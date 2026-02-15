@@ -1,25 +1,16 @@
-// Simple production server for Hostinger
-// This file is referenced as the "Application Startup File" in hPanel
-const { execSync, spawn } = require('child_process');
-const path = require('path');
+const { createServer } = require('http');
+const { parse } = require('url');
+const next = require('next');
 
-const port = process.env.PORT || 3000;
+const port = parseInt(process.env.PORT, 10) || 3000;
+const app = next({ dev: false });
+const handle = app.getRequestHandler();
 
-console.log(`> Starting Next.js on port ${port}...`);
-
-// Use next start which works with both standalone and regular builds
-const child = spawn('npx', ['next', 'start', '-p', port.toString()], {
-    cwd: __dirname,
-    stdio: 'inherit',
-    shell: true,
-    env: { ...process.env, NODE_ENV: 'production' }
-});
-
-child.on('error', (err) => {
-    console.error('Failed to start server:', err);
-    process.exit(1);
-});
-
-child.on('exit', (code) => {
-    process.exit(code || 0);
+app.prepare().then(() => {
+    createServer((req, res) => {
+        const parsedUrl = parse(req.url, true);
+        handle(req, res, parsedUrl);
+    }).listen(port, '0.0.0.0', () => {
+        console.log(`> Ready on http://0.0.0.0:${port}`);
+    });
 });
