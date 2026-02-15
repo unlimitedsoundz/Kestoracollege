@@ -1,3 +1,0 @@
-module.exports=[24715,a=>{"use strict";var b=a.i(37875);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Student Life at SYKLI College — Clubs, Culture & Campus Helsinki",description:"Discover student life at SYKLI College Helsinki. Student organisations, clubs, campus facilities, housing, and everything you need for an enriching university experience in Finland."}])}];
-
-//# sourceMappingURL=OneDrive_Documents_syklicollege_src_app_student-life_layout_tsx_d11dccc9._.js.map

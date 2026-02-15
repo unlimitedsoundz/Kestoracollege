@@ -1,3 +1,0 @@
-module.exports=[20909,a=>{"use strict";var b=a.i(37875);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Master's Student Guide — SYKLI College | Thesis, Research & Career",description:"Guide for admitted Master's students at SYKLI College. Accept your offer, submit documents, plan your thesis, and prepare for graduate studies in Helsinki, Finland."}])}];
-
-//# sourceMappingURL=OneDrive_Documents_syklicollege_src_app_student-guide_master_layout_tsx_ef09e453._.js.map

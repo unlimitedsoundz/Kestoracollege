@@ -1,3 +1,0 @@
-module.exports=[75946,a=>{"use strict";var b=a.i(37875);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Student Guide — SYKLI College Finland | Campus Life & Academic Resources",description:"Your complete guide to studying at SYKLI College. Academic resources, campus services, housing, registration, and support for new and continuing students."}])}];
-
-//# sourceMappingURL=OneDrive_Documents_syklicollege_src_app_student-guide_layout_tsx_e8ea3d48._.js.map

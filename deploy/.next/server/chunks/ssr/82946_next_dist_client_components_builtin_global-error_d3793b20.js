@@ -1,3 +1,0 @@
-module.exports=[1348,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(46504);a.n(d("[project]/OneDrive/Documents/syklicollege/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},88220,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(46504);a.n(d("[project]/OneDrive/Documents/syklicollege/node_modules/next/dist/client/components/builtin/global-error.js"))},76684,a=>{"use strict";a.i(1348);var b=a.i(88220);a.n(b)}];
-
-//# sourceMappingURL=82946_next_dist_client_components_builtin_global-error_d3793b20.js.map

@@ -1,3 +1,0 @@
-module.exports=[89772,a=>{"use strict";var b=a.i(37875);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Exchange Students — Study Abroad at SYKLI College Helsinki, Finland",description:"Information for exchange students at SYKLI College. Orientation, courses, student housing, and support for Erasmus+ and bilateral exchange programmes in Helsinki."}])}];
-
-//# sourceMappingURL=13466_Documents_syklicollege_src_app_student-guide_exchange_layout_tsx_d34d2ea0._.js.map

@@ -1,3 +1,0 @@
-module.exports=[80204,a=>{"use strict";var b=a.i(37875);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Terms of Use — SYKLI College",description:"Terms and conditions governing the use of SYKLI College digital platforms and services. Acceptable use, intellectual property, and liability."}])}];
-
-//# sourceMappingURL=OneDrive_Documents_syklicollege_src_app_terms_layout_tsx_de4ff2dd._.js.map

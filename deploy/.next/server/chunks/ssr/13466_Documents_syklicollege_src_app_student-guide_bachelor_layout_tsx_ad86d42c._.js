@@ -1,3 +1,0 @@
-module.exports=[22532,a=>{"use strict";var b=a.i(37875);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Bachelor's Student Guide — SYKLI College | Accept Offer, Tuition & Registration",description:"Step-by-step guide for admitted Bachelor's students at SYKLI College. Accept your offer, pay tuition, apply for housing, register for courses, and prepare for arrival in Helsinki."}])}];
-
-//# sourceMappingURL=13466_Documents_syklicollege_src_app_student-guide_bachelor_layout_tsx_ad86d42c._.js.map

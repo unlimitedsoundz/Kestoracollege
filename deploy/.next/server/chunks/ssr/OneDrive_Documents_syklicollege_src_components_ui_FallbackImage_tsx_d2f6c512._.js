@@ -1,3 +1,0 @@
-module.exports=[79965,a=>{"use strict";var b=a.i(47242),c=a.i(2172),d=a.i(5177);function e({src:a,fallbackSrc:e="/images/placeholders/design.png",...f}){let[g,h]=(0,d.useState)(null);return(0,d.useEffect)(()=>{h(a)},[a]),(0,b.jsx)(c.default,{...f,src:g||e,onError:()=>{h(e)}})}a.s(["default",()=>e])}];
-
-//# sourceMappingURL=OneDrive_Documents_syklicollege_src_components_ui_FallbackImage_tsx_d2f6c512._.js.map

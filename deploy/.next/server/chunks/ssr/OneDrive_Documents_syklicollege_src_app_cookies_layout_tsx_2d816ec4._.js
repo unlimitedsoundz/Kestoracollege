@@ -1,3 +1,0 @@
-module.exports=[51686,a=>{"use strict";var b=a.i(37875);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Cookie Policy — SYKLI College",description:"How SYKLI College uses cookies and similar technologies to ensure proper functionality, improve user experience, and analyse website usage."}])}];
-
-//# sourceMappingURL=OneDrive_Documents_syklicollege_src_app_cookies_layout_tsx_2d816ec4._.js.map
