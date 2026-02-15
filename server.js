@@ -1,16 +1,11 @@
-const { createServer } = require('http');
-const { parse } = require('url');
-const next = require('next');
+const http = require('http');
 
-const port = parseInt(process.env.PORT, 10) || 3000;
-const app = next({ dev: false });
-const handle = app.getRequestHandler();
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Node.js is working on Hostinger');
+});
 
-app.prepare().then(() => {
-    createServer((req, res) => {
-        const parsedUrl = parse(req.url, true);
-        handle(req, res, parsedUrl);
-    }).listen(port, '0.0.0.0', () => {
-        console.log(`> Ready on http://0.0.0.0:${port}`);
-    });
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
