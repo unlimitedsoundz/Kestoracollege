@@ -8,8 +8,6 @@ export const metadata = {
     description: 'SYKLI College is organized into four schools: Arts & Architecture, Business, Science, and Technology. Explore departments, research, and degree programmes.',
 };
 
-export const revalidate = 0;
-
 import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
 
 import { createStaticClient } from '@/lib/supabase/static';
@@ -79,7 +77,6 @@ export default async function SchoolsPage() {
                                 <div className="flex items-center gap-2 text-white font-semibold uppercase tracking-wider text-sm">
                                     Explore School <span className="text-[#f3e600]">→</span>
                                 </div>
-                                <p className="text-[10px] text-white/40 mt-4">SYKLI College | Photo by Sykli Media</p>
                             </div>
                         </Link>
                     ))}

@@ -10,6 +10,7 @@ import HousingDashboardClient from './HousingClient';
 export default function HousingPage() {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<{
+        student: any;
         application: any;
         assignment: any;
         buildings: any[];
@@ -44,7 +45,7 @@ export default function HousingPage() {
 
                 const { data: student } = await supabase
                     .from('students')
-                    .select('id')
+                    .select('*, user:profiles(*)')
                     .eq('user_id', currentUserId || '')
                     .maybeSingle();
 
@@ -63,6 +64,7 @@ export default function HousingPage() {
                 ]);
 
                 setData({
+                    student,
                     application: appRes.data,
                     assignment: assignRes.data,
                     buildings: buildRes.data || [],
@@ -102,6 +104,7 @@ export default function HousingPage() {
                 </div>
 
                 <HousingDashboardClient
+                    student={data.student}
                     application={data.application}
                     assignment={data.assignment}
                     buildings={data.buildings}

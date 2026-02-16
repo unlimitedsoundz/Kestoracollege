@@ -1,9 +1,6 @@
 
-'use server';
-
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/client';
 import { createAdminClient } from '@/utils/supabase/admin';
-import { revalidatePath } from 'next/cache';
 import { provisionLmsAccount } from './lms-actions';
 import { provisionItMaterials } from './it-actions';
 
@@ -151,8 +148,6 @@ export async function confirmEnrollment(applicationId: string) {
         } catch (itError) {
             console.error('IT Materials provisioning deferred:', itError);
         }
-
-        revalidatePath('/portal/dashboard');
         return { success: true, studentId };
 
     } catch (error: any) {

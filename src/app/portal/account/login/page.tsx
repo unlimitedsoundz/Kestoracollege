@@ -5,12 +5,11 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { CircleNotch as Loader2 } from "@phosphor-icons/react/dist/ssr";
 import { createClient } from '@/utils/supabase/client';
-import { loginWithStudentId } from '../actions';
-import DateSelector from '@/components/ui/DateSelector';
+import { signInWithEmailAndPassword } from '../actions';
 
 export default function LoginPage() {
-    const [studentId, setStudentId] = useState('');
-    const [dob, setDob] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
     const router = useRouter();
@@ -21,8 +20,7 @@ export default function LoginPage() {
         setMessage(null);
 
         try {
-            // Call Server Action to perform real Supabase Auth
-            const result = await loginWithStudentId(studentId, dob);
+            const result = await signInWithEmailAndPassword(email, password);
 
             if (result?.error) {
                 setMessage({ type: 'error', text: result.error });
@@ -30,27 +28,10 @@ export default function LoginPage() {
                 return;
             }
 
-            if (result?.success && result.session) {
-                setMessage({ type: 'success', text: 'Login successful! Redirecting...' });
-
-                // HYBRID AUTH: Explicitly set session on client to ensure persistence
-                const supabase = createClient();
-                const { error: setSessionError } = await supabase.auth.setSession(result.session);
-
-                if (setSessionError) {
-                    console.error('Failed to set client session:', setSessionError);
-                    setMessage({ type: 'error', text: 'Login failed during session setup. Please try again.' });
-                    return;
-                }
-
+            if (result?.success) {
+                router.push('/portal/dashboard');
                 // Clean up any old simulated session
                 localStorage.removeItem('sykli_user');
-
-                // Force a hard refresh to ensure cookies are picked up
-                window.location.href = '/portal';
-            } else if (result?.success) {
-                // Fallback if no session returned (shouldn't happen with new action)
-                window.location.href = '/portal';
             }
         } catch (error: any) {
             console.error('Login error:', error);
@@ -64,7 +45,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-12 bg-white p-8 rounded-2xl shadow-sm border border-neutral-100">
+        <div className="max-w-md mx-auto mt-12 bg-white p-8 rounded-2xl shadow-sm border border-neutral-100 text-[#2d2d2d]">
             <h1 className="text-2xl font-bold mb-2">Welcome Back</h1>
             <p className="text-neutral-500 mb-8">Sign in to your application portal</p>
 
@@ -76,32 +57,38 @@ export default function LoginPage() {
 
             <form onSubmit={handleLogin} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1">Student ID</label>
+                    <label className="block text-sm font-medium text-neutral-700 mb-1">Email Address</label>
                     <input
-                        type="text"
+                        type="email"
                         required
-                        value={studentId}
-                        onChange={(e) => setStudentId(e.target.value)}
-                        className="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all"
-                        placeholder="SKXXXXXXX"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all text-[#2d2d2d]"
+                        placeholder="you@example.com"
                     />
                 </div>
 
-                <DateSelector
-                    name="dob"
-                    label="Date of Birth"
-                    required
-                    value={dob}
-                    onChange={(name, value) => setDob(value)}
-                />
+                <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-1">Password</label>
+                    <input
+                        type="password"
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all text-[#2d2d2d]"
+                        placeholder="••••••••"
+                    />
+                </div>
 
-                <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
-                >
-                    {isLoading ? <Loader2 className="animate-spin" size={20} /> : 'Sign In'}
-                </button>
+                <div className="pt-2">
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
+                    >
+                        {isLoading ? <Loader2 className="animate-spin" size={20} /> : 'Sign In'}
+                    </button>
+                </div>
             </form>
 
             <div className="mt-8 pt-6 border-t border-neutral-100 text-center">

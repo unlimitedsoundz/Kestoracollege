@@ -6,7 +6,6 @@ import { ArrowRight, CaretRight as ChevronRight, CaretLeft as ChevronLeft } from
 import { createStaticClient } from "@/lib/supabase/static";
 import { formatToDDMMYYYY } from '@/utils/date';
 
-export const revalidate = 60; // Revalidate every minute
 
 export default async function Home() {
   const supabase = createStaticClient();
@@ -17,21 +16,21 @@ export default async function Home() {
     .select('*')
     .eq('published', true)
     .order('publishDate', { ascending: false })
-    .limit(3);
+    .limit(9);
 
   const { data: eventsData } = await supabase
     .from('Event')
     .select('*')
     .eq('published', true)
     .order('date', { ascending: true })
-    .limit(3);
+    .limit(9);
 
-  // Combine and take the 3 most relevant items (latest news or upcoming events)
+  // Combine and take the 9 most relevant items (latest news or upcoming events)
   const items = [
     ...(newsData || []).map((n: any) => ({ ...n, type: 'news', sortDate: n.publishDate })),
     ...(eventsData || []).map((e: any) => ({ ...e, type: 'event', sortDate: e.date }))
   ].sort((a, b) => new Date(b.sortDate).getTime() - new Date(a.sortDate).getTime())
-    .slice(0, 3);
+    .slice(0, 9);
 
   // Helper to render card
   const renderCard = (item: any) => {
@@ -97,7 +96,7 @@ export default async function Home() {
           {/* Right Image */}
           <div className="lg:w-1/2 h-full w-full relative mt-4 lg:mt-0 lg:translate-y-16 z-20 flex justify-center lg:block">
             <div className="h-full">
-              <div className="relative w-[368px] h-[368px] lg:w-full lg:h-full bg-neutral-800 shadow-2xl">
+              <div className="relative w-[368px] h-[368px] lg:w-full lg:h-full bg-neutral-800 shadow-2xl overflow-hidden">
                 <Image
                   src="/images/1770711055925-019c4693-3f9b-731f-a2a2-97b2e8a70069.png"
                   alt="Student studying at SYKLI College campus in Finland"
@@ -107,7 +106,6 @@ export default async function Home() {
                   sizes="(max-width: 1024px) 368px, 50vw"
                 />
               </div>
-              <p className="text-xs text-neutral-500 mt-2">SYKLI College | Photo by Annika Sjöberg</p>
             </div>
           </div>
         </div>
@@ -125,7 +123,6 @@ export default async function Home() {
             </div>
             <div className="w-1/3 relative">
               <Image src="/images/admissions/school_arts.jpg" alt="Arts" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-              <p className="absolute bottom-1 right-2 text-[9px] text-white/60">Photo by Eero Koskinen</p>
             </div>
           </Link>
 
@@ -137,7 +134,6 @@ export default async function Home() {
             </div>
             <div className="w-1/3 relative">
               <Image src="/images/admissions/school_business.jpg" alt="Business" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-              <p className="absolute bottom-1 right-2 text-[9px] text-white/60">Photo by Lars Nyström</p>
             </div>
           </Link>
 
@@ -149,7 +145,6 @@ export default async function Home() {
             </div>
             <div className="w-1/3 relative">
               <Image src="/images/admissions/school_technology.jpg" alt="Technology" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-              <p className="absolute bottom-1 right-2 text-[9px] text-white/60">Photo by Ville Huttunen</p>
             </div>
           </Link>
 
@@ -161,7 +156,6 @@ export default async function Home() {
             </div>
             <div className="w-1/3 relative">
               <Image src="/images/admissions/school_science.jpg" alt="Science" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-              <p className="absolute bottom-1 right-2 text-[9px] text-white/60">Photo by Aino Kallio</p>
             </div>
           </Link>
         </div>
@@ -188,8 +182,8 @@ export default async function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {/* Dynamic Cards */}
           {(items || []).map(item => renderCard(item))}
-          {/* Fill remaining slots if items length < 3 */}
-          {(items.length < 3) && Array.from({ length: 3 - items.length }).map((_, i) => (
+          {/* Fill remaining slots if items length < 9 */}
+          {(items.length < 9) && Array.from({ length: 9 - items.length }).map((_, i) => (
             <React.Fragment key={`empty-${i}`}>{renderCard(null)}</React.Fragment>
           ))}
         </div>
@@ -210,16 +204,14 @@ export default async function Home() {
       <section className="py-8 md:py-24 bg-white">
         <div className="container mx-auto px-4 flex flex-col lg:flex-row gap-16 items-center">
           <div className="w-full lg:w-1/2">
-            <div className="relative h-[300px] lg:h-[400px]">
+            <div className="relative h-[300px] md:h-[500px] overflow-hidden rounded-2xl">
               <Image
                 src="/images/admissions/campus_welcome.jpg"
-                alt="Campus Life"
+                alt="Sykli campus"
                 fill
                 className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
-            <p className="text-xs text-neutral-400 mt-2">SYKLI College | Photo by Kristian Lindqvist</p>
           </div>
           <div className="lg:w-1/2 space-y-6">
             <h2 className="text-[28px] font-bold">Welcome to our campus!</h2>

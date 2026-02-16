@@ -1,56 +1,79 @@
-import { createClient } from '@/utils/supabase/server';
-import { notFound, redirect } from 'next/navigation';
+'use client';
+
+import { createClient } from '@/utils/supabase/client';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState, Suspense } from 'react';
 import { Application } from '@/types/database';
 import Link from 'next/link';
-import { CaretLeft as ChevronLeft, DownloadSimple as Download } from "@phosphor-icons/react/dist/ssr";
+import { CaretLeft as ChevronLeft, DownloadSimple as Download } from "@phosphor-icons/react";
 import { formatToDDMMYYYY } from '@/utils/date';
 import PrintButton from '@/components/portal/PrintButton';
 import Image from 'next/image';
 
-export default async function EnrollmentConfirmationPage(props: {
-    searchParams: Promise<{ id: string }>
-}) {
-    const { id } = await props.searchParams;
+function EnrollmentContent() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const id = searchParams.get('id');
 
-    if (!id) redirect('/portal/dashboard');
+    const [loading, setLoading] = useState(true);
+    const [application, setApplication] = useState<any>(null);
+    const [student, setStudent] = useState<any>(null);
 
-    const supabase = await createClient();
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!id) {
+                router.replace('/portal/dashboard');
+                return;
+            }
 
-    // Verify Access
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) redirect('/portal/account/login');
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                router.replace('/portal/account/login');
+                return;
+            }
 
-    const { data: applicationRaw } = await supabase
-        .from('applications')
-        .select(`
-            *,
-            course:Course(*, school:School(*)),
-            user:profiles(*),
-            offer:admission_offers(*)
-        `)
-        .eq('id', id)
-        .eq('user_id', user.id)
-        .single();
+            const { data: applicationRaw } = await supabase
+                .from('applications')
+                .select(`
+                    *,
+                    course:Course(*, school:School(*)),
+                    user:profiles(*),
+                    offer:admission_offers(*)
+                `)
+                .eq('id', id)
+                .eq('user_id', user.id)
+                .single();
 
-    if (!applicationRaw || applicationRaw.status !== 'ENROLLED') {
-        // Redirect to dashboard if not enrolled yet
-        redirect('/portal/dashboard');
+            if (!applicationRaw || applicationRaw.status !== 'ENROLLED') {
+                router.replace('/portal/dashboard');
+                return;
+            }
+
+            const { data: studentData } = await supabase
+                .from('students')
+                .select('student_id')
+                .eq('application_id', id)
+                .single();
+
+            setApplication(applicationRaw);
+            setStudent(studentData);
+            setLoading(false);
+        };
+
+        fetchData();
+    }, [id, router]);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-neutral-900" />
+            </div>
+        );
     }
 
-    // Fetch specific student record for this application
-    const { data: student } = await supabase
-        .from('students')
-        .select('student_id')
-        .eq('application_id', id)
-        .single();
+    if (!application) return null;
 
-    const application = applicationRaw as Application & {
-        user: any,
-        course: any,
-        offer: any[]
-    };
-
-    // In a real system, we'd have an enrollment_date timestamp. Using updated_at for now.
     const enrollmentDate = new Date(application.updated_at);
     const validUntil = new Date(enrollmentDate);
     validUntil.setFullYear(validUntil.getFullYear() + 1);
@@ -67,7 +90,6 @@ export default async function EnrollmentConfirmationPage(props: {
                     Back to Dashboard
                 </Link>
                 <div className="flex items-center gap-4">
-                    {/* Mock Download Button */}
                     <button className="flex items-center gap-2 border border-neutral-200 bg-white text-neutral-600 px-4 py-2 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:bg-neutral-50 transition-all">
                         <Download size={16} weight="bold" />
                         Visa Support Pack
@@ -78,7 +100,6 @@ export default async function EnrollmentConfirmationPage(props: {
 
             {/* Document Container */}
             <div className="max-w-[210mm] mx-auto bg-white shadow-xl print:shadow-none min-h-[297mm] p-[20mm] md:p-[25mm] relative text-neutral-900 border border-neutral-100 print:border-0">
-
                 <div className="flex justify-between items-start mb-16 border-b-2 border-neutral-900 pb-8">
                     <div>
                         <div className="mb-4 relative w-48 h-16">
@@ -124,7 +145,6 @@ export default async function EnrollmentConfirmationPage(props: {
                             <div className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Student Name</div>
                             <div className="text-sm font-bold text-neutral-900 uppercase">{application.personal_info?.firstName} {application.personal_info?.lastName}</div>
                         </div>
-
                         <div>
                             <div className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Date of Birth</div>
                             <div className="text-sm font-bold text-neutral-900">{formatToDDMMYYYY(application.user?.date_of_birth || '2006-01-01')}</div>
@@ -211,8 +231,8 @@ export default async function EnrollmentConfirmationPage(props: {
                         Page 1 of 1
                     </div>
                 </div>
-
             </div>
+
             {/* Print Styles */}
             <style dangerouslySetInnerHTML={{
                 __html: `
@@ -220,7 +240,7 @@ export default async function EnrollmentConfirmationPage(props: {
                     @page { margin: 0; }
                     body { background: white; padding: 0; }
                     .min-h-screen { min-height: 0; background: white; padding: 0; }
-                    .max-w-[210mm] { max-width: 100%; margin: 0; padding: 0; }
+                    .max-w-\\[210mm\\] { max-width: 100%; margin: 0; padding: 0; }
                     .shadow-xl { box-shadow: none !important; }
                     .print\\:hidden { display: none !important; }
                     .print\\:border-0 { border: none !important; }
@@ -228,5 +248,17 @@ export default async function EnrollmentConfirmationPage(props: {
                 }
             ` }} />
         </div>
+    );
+}
+
+export default function EnrollmentConfirmationPage() {
+    return (
+        <Suspense fallback={
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-neutral-900" />
+            </div>
+        }>
+            <EnrollmentContent />
+        </Suspense>
     );
 }

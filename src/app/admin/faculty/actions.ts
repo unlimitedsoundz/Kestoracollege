@@ -1,30 +1,8 @@
-'use server';
-
-import { createClient } from '@supabase/supabase-js';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-
-// Create a Service Role Client to bypass RLS for Admin actions
-function getAdminClient() {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-    if (!supabaseUrl || !supabaseServiceKey) {
-        throw new Error('Missing Supabase Service Role Key');
-    }
-
-    return createClient(supabaseUrl, supabaseServiceKey, {
-        auth: {
-            persistSession: false,
-            autoRefreshToken: false,
-            detectSessionInUrl: false
-        }
-    });
-}
+import { createClient } from '@/utils/supabase/client';
 
 async function uploadFile(file: File, bucket: string = 'content') {
     if (!file || file.size === 0) return null;
-    const supabase = getAdminClient();
+    const supabase = createClient();
     const fileExt = file.name.split('.').pop();
     const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
     const filePath = `${fileName}`;
@@ -50,7 +28,7 @@ async function uploadFile(file: File, bucket: string = 'content') {
 export async function createFaculty(formData: FormData) {
     console.log('Admin Action: Creating faculty member...');
     try {
-        const supabase = getAdminClient();
+        const supabase = createClient();
         const imageFile = formData.get('image') as File;
 
         let imageUrl = null;
@@ -78,22 +56,18 @@ export async function createFaculty(formData: FormData) {
         }
     } catch (e: any) {
         console.error('createFaculty Exception:', e);
-        throw e; // Re-throw to be caught by the client
+        throw e;
     }
 
-    revalidatePath('/admin/faculty');
-    revalidatePath('/schools/arts');
-    revalidatePath('/schools/[slug]', 'layout');
-    redirect('/admin/faculty');
+    return { success: true };
 }
 
 export async function updateFaculty(id: string, formData: FormData) {
     console.log(`Admin Action: Updating faculty member ${id}...`);
     try {
-        const supabase = getAdminClient();
+        const supabase = createClient();
         const imageFile = formData.get('image') as File;
 
-        // Only upload if a new file is provided
         let imageUrl = null;
         if (imageFile && imageFile.size > 0) {
             console.log('Uploading new image...');
@@ -124,8 +98,5 @@ export async function updateFaculty(id: string, formData: FormData) {
         throw e;
     }
 
-    revalidatePath('/admin/faculty');
-    revalidatePath('/schools/arts');
-    revalidatePath('/schools/[slug]', 'layout');
-    redirect('/admin/faculty');
+    return { success: true };
 }

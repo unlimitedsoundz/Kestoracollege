@@ -1,19 +1,11 @@
 
-import { createClient } from '@supabase/supabase-js';
+import { createBrowserClient } from '@supabase/ssr';
 
+// For static export, admin operations rely on RLS policies in Supabase.
+// The service role key is NOT available client-side.
 export function createAdminClient() {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-        throw new Error('Missing Supabase Service Role Key');
-    }
-
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.SUPABASE_SERVICE_ROLE_KEY,
-        {
-            auth: {
-                autoRefreshToken: false,
-                persistSession: false
-            }
-        }
+    return createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
 }

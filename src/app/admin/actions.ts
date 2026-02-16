@@ -1,10 +1,5 @@
-'use server';
-
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/client';
 import { createAdminClient } from '@/utils/supabase/admin';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-
 // --- HELPERS ---
 
 async function uploadFile(file: File, bucket: string = 'content') {
@@ -49,8 +44,6 @@ export async function createCourse(formData: FormData) {
     });
 
     if (error) throw new Error((error as any).message);
-    revalidatePath('/admin/courses');
-    redirect('/admin/courses');
 }
 
 export async function updateCourse(id: string, formData: FormData) {
@@ -69,15 +62,12 @@ export async function updateCourse(id: string, formData: FormData) {
     }).eq('id', id);
 
     if (error) throw new Error(error.message);
-    revalidatePath('/admin/courses');
-    redirect('/admin/courses');
 }
 
 export async function deleteCourse(id: string) {
     const supabase = await createClient();
     const { error } = await supabase.from('Course').delete().eq('id', id);
     if (error) throw new Error(error.message);
-    revalidatePath('/admin/courses');
 }
 
 // --- NEWS ---
@@ -102,10 +92,6 @@ export async function createNews(formData: FormData) {
     });
 
     if (error) throw new Error((error as any).message);
-    revalidatePath('/admin/news');
-    revalidatePath('/news');
-    revalidatePath('/');
-    redirect('/admin/news');
 }
 
 export async function updateNews(id: string, formData: FormData) {
@@ -125,20 +111,14 @@ export async function updateNews(id: string, formData: FormData) {
     const { error } = await supabase.from('News').update(updateData).eq('id', id);
 
     if (error) throw new Error((error as any).message);
-    revalidatePath('/admin/news');
-    revalidatePath('/news');
-    revalidatePath('/');
-    revalidatePath(`/news/${id}`);
-    redirect('/admin/news');
 }
 
 export async function deleteNews(id: string) {
     const supabase = await createClient();
     const { error } = await supabase.from('News').delete().eq('id', id);
     if (error) throw new Error((error as any).message);
-    revalidatePath('/admin/news');
-    revalidatePath('/news');
-    revalidatePath('/');
+
+
 }
 
 // --- EVENTS ---
@@ -160,10 +140,6 @@ export async function createEvent(formData: FormData) {
     });
 
     if (error) throw new Error((error as any).message);
-    revalidatePath('/admin/events');
-    revalidatePath('/events');
-    revalidatePath('/');
-    redirect('/admin/events');
 }
 
 export async function updateEvent(id: string, formData: FormData) {
@@ -185,19 +161,14 @@ export async function updateEvent(id: string, formData: FormData) {
     const { error } = await supabase.from('Event').update(updateData).eq('id', id);
 
     if (error) throw new Error((error as any).message);
-    revalidatePath('/admin/events');
-    revalidatePath('/events');
-    revalidatePath('/');
-    redirect('/admin/events');
 }
 
 export async function deleteEvent(id: string) {
     const supabase = await createClient();
     const { error } = await supabase.from('Event').delete().eq('id', id);
     if (error) throw new Error((error as any).message);
-    revalidatePath('/admin/events');
-    revalidatePath('/events');
-    revalidatePath('/');
+
+
 }
 
 // --- SUBJECTS ---
@@ -214,8 +185,6 @@ export async function createSubject(formData: FormData) {
     });
 
     if (error) throw new Error(error.message);
-    revalidatePath('/admin/subjects');
-    redirect('/admin/subjects');
 }
 
 export async function updateSubject(id: string, formData: FormData) {
@@ -230,15 +199,12 @@ export async function updateSubject(id: string, formData: FormData) {
     }).eq('id', id);
 
     if (error) throw new Error(error.message);
-    revalidatePath('/admin/subjects');
-    redirect('/admin/subjects');
 }
 
 export async function deleteSubject(id: string) {
     const supabase = await createClient();
     const { error } = await supabase.from('Subject').delete().eq('id', id);
     if (error) throw new Error(error.message);
-    revalidatePath('/admin/subjects');
 }
 
 // --- STUDENTS ---
@@ -247,7 +213,6 @@ export async function updateStudentStatus(id: string, status: string) {
     const supabase = await createClient();
     const { error } = await supabase.from('Student').update({ status }).eq('id', id);
     if (error) throw new Error(error.message);
-    revalidatePath('/admin/students');
 }
 
 export async function updateStudentTuition(id: string, formData: FormData) {
@@ -262,7 +227,6 @@ export async function updateStudentTuition(id: string, formData: FormData) {
     }).eq('id', id);
 
     if (error) throw new Error(error.message);
-    revalidatePath('/admin/students');
 }
 
 export async function deleteStudent(id: string) {
@@ -283,8 +247,6 @@ export async function deleteStudent(id: string) {
         .eq('id', id);
 
     if (error) throw new Error(error.message);
-
-    revalidatePath('/admin/students');
 }
 
 // --- FACULTY ---
@@ -305,10 +267,6 @@ export async function createFaculty(formData: FormData) {
     });
 
     if (error) throw new Error(error.message);
-    revalidatePath('/admin/faculty');
-    revalidatePath('/schools/arts');
-    revalidatePath('/schools/[slug]', 'layout');
-    redirect('/admin/faculty');
 }
 
 export async function updateFaculty(id: string, formData: FormData) {
@@ -330,19 +288,14 @@ export async function updateFaculty(id: string, formData: FormData) {
     const { error } = await supabase.from('Faculty').update(updateData).eq('id', id);
 
     if (error) throw new Error(error.message);
-    revalidatePath('/admin/faculty');
-    revalidatePath('/schools/arts');
-    revalidatePath('/schools/[slug]', 'layout');
-    redirect('/admin/faculty');
 }
 
 export async function deleteFaculty(id: string) {
     const supabase = await createClient();
     const { error } = await supabase.from('Faculty').delete().eq('id', id);
     if (error) throw new Error(error.message);
-    revalidatePath('/admin/faculty');
-    revalidatePath('/schools/arts');
-    revalidatePath('/schools/[slug]', 'layout');
+
+
 }
 
 // --- DEPARTMENTS ---
@@ -395,8 +348,6 @@ export async function adminApproveTuition(applicationId: string) {
     if (!result.success) {
         throw new Error(result.error || 'Enrollment failed');
     }
-
-    revalidatePath('/admin/students');
 }
 
 // --- RESEARCH PROJECTS ---
@@ -423,10 +374,6 @@ export async function createResearchProject(formData: FormData) {
         console.error('Create Research Project Error:', e);
         throw new Error(e.message);
     }
-
-    revalidatePath('/admin/research/projects');
-    revalidatePath('/research/projects');
-    redirect('/admin/research/projects');
 }
 
 export async function updateResearchProject(id: string, formData: FormData) {
@@ -469,10 +416,7 @@ export async function updateResearchProject(id: string, formData: FormData) {
         throw new Error(e.message);
     }
 
-    revalidatePath('/admin/research/projects');
-    revalidatePath('/research/projects');
     // Assuming slug doesn't change or we redirect to list anyway
-    redirect('/admin/research/projects');
 }
 
 export async function deleteResearchProject(formData: FormData) {
@@ -480,8 +424,7 @@ export async function deleteResearchProject(formData: FormData) {
     const supabase = await createClient();
     const { error } = await supabase.from('ResearchProject').delete().eq('id', id);
     if (error) throw new Error(error.message);
-    revalidatePath('/admin/research/projects');
-    revalidatePath('/research/projects');
+
 }
 
 export async function getAdmissionsApplications() {
@@ -549,8 +492,7 @@ export async function updateApplicationStatusAdmin(id: string, status: string) {
             .update({ status })
             .eq('id', id);
         if (error) throw error;
-        revalidatePath('/admin/admissions');
-        revalidatePath(`/admin/admissions/review?id=${id}`);
+
         return { success: true };
     } catch (e: any) {
         console.error('updateApplicationStatusAdmin Error:', e);
@@ -567,7 +509,6 @@ export async function updateApplicationInternalNotesAdmin(id: string, notes: str
             .update({ internal_notes: notes })
             .eq('id', id);
         if (error) throw error;
-        revalidatePath(`/admin/admissions/review?id=${id}`);
         return { success: true };
     } catch (e: any) {
         console.error('updateApplicationInternalNotesAdmin Error:', e);

@@ -1,14 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
-import { House as Home, Bed, CurrencyEur as DollarSign, CheckCircle, Clock, Warning as AlertTriangle, Calendar, Building as Building2, CreditCard, CaretRight as ChevronRight } from "@phosphor-icons/react/dist/ssr";
+import { House as Home, Bed, CurrencyEur as DollarSign, CheckCircle, Clock, Warning as AlertTriangle, Calendar, Building as Building2, CreditCard, CaretRight as ChevronRight, UploadSimple as Upload } from "@phosphor-icons/react/dist/ssr";
 import { formatToDDMMYYYY } from '@/utils/date';
 import { HousingApplication, HousingAssignment, HousingDeposit, HousingBuilding, Semester, HousingInvoice, PaymentMethod } from '@/types/database';
-import { submitHousingApplication } from '../../housing-actions';
-import { initiatePayment, verifyPayment } from '../../payment-actions';
+import { submitHousingApplication } from '@/services/housing';
+import { initiatePayment, verifyPayment, initiateManualPayment } from '@/services/payment';
 import PayGoWireCheckout from '../../application/payment/PayGoWireCheckout';
 
 interface HousingDashboardClientProps {
+    student: any;
     application: (HousingApplication & { deposit?: HousingDeposit }) | null;
     assignment: (HousingAssignment & { room: any, building: any }) | null;
     buildings: HousingBuilding[];
@@ -18,7 +19,7 @@ interface HousingDashboardClientProps {
 
 const COUNTRIES = ['Finland', 'United States', 'United Kingdom', 'Germany', 'France', 'China', 'India', 'Nigeria', 'Other'];
 
-export default function HousingDashboardClient({ application, assignment, buildings, semesters, invoices }: HousingDashboardClientProps) {
+export default function HousingDashboardClient({ student, application, assignment, buildings, semesters, invoices }: HousingDashboardClientProps) {
     const [showForm, setShowForm] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -192,10 +193,20 @@ export default function HousingDashboardClient({ application, assignment, buildi
                         <div>
                             <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400 mb-1">Building</p>
                             <p className="font-bold text-lg">{assignment.room?.building?.name}</p>
+                            <p className="text-xs text-neutral-500">{assignment.room?.building?.campus_location}</p>
                         </div>
                         <div>
                             <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400 mb-1">Room</p>
                             <p className="font-bold text-lg">{assignment.room?.room_number}</p>
+                            {assignment.room?.amenities && assignment.room.amenities.length > 0 && (
+                                <div className="flex flex-wrap gap-1 mt-1">
+                                    {assignment.room.amenities.map((amenity: string, idx: number) => (
+                                        <span key={idx} className="text-[9px] bg-neutral-100 px-1.5 py-0.5 rounded text-neutral-600 font-bold uppercase">
+                                            {amenity}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                         <div>
                             <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400 mb-1">Status</p>
@@ -205,9 +216,15 @@ export default function HousingDashboardClient({ application, assignment, buildi
                         </div>
                     </div>
 
-                    <div className="pt-6 border-t border-neutral-100">
-                        <p className="text-[10px] font-bold text-neutral-400 uppercase mb-2">Lease Duration</p>
-                        <p className="text-sm font-medium">{formatToDDMMYYYY(assignment.start_date)} - {formatToDDMMYYYY(assignment.end_date)}</p>
+                    <div className="pt-6 border-t border-neutral-100 flex justify-between items-center">
+                        <div>
+                            <p className="text-[10px] font-bold text-neutral-400 uppercase mb-2">Lease Duration</p>
+                            <p className="text-sm font-medium">{formatToDDMMYYYY(assignment.start_date)} - {formatToDDMMYYYY(assignment.end_date)}</p>
+                        </div>
+                        {/* PDF Generation disabled for static export stability */}
+                        {/* <button className="px-4 py-2 bg-neutral-100 border-2 border-neutral-200 text-[10px] font-black uppercase tracking-widest rounded-sm text-neutral-400 cursor-not-allowed">
+                            Download Lease PDF (Coming Soon)
+                        </button> */}
                     </div>
                 </div>
             ) : application ? (

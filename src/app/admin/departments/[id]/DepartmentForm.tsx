@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { FloppyDisk as Save, UploadSimple as Upload } from "@phosphor-icons/react/dist/ssr";
 import Image from 'next/image';
 
+import { createClient } from '@/utils/supabase/client';
 import { uploadToHosting } from '@/utils/hostingUpload';
 
 interface DepartmentFormProps {

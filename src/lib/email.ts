@@ -1,8 +1,6 @@
 
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 interface SendEmailParams {
     to: string;
     subject: string;
@@ -14,8 +12,10 @@ interface SendEmailParams {
 }
 
 export async function sendEmail({ to, subject, react, attachments }: SendEmailParams) {
+    const apiKey = process.env.RESEND_API_KEY;
+
     // If no API key is provided, log the email content (useful for dev/demo)
-    if (!process.env.RESEND_API_KEY) {
+    if (!apiKey) {
         console.log('---------------------------------------------------');
         console.log(`[MOCK EMAIL SERVICE]`);
         console.log(`TO: ${to}`);
@@ -27,6 +27,7 @@ export async function sendEmail({ to, subject, react, attachments }: SendEmailPa
     }
 
     try {
+        const resend = new Resend(apiKey);
         const { data, error } = await resend.emails.send({
             from: 'SYKLI College <admissions@syklicollege.fi>',
             to: [to],

@@ -45,14 +45,13 @@ export default function StudiesPage() {
                     <div className="group relative bg-neutral-100 rounded-3xl overflow-hidden min-h-[400px]">
                         <div className="absolute inset-0">
                             <Image
-                                src="/images/admissions/bachelor_students.jpg"
+                                src="/images/admissions/bachelor_path.png"
                                 alt="Diverse group of bachelor students studying together in a modern campus environment"
                                 fill
                                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                                 sizes="(max-width: 768px) 100vw, 50vw"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                            <p className="absolute top-3 right-3 text-[10px] text-white/50">Photo by Hanna Nurmi</p>
                         </div>
                         <div className="absolute inset-0 p-10 flex flex-col justify-end text-white">
                             <h2 className="text-3xl font-bold mb-4">Bachelor's Degrees</h2>
@@ -69,14 +68,13 @@ export default function StudiesPage() {
                     <div className="group relative bg-neutral-100 rounded-3xl overflow-hidden min-h-[400px]">
                         <div className="absolute inset-0">
                             <Image
-                                src="/images/admissions/master_students.jpg"
+                                src="/images/admissions/master_hero_refined.jpg"
                                 alt="Master students"
                                 fill
                                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                                 sizes="(max-width: 768px) 100vw, 50vw"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                            <p className="absolute top-3 right-3 text-[10px] text-white/50">Photo by Veli Paavola</p>
                         </div>
                         <div className="absolute inset-0 p-10 flex flex-col justify-end text-white">
                             <h2 className="text-3xl font-bold mb-4">Master's Degrees</h2>

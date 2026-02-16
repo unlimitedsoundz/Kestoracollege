@@ -1,12 +1,7 @@
-'use server';
-
 import React from 'react';
 
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/client';
 import { createAdminClient } from '@/utils/supabase/admin';
-import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
-
 export async function createApplication(courseId: string) {
     const supabase = await createClient();
 
@@ -14,7 +9,7 @@ export async function createApplication(courseId: string) {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-        redirect('/portal/account/login');
+        throw new Error('Unauthorized: You must be logged in.');
     }
 
     // Ensure profile exists (defensive in case trigger failed)
@@ -57,9 +52,6 @@ export async function createApplication(courseId: string) {
         console.error('Error creating application:', error);
         throw new Error(`Failed to create application: ${error.message} (${error.code})`);
     }
-
-    revalidatePath('/portal/dashboard');
-    redirect(`/portal/application?id=${data.id}`);
 }
 
 export async function updateApplicationStep(id: string, step: string, data: any) {
@@ -122,8 +114,6 @@ export async function updateApplicationStep(id: string, step: string, data: any)
         console.error('Error syncing to profile:', syncError);
         // Non-blocking for the application flow
     }
-
-    revalidatePath(`/portal/application`);
     return { success: true };
 }
 
@@ -146,8 +136,6 @@ export async function addApplicationDocument(applicationId: string, type: string
         console.error('Error adding document meta:', error);
         throw new Error('Failed to save document info');
     }
-
-    revalidatePath(`/portal/application`);
     return { success: true };
 }
 
@@ -178,8 +166,6 @@ export async function deleteApplicationDocument(applicationId: string, documentI
         console.error('Error deleting document meta:', error);
         throw new Error('Failed to delete document info');
     }
-
-    revalidatePath(`/portal/application`);
     return { success: true };
 }
 
@@ -219,8 +205,6 @@ export async function submitApplication(applicationId: string) {
         throw new Error('Failed to submit application');
     }
 
-    revalidatePath('/portal/dashboard');
-    revalidatePath(`/portal/application`);
     return { success: true };
 }
 
@@ -448,10 +432,7 @@ export async function acceptOffer(applicationId: string) {
 
     if (appError) throw new Error('Failed to update application status');
 
-    revalidatePath('/portal/dashboard');
-    revalidatePath(`/portal/application`);
     // Redirect to the payment/offer page to continue the flow
-    redirect(`/portal/application/payment?id=${applicationId}`);
 }
 
 
@@ -532,10 +513,6 @@ export async function rejectOffer(applicationId: string) {
     } catch (emailError) {
         console.error('Failed to send rejection confirmation email:', emailError);
     }
-
-    revalidatePath('/portal/dashboard');
-    revalidatePath(`/portal/application`);
-    redirect('/portal/dashboard');
 }
 
 export async function processTuitionPayment(
@@ -669,8 +646,6 @@ export async function processTuitionPayment(
         console.error('Failed to send payment confirmation email:', emailError);
     }
 
-    revalidatePath('/portal/dashboard');
-    revalidatePath(`/portal/application`);
     return { success: true, reference };
 }
 
@@ -716,7 +691,5 @@ export async function deleteApplication(applicationId: string) {
         console.error('Error deleting application:', error);
         throw new Error('Failed to delete application');
     }
-
-    revalidatePath('/portal/dashboard');
     return { success: true };
 }

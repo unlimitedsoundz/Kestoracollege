@@ -1,12 +1,21 @@
 
-import { createClient } from '@/utils/supabase/server';
+import { createStaticClient } from '@/lib/supabase/static';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Department, School, Faculty, Course } from '@/types/database';
 import { notFound } from 'next/navigation';
 import { CaretLeft } from '@phosphor-icons/react/dist/ssr';
 
-export const revalidate = 0;
+export async function generateStaticParams() {
+    const supabase = createStaticClient();
+    const { data: depts } = await supabase
+        .from('Department')
+        .select('slug, school:School!inner(slug)');
+    return depts?.map((d: any) => ({
+        slug: (Array.isArray(d.school) ? d.school[0] : d.school)?.slug,
+        dept_slug: d.slug
+    })) || [];
+}
 
 interface Props {
     params: {
@@ -18,7 +27,7 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
     const resolvedParams = await params;
     const { dept_slug } = resolvedParams;
-    const supabase = await createClient();
+    const supabase = createStaticClient();
 
     const { data: dept } = await supabase
         .from('Department')
@@ -35,7 +44,7 @@ export async function generateMetadata({ params }: Props) {
 export default async function DepartmentDetailPage({ params }: Props) {
     const resolvedParams = await params;
     const { slug, dept_slug } = resolvedParams;
-    const supabase = await createClient();
+    const supabase = createStaticClient();
 
     // 1. Fetch Department by slug
     const { data: deptData, error } = await supabase

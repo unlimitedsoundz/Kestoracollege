@@ -79,7 +79,6 @@ export default async function AboutPage() {
                                     About Hero Image
                                 </div>
                             </div>
-                            <p className="text-xs text-neutral-500 mt-2">SYKLI College | Photo by Nils Bergman</p>
                         </div>
                     </div>
                 </div>
@@ -191,7 +190,6 @@ export default async function AboutPage() {
                                             sizes="(max-width: 768px) 50vw, 25vw"
                                         />
                                     </div>
-                                    <p className="text-xs text-neutral-400 mt-1">Photo by {img.credit}</p>
                                 </div>
                             ))}
                         </div>

@@ -1,5 +1,5 @@
 
-import { createClient } from '@/utils/supabase/server';
+import { createStaticClient } from '@/lib/supabase/static';
 import Link from 'next/link';
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function ProjectsPage() {
-    const supabase = await createClient();
+    const supabase = createStaticClient();
     const { data: projects } = await supabase
         .from('ResearchProject')
         .select('*')

@@ -1,14 +1,20 @@
 
-import { createClient } from '@/utils/supabase/server';
+import { createStaticClient } from '@/lib/supabase/static';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { CaretLeft } from "@phosphor-icons/react/dist/ssr";
 import { Metadata } from 'next';
 
+export async function generateStaticParams() {
+    const supabase = createStaticClient();
+    const { data: projects } = await supabase.from('ResearchProject').select('slug');
+    return projects?.map(({ slug }) => ({ slug })) || [];
+}
+
 // Generate metadata for the page
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
-    const supabase = await createClient();
+    const supabase = createStaticClient();
     const { data: project } = await supabase.from('ResearchProject').select('title, description').eq('slug', slug).single();
 
     if (!project) return { title: 'Project Not Found' };
@@ -21,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const supabase = await createClient();
+    const supabase = createStaticClient();
     const { data: project } = await supabase
         .from('ResearchProject')
         .select('*')

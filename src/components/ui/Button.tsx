@@ -1,5 +1,4 @@
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
 
 const buttonVariants = {
     primary: "bg-[var(--color-primary)] text-white hover:bg-[#153e32] shadow-sm",
@@ -27,9 +26,8 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ({ className = "", variant = "primary", size = "default", asChild = false, ...props }, ref) => {
-        const Comp = asChild ? Slot : "button"
         return (
-            <Comp
+            <button
                 ref={ref}
                 className={`inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] disabled:pointer-events-none disabled:opacity-50 ${buttonVariants[variant]} ${buttonSizes[size]} ${className}`}
                 {...props}

@@ -205,24 +205,63 @@ export default function HousingManagementClient({
 
     const handleDeleteAssignment = async (id: string) => {
         if (!window.confirm('Are you sure you want to remove this assignment? The room will become available again.')) return;
+        console.log('Starting deletion for assignment:', id);
         setAssignLoading(true);
         try {
             const supabase = createClient();
-            const { data: assignment } = await supabase.from('housing_assignments').select('room_id').eq('id', id).single();
-            if (assignment) {
-                await supabase.from('housing_rooms').update({ status: 'AVAILABLE' }).eq('id', assignment.room_id);
+
+            // 1. Get assignment details to identify room
+            const { data: assignment, error: fetchError } = await supabase
+                .from('housing_assignments')
+                .select('room_id')
+                .eq('id', id)
+                .single();
+
+            if (fetchError) {
+                console.error('Error fetching assignment before delete:', fetchError);
+                // We typically continue to try to delete even if fetch fails, 
+                // but if we can't find it, maybe it's already gone.
             }
+
+            console.log('Found assignment to delete:', assignment);
+
+            if (assignment?.room_id) {
+                // 2. Free up the room
+                const { error: roomError } = await supabase
+                    .from('housing_rooms')
+                    .update({ status: 'AVAILABLE' })
+                    .eq('id', assignment.room_id);
+
+                if (roomError) {
+                    console.error('Failed to update room status:', roomError);
+                    if (!window.confirm('Failed to update room status. Continue deleting assignment anyway?')) {
+                        return;
+                    }
+                } else {
+                    console.log('Room status updated to AVAILABLE');
+                }
+            }
+
             // 3. Delete the assignment
             const { error: deleteError } = await supabase
                 .from('housing_assignments')
                 .delete()
                 .eq('id', id);
 
-            if (deleteError) throw new Error(`Failed to delete assignment: ${deleteError.message}`);
+            if (deleteError) {
+                console.error('Delete failed:', deleteError);
+                throw new Error(`Failed to delete assignment: ${deleteError.message} (Code: ${deleteError.code})`);
+            }
 
+            console.log('Assignment deleted successfully. Refreshing...');
+            await new Promise(resolve => setTimeout(resolve, 500)); // Small delay for propagation
             await onRefresh();
+            console.log('Refresh complete.');
+            alert('Assignment removed successfully.');
+
         } catch (err: any) {
-            alert(err.message);
+            console.error('handleDeleteAssignment Exception:', err);
+            alert(`Error removing assignment: ${err.message}`);
         } finally {
             setAssignLoading(false);
         }

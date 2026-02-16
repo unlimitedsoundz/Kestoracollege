@@ -1,4 +1,4 @@
-import { createClient } from '@/utils/supabase/server';
+import { createStaticClient } from '@/lib/supabase/static';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Course, Subject, Faculty, School, Department } from '@/types/database';
@@ -6,7 +6,11 @@ import { notFound } from 'next/navigation';
 import TableOfContents from '@/components/course/TableOfContents';
 import { Clock, ChatTeardropText as MessageCircle, GraduationCap, CurrencyEur as Euro, ArrowLeft, CaretLeft as ChevronLeft } from "@phosphor-icons/react/dist/ssr";
 
-export const revalidate = 60;
+export async function generateStaticParams() {
+    const supabase = createStaticClient();
+    const { data: courses } = await supabase.from('Course').select('slug');
+    return courses?.map(({ slug }) => ({ slug })) || [];
+}
 
 interface Props {
     params: Promise<{
@@ -17,7 +21,7 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
     const resolvedParams = await params;
     const { slug } = resolvedParams;
-    const supabase = await createClient();
+    const supabase = createStaticClient();
 
     const { data: course } = await supabase
         .from('Course')
@@ -42,7 +46,7 @@ import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
 export default async function CourseDetailPage({ params }: Props) {
     const { slug } = await params;
 
-    const supabase = await createClient();
+    const supabase = createStaticClient();
 
     // Fetch course with related data
     const { data: course, error } = await supabase

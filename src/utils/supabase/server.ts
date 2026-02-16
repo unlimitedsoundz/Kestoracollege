@@ -1,42 +1,20 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import { createBrowserClient } from '@supabase/ssr'
 
+// For static export, we use the browser client instead of server client.
+// This means auth is handled entirely client-side via Supabase's JS SDK.
 export async function createClient() {
-    const cookieStore = await cookies()
-
-    return createServerClient(
+    return createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        {
-            cookies: {
-                getAll() {
-                    return cookieStore.getAll()
-                },
-                setAll(cookiesToSet) {
-                    try {
-                        cookiesToSet.forEach(({ name, value, options }) =>
-                            cookieStore.set(name, value, options)
-                        )
-                    } catch {
-                        // The `setAll` method was called from a Server Component.
-                        // This can be ignored if you have middleware refreshing
-                        // user sessions.
-                    }
-                },
-            },
-        }
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
 }
 
 export async function createAdminClient() {
-    return createServerClient(
+    // In static export mode, admin operations use the anon key.
+    // Sensitive admin operations should be handled via Supabase RLS policies
+    // or Edge Functions instead.
+    return createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        {
-            cookies: {
-                getAll() { return [] },
-                setAll() { },
-            },
-        }
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
 }

@@ -1,9 +1,5 @@
 
-'use server';
-
 import { createAdminClient } from '@/utils/supabase/admin';
-import { revalidatePath } from 'next/cache';
-
 /**
  * Automatically provision IT assets for a student upon enrollment
  * This should be called when a student's status becomes 'ACTIVE'
@@ -64,8 +60,6 @@ export async function provisionItMaterials(studentId: string) {
                     .eq('id', asset.id);
             }
         }
-
-        revalidatePath('/portal/student/it-access');
         return { success: true, provisioned };
     } catch (error: any) {
         return { success: false, error: error.message };
@@ -102,8 +96,6 @@ export async function deactivateItMaterials(studentId: string) {
                 await adminClient.rpc('decrement_asset_usage', { asset_uuid: access.asset_id });
             }
         }
-
-        revalidatePath('/portal/student/it-access');
         return { success: true };
     } catch (error: any) {
         return { success: false, error: error.message };
@@ -144,8 +136,6 @@ export async function manualProvisionItAsset(studentId: string, assetId: string)
             .single();
 
         if (error) throw error;
-
-        revalidatePath('/admin/it-assets');
         return { success: true, access };
     } catch (error: any) {
         return { success: false, error: error.message };

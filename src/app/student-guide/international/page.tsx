@@ -155,7 +155,6 @@ export default function InternationalGuidePage() {
                                             sizes="(max-width: 1024px) 100vw, 40vw"
                                         />
                                     </div>
-                                    <p className="text-xs text-neutral-400 mt-2">SYKLI College | Photo by Lindsen Filf</p>
                                 </div>
                             </div>
                         </section>
@@ -272,7 +271,6 @@ export default function InternationalGuidePage() {
                                         sizes="(max-width: 768px) 100vw, 448px"
                                     />
                                 </div>
-                                <p className="text-xs text-neutral-400 mt-2">SYKLI College | Photo by Marta Johansson</p>
                             </div>
                             <div className="grid md:grid-cols-2 gap-8">
                                 <div className="space-y-4">

@@ -1,8 +1,5 @@
-'use server';
-
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/client';
 import { createAdminClient } from '@/utils/supabase/admin';
-import { revalidatePath } from 'next/cache';
 import { ApplicationStatus } from '@/types/database';
 
 export async function updateApplicationStatus(applicationId: string, status: ApplicationStatus) {
@@ -41,9 +38,7 @@ export async function updateApplicationStatus(applicationId: string, status: App
         }
     }
 
-    revalidatePath('/admin/admissions');
-    revalidatePath(`/admin/admissions/${applicationId}`);
-    revalidatePath('/portal/dashboard');
+
     return { success: true };
 }
 
@@ -59,8 +54,6 @@ export async function deleteApplication(applicationId: string) {
         console.error('Error deleting application:', error);
         throw new Error('Failed to delete application');
     }
-
-    revalidatePath('/admin/admissions');
     return { success: true };
 }
 
@@ -79,8 +72,6 @@ export async function updateInternalNotes(applicationId: string, notes: string) 
         console.error('Error updating internal notes:', error);
         throw new Error('Failed to update notes');
     }
-
-    revalidatePath(`/admin/admissions/${applicationId}`);
     return { success: true };
 }
 
@@ -112,9 +103,7 @@ export async function createAdmissionOffer(applicationId: string, tuitionFee: nu
         // We don't throw here to avoid rolling back the offer creation, but we log the error.
     }
 
-    revalidatePath(`/admin/admissions/${applicationId}`);
-    revalidatePath('/admin/admissions');
-    revalidatePath('/portal/student/offer');
+
     return { success: true };
 }
 
@@ -122,8 +111,7 @@ export async function regenerateOfferLetter(applicationId: string) {
     try {
         const { generateAndStoreOfferLetter } = await import('./pdf-actions');
         await generateAndStoreOfferLetter(applicationId);
-        revalidatePath(`/admin/admissions/${applicationId}`);
-        revalidatePath('/portal/student/offer');
+
         return { success: true };
     } catch (error: any) {
         console.error('Action Error: regenerateOfferLetter:', error);
@@ -135,7 +123,6 @@ export async function generateAdmissionLetterAction(applicationId: string) {
     try {
         const { generateAndStoreAdmissionLetter } = await import('./pdf-actions');
         const url = await generateAndStoreAdmissionLetter(applicationId);
-        revalidatePath(`/admin/admissions/${applicationId}`);
         return { success: true, url };
     } catch (error: any) {
         console.error('Action Error: generateAdmissionLetterAction:', error);

@@ -1,6 +1,4 @@
 
-'use server';
-
 import { createAdminClient } from '@/utils/supabase/admin';
 import { AuditLog } from '@/types/database';
 

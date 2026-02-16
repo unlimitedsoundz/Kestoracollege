@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CookieConsent } from "@/components/layout/CookieConsent";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -70,10 +71,12 @@ export default function RootLayout({
             <body
                 className={`font-sans antialiased`}
             >
-                <Header />
-                {children}
-                <Footer />
-                <CookieConsent />
+                <AuthProvider>
+                    <Header />
+                    {children}
+                    <Footer />
+                    <CookieConsent />
+                </AuthProvider>
             </body>
         </html>
     );

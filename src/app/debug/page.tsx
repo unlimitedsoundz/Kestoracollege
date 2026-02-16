@@ -1,10 +1,7 @@
-
-import { createClient } from '@/utils/supabase/server';
-
-export const revalidate = 0;
+import { createStaticClient } from '@/lib/supabase/static';
 
 export default async function DebugPage() {
-    const supabase = await createClient();
+    const supabase = createStaticClient();
 
     const { data: schools } = await supabase.from('School').select('*');
     const { data: departments } = await supabase.from('Department').select('*, school:School(name, slug)');

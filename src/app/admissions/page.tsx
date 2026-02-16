@@ -73,7 +73,6 @@ export default function AdmissionsPage() {
                                     sizes="(max-width: 1024px) 368px, 50vw"
                                 />
                             </div>
-                            <p className="text-xs text-neutral-700 mt-2">SYKLI College | Photo by Rasmus Elo</p>
                         </div>
                     </div>
                 </div>
@@ -198,7 +197,6 @@ export default function AdmissionsPage() {
                                             />
                                         </div>
                                         <div className="p-10">
-                                            <p className="text-xs text-neutral-400 mb-2">SYKLI College | Photo by {item.credit}</p>
                                             <h3 className="font-bold text-xl mb-3">{item.title}</h3>
                                             <p className="text-neutral-600 text-sm leading-relaxed">{item.desc}</p>
                                         </div>
@@ -252,7 +250,6 @@ export default function AdmissionsPage() {
                                     </div>
                                 </div>
                             </div>
-                            <p className="text-xs text-neutral-400 mt-2">SYKLI College | Photo by Venla Kinnunen</p>
                         </section>
 
                         <section id="study-in-finland" className="scroll-mt-32">
@@ -286,7 +283,6 @@ export default function AdmissionsPage() {
                                             fill
                                             className="object-cover"
                                         />
-                                        <p className="absolute bottom-2 right-3 text-[10px] text-white/60">Photo by Iiris Pelkonen</p>
                                     </div>
                                 </div>
                             </div>
@@ -329,7 +325,6 @@ export default function AdmissionsPage() {
                                             />
                                         </div>
                                         <div className="md:w-2/3 p-6 flex flex-col justify-center">
-                                            <p className="text-xs text-neutral-400 mb-1">Photo by {item.credit}</p>
                                             <h4 className="font-bold text-lg mb-2 group-hover:text-black transition-colors">{item.title}</h4>
                                             <p className="text-sm text-neutral-500">{item.desc}</p>
                                         </div>

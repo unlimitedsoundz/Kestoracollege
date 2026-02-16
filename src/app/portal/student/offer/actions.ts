@@ -1,9 +1,5 @@
-'use server';
-
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/client';
 import { createAdminClient } from '@/utils/supabase/admin';
-import { revalidatePath } from 'next/cache';
-
 export async function respondToOffer(admissionId: string, decision: 'ACCEPTED' | 'REJECTED') {
     const supabase = await createClient();
     const adminSupabase = createAdminClient();
@@ -70,9 +66,7 @@ export async function respondToOffer(admissionId: string, decision: 'ACCEPTED' |
         console.log(`Admin notified: Student ${user.id} rejected offer for admission ${admissionId}`);
     }
 
-    revalidatePath('/portal/student/offer');
-    revalidatePath('/portal/dashboard');
-    revalidatePath('/portal/dashboard');
+
     return { success: true };
 }
 
@@ -161,8 +155,6 @@ export async function acceptApplicationOffer(applicationId: string) {
         console.warn('Legacy admission update failed silently', err);
     }
 
-    revalidatePath(`/portal/application/letter?id=${applicationId}`);
-    revalidatePath(`/portal/application/payment?id=${applicationId}`);
-    revalidatePath('/portal/dashboard');
+
     return { success: true };
 }

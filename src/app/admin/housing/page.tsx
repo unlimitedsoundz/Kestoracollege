@@ -7,7 +7,12 @@ import HousingManagementClient from './HousingManagementClient';
 import { useState, useEffect } from 'react';
 
 export default function AdminHousingPage() {
-    const [data, setData] = useState({
+    const [data, setData] = useState<{
+        applications: any[];
+        availableRooms: any[];
+        assignments: any[];
+        buildings: any[];
+    }>({
         applications: [],
         availableRooms: [],
         assignments: [],
@@ -46,6 +51,8 @@ export default function AdminHousingPage() {
                     )
                 `)
                 .order('created_at', { ascending: false });
+
+            console.log('Fetched Housing Assignments:', assign);
 
             if (assignError) console.error("Error fetching assignments:", assignError);
 

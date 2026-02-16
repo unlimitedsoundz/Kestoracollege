@@ -1,9 +1,6 @@
 
-'use server';
-
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/client';
 import { createAdminClient } from '@/utils/supabase/admin';
-import { revalidatePath } from 'next/cache';
 import { syncEnrollmentToLms } from './lms-actions';
 
 /**
@@ -115,8 +112,6 @@ export async function registerForModule(subjectId: string) {
         } catch (lmsSyncError) {
             console.error('LMS Course Sync failed:', lmsSyncError);
         }
-
-        revalidatePath('/portal/student/courses');
         return { success: true, message: `Successfully registered for ${subjectData.code}` };
 
     } catch (error: any) {
@@ -173,8 +168,6 @@ export async function dropModule(enrollmentId: string) {
             entity_id: enrollmentId,
             actor_id: actor.id
         });
-
-        revalidatePath('/portal/student/courses');
         return { success: true };
 
     } catch (error: any) {

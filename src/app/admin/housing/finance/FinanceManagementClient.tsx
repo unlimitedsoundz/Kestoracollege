@@ -20,8 +20,9 @@ import {
     batchGenerateInvoices,
     reconcilePayment,
     generateHousingInvoice,
-    searchStudents
-} from '@/app/portal/payment-actions';
+    searchStudents,
+    verifyHousingPaymentManually
+} from '@/services/payment';
 
 interface FinanceManagementClientProps {
     initialInvoices: any[];
@@ -43,6 +44,12 @@ export default function FinanceManagementClient({
     const [showBatchModal, setShowBatchModal] = useState(false);
     const [batchMonth, setBatchMonth] = useState(new Date().getMonth() + 1);
     const [batchYear, setBatchYear] = useState(new Date().getFullYear());
+
+    // Manual Verification State
+    const [showManualVerifyModal, setShowManualVerifyModal] = useState(false);
+    const [verifyInvoiceId, setVerifyInvoiceId] = useState<string | null>(null);
+    const [verifyAmount, setVerifyAmount] = useState('');
+    const [verifyMethod, setVerifyMethod] = useState('BANK_TRANSFER');
 
     // New Invoice State
     const [showInvoiceModal, setShowInvoiceModal] = useState(false);
@@ -273,6 +280,19 @@ export default function FinanceManagementClient({
                                     </td>
                                     <td className="py-4 px-2 text-right">
                                         <div className="flex justify-end gap-2">
+                                            {inv.status !== 'PAID' && (
+                                                <button
+                                                    onClick={() => {
+                                                        setVerifyInvoiceId(inv.id);
+                                                        setVerifyAmount((inv.total_amount - (inv.paid_amount || 0)).toString());
+                                                        setShowManualVerifyModal(true);
+                                                    }}
+                                                    title="Mark as Paid (Manual)"
+                                                    className="p-2 border border-neutral-200 rounded-sm hover:border-green-500 hover:text-green-600 transition-all text-green-600"
+                                                >
+                                                    <DollarSign size={14} weight="bold" />
+                                                </button>
+                                            )}
                                             <button className="p-2 border border-neutral-200 rounded-sm hover:border-black transition-all">
                                                 <AlertCircle size={14} weight="bold" />
                                             </button>
@@ -523,6 +543,80 @@ export default function FinanceManagementClient({
                                 className="flex-1 py-3 bg-black text-white text-[10px] font-black uppercase tracking-widest hover:bg-neutral-800 transition-all disabled:opacity-50"
                             >
                                 {loading ? 'Generating...' : 'Create Invoice'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Manual Verification Modal */}
+            {showManualVerifyModal && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white border-4 border-black p-8 max-w-sm w-full shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                        <h2 className="text-xl font-black uppercase mb-4">Manual Payment Verification</h2>
+                        <p className="text-sm text-neutral-600 mb-6 font-bold uppercase tracking-tight">
+                            Confirm receipt of payment outside the system (e.g., Cash, Bank Transfer).
+                        </p>
+
+                        <div className="space-y-4 mb-8">
+                            <div>
+                                <label className="block text-[10px] font-black uppercase text-neutral-400 mb-1">Amount Received (€)</label>
+                                <input
+                                    type="number"
+                                    className="w-full px-4 py-3 border-2 border-black font-bold outline-none"
+                                    value={verifyAmount}
+                                    onChange={(e) => setVerifyAmount(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-black uppercase text-neutral-400 mb-1">Payment Method</label>
+                                <select
+                                    className="w-full px-4 py-3 border-2 border-black font-bold outline-none bg-white"
+                                    value={verifyMethod}
+                                    onChange={(e) => setVerifyMethod(e.target.value)}
+                                >
+                                    <option value="BANK_TRANSFER">Bank Transfer</option>
+                                    <option value="CASH">Cash</option>
+                                    <option value="CHECK">Check</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-4">
+                            <button
+                                onClick={() => {
+                                    setShowManualVerifyModal(false);
+                                    setVerifyInvoiceId(null);
+                                    setVerifyAmount('');
+                                }}
+                                className="flex-1 py-3 border-2 border-black text-[10px] font-black uppercase tracking-widest hover:bg-neutral-100 transition-all"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={async () => {
+                                    if (!verifyInvoiceId || !verifyAmount) return;
+                                    setLoading(true);
+                                    try {
+                                        await verifyHousingPaymentManually(
+                                            verifyInvoiceId,
+                                            Number(verifyAmount),
+                                            verifyMethod as any,
+                                            'Manual verification by admin'
+                                        );
+                                        alert('Payment verified & recorded successfully');
+                                        window.location.reload();
+                                    } catch (err: any) {
+                                        alert(err.message);
+                                    } finally {
+                                        setLoading(false);
+                                    }
+                                }}
+                                disabled={loading}
+                                className="flex-1 py-3 bg-green-600 text-white text-[10px] font-black uppercase tracking-widest hover:bg-green-700 transition-all disabled:opacity-50"
+                            >
+                                {loading ? 'Verifying...' : 'Confirm Payment'}
                             </button>
                         </div>
                     </div>

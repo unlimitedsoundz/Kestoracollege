@@ -12,7 +12,8 @@ export default function AdminRegisterPage() {
         firstName: '',
         lastName: '',
         email: '',
-        dateOfBirth: ''
+        dateOfBirth: '',
+        password: ''
     });
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{ status: 'success' | 'error', text: string } | null>(null);
@@ -85,7 +86,7 @@ export default function AdminRegisterPage() {
             </div>
 
             {message && (
-                <div className="p-4 rounded-lg mb-6 text-xs font-bold uppercase tracking-widest border bg-red-50 text-red-700 border-red-100">
+                <div className={`p-4 rounded-lg mb-6 text-xs font-bold uppercase tracking-widest border ${message.status === 'error' ? 'bg-red-50 text-red-700 border-red-100' : 'bg-neutral-50 text-neutral-900 border-neutral-100'}`}>
                     {message.text}
                 </div>
             )}
@@ -136,6 +137,20 @@ export default function AdminRegisterPage() {
                     value={formData.dateOfBirth}
                     onChange={(name, value) => setFormData({ ...formData, [name]: value })}
                 />
+
+                <div>
+                    <label className="block text-[10px] font-black uppercase text-neutral-400 mb-1">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        required
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="w-full bg-neutral-50 border border-neutral-100 rounded-xl px-4 py-2.5 text-sm font-bold shadow-sm outline-none focus:border-black transition-all"
+                        placeholder="Minimum 6 characters"
+                        minLength={6}
+                    />
+                </div>
 
                 <div className="pt-4">
                     <button

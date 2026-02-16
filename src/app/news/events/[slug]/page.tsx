@@ -1,5 +1,5 @@
 
-import { createClient } from '@/utils/supabase/server';
+import { createStaticClient } from '@/lib/supabase/static';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Event } from '@/types/database';
@@ -7,7 +7,11 @@ import { notFound } from 'next/navigation';
 import { formatToDDMMYYYY } from '@/utils/date';
 import { Calendar, MapPin, Clock, Tag, CaretLeft as ChevronLeft } from "@phosphor-icons/react/dist/ssr";
 
-export const revalidate = 60;
+export async function generateStaticParams() {
+    const supabase = createStaticClient();
+    const { data: events } = await supabase.from('Event').select('slug');
+    return events?.map(({ slug }) => ({ slug })) || [];
+}
 
 interface Props {
     params: {
@@ -18,7 +22,7 @@ interface Props {
 export default async function EventDetailPage({ params }: Props) {
     const resolvedParams = await params;
     const { slug } = resolvedParams;
-    const supabase = await createClient();
+    const supabase = createStaticClient();
 
     const { data: eventItem, error } = await supabase
         .from('Event')

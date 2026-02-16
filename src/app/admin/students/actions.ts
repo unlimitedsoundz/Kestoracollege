@@ -1,8 +1,4 @@
-'use server';
-
-import { createAdminClient } from '@/utils/supabase/server';
-import { revalidatePath } from 'next/cache';
-
+import { createAdminClient } from '@/utils/supabase/admin';
 /**
  * Enrolls a student officially after tuition payment.
  */
@@ -79,8 +75,6 @@ export async function enrollStudent(applicationId: string) {
             .eq('id', user.id);
 
         console.log('Enrollment: Success for', user.email);
-
-        revalidatePath('/admin/students');
         return { success: true, studentId };
 
     } catch (e: any) {

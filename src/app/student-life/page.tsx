@@ -85,7 +85,6 @@ export default function StudentLifePage() {
                                             sizes="(max-width: 1024px) 100vw, 50vw"
                                         />
                                     </div>
-                                    <p className="text-xs text-neutral-400 mt-2">SYKLI College | Photo by Lindsen Filf</p>
                                 </div>
                             </div>
                         </section>
@@ -105,7 +104,6 @@ export default function StudentLifePage() {
                                             sizes="(max-width: 1024px) 100vw, 50vw"
                                         />
                                     </div>
-                                    <p className="text-xs text-neutral-400 mt-2">SYKLI College | Photo by Antti Korhonen</p>
                                 </div>
 
                                 {/* Right: Text Content */}
@@ -157,7 +155,6 @@ export default function StudentLifePage() {
                                             )}
                                         </div>
                                         <h3 className="font-bold text-lg mb-1">{item.title}</h3>
-                                        <p className="text-xs text-neutral-400">SYKLI College | Photo by {item.credit}</p>
                                     </div>
                                 ))}
                             </div>
@@ -196,7 +193,6 @@ export default function StudentLifePage() {
                                             sizes="(max-width: 1024px) 100vw, 50vw"
                                         />
                                     </div>
-                                    <p className="text-xs text-neutral-400 mt-2">SYKLI College | Photo by Henrik Laakso</p>
                                 </div>
                             </div>
                         </section>
@@ -218,7 +214,6 @@ export default function StudentLifePage() {
                                             sizes="(max-width: 768px) 100vw, 50vw"
                                         />
                                     </div>
-                                    <p className="text-xs text-neutral-400 -mt-4 mb-4">SYKLI College | Photo by Sanna Heikkinen</p>
                                     <h3 className="text-xl font-bold mb-2">Shared Apartments</h3>
                                     <p className="text-neutral-600 mb-4 text-sm">Private room with shared kitchen and bathroom facilities. Affordable and social options for students.</p>
                                     <span className="inline-block bg-white px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-md">From ~300€/month</span>
@@ -233,7 +228,6 @@ export default function StudentLifePage() {
                                             sizes="(max-width: 768px) 100vw, 50vw"
                                         />
                                     </div>
-                                    <p className="text-xs text-neutral-400 -mt-4 mb-4">SYKLI College | Photo by Tuomas Nieminen</p>
                                     <h3 className="text-xl font-bold mb-2">Studio Apartments</h3>
                                     <p className="text-neutral-600 mb-4 text-sm">private apartments with own kitchen and bathroom. Ideal for students who prefer more independence.</p>
                                     <span className="inline-block bg-white px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-md">From ~450€/month</span>
@@ -343,7 +337,6 @@ export default function StudentLifePage() {
                                         <div className="p-8 text-center">
                                             <h3 className="font-bold text-sm mb-1">{item.name}</h3>
                                             <p className="text-[10px] text-neutral-500 font-medium uppercase tracking-wider">{item.desc}</p>
-                                            <p className="text-[10px] text-neutral-400 mt-1">Photo by {item.credit}</p>
                                         </div>
                                     </div>
                                 ))}

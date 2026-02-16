@@ -1,18 +1,4 @@
-'use server';
-
-import { createClient } from '@/utils/supabase/server';
-import { createClient as createAdminClient } from '@supabase/supabase-js';
-
-// Initialize Admin Client (Bypass RLS)
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-if (!serviceRoleKey) {
-    console.error('CRITICAL: SUPABASE_SERVICE_ROLE_KEY is missing in server environment.');
-}
-
-const adminSupabase = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    serviceRoleKey || ''
-);
+import { createClient } from '@/utils/supabase/client';
 
 export async function recordTuitionPayment(
     offerId: string,
@@ -25,29 +11,22 @@ export async function recordTuitionPayment(
         fxMetadata: any;
     }
 ) {
-    console.log('Server Action: recordTuitionPayment started', { offerId, applicationId, amount });
-
-    if (!serviceRoleKey) {
-        return { success: false, error: 'Server misconfiguration: Missing Service Role Key' };
-    }
+    console.log('recordTuitionPayment started', { offerId, applicationId, amount });
 
     try {
-        const supabase = await createClient();
+        const supabase = createClient();
 
         // 1. Verify User Session
-        console.log('Server Action: Verifying session...');
         const { data: { user }, error: authError } = await supabase.auth.getUser();
         if (authError || !user) {
-            console.error('Server Action: Auth error', authError);
+            console.error('Auth error', authError);
             throw new Error('Unauthorized: No valid session');
         }
-        console.log('Server Action: Session verified for user', user.id);
 
         const reference = `TXN_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
-        // 2. Insert Payment Record (Admin Bypass)
-        console.log('Server Action: Inserting payment...');
-        const { error: paymentError } = await adminSupabase
+        // 2. Insert Payment Record
+        const { error: paymentError } = await supabase
             .from('tuition_payments')
             .insert({
                 offer_id: offerId,
@@ -61,14 +40,12 @@ export async function recordTuitionPayment(
             });
 
         if (paymentError) {
-            console.error('Server Action: Payment insert failed', paymentError);
+            console.error('Payment insert failed', paymentError);
             throw new Error(`DB Insert Failed: ${paymentError.message}`);
         }
-        console.log('Server Action: Payment inserted successfully');
 
-        // 3. Update Application Status (Admin Bypass)
-        console.log('Server Action: Updating application status...');
-        const { error: appError } = await adminSupabase
+        // 3. Update Application Status
+        const { error: appError } = await supabase
             .from('applications')
             .update({
                 status: 'PAYMENT_SUBMITTED',
@@ -77,23 +54,20 @@ export async function recordTuitionPayment(
             .eq('id', applicationId);
 
         if (appError) {
-            console.error('Server Action: App update failed', appError);
+            console.error('App update failed', appError);
             throw new Error(`App Update Failed: ${appError.message}`);
         }
-        console.log('Server Action: Application updated');
 
         // 4. Update Offer Status
-        console.log('Server Action: Updating offer status...');
-        await adminSupabase
+        await supabase
             .from('admission_offers')
-            .update({ status: 'ACCEPTED' }) // Ensure it's marked accepted if paying
+            .update({ status: 'ACCEPTED' })
             .eq('id', offerId);
 
-        console.log('Server Action: Success');
         return { success: true };
 
     } catch (error: any) {
-        console.error('Payment Action Error (Caught):', error);
+        console.error('Payment Action Error:', error);
         return { success: false, error: error.message };
     }
 }

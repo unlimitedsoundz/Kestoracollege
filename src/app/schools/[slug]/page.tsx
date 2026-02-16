@@ -5,8 +5,6 @@ import { notFound } from 'next/navigation';
 import { ArrowRight, PencilSimple as Edit } from "@phosphor-icons/react/dist/ssr";
 import FallbackImage from '@/components/ui/FallbackImage';
 
-export const revalidate = 0;
-
 interface Props {
     params: Promise<{
         slug: string;
@@ -134,7 +132,6 @@ export default async function SchoolDetails({ params }: Props) {
                                     />
                                 )}
                             </div>
-                            <p className="text-xs text-neutral-500 mt-2">SYKLI College | Photo by Sykli Media</p>
                         </div>
                     </div>
                 </div>
@@ -166,7 +163,6 @@ export default async function SchoolDetails({ params }: Props) {
                                             sizes="(max-width: 768px) 100vw, 33vw"
                                         />
                                     </div>
-                                    <p className="text-xs text-neutral-400 mb-3">Photo by Sykli Media</p>
                                     <h3 className="text-xl font-bold mb-3 transition-colors">
                                         Department of {dept.name.startsWith('Department of') ? dept.name.replace('Department of', '').trim() : dept.name}
                                     </h3>

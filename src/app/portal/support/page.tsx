@@ -1,5 +1,8 @@
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
+'use client';
+
+import { createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
     CaretLeft as ArrowLeft,
@@ -13,14 +16,32 @@ import {
     Question as HelpCircle,
     Desktop as Laptop,
     WarningCircle as AlertCircle
-} from "@phosphor-icons/react/dist/ssr";
+} from "@phosphor-icons/react";
 
-export default async function SupportPage() {
-    const supabase = await createClient();
+export default function SupportPage() {
+    const router = useRouter();
+    const [loading, setLoading] = useState(true);
 
-    // 1. Auth Check
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) redirect('/portal/account/login');
+    useEffect(() => {
+        const checkAuth = async () => {
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                router.replace('/portal/account/login');
+                return;
+            }
+            setLoading(false);
+        };
+        checkAuth();
+    }, [router]);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-neutral-900" />
+            </div>
+        );
+    }
 
     const supportChannels = [
         {

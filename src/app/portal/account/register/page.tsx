@@ -5,7 +5,7 @@ import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Plus, CheckCircle as CheckCircle2, Copy, ArrowRight, CircleNotch as Loader2 } from "@phosphor-icons/react/dist/ssr";
-import { getStudentIdByEmail, registerApplicant } from '../actions';
+import { registerApplicant } from '../actions';
 import DateSelector from '@/components/ui/DateSelector';
 
 export default function RegisterPage() {
@@ -14,13 +14,13 @@ export default function RegisterPage() {
         lastName: '',
         country: '',
         email: '',
-        dateOfBirth: ''
+        dateOfBirth: '',
+        password: ''
     });
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
-    const [generatedId, setGeneratedId] = useState<string | null>(null);
+    const [isRegistered, setIsRegistered] = useState(false);
     const router = useRouter();
-    const supabase = createClient();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,10 +38,7 @@ export default function RegisterPage() {
                 throw new Error(result.error);
             }
 
-            if (result.studentId) {
-                setGeneratedId(result.studentId);
-            }
-
+            setIsRegistered(true);
             setMessage({
                 type: 'success',
                 text: 'Account created successfully!'
@@ -56,7 +53,7 @@ export default function RegisterPage() {
         }
     };
 
-    if (generatedId && message?.type === 'success') {
+    if (isRegistered && message?.type === 'success') {
         return (
             <div className="max-w-md mx-auto mt-12 bg-white p-8 border border-neutral-100 text-center space-y-6 animate-in zoom-in-95 duration-500 text-[#2d2d2d]">
                 <div className="w-16 h-16 bg-neutral-100 rounded-2xl flex items-center justify-center mx-auto text-neutral-900">
@@ -69,22 +66,12 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="p-6 bg-neutral-900 rounded-2xl text-white space-y-3 shadow-md">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-[#2d2d2d]" style={{ filter: 'invert(1) grayscale(1) brightness(2)' }}>Unique Student ID</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-[#2d2d2d]" style={{ filter: 'invert(1) grayscale(1) brightness(2)' }}>Registration Complete</p>
                     <div className="flex items-center justify-center gap-3">
-                        <span className="text-3xl font-black tracking-tighter text-white">{generatedId}</span>
-                        <button
-                            onClick={() => {
-                                navigator.clipboard.writeText(generatedId);
-                                alert("Student ID copied to clipboard");
-                            }}
-                            className="p-1.5 hover:bg-white/10 rounded transition-colors"
-                            title="Copy ID"
-                        >
-                            <Copy size={16} weight="bold" className="text-neutral-400" />
-                        </button>
+                        <span className="text-xl font-black tracking-tight text-white">{formData.email}</span>
                     </div>
                     <p className="text-[9px] font-bold uppercase leading-tight pt-1">
-                        Required for future logins alongside your Date of Birth.
+                        You can now sign in using your email and password.
                     </p>
                 </div>
 
@@ -97,23 +84,12 @@ export default function RegisterPage() {
 
                     <div className="flex flex-col gap-2">
                         <Link
-                            href="/portal/dashboard"
+                            href="/portal/account/login"
                             className="w-full bg-neutral-900 text-white font-bold py-3.5 rounded-xl hover:bg-black transition-all flex items-center justify-center gap-2"
                         >
-                            Enter Dashboard <ArrowRight size={16} weight="bold" />
+                            Go to Login <ArrowRight size={16} weight="bold" />
                         </Link>
-
-                        <p className="text-[9px] font-medium uppercase tracking-widest">
-                            Email confirmation sent
-                        </p>
                     </div>
-
-                    <Link
-                        href="/portal/account/login"
-                        className="inline-block text-[10px] font-black uppercase tracking-widest border-b border-[#2d2d2d] transition-colors pt-2"
-                    >
-                        Go to Login Page
-                    </Link>
                 </div>
             </div>
         );
@@ -187,6 +163,20 @@ export default function RegisterPage() {
                         onChange={handleChange}
                         className="w-full px-4 py-2 border border-neutral-200 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all text-[#2d2d2d]"
                         placeholder="you@example.com"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium mb-1">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        required
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 border border-neutral-200 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all text-[#2d2d2d]"
+                        placeholder="Minimum 6 characters"
+                        minLength={6}
                     />
                 </div>
 
