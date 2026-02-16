@@ -87,8 +87,14 @@ export default function AdminLayout({
     const handleSignOut = async () => {
         await supabase.auth.signOut();
         localStorage.removeItem('sykli_user');
+
+        // Clear local state
+        setUser(null);
+        setProfile(null);
+
         window.dispatchEvent(new Event('storage'));
         router.push('/portal/account/admin-login');
+        router.refresh();
     };
 
     if (loading) {

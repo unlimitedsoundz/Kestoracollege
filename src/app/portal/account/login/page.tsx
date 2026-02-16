@@ -3,13 +3,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { CircleNotch as Loader2 } from "@phosphor-icons/react/dist/ssr";
+import { CircleNotch as Loader2, Eye, EyeSlash } from "@phosphor-icons/react/dist/ssr";
 import { createClient } from '@/utils/supabase/client';
 import { signInWithEmailAndPassword } from '../actions';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
     const router = useRouter();
@@ -68,16 +69,25 @@ export default function LoginPage() {
                     />
                 </div>
 
-                <div>
+                <div className="relative">
                     <label className="block text-sm font-medium text-neutral-700 mb-1">Password</label>
-                    <input
-                        type="password"
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all text-[#2d2d2d]"
-                        placeholder="••••••••"
-                    />
+                    <div className="relative">
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all text-[#2d2d2d] pr-12"
+                            placeholder="••••••••"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-black transition-colors"
+                        >
+                            {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
+                        </button>
+                    </div>
                 </div>
 
                 <div className="pt-2">

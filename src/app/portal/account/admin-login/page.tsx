@@ -3,12 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { CircleNotch as Loader2, ShieldCheck, Envelope as Mail, Calendar } from "@phosphor-icons/react/dist/ssr";
+import { CircleNotch as Loader2, ShieldCheck, Envelope as Mail, Calendar, Eye, EyeSlash } from "@phosphor-icons/react/dist/ssr";
 import { createClient } from '@/utils/supabase/client';
 
 export default function AdminLoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
     const router = useRouter();
@@ -125,13 +126,20 @@ export default function AdminLoginPage() {
                     <div className="relative">
                         <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" size={18} weight="bold" />
                         <input
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full pl-12 pr-4 py-3 bg-neutral-50 border border-neutral-100 rounded-xl focus:ring-2 focus:ring-black focus:bg-white outline-none transition-all font-bold text-sm"
+                            className="w-full pl-12 pr-12 py-3 bg-neutral-50 border border-neutral-100 rounded-xl focus:ring-2 focus:ring-black focus:bg-white outline-none transition-all font-bold text-sm"
                             placeholder="••••••••••••"
                         />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-black transition-colors"
+                        >
+                            {showPassword ? <EyeSlash size={20} weight="bold" /> : <Eye size={20} weight="bold" />}
+                        </button>
                     </div>
                 </div>
 

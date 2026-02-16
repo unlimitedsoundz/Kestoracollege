@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 import { DownloadSimple as Download, CheckCircle, XCircle, FileText, CircleNotch as Loader2, WarningCircle as AlertCircle, Trophy as Award, Percent } from "@phosphor-icons/react/dist/ssr";
 import { respondToOffer } from './actions';
 import { format } from 'date-fns';
@@ -10,6 +11,7 @@ interface OfferClientProps {
 }
 
 export function OfferClient({ admission }: OfferClientProps) {
+    const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | null>(null);
     const [decisionFeedback, setDecisionFeedback] = useState<string | null>(null);
@@ -17,6 +19,8 @@ export function OfferClient({ admission }: OfferClientProps) {
     const hasResponded = admission.offer_status !== 'PENDING';
     const isAccepted = admission.offer_status === 'ACCEPTED';
     const isRejected = admission.offer_status === 'REJECTED';
+    const isOfferAcceptedOnly = isAccepted && admission.application_status === 'OFFER_ACCEPTED';
+    const isLetterGenerated = admission.application_status === 'ADMISSION_LETTER_GENERATED';
 
     const handleDecision = async (decision: 'ACCEPTED' | 'REJECTED') => {
         if (!confirm(`Are you sure you want to ${decision.toLowerCase()} this admission offer? This action cannot be undone.`)) {
@@ -30,11 +34,17 @@ export function OfferClient({ admission }: OfferClientProps) {
                 if (result.success) {
                     setDecisionFeedback(decision === 'ACCEPTED' ? 'Offer Accepted' : 'Offer Rejected');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                    // Refresh current page to trigger Edge Function side effects via server update
+                    router.refresh();
                 }
             } catch (err: any) {
                 setError(err.message || 'Failed to process decision');
             }
         });
+    };
+
+    const handlePayment = () => {
+        router.push(`/portal/student/finance`);
     };
 
     return (
@@ -45,10 +55,12 @@ export function OfferClient({ admission }: OfferClientProps) {
                     <div className="p-4 border-b border-neutral-100 flex items-center justify-between bg-neutral-50/50">
                         <div className="flex items-center gap-2">
                             <FileText size={18} weight="regular" className="text-neutral-400" />
-                            <span className="text-[10px] font-black uppercase tracking-widest text-neutral-500">Letter of Offer - {admission.student_id}</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-neutral-500">
+                                {isLetterGenerated ? 'Official Admission Letter' : 'Letter of Offer'} - {admission.student_id}
+                            </span>
                         </div>
                         <a
-                            href={admission.offer_letter_url}
+                            href={isLetterGenerated ? (admission.document_url || admission.offer_letter_url) : admission.offer_letter_url}
                             target="_blank"
                             rel="noopener noreferrer"
                             download
@@ -60,16 +72,16 @@ export function OfferClient({ admission }: OfferClientProps) {
                     </div>
 
                     <div className="flex-1 bg-neutral-100">
-                        {admission.offer_letter_url ? (
+                        {(isLetterGenerated ? (admission.document_url || admission.offer_letter_url) : admission.offer_letter_url) ? (
                             <iframe
-                                src={`${admission.offer_letter_url}#toolbar=0`}
+                                src={`${isLetterGenerated ? (admission.document_url || admission.offer_letter_url) : admission.offer_letter_url}#toolbar=0`}
                                 className="w-full h-full border-none min-h-[600px]"
-                                title="Admission Offer Letter"
+                                title={isLetterGenerated ? "Official Admission Letter" : "Admission Offer Letter"}
                             />
                         ) : (
                             <div className="h-full flex flex-col items-center justify-center p-12 text-center text-neutral-400">
                                 <AlertCircle size={48} weight="regular" className="mb-4 opacity-20" />
-                                <p className="font-medium">Offer letter file not found. Please contact admissions.</p>
+                                <p className="font-medium">File not found. Please contact admissions.</p>
                             </div>
                         )}
                     </div>
@@ -133,35 +145,58 @@ export function OfferClient({ admission }: OfferClientProps) {
                                     </div>
 
                                     <div className="text-left bg-neutral-50 p-8 rounded-lg space-y-6 border border-neutral-200">
-                                        <p className="text-sm leading-relaxed text-neutral-700">
-                                            Congratulations, <span className="font-semibold text-neutral-900">{admission.full_name}</span>! We are absolutely delighted that you've chosen to join our academic community. Your acceptance has been officially recorded.
-                                        </p>
-
-                                        <div className="space-y-4 pt-2">
-                                            <h4 className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Next Steps for Enrollment:</h4>
-                                            <div className="grid gap-4">
-                                                <WelcomeStep number="01" title="Tuition Clearance" description="An invoice for your initial tuition deposit will be available in your portal shortly." />
-                                                <WelcomeStep number="02" title="IT Credentials" description="You will receive your Sykli student email and portal credentials once the first payment is confirmed." />
-                                                <WelcomeStep number="03" title="Orientation" description="Check your email for the upcoming orientation schedule and arrival guide." />
+                                        {isOfferAcceptedOnly ? (
+                                            <div className="flex flex-col items-center py-4">
+                                                <Loader2 size={32} className="animate-spin text-neutral-400 mb-3" />
+                                                <p className="text-sm font-bold uppercase tracking-widest text-neutral-600">Generating Admission Letter...</p>
+                                                <p className="text-[10px] text-neutral-400 mt-2 text-center uppercase font-bold tracking-tight">Please wait while we finalize your enrollment documents.</p>
                                             </div>
-                                        </div>
+                                        ) : (
+                                            <>
+                                                <p className="text-sm leading-relaxed text-neutral-700">
+                                                    Congratulations, <span className="font-semibold text-neutral-900">{admission.full_name}</span>! Your official admission letter has been issued.
+                                                </p>
+
+                                                <div className="space-y-4 pt-2">
+                                                    <h4 className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Next Steps for Enrollment:</h4>
+                                                    <div className="grid gap-4">
+                                                        <WelcomeStep number="01" title="Tuition Clearance" description="Proceed to the finance section to settle your initial tuition fees." />
+                                                        <WelcomeStep number="02" title="IT Credentials" description="You will receive your Sykli credentials once the payment is confirmed." />
+                                                        <WelcomeStep number="03" title="Orientation" description="Check your portal for the upcoming orientation schedule." />
+                                                    </div>
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
 
-                                    {/* Download Offer Letter button */}
-                                    {admission.offer_letter_url && (
-                                        <a
-                                            href={admission.offer_letter_url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            download
-                                            className="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-neutral-800 transition-all flex items-center justify-center gap-2 active:scale-95 text-xs uppercase tracking-widest"
-                                        >
-                                            <Download size={16} weight="bold" /> Download Offer Letter
-                                        </a>
-                                    )}
+                                    {/* Action Buttons Based on Status */}
+                                    <div className="space-y-3">
+                                        {isLetterGenerated && (
+                                            <button
+                                                onClick={handlePayment}
+                                                className="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl hover:bg-emerald-700 transition-all flex items-center justify-center gap-3 shadow-lg shadow-emerald-200 group active:scale-[0.98]"
+                                            >
+                                                Pay Tuition Fees
+                                                <Award size={18} weight="bold" className="group-hover:scale-110 transition-transform" />
+                                            </button>
+                                        )}
 
-                                    <div className="text-center text-xs text-neutral-500 mt-6">
-                                        Accepted on: {admission.accepted_at ? format(new Date(admission.accepted_at), 'PPP pp') : 'Just now'}
+                                        {/* Download Offer Letter button */}
+                                        {(admission.offer_letter_url || admission.document_url) && (
+                                            <a
+                                                href={isLetterGenerated ? (admission.document_url || admission.offer_letter_url) : admission.offer_letter_url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                download
+                                                className="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-neutral-800 transition-all flex items-center justify-center gap-2 active:scale-95 text-xs uppercase tracking-widest"
+                                            >
+                                                <Download size={16} weight="bold" /> Download {isLetterGenerated ? 'Admission Letter' : 'Offer Letter'}
+                                            </a>
+                                        )}
+                                    </div>
+
+                                    <div className="text-center text-xs text-neutral-500 mt-6 font-bold uppercase tracking-widest">
+                                        {isLetterGenerated ? 'Enrollment Documents Issued' : `Accepted on: ${admission.accepted_at ? format(new Date(admission.accepted_at), 'PPP pp') : 'Just now'}`}
                                     </div>
                                 </div>
                             </div>

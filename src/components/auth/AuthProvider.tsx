@@ -58,7 +58,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const signOut = async () => {
         await supabase.auth.signOut();
+        localStorage.removeItem('sykli_user');
         router.push("/login");
+        router.refresh();
     };
 
     return (

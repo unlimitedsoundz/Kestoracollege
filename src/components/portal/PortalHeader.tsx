@@ -81,6 +81,13 @@ export default function PortalHeader() {
     const handleSignOut = async () => {
         await supabase.auth.signOut();
         localStorage.removeItem('sykli_user');
+
+        // Clear local state
+        setUserEmail(undefined);
+        setFirstName(undefined);
+        setAvatarUrl(undefined);
+        setStudentId(undefined);
+
         router.push('/portal/account/login');
         router.refresh();
         window.dispatchEvent(new Event('storage'));

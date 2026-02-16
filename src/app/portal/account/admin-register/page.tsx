@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { CheckCircle as CheckCircle2, ArrowRight, CircleNotch as Loader2, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+import { CheckCircle as CheckCircle2, ArrowRight, CircleNotch as Loader2, ShieldCheck, Eye, EyeSlash } from "@phosphor-icons/react/dist/ssr";
 import { registerAdmin } from '../actions';
 import DateSelector from '@/components/ui/DateSelector';
 
@@ -15,6 +15,7 @@ export default function AdminRegisterPage() {
         dateOfBirth: '',
         password: ''
     });
+    const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{ status: 'success' | 'error', text: string } | null>(null);
     const router = useRouter();
@@ -138,18 +139,27 @@ export default function AdminRegisterPage() {
                     onChange={(name, value) => setFormData({ ...formData, [name]: value })}
                 />
 
-                <div>
+                <div className="relative">
                     <label className="block text-[10px] font-black uppercase text-neutral-400 mb-1">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        required
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="w-full bg-neutral-50 border border-neutral-100 rounded-xl px-4 py-2.5 text-sm font-bold shadow-sm outline-none focus:border-black transition-all"
-                        placeholder="Minimum 6 characters"
-                        minLength={6}
-                    />
+                    <div className="relative">
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            name="password"
+                            required
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="w-full bg-neutral-50 border border-neutral-100 rounded-xl pl-4 pr-12 py-2.5 text-sm font-bold shadow-sm outline-none focus:border-black transition-all"
+                            placeholder="Minimum 6 characters"
+                            minLength={6}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-black transition-colors"
+                        >
+                            {showPassword ? <EyeSlash size={20} weight="bold" /> : <Eye size={20} weight="bold" />}
+                        </button>
+                    </div>
                 </div>
 
                 <div className="pt-4">

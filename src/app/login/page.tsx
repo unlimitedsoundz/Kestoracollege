@@ -4,10 +4,12 @@
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { Eye, EyeSlash } from "@phosphor-icons/react";
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
@@ -70,15 +72,24 @@ export default function LoginPage() {
                             required
                         />
                     </div>
-                    <div>
+                    <div className="relative">
                         <label className="block text-sm font-semibold mb-1 text-neutral-700">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
-                            required
-                        />
+                        <div className="relative">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none pr-12"
+                                required
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 transition-colors"
+                            >
+                                {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
+                            </button>
+                        </div>
                     </div>
 
                     <button

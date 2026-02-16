@@ -110,22 +110,23 @@ export async function createAdmissionOffer(applicationId: string, tuitionFee: nu
 export async function regenerateOfferLetter(applicationId: string) {
     try {
         const { generateAndStoreOfferLetter } = await import('./pdf-actions');
-        await generateAndStoreOfferLetter(applicationId);
-
+        const result = (await generateAndStoreOfferLetter(applicationId)) as any;
+        if (result && result.error) throw new Error(result.error);
         return { success: true };
     } catch (error: any) {
         console.error('Action Error: regenerateOfferLetter:', error);
-        throw new Error(error.message || 'Failed to regenerate offer letter');
+        return { success: false, error: error.message || 'Failed to regenerate offer letter' };
     }
 }
 
 export async function generateAdmissionLetterAction(applicationId: string) {
     try {
         const { generateAndStoreAdmissionLetter } = await import('./pdf-actions');
-        const url = await generateAndStoreAdmissionLetter(applicationId);
-        return { success: true, url };
+        const result = (await generateAndStoreAdmissionLetter(applicationId)) as any;
+        if (result && result.error) throw new Error(result.error);
+        return { success: true, url: result?.url };
     } catch (error: any) {
         console.error('Action Error: generateAdmissionLetterAction:', error);
-        throw new Error(error.message || 'Failed to generate admission letter');
+        return { success: false, error: error.message || 'Failed to generate admission letter' };
     }
 }

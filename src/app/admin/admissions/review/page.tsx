@@ -3,10 +3,10 @@
 import { createClient } from '@/utils/supabase/client';
 import {
     getAdmissionsApplicationById,
-    updateApplicationStatusAdmin,
     updateApplicationInternalNotesAdmin
 } from '@/app/admin/actions';
 import {
+    updateApplicationStatus,
     regenerateOfferLetter,
     generateAdmissionLetterAction
 } from '../actions';
@@ -70,7 +70,7 @@ function ApplicationReviewContent() {
         if (!id) return;
         setUpdating(true);
         try {
-            const result = await updateApplicationStatusAdmin(id, status) as any;
+            const result = await updateApplicationStatus(id, status as any) as any;
             if (!result.success) throw new Error(result.error);
             await fetchData();
         } catch (error: any) {
@@ -301,21 +301,41 @@ function ApplicationReviewContent() {
 
                                 <button
                                     onClick={async () => {
-                                        if (!confirm('Generate Admission Letter? Ensure student is fully enrolled.')) return;
+                                        if (!confirm('Generate Admission Letter? This will overwrite any existing version.')) return;
                                         setUpdating(true);
                                         try {
-                                            await generateAdmissionLetterAction(id!);
-                                            alert('Admission Letter generated successfully.');
+                                            const result = await generateAdmissionLetterAction(id!);
+                                            if (result.success) {
+                                                alert('Admission Letter generated successfully.');
+                                                await fetchData();
+                                            } else {
+                                                alert('Error: ' + result.error);
+                                            }
                                         } catch (e: any) {
-                                            alert('Error: ' + e.message);
+                                            alert('Unexpected Error: ' + e.message);
                                         } finally {
                                             setUpdating(false);
                                         }
                                     }}
-                                    disabled={updating || app.status !== 'ENROLLED'}
-                                    className="w-full text-left px-4 py-3 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2"
+                                    disabled={updating || (app.status !== 'ENROLLED' && app.status !== 'ADMISSION_LETTER_GENERATED' && app.status !== 'OFFER_ACCEPTED' && app.status !== 'PAYMENT_SUBMITTED')}
+                                    className="w-full text-left px-4 py-3 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-between group"
                                 >
-                                    <FileText size={14} weight="bold" /> Generate Admission Letter
+                                    <div className="flex items-center gap-2">
+                                        <FileText size={14} weight="bold" />
+                                        {app.status === 'ADMISSION_LETTER_GENERATED' ? 'Regenerate Admission Letter' : 'Generate Admission Letter'}
+                                    </div>
+                                    {app.offer?.[0]?.document_url && (
+                                        <a
+                                            href={app.offer[0].document_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="p-1.5 bg-white rounded-lg border border-neutral-200 text-neutral-400 hover:text-black hover:border-black transition-all"
+                                            title="View Document"
+                                        >
+                                            <Download size={14} weight="bold" />
+                                        </a>
+                                    )}
                                 </button>
                             </div>
 
@@ -377,6 +397,7 @@ function StatusDisplay({ status }: { status: string }) {
         'ADMITTED': { label: 'Admitted', color: 'bg-emerald-50 text-emerald-600 border-emerald-200', icon: CheckCircle2 },
         'OFFER_ACCEPTED': { label: 'Offer Accepted', color: 'bg-emerald-100 text-emerald-700 border-emerald-300', icon: CheckCircle2 },
         'PAYMENT_SUBMITTED': { label: 'Paid', color: 'bg-cyan-50 text-cyan-600 border-cyan-200', icon: CheckCircle2 },
+        'ADMISSION_LETTER_GENERATED': { label: 'Admitted & Documented', color: 'bg-emerald-950 text-emerald-400 border-emerald-900', icon: FileText },
         'ENROLLED': { label: 'Enrolled', color: 'bg-emerald-900 text-white border-emerald-800', icon: CheckCircle2 },
         'REJECTED': { label: 'Rejected', color: 'bg-red-50 text-red-600 border-red-200', icon: XCircle },
     };

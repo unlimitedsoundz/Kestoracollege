@@ -39,26 +39,34 @@ export default function StudentOfferPage() {
 
                 // 2. Fetch Admission record
                 const { data: admission } = await supabase
-                    .from('admissions')
+                    .from('admission_offers')
                     .select('*')
+                    .eq('application_id', (
+                        await supabase
+                            .from('applications')
+                            .select('id')
+                            .eq('user_id', currentUserId || '')
+                            .order('created_at', { ascending: false })
+                            .limit(1)
+                            .single()
+                    ).data?.id || '')
+                    .order('created_at', { ascending: false })
+                    .limit(1)
+                    .single();
+
+                // 3. Fetch Application status
+                const { data: app } = await supabase
+                    .from('applications')
+                    .select('status, id')
                     .eq('user_id', currentUserId || '')
                     .order('created_at', { ascending: false })
                     .limit(1)
                     .single();
 
-                let appStatus = null;
-                if (!admission) {
-                    const { data: app } = await supabase
-                        .from('applications')
-                        .select('status')
-                        .eq('user_id', currentUserId || '')
-                        .order('created_at', { ascending: false })
-                        .limit(1)
-                        .single();
-                    appStatus = app?.status || null;
-                }
+                const appStatus = app?.status || null;
+                const applicationId = app?.id || null;
 
-                setData({ admission, appStatus });
+                setData({ admission: { ...admission, application_status: appStatus, application_id: applicationId }, appStatus });
             } catch (err) {
                 console.error('CRITICAL: Fetching offer data failed', err);
             } finally {

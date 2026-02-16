@@ -111,6 +111,7 @@ export type ApplicationStatus =
     | 'ADMITTED'
     | 'REJECTED'
     | 'OFFER_ACCEPTED'
+    | 'ADMISSION_LETTER_GENERATED'
     | 'OFFER_DECLINED'
     | 'PAYMENT_SUBMITTED'
     | 'ENROLLED';

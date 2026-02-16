@@ -1,5 +1,6 @@
 import { createClient } from '@/utils/supabase/client';
 import { createAdminClient } from '@/utils/supabase/admin';
+
 export async function respondToOffer(admissionId: string, decision: 'ACCEPTED' | 'REJECTED') {
     const supabase = await createClient();
     const adminSupabase = createAdminClient();
@@ -39,33 +40,23 @@ export async function respondToOffer(admissionId: string, decision: 'ACCEPTED' |
 
     if (updateError) {
         console.error('Error updating offer response:', updateError);
-        console.error('Update data:', updateData);
-        console.error('Admission ID:', admissionId);
         throw new Error(`Failed to save your decision: ${updateError.message}`);
     }
 
     // 5. Trigger next steps / notifications
     if (decision === 'ACCEPTED') {
-        // Example: Update application status as well
         await adminSupabase
             .from('applications')
             .update({ status: 'OFFER_ACCEPTED' })
             .eq('user_id', user.id)
             .eq('status', 'ADMITTED');
-
-        // Note: Real automation might trigger an enrollment email or generate student login
     } else {
-        // Example: Update application status
         await adminSupabase
             .from('applications')
             .update({ status: 'OFFER_DECLINED' })
             .eq('user_id', user.id)
             .eq('status', 'ADMITTED');
-
-        // Notify admin (simulation)
-        console.log(`Admin notified: Student ${user.id} rejected offer for admission ${admissionId}`);
     }
-
 
     return { success: true };
 }
@@ -89,8 +80,7 @@ export async function acceptApplicationOffer(applicationId: string) {
     if (fetchError || !application) throw new Error('Application not found');
 
     if (application.status !== 'ADMITTED') {
-        // If already accepted, just return success so UI redirects
-        if (application.status === 'OFFER_ACCEPTED' || application.status === 'ENROLLED') {
+        if (application.status === 'OFFER_ACCEPTED' || application.status === 'ADMISSION_LETTER_GENERATED' || application.status === 'ENROLLED') {
             return { success: true };
         }
         throw new Error('This application is not in a state to accept an offer.');
@@ -101,7 +91,7 @@ export async function acceptApplicationOffer(applicationId: string) {
         .from('admission_offers')
         .update({
             status: 'ACCEPTED',
-            accepted_at: new Date().toISOString() // Now supported by schema
+            accepted_at: new Date().toISOString()
         })
         .eq('application_id', applicationId);
 
@@ -124,22 +114,27 @@ export async function acceptApplicationOffer(applicationId: string) {
         throw new Error('Failed to update application status');
     }
 
-    // 5. Try updating legacy admissions table if it exists (for consistency)
-    // We don't throw if this fails, as it's secondary
+    // 5. Trigger Admission Letter Generation (Edge Function)
     try {
-        await adminSupabase
-            .from('admissions')
-            .update({
-                offer_status: 'ACCEPTED',
-                accepted_at: new Date().toISOString()
-            })
-            .eq('user_id', user.id)
-            .eq('program', (await adminSupabase.from('applications').select('course(title)').eq('id', applicationId).single()).data?.course);
-        // Note: The above might fail if course is complex object, simplified for now or let it be if it was working before
-        // actually, let's just ignore this legacy update if it's too complex, or fetch properly.
-        // Better fetch:
-        const { data: courseData } = await adminSupabase.from('applications').select('course(title)').eq('id', applicationId).single();
-        const courseTitle = Array.isArray(courseData?.course) ? courseData.course[0]?.title : (courseData?.course as any)?.title;
+        const { error: funcError } = await adminSupabase.functions.invoke('generate-admission-letter', {
+            body: { applicationId }
+        });
+        if (funcError) {
+            console.error('Edge Function Error:', funcError);
+        }
+    } catch (err) {
+        console.error('Failed to trigger admission letter generation:', err);
+    }
+
+    // 6. Try updating legacy admissions table
+    try {
+        const { data: courseData } = await adminSupabase
+            .from('applications')
+            .select('course(title)')
+            .eq('id', applicationId)
+            .single();
+
+        const courseTitle = (courseData?.course as any)?.title;
 
         if (courseTitle) {
             await adminSupabase
@@ -154,7 +149,6 @@ export async function acceptApplicationOffer(applicationId: string) {
     } catch (err) {
         console.warn('Legacy admission update failed silently', err);
     }
-
 
     return { success: true };
 }
