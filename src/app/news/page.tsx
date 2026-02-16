@@ -1,4 +1,4 @@
-import { createClient } from '@/utils/supabase/server';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { News, Event } from '@/types/database';
@@ -10,8 +10,10 @@ export const metadata = {
     description: 'The latest news, announcements, and upcoming events from Sykli College.',
 };
 
+import { createStaticClient } from '@/lib/supabase/static';
+
 export default async function NewsPage() {
-    const supabase = await createClient();
+    const supabase = createStaticClient();
 
     // Fetch news
     const { data: newsData, error: newsError } = await supabase

@@ -419,7 +419,7 @@ export default function StudentHandbookPage() {
                             <Link href="/code-of-conduct" className="border border-black px-6 py-3 font-bold text-sm hover:bg-black hover:text-white transition-colors">
                                 Code of Conduct →
                             </Link>
-                            <Link href="/refund-withdrawal-policy" className="border border-black px-6 py-3 font-bold text-sm hover:bg-black hover:text-white transition-colors">
+                            <Link href="/refund-withdrawal-policy/" className="border border-black px-6 py-3 font-bold text-sm hover:bg-black hover:text-white transition-colors">
                                 Refund Policy →
                             </Link>
                         </div>

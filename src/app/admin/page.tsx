@@ -1,5 +1,6 @@
+'use client';
 
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/client';
 import {
     BookOpen,
     Newspaper,
@@ -7,70 +8,102 @@ import {
     Calendar,
     GraduationCap,
     Clock,
-    CheckCircle,
-    XCircle,
     ArrowRight,
     Buildings as SchoolIcon,
     FileText,
-    House as Home
-} from "@phosphor-icons/react/dist/ssr";
+    House as Home,
+    CircleNotch as Loader2
+} from "@phosphor-icons/react";
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { UserAvatar } from '@/components/ui/UserAvatar';
 
-export const revalidate = 0;
+export default function AdminPage() {
+    const [stats, setStats] = useState<any[]>([]);
+    const [pendingApps, setPendingApps] = useState<any[]>([]);
+    const [appsCount, setAppsCount] = useState(0);
+    const [statusCounts, setStatusCounts] = useState({
+        SUBMITTED: 0,
+        UNDER_REVIEW: 0,
+        ADMITTED: 0,
+        REJECTED: 0,
+    });
+    const [loading, setLoading] = useState(true);
 
-export default async function AdminPage() {
-    const supabase = await createClient();
+    useEffect(() => {
+        const fetchData = async () => {
+            const supabase = createClient();
 
-    // Fetch aggregates
-    const [
-        { count: courseCount },
-        { count: newsCount },
-        { count: eventCount },
-        { count: subjectCount },
-        { count: facultyCount },
-        { count: departmentCount },
-        { data: pendingApps, count: appsCount },
-        { count: housingAppsCount },
-        { count: registrarCount }
-    ] = await Promise.all([
-        supabase.from('Course').select('*', { count: 'exact', head: true }),
-        supabase.from('News').select('*', { count: 'exact', head: true }),
-        supabase.from('Event').select('*', { count: 'exact', head: true }),
-        supabase.from('Subject').select('*', { count: 'exact', head: true }),
-        supabase.from('Faculty').select('*', { count: 'exact', head: true }),
-        supabase.from('Department').select('*', { count: 'exact', head: true }),
-        supabase.from('applications')
-            .select('*, course:Course(title), user:profiles(first_name, last_name, email, avatar_url)', { count: 'exact' })
-            .neq('status', 'DRAFT')
-            .order('submitted_at', { ascending: false })
-            .limit(5),
-        supabase.from('housing_applications').select('*', { count: 'exact', head: true }),
-        supabase.from('registration_windows').select('*', { count: 'exact', head: true })
-    ]);
+            try {
+                // Fetch aggregates
+                const [
+                    { count: courseCount },
+                    { count: newsCount },
+                    { count: eventCount },
+                    { count: subjectCount },
+                    { count: facultyCount },
+                    { count: departmentCount },
+                    { data: apps, count: totalApps },
+                    { count: housingAppsCount },
+                    { count: registrarCount }
+                ] = await Promise.all([
+                    supabase.from('Course').select('*', { count: 'exact', head: true }),
+                    supabase.from('News').select('*', { count: 'exact', head: true }),
+                    supabase.from('Event').select('*', { count: 'exact', head: true }),
+                    supabase.from('Subject').select('*', { count: 'exact', head: true }),
+                    supabase.from('Faculty').select('*', { count: 'exact', head: true }),
+                    supabase.from('Department').select('*', { count: 'exact', head: true }),
+                    supabase.from('applications')
+                        .select('*, course:Course(title), user:profiles(first_name, last_name, email, avatar_url)', { count: 'exact' })
+                        .neq('status', 'DRAFT')
+                        .order('submitted_at', { ascending: false })
+                        .limit(5),
+                    supabase.from('housing_applications').select('*', { count: 'exact', head: true }),
+                    supabase.from('registration_windows').select('*', { count: 'exact', head: true })
+                ]);
 
-    // Application Status Breakdown
-    const { data: allApps } = await supabase.from('applications').select('status');
-    const statusCounts = {
-        SUBMITTED: allApps?.filter(s => s.status === 'SUBMITTED').length || 0,
-        UNDER_REVIEW: allApps?.filter(s => s.status === 'UNDER_REVIEW' || s.status === 'DOCS_REQUIRED').length || 0,
-        ADMITTED: allApps?.filter(s => s.status === 'ADMITTED' || s.status === 'OFFER_ACCEPTED').length || 0,
-        REJECTED: allApps?.filter(s => s.status === 'REJECTED' || s.status === 'OFFER_DECLINED').length || 0,
-    };
+                // Application Status Breakdown
+                const { data: allApps } = await supabase.from('applications').select('status');
 
-    const stats = [
-        { label: 'Courses', count: courseCount, icon: BookOpen, color: 'bg-blue-500', href: '/admin/courses' },
-        { label: 'News Stories', count: newsCount, icon: Newspaper, color: 'bg-neutral-800', href: '/admin/news' },
-        { label: 'Campus Events', count: eventCount, icon: Calendar, color: 'bg-purple-500', href: '/admin/events' },
-        { label: 'Applications', count: appsCount, icon: FileText, color: 'bg-amber-500', href: '/admin/admissions' },
-        { label: 'Housing Applications', count: housingAppsCount, icon: Home, color: 'bg-teal-500', href: '/admin/housing' },
-        { label: 'Faculty Members', count: facultyCount, icon: Users, color: 'bg-neutral-900', href: '/admin/faculty' },
-        { label: 'Academic Departments', count: departmentCount, icon: SchoolIcon, color: 'bg-emerald-600', href: '/admin/departments' },
-        { label: 'Registrar Windows', count: registrarCount, icon: FileText, color: 'bg-indigo-600', href: '/admin/registrar' },
-    ];
+                setAppsCount(totalApps || 0);
+                setPendingApps(apps || []);
+                setStatusCounts({
+                    SUBMITTED: allApps?.filter(s => s.status === 'SUBMITTED').length || 0,
+                    UNDER_REVIEW: allApps?.filter(s => s.status === 'UNDER_REVIEW' || s.status === 'DOCS_REQUIRED').length || 0,
+                    ADMITTED: allApps?.filter(s => s.status === 'ADMITTED' || s.status === 'OFFER_ACCEPTED').length || 0,
+                    REJECTED: allApps?.filter(s => s.status === 'REJECTED' || s.status === 'OFFER_DECLINED').length || 0,
+                });
+
+                setStats([
+                    { label: 'Courses', count: courseCount, icon: BookOpen, color: 'bg-blue-500', href: '/admin/courses' },
+                    { label: 'News Stories', count: newsCount, icon: Newspaper, color: 'bg-neutral-800', href: '/admin/news' },
+                    { label: 'Campus Events', count: eventCount, icon: Calendar, color: 'bg-purple-500', href: '/admin/events' },
+                    { label: 'Applications', count: totalApps, icon: FileText, color: 'bg-amber-500', href: '/admin/admissions' },
+                    { label: 'Housing Applications', count: housingAppsCount, icon: Home, color: 'bg-teal-500', href: '/admin/housing' },
+                    { label: 'Faculty Members', count: facultyCount, icon: Users, color: 'bg-neutral-900', href: '/admin/faculty' },
+                    { label: 'Academic Departments', count: departmentCount, icon: SchoolIcon, color: 'bg-emerald-600', href: '/admin/departments' },
+                    { label: 'Registrar Windows', count: registrarCount, icon: FileText, color: 'bg-indigo-600', href: '/admin/registrar' },
+                ]);
+            } catch (error) {
+                console.error("Error fetching dashboard data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-20">
+                <Loader2 className="animate-spin text-neutral-400" size={40} weight="bold" />
+            </div>
+        );
+    }
 
     return (
-        <div className="space-y-8 md:space-y-10">
+        <div className="space-y-8 md:space-y-10 animate-in fade-in duration-500">
             <div>
                 <h1 className="text-3xl font-extrabold text-neutral-900 tracking-tight">System Overview</h1>
                 <p className="text-neutral-500 mt-2">Welcome back. Here's what's happening at SYKLI College.</p>
@@ -122,7 +155,7 @@ export default async function AdminPage() {
                                             <tr key={a.id} className="hover:bg-neutral-50 transition-colors">
                                                 <td className="p-4">
                                                     <div className="flex items-center gap-3">
-                                                        <UserAvatar src={a.user?.avatar_url} firstName={a.user?.first_name} email={a.user?.email} size="sm" />
+                                                        <UserAvatar src={a.user?.avatar_url} firstName={a.user?.first_name} email={a.user?.email} size="sm" isLoggedIn={true} />
                                                         <div>
                                                             <div className="font-bold text-neutral-900 leading-none mb-1">
                                                                 {a.user?.first_name} {a.user?.last_name || a.user?.email?.split('@')[0]}

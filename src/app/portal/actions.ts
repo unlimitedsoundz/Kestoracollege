@@ -1,5 +1,7 @@
 'use server';
 
+import React from 'react';
+
 import { createClient } from '@/utils/supabase/server';
 import { createAdminClient } from '@/utils/supabase/admin';
 import { redirect } from 'next/navigation';
@@ -57,14 +59,17 @@ export async function createApplication(courseId: string) {
     }
 
     revalidatePath('/portal/dashboard');
-    redirect(`/portal/application/${data.id}`);
+    redirect(`/portal/application?id=${data.id}`);
 }
 
 export async function updateApplicationStep(id: string, step: string, data: any) {
     const supabase = await createClient();
+
     const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) throw new Error('Unauthorized');
+    if (!user) {
+        throw new Error('Unauthorized');
+    }
 
     // Map step to database column
     const columnMap: Record<string, string> = {
@@ -93,7 +98,32 @@ export async function updateApplicationStep(id: string, step: string, data: any)
         throw new Error('Failed to save progress');
     }
 
-    revalidatePath(`/portal/application/${id}`);
+    // SYNC TO PROFILES TABLE
+    // This ensures student list and other admin features have up-to-date names/info
+    try {
+        if (step === 'personal') {
+            await supabase
+                .from('profiles')
+                .update({
+                    first_name: data.firstName,
+                    last_name: data.lastName,
+                    date_of_birth: data.dateOfBirth
+                })
+                .eq('id', user.id);
+        } else if (step === 'contact') {
+            await supabase
+                .from('profiles')
+                .update({
+                    country_of_residence: data.country
+                })
+                .eq('id', user.id);
+        }
+    } catch (syncError) {
+        console.error('Error syncing to profile:', syncError);
+        // Non-blocking for the application flow
+    }
+
+    revalidatePath(`/portal/application`);
     return { success: true };
 }
 
@@ -117,7 +147,7 @@ export async function addApplicationDocument(applicationId: string, type: string
         throw new Error('Failed to save document info');
     }
 
-    revalidatePath(`/portal/application/${applicationId}`);
+    revalidatePath(`/portal/application`);
     return { success: true };
 }
 
@@ -149,7 +179,7 @@ export async function deleteApplicationDocument(applicationId: string, documentI
         throw new Error('Failed to delete document info');
     }
 
-    revalidatePath(`/portal/application/${applicationId}`);
+    revalidatePath(`/portal/application`);
     return { success: true };
 }
 
@@ -190,8 +220,180 @@ export async function submitApplication(applicationId: string) {
     }
 
     revalidatePath('/portal/dashboard');
-    revalidatePath(`/portal/application/${applicationId}`);
+    revalidatePath(`/portal/application`);
     return { success: true };
+}
+
+export async function getAdmissionLetterData(applicationId: string) {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    // If we have a user session, we use it for preliminary checks
+    const targetUserId = user?.id;
+
+    // Use Admin Client to bypass RLS and fetch full aggregated data
+    const adminSupabase = createAdminClient();
+
+    try {
+        const { data: applicationRaw, error: appError } = await adminSupabase
+            .from('applications')
+            .select(`
+                *,
+                course:Course(*, school:School(*)),
+                user:profiles(*),
+                offer:admission_offers(*)
+            `)
+            .eq('id', applicationId)
+            .single();
+
+        if (appError || !applicationRaw) {
+            throw new Error('Application not found');
+        }
+
+        // Security check: if user session exists, ensure it matches. 
+        if (targetUserId && applicationRaw.user_id !== targetUserId) {
+            throw new Error('Unauthorized access to application');
+        }
+
+        if (!applicationRaw.offer?.[0]) {
+            return { success: false, error: 'Offer not found' };
+        }
+
+        return {
+            success: true,
+            data: {
+                application: applicationRaw,
+                offer: applicationRaw.offer[0]
+            }
+        };
+    } catch (e: any) {
+        console.error('Error in getAdmissionLetterData:', e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function getPortalDashboardData() {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) throw new Error('Unauthorized');
+
+    const adminSupabase = createAdminClient();
+
+    try {
+        const [profileRes, appsRes, studentRes] = await Promise.all([
+            adminSupabase.from('profiles').select('*').eq('id', user.id).single(),
+            adminSupabase.from('applications')
+                .select('*, course:Course(title, duration), offer:admission_offers(*)')
+                .eq('user_id', user.id)
+                .order('updated_at', { ascending: false }),
+            adminSupabase.from('students')
+                .select('*, program:Course(*), user:profiles(*)')
+                .eq('user_id', user.id)
+                .maybeSingle()
+        ]);
+
+        return {
+            success: true,
+            data: {
+                profile: profileRes.data,
+                applications: appsRes.data || [],
+                student: studentRes.data
+            }
+        };
+    } catch (e: any) {
+        console.error('Error fetching portal dashboard data:', e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function getPortalApplicationDetail(applicationId: string) {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) throw new Error('Unauthorized');
+
+    const adminSupabase = createAdminClient();
+
+    try {
+        const { data: applicationRaw, error: appError } = await adminSupabase
+            .from('applications')
+            .select(`
+                *,
+                course:Course(*, school:School(*)),
+                user:profiles(email),
+                documents:application_documents(*),
+                offer:admission_offers(*)
+            `)
+            .eq('id', applicationId)
+            .single();
+
+        if (appError || !applicationRaw) throw new Error('Application not found');
+
+        // Security check
+        if (applicationRaw.user_id !== user.id) throw new Error('Unauthorized access');
+
+        return {
+            success: true,
+            data: applicationRaw
+        };
+    } catch (e: any) {
+        console.error('Error fetching application detail:', e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function getStudentPortalData() {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) throw new Error('Unauthorized');
+
+    const adminSupabase = createAdminClient();
+
+    try {
+        const { data: studentData, error } = await adminSupabase
+            .from('students')
+            .select(`
+                *,
+                program:Course(*),
+                user:profiles(*),
+                application:applications(*)
+            `)
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single();
+
+        if (error || !studentData) throw new Error('Student record not found');
+
+        return {
+            success: true,
+            data: studentData
+        };
+    } catch (e: any) {
+        console.error('Error fetching student portal data:', e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function getAllCourses() {
+    const adminSupabase = createAdminClient();
+    try {
+        const { data, error } = await adminSupabase
+            .from('Course')
+            .select(`
+                *,
+                school:School(name, slug)
+            `)
+            .order('title');
+
+        if (error) throw error;
+        return { success: true, data: data || [] };
+    } catch (e: any) {
+        console.error('Error fetching courses:', e);
+        return { success: false, error: e.message };
+    }
 }
 
 export async function acceptOffer(applicationId: string) {
@@ -247,14 +449,15 @@ export async function acceptOffer(applicationId: string) {
     if (appError) throw new Error('Failed to update application status');
 
     revalidatePath('/portal/dashboard');
-    revalidatePath(`/portal/application/${applicationId}`);
+    revalidatePath(`/portal/application`);
     // Redirect to the payment/offer page to continue the flow
-    redirect(`/portal/application/${applicationId}/offer/payment`);
+    redirect(`/portal/application/payment?id=${applicationId}`);
 }
 
 
 import { sendEmail } from '@/lib/email';
 import OfferRejectionEmail from '@/emails/OfferRejectionEmail';
+import PaymentConfirmationEmail from '@/emails/PaymentConfirmationEmail';
 
 // ... (existing code: acceptOffer, etc.)
 
@@ -331,7 +534,7 @@ export async function rejectOffer(applicationId: string) {
     }
 
     revalidatePath('/portal/dashboard');
-    revalidatePath(`/portal/application/${applicationId}`);
+    revalidatePath(`/portal/application`);
     redirect('/portal/dashboard');
 }
 
@@ -353,7 +556,14 @@ export async function processTuitionPayment(
     // 1. Verify Offer exists and belongs to user (via application)
     const { data: offer, error: fetchError } = await supabase
         .from('admission_offers')
-        .select('*, application:applications(user_id, status)')
+        .select(`
+            *, 
+            application:applications(
+                user_id, 
+                status,
+                course:Course(title)
+            )
+        `)
         .eq('id', offerId)
         .single();
 
@@ -402,8 +612,23 @@ export async function processTuitionPayment(
 
         if (offerError) {
             console.error('Failed to update offer status:', offerError);
-            // We don't throw here to avoid failing the whole process after payment and app update are done
         }
+    }
+
+    // 4. AUTO-TRIGGER ADMISSION LETTER & ENROLLMENT
+    try {
+        const { generateAndStoreAdmissionLetter } = await import('@/app/admin/admissions/pdf-actions');
+        await generateAndStoreAdmissionLetter(applicationId);
+
+        // Also update status to ENROLLED if not already
+        await adminSupabase
+            .from('applications')
+            .update({ status: 'ENROLLED', updated_at: new Date().toISOString() })
+            .eq('id', applicationId);
+
+    } catch (pdfError) {
+        console.error('Failed to auto-generate admission letter after payment:', pdfError);
+        // We still consider the payment successful
     }
 
     // 4. Audit Log for Compliance
@@ -419,16 +644,51 @@ export async function processTuitionPayment(
         }
     });
 
+    // 5. Send Payment Confirmation Email
+    try {
+        const { data: profile } = await adminSupabase
+            .from('profiles')
+            .select('first_name')
+            .eq('id', user.id)
+            .single();
+
+        const courseTitle = app.course?.title || 'Program';
+
+        await sendEmail({
+            to: user.email!,
+            subject: `Payment Confirmation - SYKLI College`,
+            react: React.createElement(PaymentConfirmationEmail, {
+                firstName: profile?.first_name || 'Student',
+                courseTitle: courseTitle,
+                amount: amount,
+                currency: currency || 'EUR',
+                transactionId: reference,
+            })
+        });
+    } catch (emailError) {
+        console.error('Failed to send payment confirmation email:', emailError);
+    }
+
     revalidatePath('/portal/dashboard');
-    revalidatePath(`/portal/application/${applicationId}`);
+    revalidatePath(`/portal/application`);
     return { success: true, reference };
 }
 
 export async function deleteApplication(applicationId: string) {
+    const { cookies } = await import('next/headers');
+    const cookieStore = await cookies();
+    const allCookies = cookieStore.getAll().map(c => c.name);
+    console.log('[deleteApplication] Available Cookies:', allCookies);
+
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) throw new Error('Unauthorized');
+    console.log('[deleteApplication] User check:', user?.id);
+
+    if (!user) {
+        console.error('[deleteApplication] Unauthorized: No user found in session');
+        throw new Error('Unauthorized');
+    }
 
     // 1. Verify ownership and status
     const { data: app, error: fetchError } = await supabase
@@ -445,7 +705,9 @@ export async function deleteApplication(applicationId: string) {
     }
 
     // 2. Delete the application (triggers/cascades should handle related documents/offers)
-    const { error } = await supabase
+    // Use Admin Client to bypass RLS "No DELETE policy" restriction
+    const adminSupabase = await createAdminClient();
+    const { error } = await adminSupabase
         .from('applications')
         .delete()
         .eq('id', applicationId);

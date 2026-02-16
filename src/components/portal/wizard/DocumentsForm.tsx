@@ -11,6 +11,7 @@ import { CaretRight as ChevronRight, CircleNotch as Loader2, UploadSimple as Upl
 interface Props {
     applicationId: string;
     existingDocuments: ApplicationDocument[];
+    onUpdate?: () => Promise<void>;
 }
 
 const DOCUMENT_TYPES: { type: DocumentType; label: string; description: string; required: boolean }[] = [
@@ -18,11 +19,11 @@ const DOCUMENT_TYPES: { type: DocumentType; label: string; description: string; 
     { type: 'TRANSCRIPT', label: 'Academic Transcript', description: 'Official transcript from your previous institution.', required: true },
     { type: 'CERTIFICATE', label: 'Degree Certificate', description: 'Copy of your degree certificate or diploma.', required: true },
     { type: 'CV', label: 'Curriculum Vitae (CV)', description: 'Updated CV detailing your experience and education.', required: true },
-    { type: 'MOTIVATION_LETTER', label: 'Motivation Letter', description: 'A brief letter explaining why you chose this programme.', required: true },
+    { type: 'MOTIVATION_LETTER', label: 'Motivation Letter / Statement of Purpose', description: 'A brief letter explaining why you chose this programme.', required: true },
     { type: 'LANGUAGE_CERT', label: 'English Proficiency', description: 'IELTS/TOEFL or equivalent (if applicable).', required: false },
 ];
 
-export default function DocumentsForm({ applicationId, existingDocuments }: Props) {
+export default function DocumentsForm({ applicationId, existingDocuments, onUpdate }: Props) {
     const [uploading, setUploading] = useState<string | null>(null);
     const [deleting, setDeleting] = useState<string | null>(null);
     const [isSaving, setIsSaving] = useState(false);
@@ -62,6 +63,7 @@ export default function DocumentsForm({ applicationId, existingDocuments }: Prop
 
             await addApplicationDocument(applicationId, type, publicUrl, file.name);
 
+            if (onUpdate) await onUpdate();
             // Trigger parent refresh to update progress
             router.refresh();
         } catch (error) {
@@ -80,6 +82,7 @@ export default function DocumentsForm({ applicationId, existingDocuments }: Prop
             if (!path) throw new Error('Invalid file URL');
 
             await deleteApplicationDocument(applicationId, docId, path);
+            if (onUpdate) await onUpdate();
             router.refresh();
         } catch (error) {
             console.error('Delete failed:', error);
@@ -150,7 +153,7 @@ export default function DocumentsForm({ applicationId, existingDocuments }: Prop
             <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
                 <div className="flex items-center gap-4">
                     <Link
-                        href="?step=5"
+                        href={`?id=${applicationId}&step=5`}
                         className="text-[#2d2d2d] hover:text-primary font-semibold text-xs uppercase tracking-widest transition-colors"
                     >
                         Back
@@ -167,7 +170,7 @@ export default function DocumentsForm({ applicationId, existingDocuments }: Prop
                 <button
                     onClick={async () => {
                         setIsSaving(true);
-                        router.push('?step=7');
+                        router.push(`?id=${applicationId}&step=7`);
                         setIsSaving(false);
                     }}
                     disabled={!allRequiredUploaded || isSaving}
@@ -186,6 +189,6 @@ export default function DocumentsForm({ applicationId, existingDocuments }: Prop
                     )}
                 </button>
             </div>
-        </div>
+        </div >
     );
 }

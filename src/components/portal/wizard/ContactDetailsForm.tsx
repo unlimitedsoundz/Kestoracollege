@@ -27,9 +27,10 @@ interface Props {
     applicationId: string;
     initialData?: any;
     defaultEmail?: string;
+    onUpdate?: () => Promise<void>;
 }
 
-export default function ContactDetailsForm({ applicationId, initialData, defaultEmail }: Props) {
+export default function ContactDetailsForm({ applicationId, initialData, defaultEmail, onUpdate }: Props) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
 
@@ -51,7 +52,8 @@ export default function ContactDetailsForm({ applicationId, initialData, default
         setIsSubmitting(true);
         try {
             await updateApplicationStep(applicationId, 'contact', data);
-            router.push('?step=4');
+            if (onUpdate) await onUpdate();
+            router.push(`?id=${applicationId}&step=4`);
             router.refresh();
         } catch (error) {
             console.error('Failed to save:', error);
@@ -155,7 +157,7 @@ export default function ContactDetailsForm({ applicationId, initialData, default
             <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
                 <div className="flex items-center gap-4">
                     <Link
-                        href="?step=2"
+                        href={`?id=${applicationId}&step=2`}
                         className="text-[#2d2d2d] hover:text-black font-semibold text-xs uppercase tracking-widest transition-colors"
                     >
                         Back

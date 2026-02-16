@@ -6,7 +6,7 @@ import { formatToDDMMYYYY } from '@/utils/date';
 import { HousingApplication, HousingAssignment, HousingDeposit, HousingBuilding, Semester, HousingInvoice, PaymentMethod } from '@/types/database';
 import { submitHousingApplication } from '../../housing-actions';
 import { initiatePayment, verifyPayment } from '../../payment-actions';
-import PayGoWireCheckout from '../../application/[id]/offer/payment/PayGoWireCheckout';
+import PayGoWireCheckout from '../../application/payment/PayGoWireCheckout';
 
 interface HousingDashboardClientProps {
     application: (HousingApplication & { deposit?: HousingDeposit }) | null;

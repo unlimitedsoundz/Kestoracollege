@@ -3,11 +3,13 @@ import * as React from "react";
 import Image from "next/image"; // Added next/image
 import { Button } from "@/components/ui/Button";
 import { ArrowRight, CaretRight as ChevronRight, CaretLeft as ChevronLeft } from "@phosphor-icons/react/dist/ssr";
-import { createClient } from "@/utils/supabase/server";
+import { createStaticClient } from "@/lib/supabase/static";
 import { formatToDDMMYYYY } from '@/utils/date';
 
+export const revalidate = 60; // Revalidate every minute
+
 export default async function Home() {
-  const supabase = await createClient();
+  const supabase = createStaticClient();
 
   // Fetch most recent news & events
   const { data: newsData } = await supabase

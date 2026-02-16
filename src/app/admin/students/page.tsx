@@ -1,38 +1,132 @@
-import { createAdminClient } from '@/utils/supabase/admin';
-import { updateStudentStatus, updateStudentTuition, adminApproveTuition } from '../actions';
-import { User, Envelope as Mail, Globe, CheckCircle, XCircle, Clock, CreditCard, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+'use client';
+
+import { createClient } from '@/utils/supabase/client';
+import { User, Envelope as Mail, Globe, CheckCircle, XCircle, Clock, CreditCard, ShieldCheck, CircleNotch as Loader2 } from "@phosphor-icons/react";
 import { formatToDDMMYYYY } from '@/utils/date';
 import DeleteStudentBtn from './DeleteStudentBtn';
+import { useState, useEffect } from 'react';
 
-export const revalidate = 0;
+export default function AdminStudentsPage() {
+    const [enrolledStudents, setEnrolledStudents] = useState<any[]>([]);
+    const [pendingApplications, setPendingApplications] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [actionLoading, setActionLoading] = useState<string | null>(null);
+    const [currentUser, setCurrentUser] = useState<any>(null);
+    const supabase = createClient();
 
-export default async function AdminStudentsPage() {
-    const supabase = createAdminClient();
+    const fetchData = async () => {
+        try {
+            // Check current user
+            const { data: { user: authUser } } = await supabase.auth.getUser();
+            setCurrentUser(authUser);
 
-    // Fetch Enrolled Students (New System)
-    const { data: enrolledStudents } = await supabase
-        .from('students')
-        .select(`
-    *,
-    user: profiles!user_id(first_name, last_name, email),
-        program: Course(title)
-            `)
-        .order('created_at', { ascending: false });
+            if (authUser) {
+                // Also check their profile role
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', authUser.id)
+                    .single();
 
-    // Fetch Pending Enrollments (Offer Accepted but not Enrolled)
-    const { data: pendingApplications } = await supabase
-        .from('applications')
-        .select(`
-            *,
-            user: profiles!user_id(first_name, last_name, email),
-                offer: admission_offers(*),
-                    course: Course(title)
-                        `)
-        .in('status', ['OFFER_ACCEPTED', 'PAYMENT_SUBMITTED'])
-        .order('updated_at', { ascending: false });
+                if (profile) {
+                    setCurrentUser((prev: any) => ({ ...prev, profileRole: profile.role }));
+                }
+            }
+
+            // Fetch Enrolled Students
+            const { data: students, error: studentError } = await supabase
+                .from('students')
+                .select(`
+                    *,
+                    user:profiles!user_id(first_name, last_name, email),
+                    program:Course!program_id(title)
+                `)
+                .order('created_at', { ascending: false });
+
+            if (studentError) {
+                setError(studentError.message);
+            }
+
+            // Fetch Pending Enrollments
+            const { data: apps, error: appError } = await supabase
+                .from('applications')
+                .select(`
+                    *,
+                    user:profiles!user_id(first_name, last_name, email),
+                    offer:admission_offers!application_id(*),
+                    course:Course!course_id(title)
+                `)
+                .in('status', ['OFFER_ACCEPTED', 'PAYMENT_SUBMITTED'])
+                .order('updated_at', { ascending: false });
+
+            if (appError) {
+                if (!studentError) setError(appError.message);
+            }
+
+            setEnrolledStudents(students || []);
+            setPendingApplications(apps || []);
+
+            console.log("Fetched Data (Client):", { students, apps });
+        } catch (error) {
+            console.error("Outer Error fetching students data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const handleApproveTuition = async (applicationId: string) => {
+        if (!confirm("Are you sure you want to officially ENROLL this student? This will generate a Student ID and institutional email.")) return;
+
+        setActionLoading(applicationId);
+        try {
+            const { enrollStudent } = await import('./actions');
+            const result = await enrollStudent(applicationId);
+
+            if (result.success) {
+                alert(`Student enrolled successfully! ID: ${result.studentId}`);
+                await fetchData(); // Refresh lists
+            } else {
+                alert(`Enrollment failed: ${result.error}`);
+            }
+        } catch (error) {
+            console.error("Enrollment error:", error);
+            alert("An unexpected error occurred during enrollment.");
+        } finally {
+            setActionLoading(null);
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-20">
+                <Loader2 className="animate-spin text-neutral-400" size={40} weight="bold" />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="p-20 text-center">
+                <XCircle size={48} weight="bold" className="mx-auto mb-4 text-red-500 opacity-20" />
+                <h2 className="text-xl font-bold text-neutral-900">Error loading data</h2>
+                <p className="text-neutral-500 text-sm mt-1">{error}</p>
+                <button
+                    onClick={() => { setError(null); setLoading(true); fetchData(); }}
+                    className="mt-6 px-4 py-2 bg-neutral-900 text-white text-xs font-bold uppercase tracking-widest rounded-sm hover:bg-neutral-800 transition-colors"
+                >
+                    Retry
+                </button>
+            </div>
+        );
+    }
 
     return (
-        <div>
+        <div className="animate-in fade-in duration-500">
             <div className="flex justify-between items-center mb-8">
                 <div>
                     <h1 className="text-3xl font-bold text-neutral-900">Enrolled Students</h1>
@@ -84,18 +178,22 @@ export default async function AdminStudentsPage() {
                                             €{app.offer?.[0]?.tuition_fee}
                                         </td>
                                         <td className="p-4 text-right">
-                                            <form action={adminApproveTuition.bind(null, app.id)}>
-                                                <button
-                                                    className={`px-3 py-2 rounded-sm text-[10px] font-bold uppercase tracking-widest transition-colors flex items-center gap-2 ml-auto ${app.status === 'PAYMENT_SUBMITTED'
-                                                        ? 'bg-emerald-600 text-white hover:bg-emerald-700'
-                                                        : 'bg-neutral-900 text-white hover:bg-neutral-700 opacity-50'
-                                                        }`}
-                                                    title={app.status === 'PAYMENT_SUBMITTED' ? 'Finalize Enrollment' : 'Waiting for student payment'}
-                                                >
+                                            <button
+                                                onClick={() => handleApproveTuition(app.id)}
+                                                disabled={actionLoading === app.id || app.status !== 'PAYMENT_SUBMITTED'}
+                                                className={`px-3 py-2 rounded-sm text-[10px] font-bold uppercase tracking-widest transition-colors flex items-center gap-2 ml-auto ${app.status === 'PAYMENT_SUBMITTED'
+                                                    ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                                                    : 'bg-neutral-900 text-white hover:bg-neutral-700 opacity-50'
+                                                    } ${actionLoading === app.id ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                                title={app.status === 'PAYMENT_SUBMITTED' ? 'Finalize Enrollment' : 'Waiting for student payment'}
+                                            >
+                                                {actionLoading === app.id ? (
+                                                    <Loader2 size={12} className="animate-spin" />
+                                                ) : (
                                                     <CreditCard size={12} weight="bold" />
-                                                    {app.status === 'PAYMENT_SUBMITTED' ? 'Confirm & Enroll' : 'Approve Tuition'}
-                                                </button>
-                                            </form>
+                                                )}
+                                                {actionLoading === app.id ? 'Processing...' : (app.status === 'PAYMENT_SUBMITTED' ? 'Confirm & Enroll' : 'Wait for Payment')}
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
@@ -172,6 +270,23 @@ export default async function AdminStudentsPage() {
                         <User size={48} weight="regular" className="mx-auto mb-4 opacity-20" />
                         <p>No enrolled students found.</p>
                         <p className="text-xs mt-2">Students appear here after tuition payment and enrollment confirmation.</p>
+                        {/* Dev Info to track down the empty list issue */}
+                        <div className="mt-10 p-4 bg-neutral-50 rounded text-left border border-neutral-200">
+                            <p className="text-[10px] uppercase font-bold text-neutral-400 mb-2">Supabase Response Debug:</p>
+                            <pre className="text-[10px] font-mono overflow-auto max-h-40">
+                                {JSON.stringify({
+                                    studentCount: enrolledStudents?.length,
+                                    pendingCount: pendingApplications?.length,
+                                    loading: loading,
+                                    hasError: !!error,
+                                    currentUser: currentUser ? {
+                                        id: currentUser.id,
+                                        email: currentUser.email,
+                                        role: currentUser.profileRole
+                                    } : 'Not logged in'
+                                }, null, 2)}
+                            </pre>
+                        </div>
                     </div>
                 )}
             </div>

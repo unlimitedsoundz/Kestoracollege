@@ -380,7 +380,7 @@ export default function AdmissionsPage() {
                                     <Link href="/code-of-conduct" className="inline-block border border-white text-white px-8 py-3 font-bold hover:bg-white hover:text-black transition-colors">
                                         Code of Conduct
                                     </Link>
-                                    <Link href="/refund-withdrawal-policy" className="inline-block border border-white text-white px-8 py-3 font-bold hover:bg-white hover:text-black transition-colors">
+                                    <Link href="/refund-withdrawal-policy/" className="inline-block border border-white text-white px-8 py-3 font-bold hover:bg-white hover:text-black transition-colors">
                                         Refund Policy
                                     </Link>
                                 </div>

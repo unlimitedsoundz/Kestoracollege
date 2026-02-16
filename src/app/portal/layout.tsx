@@ -1,34 +1,103 @@
-import { ReactNode } from 'react';
+'use client';
+
+import { ReactNode, useState, useEffect, useMemo } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
 import PortalHeader from '@/components/portal/PortalHeader';
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
-import { Open_Sans } from "next/font/google";
 
-const openSans = Open_Sans({
-    subsets: ["latin"],
-    display: "swap",
-    variable: "--font-open-sans",
-});
+export default function PortalLayout({ children }: { children: ReactNode }) {
+    const [loading, setLoading] = useState(true);
+    const [authorized, setAuthorized] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname() || '';
+    const supabase = useMemo(() => createClient(), []);
 
-export default async function PortalLayout({ children }: { children: ReactNode }) {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    useEffect(() => {
+        const checkAuth = async () => {
+            // Public paths that don't require authentication
+            const publicPaths = [
+                '/portal/account/login',
+                '/portal/account/register',
+                '/portal/account/admin-login',
+                '/portal/account/reset-password'
+            ];
 
-    const { data: profile } = await supabase
-        .from('profiles')
-        .select('student_id, first_name, avatar_url')
-        .eq('id', user?.id)
-        .single();
+            // Normalize path for matching (handle trailing slashes)
+            const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '');
+            const isPublicPath = publicPaths.some(p => normalizedPath === p);
+
+            console.log('Portal Auth Check:', { pathname, normalizedPath, isPublicPath });
+
+            try {
+                // 1. Check real Supabase Auth
+                const { data: { user: sbUser }, error: userError } = await supabase.auth.getUser();
+
+                console.log('[PortalLayout] Supabase User Check:', {
+                    hasUser: !!sbUser,
+                    userId: sbUser?.id,
+                    email: sbUser?.email,
+                    error: userError
+                });
+
+                if (sbUser) {
+                    // Even if we have a Supabase user, we verify the profile exists in DB
+                    const { data: prof, error: profError } = await supabase
+                        .from('profiles')
+                        .select('id, role')
+                        .eq('id', sbUser.id)
+                        .single();
+
+                    console.log('[PortalLayout] Profile Check:', {
+                        hasProfile: !!prof,
+                        role: prof?.role,
+                        error: profError
+                    });
+
+                    if (prof) {
+                        setAuthorized(true);
+                        setLoading(false);
+                        return;
+                    }
+                }
+
+                // 2. Database-Validated Session
+                // We now allow the Middleware to handle the primary protection.
+                // We keep the state update to show content when ready.
+
+                if (!isPublicPath && !sbUser) {
+                    // Only log warning, let middleware handle full redirects if simulated
+                    console.log('[PortalLayout] No session detected in Client Layout (Middleware should have caught this?)');
+                    // We can opt to NOT redirect here immediately to let the server action/middleware do its job
+                    // But if we truly have no user, we shouldn't show content.
+                    setLoading(false); // Stop loading, show nothing or allow access if middleware allows
+                } else {
+                    setLoading(false);
+                }
+            } catch (error) {
+                console.error("Portal auth check error:", error);
+                if (!isPublicPath) {
+                    router.push('/portal/account/login');
+                } else {
+                    setLoading(false);
+                }
+            }
+        };
+
+        checkAuth();
+    }, [pathname, router, supabase]);
+
+    if (loading && !authorized) {
+        return (
+            <div className="min-h-screen bg-white flex items-center justify-center font-open-sans">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-neutral-900"></div>
+            </div>
+        );
+    }
 
     return (
-        <div className={`min-h-screen bg-white flex flex-col ${openSans.className} text-base`} data-theme="portal">
-            <PortalHeader
-                userEmail={user?.email}
-                studentId={profile?.student_id}
-                avatarUrl={profile?.avatar_url}
-                firstName={profile?.first_name}
-            />
-            <main className="flex-1 container mx-auto px-4 py-8">
+        <div className={`min-h-screen bg-white flex flex-col font-open-sans text-base`} data-theme="portal">
+            <PortalHeader />
+            <main className="flex-1 container mx-auto px-4 py-4 md:py-8">
                 {children}
             </main>
             <footer className="bg-black text-white py-12">

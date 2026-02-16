@@ -28,8 +28,16 @@ export async function updateApplicationStatus(applicationId: string, status: App
             await generateAndStoreOfferLetter(applicationId);
         } catch (pdfError) {
             console.error('Failed to generate automated offer letter:', pdfError);
-            // We don't fail the status update, but the letter won't be there.
-            // In production, we might want a retry queue.
+        }
+    }
+
+    // TRIGGER LOGIC: Automatically generate Admission Letter on enrollment
+    if (status === 'ENROLLED') {
+        try {
+            const { generateAndStoreAdmissionLetter } = await import('./pdf-actions');
+            await generateAndStoreAdmissionLetter(applicationId);
+        } catch (pdfError) {
+            console.error('Failed to generate automated admission letter:', pdfError);
         }
     }
 
@@ -95,6 +103,15 @@ export async function createAdmissionOffer(applicationId: string, tuitionFee: nu
         throw new Error('Failed to create offer');
     }
 
+    // Trigger PDF Generation & Email
+    try {
+        const { generateAndStoreOfferLetter } = await import('./pdf-actions');
+        await generateAndStoreOfferLetter(applicationId);
+    } catch (pdfError) {
+        console.error('Failed to generate offer letter after manual creation:', pdfError);
+        // We don't throw here to avoid rolling back the offer creation, but we log the error.
+    }
+
     revalidatePath(`/admin/admissions/${applicationId}`);
     revalidatePath('/admin/admissions');
     revalidatePath('/portal/student/offer');
@@ -111,5 +128,17 @@ export async function regenerateOfferLetter(applicationId: string) {
     } catch (error: any) {
         console.error('Action Error: regenerateOfferLetter:', error);
         throw new Error(error.message || 'Failed to regenerate offer letter');
+    }
+}
+
+export async function generateAdmissionLetterAction(applicationId: string) {
+    try {
+        const { generateAndStoreAdmissionLetter } = await import('./pdf-actions');
+        const url = await generateAndStoreAdmissionLetter(applicationId);
+        revalidatePath(`/admin/admissions/${applicationId}`);
+        return { success: true, url };
+    } catch (error: any) {
+        console.error('Action Error: generateAdmissionLetterAction:', error);
+        throw new Error(error.message || 'Failed to generate admission letter');
     }
 }

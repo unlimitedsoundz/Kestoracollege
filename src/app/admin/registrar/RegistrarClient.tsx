@@ -1,8 +1,7 @@
 
 'use client';
 
-import { useState, useTransition, useEffect } from 'react';
-import { updateWindowStatus, finalizeGrade, updateStudentStatus, updateSemesterStatus, createSession, updateSession, deleteSession } from './actions';
+import { createClient } from '@/utils/supabase/client';
 import {
     ShieldCheck,
     Calendar,
@@ -46,7 +45,7 @@ export default function RegistrarClient({
     tuitionPayments = []
 }: RegistrarClientProps) {
     const [isMounted, setIsMounted] = useState(false);
-    const [isPending, startTransition] = useTransition();
+    const [isLoading, setIsLoading] = useState(false);
     const [activeTab, setActiveTab] = useState<'windows' | 'enrollments' | 'grades' | 'students' | 'calendar' | 'housing' | 'audit' | 'timetable' | 'tuition'>('windows');
     const [searchTerm, setSearchTerm] = useState('');
     const [moduleSearchTerm, setModuleSearchTerm] = useState('');
@@ -73,35 +72,91 @@ export default function RegistrarClient({
     }, []);
 
     const handleStatusUpdate = async (windowId: string, status: any) => {
-        startTransition(async () => {
-            await updateWindowStatus(windowId, status);
-        });
+        setIsLoading(true);
+        try {
+            const supabase = createClient();
+            const { error } = await supabase
+                .from('registration_windows')
+                .update({ status })
+                .eq('id', windowId);
+            if (error) throw error;
+            window.location.reload();
+        } catch (error: any) {
+            alert(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleFinalizeGrade = async (enrollmentId: string) => {
-        startTransition(async () => {
-            await finalizeGrade(enrollmentId);
-        });
+        setIsLoading(true);
+        try {
+            const supabase = createClient();
+            const { error } = await supabase
+                .from('module_enrollments')
+                .update({
+                    grade_status: 'FINAL',
+                    finalized_at: new Date().toISOString()
+                })
+                .eq('id', enrollmentId);
+            if (error) throw error;
+            window.location.reload();
+        } catch (error: any) {
+            alert(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleUpdateStudentStatus = async (studentId: string, status: string) => {
-        startTransition(async () => {
-            await updateStudentStatus(studentId, status);
-        });
+        setIsLoading(true);
+        try {
+            const supabase = createClient();
+            const { error } = await supabase
+                .from('students')
+                .update({ enrollment_status: status })
+                .eq('id', studentId);
+            if (error) throw error;
+            window.location.reload();
+        } catch (error: any) {
+            alert(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleUpdateSemesterStatus = async (semesterId: string, status: string) => {
-        startTransition(async () => {
-            await updateSemesterStatus(semesterId, status);
-        });
+        setIsLoading(true);
+        try {
+            const supabase = createClient();
+            const { error } = await supabase
+                .from('semesters')
+                .update({ status })
+                .eq('id', semesterId);
+            if (error) throw error;
+            window.location.reload();
+        } catch (error: any) {
+            alert(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleSaveSession = async () => {
-        startTransition(async () => {
+        setIsLoading(true);
+        try {
+            const supabase = createClient();
             if (editingSession) {
-                await updateSession(editingSession.id, sessionFormData);
+                const { error } = await supabase
+                    .from('class_sessions')
+                    .update(sessionFormData)
+                    .eq('id', editingSession.id);
+                if (error) throw error;
             } else {
-                await createSession(sessionFormData as any);
+                const { error } = await supabase
+                    .from('class_sessions')
+                    .insert(sessionFormData);
+                if (error) throw error;
             }
             setShowSessionModal(false);
             setEditingSession(null);
@@ -114,14 +169,30 @@ export default function RegistrarClient({
                 location_type: 'CAMPUS',
                 location_detail: ''
             });
-        });
+            window.location.reload();
+        } catch (error: any) {
+            alert(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleDeleteSession = async (id: string) => {
         if (!confirm('Are you sure you want to delete this session?')) return;
-        startTransition(async () => {
-            await deleteSession(id);
-        });
+        setIsLoading(true);
+        try {
+            const supabase = createClient();
+            const { error } = await supabase
+                .from('class_sessions')
+                .delete()
+                .eq('id', id);
+            if (error) throw error;
+            window.location.reload();
+        } catch (error: any) {
+            alert(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const filteredStudents = students.filter(s =>
@@ -202,14 +273,14 @@ export default function RegistrarClient({
                                         <div className="flex gap-2 pt-6 border-t border-neutral-50">
                                             <button
                                                 onClick={() => handleStatusUpdate(window.id, 'OPEN')}
-                                                disabled={isPending || window.status === 'OPEN'}
+                                                disabled={isLoading || window.status === 'OPEN'}
                                                 className="px-4 py-2 bg-primary text-white rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-700 transition-all disabled:opacity-50"
                                             >
                                                 Open
                                             </button>
                                             <button
                                                 onClick={() => handleStatusUpdate(window.id, 'CLOSED')}
-                                                disabled={isPending || window.status === 'CLOSED'}
+                                                disabled={isLoading || window.status === 'CLOSED'}
                                                 className="px-4 py-2 bg-neutral-900 text-white rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all disabled:opacity-50"
                                             >
                                                 Close
@@ -415,7 +486,7 @@ export default function RegistrarClient({
                                             <td className="px-6 py-4 text-right">
                                                 <button
                                                     onClick={() => handleFinalizeGrade(grade.id)}
-                                                    disabled={isPending}
+                                                    disabled={isLoading}
                                                     className="px-4 py-2 bg-black text-white rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-neutral-800 transition-all disabled:opacity-50 inline-flex items-center gap-2"
                                                 >
                                                     <ShieldCheck size={14} weight="bold" /> Approve & Seal
@@ -495,7 +566,7 @@ export default function RegistrarClient({
                                                 <div className="flex justify-end gap-2">
                                                     <button
                                                         onClick={() => handleUpdateStudentStatus(student.id, student.enrollment_status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE')}
-                                                        disabled={isPending}
+                                                        disabled={isLoading}
                                                         className={`p-2 rounded-lg transition-all ${student.enrollment_status === 'ACTIVE' ? 'text-red-400 hover:bg-red-50' : 'text-emerald-400 hover:bg-emerald-50'}`}
                                                     >
                                                         <ShieldCheck size={16} weight="bold" />
@@ -533,7 +604,7 @@ export default function RegistrarClient({
                                         </span>
                                         <button
                                             onClick={() => handleUpdateSemesterStatus(semester.id, semester.status === 'ACTIVE' ? 'COMPLETED' : 'ACTIVE')}
-                                            disabled={isPending}
+                                            disabled={isLoading}
                                             className="p-2 text-neutral-400 hover:text-black hover:bg-neutral-100 rounded-lg transition-all"
                                         >
                                             <Settings size={14} />

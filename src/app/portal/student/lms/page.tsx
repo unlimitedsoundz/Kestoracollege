@@ -1,35 +1,85 @@
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { CaretLeft as ArrowLeft, ArrowSquareOut as ExternalLink, BookOpen } from "@phosphor-icons/react/dist/ssr";
 import { formatToDDMMYYYY } from '@/utils/date';
 
-export default async function LmsPage() {
-    const supabase = await createClient();
+export default function LmsPage() {
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState<{
+        student: any;
+        lmsAccess: any;
+    } | null>(null);
+    const router = useRouter();
+    const supabase = createClient();
 
-    // 1. Auth & Student Context
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) redirect('/portal/account/login');
+    useEffect(() => {
+        const fetchLmsData = async () => {
+            try {
+                // 1. Primary Auth Check (Supabase)
+                const { data: { user: sbUser } } = await supabase.auth.getUser();
+                let currentUserEmail = sbUser?.email;
+                let currentUserId = sbUser?.id;
 
-    const { data: student } = await supabase
-        .from('students')
-        .select('id, student_id, institutional_email')
-        .eq('user_id', user.id)
-        .single();
+                // 2. Secondary Auth Check (LocalStorage Fallback)
+                if (!sbUser) {
+                    const savedUser = localStorage.getItem('sykli_user');
+                    if (savedUser) {
+                        const localProfile = JSON.parse(savedUser);
+                        currentUserEmail = localProfile.email;
+                        currentUserId = localProfile.id;
+                    }
+                }
 
-    // 2. Fetch LMS Access from IT Materials
-    let lmsAccess = null;
-    if (student) {
-        const { data: itAccess } = await supabase
-            .from('student_it_access')
-            .select('*, asset:it_assets(*)')
-            .eq('student_id', student.id)
-            .eq('asset.asset_type', 'LMS')
-            .eq('status', 'ACTIVE')
-            .single();
+                if (!currentUserEmail) {
+                    router.push('/portal/account/login');
+                    return;
+                }
 
-        lmsAccess = itAccess;
+                const { data: student } = await supabase
+                    .from('students')
+                    .select('id, student_id, institutional_email')
+                    .eq('user_id', currentUserId || '')
+                    .single();
+
+                let lmsAccess = null;
+                if (student) {
+                    const { data: itAccess } = await supabase
+                        .from('student_it_access')
+                        .select('*, asset:it_assets(*)')
+                        .eq('student_id', student.id)
+                        .eq('asset.asset_type', 'LMS')
+                        .eq('status', 'ACTIVE')
+                        .single();
+
+                    lmsAccess = itAccess;
+                }
+
+                setData({ student, lmsAccess });
+            } catch (err) {
+                console.error('CRITICAL: Fetching LMS data failed', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchLmsData();
+    }, [router, supabase]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-neutral-50/50 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-neutral-900"></div>
+            </div>
+        );
     }
+
+    if (!data) return null;
+
+    const { student, lmsAccess } = data;
 
     return (
         <div className="min-h-screen bg-neutral-50/50 p-4 md:p-8 font-sans">

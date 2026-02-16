@@ -4,116 +4,183 @@ import { formatDateToWords } from '@/utils/word-converter';
 
 const styles = StyleSheet.create({
     page: {
-        padding: 50,
+        padding: 60,
         fontFamily: 'Helvetica',
         fontSize: 10,
-        lineHeight: 1.5,
-        color: '#333',
+        lineHeight: 1.6,
+        color: '#1a1a1a',
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottom: '2pt solid #000',
+        alignItems: 'flex-start',
+        marginBottom: 40,
+        borderBottom: '1pt solid #e5e5e5',
         paddingBottom: 20,
-        marginBottom: 30,
-        marginLeft: 0,
-        paddingLeft: 0,
     },
     logo: {
-        width: 120,
+        width: 140,
     },
-    collegeInfo: {
+    contactInfo: {
         textAlign: 'right',
         fontSize: 8,
         color: '#666',
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
     },
-    collegeName: {
-        fontSize: 12,
+    mainTitle: {
+        fontSize: 24,
         fontWeight: 'bold',
-        color: '#000',
-        marginBottom: 2,
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        marginBottom: 40,
+        textTransform: 'uppercase',
+        letterSpacing: 3,
         textAlign: 'center',
-        marginBottom: 30,
-        textTransform: 'uppercase',
-        letterSpacing: 2,
+        color: '#000',
     },
-    dateIssue: {
-        marginBottom: 20,
-        fontWeight: 'bold',
-    },
-    section: {
-        marginBottom: 15,
-    },
-    label: {
-        fontWeight: 'bold',
-        width: 120,
-    },
-    row: {
-        flexDirection: 'row',
-        marginBottom: 5,
-    },
-    content: {
-        marginTop: 20,
-        textAlign: 'justify',
-    },
-    offerStatement: {
-        marginBottom: 15,
-    },
-    instructions: {
-        marginTop: 20,
-        padding: 10,
-        backgroundColor: '#f9f9f9',
-        borderLeft: '3pt solid #000',
-    },
-    instructionTitle: {
-        fontWeight: 'bold',
-        marginBottom: 5,
-        textTransform: 'uppercase',
-        fontSize: 9,
-    },
-    footer: {
-        position: 'absolute',
-        bottom: 50,
-        left: 50,
-        right: 50,
-        borderTop: '1pt solid #eee',
-        paddingTop: 10,
+    metaSection: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        fontSize: 8,
-        color: '#999',
+        marginBottom: 30,
+        padding: 15,
+        backgroundColor: '#f8f8f8',
+        borderRadius: 2,
     },
-    signatureSection: {
+    metaItem: {
+        flexDirection: 'column',
+    },
+    metaLabel: {
+        fontSize: 7,
+        fontWeight: 'bold',
+        color: '#999',
+        textTransform: 'uppercase',
+        marginBottom: 2,
+    },
+    metaValue: {
+        fontSize: 10,
+        fontWeight: 'bold',
+        color: '#000',
+    },
+    section: {
+        marginBottom: 25,
+    },
+    sectionTitle: {
+        fontSize: 9,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        letterSpacing: 1.5,
+        color: '#000',
+        marginBottom: 10,
+        borderBottom: '0.5pt solid #eee',
+        paddingBottom: 4,
+    },
+    grid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginBottom: 10,
+    },
+    gridItem: {
+        width: '50%',
+        marginBottom: 8,
+    },
+    gridLabel: {
+        fontSize: 7,
+        color: '#666',
+        textTransform: 'uppercase',
+        marginBottom: 1,
+    },
+    gridValue: {
+        fontSize: 10,
+        fontWeight: 'bold',
+    },
+    highlightBox: {
+        backgroundColor: '#000',
+        padding: 20,
+        color: '#fff',
+        marginBottom: 25,
+        borderRadius: 2,
+    },
+    highlightText: {
+        fontSize: 11,
+        textAlign: 'center',
+        fontStyle: 'italic',
+    },
+    table: {
+        width: '100%',
+        marginTop: 10,
+        borderTop: '1pt solid #eee',
+    },
+    tableHeader: {
+        flexDirection: 'row',
+        borderBottom: '1pt solid #eee',
+        paddingVertical: 8,
+        backgroundColor: '#fafafa',
+    },
+    tableRow: {
+        flexDirection: 'row',
+        borderBottom: '1pt solid #eee',
+        paddingVertical: 8,
+    },
+    tableCellLabel: {
+        flex: 2,
+        paddingLeft: 10,
+    },
+    tableCellValue: {
+        flex: 1,
+        textAlign: 'right',
+        paddingRight: 10,
+        fontWeight: 'bold',
+    },
+    footerContainer: {
         marginTop: 40,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+    },
+    signatureBlock: {
+        width: 200,
     },
     signatureImage: {
-        width: 150,
+        width: 140,
         marginBottom: 5,
     },
-    signOff: {
+    signatoryName: {
+        fontSize: 11,
         fontWeight: 'bold',
-        marginTop: 10,
+        textTransform: 'uppercase',
+    },
+    signatoryTitle: {
+        fontSize: 7,
+        color: '#666',
+        textTransform: 'uppercase',
+        letterSpacing: 1,
+    },
+    disclaimer: {
+        marginTop: 30,
+        fontSize: 7,
+        color: '#999',
+        textAlign: 'justify',
+        fontStyle: 'italic',
+        lineHeight: 1.4,
     }
 });
 
 interface OfferLetterProps {
     data: {
+        offer_reference: string;
         full_name: string;
         student_id: string;
         date_of_birth: string;
         program: string;
+        degree_level: string;
+        intake: string;
+        academic_year: string;
         school: string;
         course: string;
         program_length: string;
         total_ects: number;
         issue_date: string;
+        expiry_date: string;
         tuition_fee?: number;
-        payment_deadline?: string;
-        offer_type?: 'DEPOSIT' | 'FULL_TUITION' | 'FIRST_YEAR' | 'FULL_PROGRAM';
         discount_amount?: number;
         logo_path?: string;
         signature_path?: string;
@@ -123,133 +190,136 @@ interface OfferLetterProps {
 export const OfferLetterPDF = ({ data }: OfferLetterProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
-            {/* Header */}
+            {/* Header Area */}
             <View style={styles.header}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    {data.logo_path && (
-                        <Image
-                            src={data.logo_path}
-                            style={styles.logo}
-                        />
-                    )}
+                <View>
+                    {data.logo_path && <Image src={data.logo_path} style={styles.logo} />}
                 </View>
-                <View style={styles.collegeInfo}>
-                    <Text style={styles.collegeName}>SYKLI College</Text>
+                <View style={styles.contactInfo}>
+                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 10, marginBottom: 4 }}>SYKLI College</Text>
                     <Text>Pohjoisesplanadi 51</Text>
-                    <Text>00150 Helsinki, Uusimaa</Text>
-                    <Text>Finland</Text>
-                    <Text>admissions@syklicollege.fi</Text>
+                    <Text>00150 Helsinki, Finland</Text>
+                    <Text>Website: https://syklicollege.fi</Text>
+                    <Text>Email: admissions@syklicollege.fi</Text>
                 </View>
             </View>
 
-            {/* Title */}
-            <Text style={styles.title}>Letter of Offer</Text>
+            {/* Title Section */}
+            <Text style={styles.mainTitle}>Official Letter of Offer</Text>
 
-            {/* Date of Issue */}
+            {/* Meta Data Box */}
+            <View style={styles.metaSection}>
+                <View style={styles.metaItem}>
+                    <Text style={styles.metaLabel}>Date Issued</Text>
+                    <Text style={styles.metaValue}>{data.issue_date}</Text>
+                </View>
+                <View style={styles.metaItem}>
+                    <Text style={styles.metaLabel}>Unique Offer Reference Number</Text>
+                    <Text style={styles.metaValue}>{data.offer_reference}</Text>
+                </View>
+                <View style={styles.metaItem}>
+                    <Text style={styles.metaLabel}>Application ID</Text>
+                    <Text style={styles.metaValue}>{data.student_id}</Text>
+                </View>
+            </View>
+
+            {/* Applicant & Program Info */}
             <View style={styles.section}>
-                <Text style={styles.dateIssue}>Date of Issue: {data.issue_date}</Text>
-            </View>
-
-            {/* Student Details */}
-            <View style={styles.section}>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Full Name:</Text>
-                    <Text>{data.full_name}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Student ID:</Text>
-                    <Text>{data.student_id}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Date of Birth:</Text>
-                    <Text>{formatDateToWords(data.date_of_birth)}</Text>
-                </View>
-            </View>
-
-            {/* Programme Information */}
-            <View style={styles.section}>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Programme Title:</Text>
-                    <Text>{data.program}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>School / Faculty:</Text>
-                    <Text>{data.school}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Course:</Text>
-                    <Text>{data.course}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Programme Duration:</Text>
-                    <Text>{data.program_length}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Total Credits (ECTS):</Text>
-                    <Text>{data.total_ects}</Text>
-                </View>
-            </View>
-
-            {/* Financial Terms */}
-            {data.tuition_fee && (
-                <View style={[styles.section, { borderTop: '1pt solid #eee', paddingTop: 10, marginTop: 10 }]}>
-                    <Text style={[styles.label, { marginBottom: 5, fontSize: 10, textTransform: 'uppercase' }]}>Financial Terms & Requirements</Text>
-                    <View style={styles.row}>
-                        <Text style={styles.label}>Tuition Payment Plan:</Text>
-                        <Text>{data.offer_type === 'FULL_PROGRAM' ? 'Full Programme Degree (All Years)' : 'Initial Year Tuition'}</Text>
+                <Text style={styles.sectionTitle}>Applicant & Programme Details</Text>
+                <View style={styles.grid}>
+                    <View style={styles.gridItem}>
+                        <Text style={styles.gridLabel}>Full Name (Passport Match)</Text>
+                        <Text style={styles.gridValue}>{data.full_name}</Text>
                     </View>
-                    <View style={styles.row}>
-                        <Text style={styles.label}>Total Amount Due:</Text>
-                        <Text>€{data.tuition_fee.toLocaleString()} EUR</Text>
+                    <View style={styles.gridItem}>
+                        <Text style={styles.gridLabel}>Intake & Year</Text>
+                        <Text style={styles.gridValue}>{data.intake} {data.academic_year}</Text>
                     </View>
-                    {data.discount_amount && data.discount_amount > 0 ? (
-                        <View style={styles.row}>
-                            <Text style={styles.label}>Early Payment Discount:</Text>
-                            <Text>€{data.discount_amount.toLocaleString()} EUR Applied</Text>
+                    <View style={styles.gridItem}>
+                        <Text style={styles.gridLabel}>Intended Programme</Text>
+                        <Text style={styles.gridValue}>{data.program}</Text>
+                    </View>
+                    <View style={styles.gridItem}>
+                        <Text style={styles.gridLabel}>Degree Level</Text>
+                        <Text style={styles.gridValue}>{data.degree_level}</Text>
+                    </View>
+                </View>
+            </View>
+
+            {/* Formal Offer Statement (LOCKED WORDING) */}
+            <View style={styles.highlightBox}>
+                <Text style={styles.highlightText}>
+                    “We are pleased to inform you that you have been offered a place in the above-named programme at SYKLI College, subject to the conditions outlined in this letter.”
+                </Text>
+            </View>
+
+            {/* Conditions of Offer */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Conditions of Offer</Text>
+                <Text style={{ fontSize: 9, marginBottom: 5 }}>This offer is conditional upon acceptance and fulfillment of all stated requirements:</Text>
+                <View style={{ marginLeft: 10 }}>
+                    <Text style={{ fontSize: 8 }}>• Formal acceptance of this offer via the student portal.</Text>
+                    <Text style={{ fontSize: 8 }}>• Payment of required tuition fees by the specified deadline.</Text>
+                    <Text style={{ fontSize: 8 }}>• Submission of any outstanding original documents (if applicable).</Text>
+                </View>
+                <Text style={{ fontSize: 8, fontStyle: 'italic', marginTop: 8 }}>
+                    “This offer is conditional upon acceptance and fulfillment of all stated requirements.”
+                </Text>
+            </View>
+
+            {/* Tuition Information (INFORMATIONAL ONLY) */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Tuition & Financial Information (Informational Only)</Text>
+                <View style={styles.table}>
+                    <View style={styles.tableRow}>
+                        <Text style={styles.tableCellLabel}>Standard Annual Tuition Fee</Text>
+                        <Text style={styles.tableCellValue}>€{((data.tuition_fee || 0) + (data.discount_amount || 0)).toLocaleString()} EUR</Text>
+                    </View>
+                    {data.discount_amount ? (
+                        <View style={styles.tableRow}>
+                            <Text style={styles.tableCellLabel}>Early-bird Discount (First Academic Year only)</Text>
+                            <Text style={[styles.tableCellValue, { color: '#059669' }]}>- €{data.discount_amount.toLocaleString()} EUR</Text>
                         </View>
                     ) : null}
-                    <View style={styles.row}>
-                        <Text style={styles.label}>Payment Deadline:</Text>
-                        <Text>{data.payment_deadline ? formatDateToWords(data.payment_deadline) : 'As per portal'}</Text>
+                    <View style={[styles.tableRow, { backgroundColor: '#fdfdfd' }]}>
+                        <Text style={[styles.tableCellLabel, { fontWeight: 'bold' }]}>Amount Due to Secure Admission</Text>
+                        <Text style={[styles.tableCellValue, { fontSize: 11 }]}>€{data.tuition_fee?.toLocaleString()} EUR</Text>
                     </View>
                 </View>
-            )}
-
-            {/* Offer Statement */}
-            <View style={styles.content}>
-                <Text style={styles.offerStatement}>
-                    We are pleased to inform you that, following a comprehensive review of your application, you have been offered admission to the above-mentioned programme at SYKLI College.
-                </Text>
-                <Text style={styles.offerStatement}>
-                    This offer constitutes formal notification of your provisional acceptance into the programme, subject to your acceptance of this offer and compliance with all academic, administrative, and regulatory requirements of SYKLI College.
-                </Text>
-                <Text style={styles.offerStatement}>
-                    The programme is designed to provide a rigorous academic and practical foundation aligned with industry and professional standards. Upon successful completion of the programme, you will be awarded the appropriate qualification in accordance with the academic regulations of SYKLI College and the relevant educational authorities.
-                </Text>
-                <Text style={styles.offerStatement}>
-                    This offer is valid only for the specified intake and is conditional upon the accuracy and completeness of the information provided in your application.
-                </Text>
             </View>
 
-            {/* Acceptance Instructions */}
-            <View style={styles.instructions}>
-                <Text style={styles.instructionTitle}>Acceptance Instructions</Text>
-                <Text>• The student must accept the offer via the student portal.</Text>
-                <Text>• Students must adhere to the SYKLI College Code of Conduct.</Text>
-                <Text>• Acceptance deadline applies.</Text>
-                <Text>• Failure to accept results in automatic withdrawal.</Text>
-                <Text>• Refund requests are subject to the official Refund & Withdrawal Policy.</Text>
-                <Text>• Rejection permanently closes the application.</Text>
+            {/* Next Steps & Validity */}
+            <View style={styles.grid}>
+                <View style={[styles.gridItem, { width: '60%' }]}>
+                    <Text style={styles.sectionTitle}>Next Steps</Text>
+                    <Text style={{ fontSize: 8 }}>1. Accept offer via the student portal.</Text>
+                    <Text style={{ fontSize: 8 }}>2. Proceed to tuition payment.</Text>
+                    <Text style={{ fontSize: 8 }}>3. Admission letter issued after payment confirmation.</Text>
+                </View>
+                <View style={[styles.gridItem, { width: '40%' }]}>
+                    <Text style={styles.sectionTitle}>Offer Validity</Text>
+                    <Text style={{ fontSize: 10, fontWeight: 'bold' }}>{data.expiry_date}</Text>
+                    <Text style={{ fontSize: 7, color: '#666' }}>This offer will lapse automatically if not accepted by the specified date.</Text>
+                </View>
             </View>
 
-            {/* Closing & Signature */}
-            <View style={styles.signatureSection}>
-                <Image
-                    src={data.signature_path}
-                    style={styles.signatureImage}
-                />
-                <Text style={styles.signOff}>Admissions Office</Text>
-                <Text>SYKLI College</Text>
+            {/* Signature & Legal */}
+            <View style={styles.footerContainer}>
+                <View style={styles.signatureBlock}>
+                    {data.signature_path && <Image src={data.signature_path} style={styles.signatureImage} />}
+                    <Text style={styles.signatoryName}>Admissions Office</Text>
+                    <Text style={styles.signatoryTitle}>SYKLI College | Finland</Text>
+                </View>
+                <View style={{ width: '40%', textAlign: 'right' }}>
+                    <Text style={{ fontSize: 7, color: '#999' }}>Verified Document ID</Text>
+                    <Text style={{ fontSize: 7, color: '#000', fontFamily: 'Courier' }}>{data.offer_reference}</Text>
+                </View>
+            </View>
+
+            <View style={styles.disclaimer}>
+                <Text>
+                    LEGAL DISCLAIMER: “This Offer Letter does not constitute confirmation of enrollment. Official admission is granted only after acceptance of the offer and confirmation of required tuition payment.”
+                </Text>
             </View>
         </Page>
     </Document>

@@ -1,44 +1,59 @@
-import { createClient } from '@/utils/supabase/server';
-import { CaretLeft as ArrowLeft } from "@phosphor-icons/react/dist/ssr";
+'use client';
+
+import { createClient } from '@/utils/supabase/client';
+import { CaretLeft as ArrowLeft, CircleNotch as Loader2 } from "@phosphor-icons/react";
 import Link from 'next/link';
 import FacultyForm from './FacultyForm';
+import { useState, useEffect, use } from 'react';
 
-export const revalidate = 0;
-
-export default async function FacultyEditorPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
+export default function FacultyEditorPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
+    const params = use(paramsPromise);
+    const id = params.id;
     const isNew = id === 'new';
-    const supabase = await createClient();
+    const [facultyMember, setFacultyMember] = useState<any>(null);
+    const [schools, setSchools] = useState<any[]>([]);
+    const [departments, setDepartments] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const supabase = createClient();
 
-    let facultyMember: any = null;
-    if (!isNew) {
-        const { data } = await supabase.from('Faculty').select('*').eq('id', id).single();
-        facultyMember = data;
-    }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data: schoolsData } = await supabase.from('School').select('id, name');
+                const { data: deptsData } = await supabase.from('Department').select('id, name, schoolId');
 
-    // Fetch dependencies
-    let schools: { id: string; name: string }[] = [];
-    let departments: { id: string; name: string; schoolId: string }[] = [];
+                setSchools(schoolsData || []);
+                setDepartments(deptsData || []);
 
-    try {
-        const { data: schoolsData, error: sErr } = await supabase.from('School').select('id, name');
-        if (sErr) throw sErr;
-        schools = schoolsData || [];
+                if (!isNew) {
+                    const { data: facultyData } = await supabase.from('Faculty').select('*').eq('id', id).single();
+                    setFacultyMember(facultyData);
+                }
+            } catch (error) {
+                console.error("Error fetching faculty editor data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-        const { data: departmentsData, error: dErr } = await supabase.from('Department').select('id, name, schoolId, headOfDepartmentId');
-        if (dErr) throw dErr;
-        departments = departmentsData || [];
-    } catch (error) {
-        console.error('FacultyEditorPage Data Fetch Error:', error);
+        fetchData();
+    }, [id, isNew]);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-20 min-h-[60vh]">
+                <Loader2 className="animate-spin text-neutral-400" size={40} weight="bold" />
+            </div>
+        );
     }
 
     return (
-        <div className="max-w-4xl mx-auto pb-24 pt-12 pl-12">
+        <div className="max-w-4xl mx-auto pb-24 pt-12 pl-12 animate-in fade-in duration-500">
             <div className="mb-8 flex items-center justify-between">
                 <Link href="/admin/faculty" className="flex items-center gap-2 text-neutral-500 hover:text-black transition-colors font-bold">
                     <ArrowLeft size={18} weight="bold" /> Back to Faculty
                 </Link>
-                <h1 className="text-3xl font-bold">{isNew ? 'Create New Member' : 'Edit Faculty Member'}</h1>
+                <h1 className="text-3xl font-bold uppercase tracking-tight text-neutral-900">{isNew ? 'Create New Member' : 'Edit Faculty Member'}</h1>
             </div>
 
             <FacultyForm

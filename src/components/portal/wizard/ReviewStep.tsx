@@ -1,7 +1,4 @@
-'use client';
-
 import { useState } from 'react';
-import { Application } from '@/types/database';
 import {
     CheckCircle,
     User,
@@ -17,8 +14,9 @@ import {
     WarningCircle as AlertCircle,
     CaretRight
 } from "@phosphor-icons/react/dist/ssr";
-import { submitApplication } from '@/app/portal/actions';
+import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
+import { Application } from '@/types/database';
 
 interface Props {
     application: Application & {
@@ -38,18 +36,35 @@ export default function ReviewStep({ application }: Props) {
     const education = application.education_history as any || {};
     const motivation = application.motivation as any || {};
 
+    const supabase = createClient();
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!isAttested) return;
 
         setIsSubmitting(true);
         try {
-            await submitApplication(application.id);
+            // 1. Basic validation (optional client-side)
+            if (!application.personal_info || !application.contact_details || !application.education_history) {
+                throw new Error('Please complete all required sections before submitting.');
+            }
+
+            // 2. Update status
+            const { error } = await supabase
+                .from('applications')
+                .update({
+                    status: 'SUBMITTED',
+                    submitted_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                })
+                .eq('id', application.id);
+
+            if (error) throw error;
+
             router.push('/portal/dashboard');
-            router.refresh();
-        } catch (error) {
+        } catch (error: any) {
             console.error('Submission failed:', error);
-            alert('Failed to submit application. Please try again.');
+            alert(error.message || 'Failed to submit application. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
@@ -127,11 +142,11 @@ export default function ReviewStep({ application }: Props) {
                 {/* Motivation Section */}
                 <div className="bg-neutral-50/50 p-6 rounded-2xl border border-neutral-100">
                     <h4 className="text-xs font-semibold uppercase tracking-widest text-black mb-6 pb-2">
-                        Motivation & Language
+                        Motivation Letter / Statement of Purpose
                     </h4>
                     <div className="space-y-4">
                         <div>
-                            <div className="text-[9px] font-semibold uppercase tracking-widest text-[#2d2d2d] mb-1">Statement of Purpose</div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-3">Motivation Letter / Statement of Purpose</h4>
                             <div className="text-xs text-neutral-700 font-medium leading-relaxed bg-white p-4 rounded border border-neutral-100 whitespace-pre-wrap break-words">
                                 {motivation.statementOfPurpose || "No statement provided."}
                             </div>
@@ -149,7 +164,7 @@ export default function ReviewStep({ application }: Props) {
                         Uploaded Documents
                     </h4>
                     <div className="flex flex-wrap gap-2">
-                        {application.documents?.map((doc, idx) => (
+                        {application.documents?.map((doc: any, idx: number) => (
                             <div key={idx} className="bg-white px-3 py-1.5 rounded-lg border border-neutral-100 text-xs font-semibold text-primary uppercase tracking-widest shadow-sm">
                                 {doc.type.replace('_', ' ')}
                             </div>

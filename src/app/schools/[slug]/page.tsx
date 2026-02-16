@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { createClient } from '@/utils/supabase/server';
 import { School, Department, Course } from '@/types/database';
 import { notFound } from 'next/navigation';
 import { ArrowRight, PencilSimple as Edit } from "@phosphor-icons/react/dist/ssr";
@@ -17,7 +16,7 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
     const resolvedParams = await params;
     const { slug } = resolvedParams;
-    const supabase = await createClient();
+    const supabase = createStaticClient();
 
     const { data: school } = await supabase
         .from('School')
@@ -47,13 +46,18 @@ interface ExtendedSchool extends School {
 
 import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
 
+import { createStaticClient } from '@/lib/supabase/static';
+
+
+export async function generateStaticParams() {
+    const supabase = createStaticClient();
+    const { data: schools } = await supabase.from('School').select('slug');
+    return schools?.map(({ slug }) => ({ slug })) || [];
+}
+
 export default async function SchoolDetails({ params }: Props) {
     const { slug } = await params;
-    const supabase = await createClient();
-
-    // Check if user is admin
-    const { data: { user } } = await supabase.auth.getUser();
-    const isAdmin = !!user; // Simplified check for now
+    const supabase = createStaticClient();
 
     // Fetch school with departments and (optionally) top courses via filtering
     const { data: schoolData, error } = await supabase

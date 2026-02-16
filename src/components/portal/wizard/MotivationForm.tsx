@@ -24,9 +24,10 @@ type MotivationValues = z.infer<typeof motivationSchema>;
 interface Props {
     applicationId: string;
     initialData?: any;
+    onUpdate?: () => Promise<void>;
 }
 
-export default function MotivationForm({ applicationId, initialData }: Props) {
+export default function MotivationForm({ applicationId, initialData, onUpdate }: Props) {
     const [isSaving, setIsSaving] = useState(false);
     const router = useRouter();
 
@@ -47,7 +48,8 @@ export default function MotivationForm({ applicationId, initialData }: Props) {
         setIsSaving(true);
         try {
             await updateApplicationStep(applicationId, 'motivation', data);
-            router.push('?step=6');
+            if (onUpdate) await onUpdate();
+            router.push(`?id=${applicationId}&step=6`);
             router.refresh();
         } catch (error) {
             console.error('Failed to save:', error);
@@ -61,7 +63,7 @@ export default function MotivationForm({ applicationId, initialData }: Props) {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-4">
                 <div>
-                    <label className="block text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-1">Statement of Purpose</label>
+                    <label className="block text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-1">Motivation Letter / Statement of Purpose</label>
                     <p className="text-xs text-[#2d2d2d] mb-2 leading-relaxed">
                         Tell us why you want to study at Sykli College and why you are a good fit for this programme.
                     </p>
@@ -122,7 +124,7 @@ export default function MotivationForm({ applicationId, initialData }: Props) {
             <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
                 <div className="flex items-center gap-4">
                     <Link
-                        href="?step=4"
+                        href={`?id=${applicationId}&step=4`}
                         className="text-[#2d2d2d] hover:text-black font-semibold text-xs uppercase tracking-widest transition-colors"
                     >
                         Back

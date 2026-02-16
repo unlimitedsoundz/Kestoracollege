@@ -46,7 +46,7 @@ export default function SubjectsClient({ subjects }: SubjectsClientProps) {
                     <h1 className="text-3xl font-bold text-neutral-900">Manage Subjects</h1>
                     <p className="text-neutral-500 text-sm mt-1">Total subjects: {subjects.length}</p>
                 </div>
-                <Link href="/admin/subjects/new" className="bg-neutral-900 text-white px-4 py-2 rounded-lg font-bold hover:bg-neutral-800 transition-colors">
+                <Link href="/admin/subjects/edit" className="bg-neutral-900 text-white px-4 py-2 rounded-lg font-bold hover:bg-neutral-800 transition-colors">
                     + New Subject
                 </Link>
             </div>
@@ -101,7 +101,7 @@ export default function SubjectsClient({ subjects }: SubjectsClientProps) {
                                 </td>
                                 <td className="p-4">
                                     <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <Link href={`/admin/subjects/${subject.id}`} className="p-2 hover:bg-neutral-200 rounded-lg transition-colors text-neutral-600">
+                                        <Link href={`/admin/subjects/edit?id=${subject.id}`} className="p-2 hover:bg-neutral-200 rounded-lg transition-colors text-neutral-600">
                                             <Edit size={16} weight="bold" />
                                         </Link>
                                         <form action={async () => {

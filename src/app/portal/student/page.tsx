@@ -1,59 +1,85 @@
+'use client';
 
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
 import AcademicDashboard from '@/components/portal/AcademicDashboard';
 
+export default function StudentPortalPage() {
+    const [student, setStudent] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+    const router = useRouter();
+    const supabase = createClient();
 
-export default async function StudentPortalPage() {
-    const supabase = await createClient();
-    let user = null;
-    try {
-        console.log('--- DEBUG: Supabase Auth Fetch Starting ---');
-        console.log('URL:', process.env.NEXT_PUBLIC_SUPABASE_URL ? 'Defined' : 'Missing');
-        console.log('Key:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? 'Defined' : 'Missing');
+    useEffect(() => {
+        const fetchStudentData = async () => {
+            try {
+                // 1. Primary Auth Check (Supabase)
+                const { data: { user: sbUser } } = await supabase.auth.getUser();
+                let currentUserEmail = sbUser?.email;
+                let currentUserId = sbUser?.id;
 
-        const { data } = await supabase.auth.getUser();
-        user = data.user;
+                // 2. Secondary Auth Check (LocalStorage Fallback)
+                if (!sbUser) {
+                    const savedUser = localStorage.getItem('sykli_user');
+                    if (savedUser) {
+                        const localProfile = JSON.parse(savedUser);
+                        currentUserEmail = localProfile.email;
+                        currentUserId = localProfile.id;
+                    }
+                }
 
-        console.log('Auth result user ID:', user?.id || 'No User');
-    } catch (err: any) {
-        console.error('CRITICAL: supabase.auth.getUser() fetch failed!', {
-            message: err.message,
-            cause: err.cause,
-            stack: err.stack,
-            env_url: process.env.NEXT_PUBLIC_SUPABASE_URL
-        });
+                if (!currentUserEmail) {
+                    router.push('/portal/account/login');
+                    return;
+                }
+
+                // Fetch Student Record (SIS) with relations
+                const { data: studentData, error } = await supabase
+                    .from('students')
+                    .select(`
+                        *,
+                        program:Course(*),
+                        user:profiles(*),
+                        application:applications(*)
+                    `)
+                    .eq('user_id', currentUserId || '')
+                    .order('created_at', { ascending: false })
+                    .limit(1)
+                    .maybeSingle();
+
+                if (error) {
+                    console.error('Error fetching student record:', error.message, error.details);
+                    router.push('/portal/dashboard');
+                    return;
+                }
+
+                if (!studentData) {
+                    // If no student record, redirect back to application dashboard
+                    // This is a normal state for applicants who haven't been enrolled yet
+                    router.push('/portal/dashboard');
+                } else {
+                    setStudent(studentData);
+                }
+            } catch (err) {
+                console.error('CRITICAL: Fetching student data failed', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchStudentData();
+    }, [router, supabase]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-neutral-50/50 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-neutral-900"></div>
+            </div>
+        );
     }
 
-    if (!user) {
-        console.log('No user found, redirecting to login...');
-        redirect('/portal/account/login');
-    }
-
-    // Fetch Student Record (SIS) with relations
-    const { data: student, error } = await supabase
-        .from('students')
-        .select(`
-            *,
-            program:Course(*),
-            user:profiles(*),
-            application:applications(*)
-        `)
-        .eq('user_id', user.id)
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
-
-    if (error) {
-        console.error('Error fetching student record:', error);
-    }
-    console.log('Student data fetch result:', student ? 'Found' : 'Null', 'User ID:', user.id);
-
-    if (!student) {
-        // If no student record, redirect back to application dashboard
-        redirect('/portal/dashboard');
-    }
+    if (!student) return null;
 
     return <AcademicDashboard student={student} />;
 }

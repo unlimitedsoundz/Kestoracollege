@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { CircleNotch as Loader2 } from "@phosphor-icons/react/dist/ssr";
+import { createClient } from '@/utils/supabase/client';
 import { loginWithStudentId } from '../actions';
 import DateSelector from '@/components/ui/DateSelector';
 
@@ -20,16 +21,39 @@ export default function LoginPage() {
         setMessage(null);
 
         try {
+            // Call Server Action to perform real Supabase Auth
             const result = await loginWithStudentId(studentId, dob);
 
-            if (result.error) {
+            if (result?.error) {
                 setMessage({ type: 'error', text: result.error });
-            } else {
-                // Success! The user is signed in on the server via verifyOtp
-                router.push('/portal/dashboard');
-                router.refresh();
+                setIsLoading(false);
+                return;
+            }
+
+            if (result?.success && result.session) {
+                setMessage({ type: 'success', text: 'Login successful! Redirecting...' });
+
+                // HYBRID AUTH: Explicitly set session on client to ensure persistence
+                const supabase = createClient();
+                const { error: setSessionError } = await supabase.auth.setSession(result.session);
+
+                if (setSessionError) {
+                    console.error('Failed to set client session:', setSessionError);
+                    setMessage({ type: 'error', text: 'Login failed during session setup. Please try again.' });
+                    return;
+                }
+
+                // Clean up any old simulated session
+                localStorage.removeItem('sykli_user');
+
+                // Force a hard refresh to ensure cookies are picked up
+                window.location.href = '/portal';
+            } else if (result?.success) {
+                // Fallback if no session returned (shouldn't happen with new action)
+                window.location.href = '/portal';
             }
         } catch (error: any) {
+            console.error('Login error:', error);
             setMessage({
                 type: 'error',
                 text: 'An unexpected error occurred. Please try again.'

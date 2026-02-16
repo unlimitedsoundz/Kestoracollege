@@ -1,25 +1,64 @@
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
-import { User, Envelope as Mail, Globe, Calendar, GraduationCap, Clock, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+'use client';
+
+import { createClient } from '@/utils/supabase/client';
+import { User, Envelope as Mail, Globe, Calendar, GraduationCap, Clock, ShieldCheck, CircleNotch as Loader2 } from "@phosphor-icons/react";
 import Link from 'next/link';
 import { formatToDDMMYYYY } from '@/utils/date';
 import AvatarUpload from '@/components/portal/AvatarUpload';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export const revalidate = 0;
+export default function ProfilePage() {
+    const [user, setUser] = useState<any>(null);
+    const [profile, setProfile] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+    const supabase = createClient();
+    const router = useRouter();
 
-export default async function ProfilePage() {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const { data: { user: authUser } } = await supabase.auth.getUser();
 
-    if (!user) redirect('/portal/account/login');
+                if (!authUser) {
+                    router.push('/portal/account/login');
+                    return;
+                }
 
-    const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
+                setUser(authUser);
 
-    if (!profile) redirect('/portal/account/login');
+                const { data: profileData, error: profileError } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', authUser.id)
+                    .maybeSingle();
+
+                if (profileError || !profileData) {
+                    router.push('/portal/account/login');
+                    return;
+                }
+
+                setProfile(profileData);
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+                router.push('/portal/account/login');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProfile();
+    }, [supabase, router]);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-20">
+                <Loader2 className="animate-spin text-neutral-400" size={40} weight="bold" />
+            </div>
+        );
+    }
+
+    if (!user || !profile) return null;
 
     return (
         <div className="max-w-3xl mx-auto space-y-6">

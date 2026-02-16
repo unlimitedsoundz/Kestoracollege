@@ -1,26 +1,87 @@
+'use client';
 
-import { createClient } from '@/utils/supabase/server';
-import { createCourse, updateCourse } from '../../actions';
-import { CaretLeft as ArrowLeft, FloppyDisk as Save } from "@phosphor-icons/react/dist/ssr";
+import { createClient } from '@/utils/supabase/client';
+import { CaretLeft as ArrowLeft, FloppyDisk as Save, CircleNotch as Loader2 } from "@phosphor-icons/react";
 import Link from 'next/link';
+import { useState, useEffect, use } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default async function CourseEditorPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
+export default function CourseEditorPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
+    const params = use(paramsPromise);
+    const id = params.id;
     const isNew = id === 'new';
-    const supabase = await createClient();
+    const router = useRouter();
 
-    let course: any = null;
-    if (!isNew) {
-        const { data } = await supabase.from('Course').select('*').eq('id', id).single();
-        course = data;
+    const [course, setCourse] = useState<any>(null);
+    const [schools, setSchools] = useState<any[]>([]);
+    const [departments, setDepartments] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const supabase = createClient();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [
+                    { data: schoolsData },
+                    { data: deptsData }
+                ] = await Promise.all([
+                    supabase.from('School').select('id, name'),
+                    supabase.from('Department').select('id, name, schoolId')
+                ]);
+
+                setSchools(schoolsData || []);
+                setDepartments(deptsData || []);
+
+                if (!isNew) {
+                    const { data } = await supabase.from('Course').select('*').eq('id', id).single();
+                    setCourse(data);
+                }
+            } catch (error) {
+                console.error("Error fetching course data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [id, isNew]);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSaving(true);
+        const formData = new FormData(e.currentTarget);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            if (isNew) {
+                const { error } = await supabase.from('Course').insert([data]);
+                if (error) throw error;
+                alert("Course created successfully");
+            } else {
+                const { error } = await supabase.from('Course').update(data).eq('id', id);
+                if (error) throw error;
+                alert("Course updated successfully");
+            }
+            router.push('/admin/courses');
+            router.refresh();
+        } catch (error: any) {
+            alert("Error saving course: " + error.message);
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-20 min-h-[60vh]">
+                <Loader2 className="animate-spin text-neutral-400" size={40} weight="bold" />
+            </div>
+        );
     }
 
-    // Fetch dependencies
-    const { data: schools } = await supabase.from('School').select('id, name');
-    const { data: departments } = await supabase.from('Department').select('id, name, schoolId');
-
     return (
-        <div className="max-w-4xl mx-auto pt-12 pl-12">
+        <div className="max-w-4xl mx-auto pt-12 pl-12 animate-in fade-in duration-500">
             <div className="mb-8 flex items-center justify-between">
                 <Link href="/admin/courses" className="flex items-center gap-2 text-neutral-500 hover:text-black transition-colors font-bold">
                     <ArrowLeft size={18} weight="bold" /> Back to Courses
@@ -28,74 +89,59 @@ export default async function CourseEditorPage({ params }: { params: Promise<{ i
                 <h1 className="text-3xl font-bold">{isNew ? 'Create New Course' : 'Edit Course'}</h1>
             </div>
 
-            <form
-                action={async (formData: FormData) => {
-                    'use server';
-                    if (isNew) {
-                        await createCourse(formData);
-                    } else {
-                        await updateCourse(id, formData);
-                    }
-                }}
-                className="bg-white rounded-2xl border border-neutral-200 shadow-xl overflow-hidden"
-            >
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-neutral-200 shadow-xl overflow-hidden">
                 <div className="p-8 space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Title */}
                         <div className="space-y-1.5">
-                            <label className="text-sm font-bold text-neutral-600">Course Title</label>
+                            <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">Course Title</label>
                             <input
                                 name="title"
                                 defaultValue={course?.title || ''}
                                 required
-                                className="w-full p-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-black outline-none"
+                                className="w-full p-4 bg-neutral-50 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-black outline-none font-bold text-sm"
                                 placeholder="e.g. BSc in Accounting & Finance"
                             />
                         </div>
 
-                        {/* Slug */}
                         <div className="space-y-1.5">
-                            <label className="text-sm font-bold text-neutral-600">URL Slug</label>
+                            <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">URL Slug</label>
                             <input
                                 name="slug"
                                 defaultValue={course?.slug || ''}
                                 required
-                                className="w-full p-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-black outline-none"
+                                className="w-full p-4 bg-neutral-50 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-black outline-none font-bold text-sm"
                                 placeholder="e.g. bsc-accounting-finance"
                             />
                         </div>
 
-                        {/* Degree Level */}
                         <div className="space-y-1.5">
-                            <label className="text-sm font-bold text-neutral-600">Degree Level</label>
+                            <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">Degree Level</label>
                             <select
                                 name="degreeLevel"
                                 defaultValue={course?.degreeLevel || 'BACHELOR'}
-                                className="w-full p-3 bg-neutral-50 border border-neutral-200 rounded-xl outline-none"
+                                className="w-full p-4 bg-neutral-50 border border-neutral-200 rounded-xl outline-none font-bold text-sm"
                             >
                                 <option value="BACHELOR">Bachelor's Degree</option>
                                 <option value="MASTER">Master's Degree</option>
                             </select>
                         </div>
 
-                        {/* Credits */}
                         <div className="space-y-1.5">
-                            <label className="text-sm font-bold text-neutral-600">ECTS Credits</label>
+                            <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">ECTS Credits</label>
                             <input
                                 name="credits"
                                 type="number"
                                 defaultValue={course?.credits || 180}
-                                className="w-full p-3 bg-neutral-50 border border-neutral-200 rounded-xl outline-none"
+                                className="w-full p-4 bg-neutral-50 border border-neutral-200 rounded-xl outline-none font-bold text-sm"
                             />
                         </div>
 
-                        {/* School */}
                         <div className="space-y-1.5">
-                            <label className="text-sm font-bold text-neutral-600">School</label>
+                            <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">School</label>
                             <select
                                 name="schoolId"
                                 defaultValue={course?.schoolId || schools?.[0]?.id}
-                                className="w-full p-3 bg-neutral-50 border border-neutral-200 rounded-xl outline-none"
+                                className="w-full p-4 bg-neutral-50 border border-neutral-200 rounded-xl outline-none font-bold text-sm"
                             >
                                 {schools?.map(s => (
                                     <option key={s.id} value={s.id}>{s.name}</option>
@@ -103,25 +149,23 @@ export default async function CourseEditorPage({ params }: { params: Promise<{ i
                             </select>
                         </div>
 
-                        {/* Duration */}
                         <div className="space-y-1.5">
-                            <label className="text-sm font-bold text-neutral-600">Duration</label>
+                            <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">Duration</label>
                             <input
                                 name="duration"
                                 defaultValue={course?.duration || '3 years'}
-                                className="w-full p-3 bg-neutral-50 border border-neutral-200 rounded-xl outline-none"
+                                className="w-full p-4 bg-neutral-50 border border-neutral-200 rounded-xl outline-none font-bold text-sm"
                             />
                         </div>
                     </div>
 
-                    {/* Description */}
                     <div className="space-y-1.5">
-                        <label className="text-sm font-bold text-neutral-600">Description</label>
+                        <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">Description</label>
                         <textarea
                             name="description"
                             defaultValue={course?.description || ''}
                             rows={4}
-                            className="w-full p-3 bg-neutral-50 border border-neutral-200 rounded-xl outline-none resize-none"
+                            className="w-full p-4 bg-neutral-50 border border-neutral-200 rounded-xl outline-none resize-none font-medium text-sm leading-relaxed"
                         />
                     </div>
                 </div>
@@ -129,9 +173,10 @@ export default async function CourseEditorPage({ params }: { params: Promise<{ i
                 <div className="bg-neutral-50 p-6 border-t border-neutral-200 flex justify-end">
                     <button
                         type="submit"
-                        className="bg-black text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-neutral-800 transition-colors shadow-lg"
+                        disabled={saving}
+                        className="bg-black text-white px-8 py-3.5 rounded-xl font-black uppercase text-xs tracking-widest flex items-center gap-2 hover:bg-neutral-800 transition-all shadow-lg shadow-neutral-200 disabled:opacity-50"
                     >
-                        <Save size={18} weight="bold" /> {isNew ? 'Create Course' : 'Save Changes'}
+                        <Save size={18} weight="bold" /> {saving ? 'Saving...' : (isNew ? 'Create Course' : 'Save Changes')}
                     </button>
                 </div>
             </form>

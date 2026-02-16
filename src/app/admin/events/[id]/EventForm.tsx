@@ -1,5 +1,5 @@
-'use client';
-
+import { createClient } from '@/utils/supabase/client';
+import { uploadToHosting } from '@/utils/hostingUpload';
 import { FloppyDisk as Save, Image as ImageIcon, Calendar, MapPin, Tag } from "@phosphor-icons/react/dist/ssr";
 import { useState } from 'react';
 import Image from 'next/image';
@@ -19,27 +19,37 @@ export default function EventForm({ id, isNew, eventItem }: EventFormProps) {
         setIsSubmitting(true);
 
         const formData = new FormData(event.currentTarget);
-
-        // Append ID if updating
-        if (!isNew && id) {
-            formData.append('id', id);
-        }
+        const supabase = createClient();
 
         try {
-            const res = await fetch('/api/events', {
-                method: 'POST',
-                body: formData,
-            });
+            const eventData: any = {
+                title: formData.get('title') as string,
+                slug: formData.get('slug') as string,
+                category: formData.get('category') as string,
+                date: formData.get('date') as string,
+                location: formData.get('location') as string,
+                content: formData.get('content') as string,
+            };
 
-            const data = await res.json();
+            // Handle Image Upload (Hostinger PHP)
+            const imageFile = formData.get('image') as File;
+            if (imageFile && imageFile.size > 0) {
+                const imageUrl = await uploadToHosting(imageFile);
+                if (imageUrl) {
+                    eventData.imageUrl = imageUrl;
+                }
+            }
 
-            if (!res.ok || !data.success) {
-                throw new Error(data.error || 'Failed to save');
+            if (isNew) {
+                const { error } = await supabase.from('Event').insert(eventData);
+                if (error) throw error;
+            } else {
+                const { error } = await supabase.from('Event').update(eventData).eq('id', id);
+                if (error) throw error;
             }
 
             // Success! Redirect to list
             window.location.href = '/admin/events';
-
         } catch (error: any) {
             console.error('Error submitting form:', error);
             alert(`Failed to save: ${error.message}`);

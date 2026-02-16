@@ -1,24 +1,55 @@
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
-import { Course } from '@/types/database';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
 import CourseSelector from './CourseSelector';
 
-export default async function ApplyPage() {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+export default function ApplyPage() {
+    const [courses, setCourses] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const router = useRouter();
+    const supabase = createClient();
 
-    if (!user) {
-        redirect('/portal/account/login');
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // 1. Auth Check (Client-side)
+                const { data: { user } } = await supabase.auth.getUser();
+                if (!user) {
+                    console.log('[ApplyPage] No active session, redirecting to login');
+                    router.push('/portal/account/login?redirect=/portal/apply');
+                    return;
+                }
+
+                // 2. Fetch all courses
+                const { data, error } = await supabase
+                    .from('Course')
+                    .select(`
+                        *,
+                        school:School(name, slug)
+                    `)
+                    .order('title');
+
+                if (error) throw error;
+                setCourses(data || []);
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [router, supabase]);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[400px]">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            </div>
+        );
     }
-
-    // Fetch all courses
-    const { data: courses } = await supabase
-        .from('Course')
-        .select(`
-            *,
-            school:School(name, slug)
-        `)
-        .order('title');
 
     return (
         <div className="max-w-4xl">
@@ -28,7 +59,7 @@ export default async function ApplyPage() {
                 Ensure you meet the minimum entry requirements listed in the programme details.
             </p>
 
-            <CourseSelector initialCourses={courses as any || []} />
+            <CourseSelector initialCourses={courses} />
         </div>
     );
 }

@@ -7,13 +7,13 @@ export const TUITION_FEES: Record<DegreeLevel, Record<TuitionField, number>> = {
         BUSINESS: 4000,
         ARTS: 4000,
         TECHNOLOGY: 6000,
-        SCIENCE: 9500,
+        SCIENCE: 7500,
     },
     MASTER: {
         BUSINESS: 6000,
         ARTS: 6000,
         TECHNOLOGY: 6000,
-        SCIENCE: 7500,
+        SCIENCE: 9500,
     }
 };
 

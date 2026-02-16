@@ -6,7 +6,7 @@ import { PencilSimple as Edit2, Trash, House as Home, CheckCircle, Clock, XCircl
 import { formatToDDMMYYYY } from '@/utils/date';
 import { HousingBuilding, HousingRoom, HousingAssignment, HousingApplication, Semester } from '@/types/database';
 import Link from 'next/link';
-import { createBuilding, createRoom, deleteHousingApplication, deleteHousingAssignment, deleteHousingRoom, deleteHousingBuilding, updateBuilding, updateRoom } from '@/app/portal/housing-actions';
+import { createClient } from '@/utils/supabase/client';
 
 interface HousingManagementClientProps {
     applications: any[];
@@ -39,10 +39,13 @@ export default function HousingManagementClient({
     const [editRoomData, setEditRoomData] = useState({ room_number: '', capacity: 1, monthly_rate: 600 });
 
     // Filter for applications that need action (Pending OR Approved but not yet assigned)
-    const actionableApplications = applications.filter(app =>
-        (app.status === 'PENDING' || app.status === 'APPROVED') &&
-        !assignments.some(a => a.application_id === app.id)
-    );
+    // Relaxed filter: Show all PENDING apps, and APPROVED apps that aren't assigned.
+    const actionableApplications = applications.filter(app => {
+        const isAssigned = assignments.some(a => a.application_id === app.id);
+        if (app.status === 'PENDING') return !isAssigned;
+        if (app.status === 'APPROVED') return !isAssigned;
+        return false;
+    });
 
     const pendingApplications = actionableApplications; // Maintain variable name for UI compatibility or rename if preferred
     const approvedApplications = applications.filter(app => app.status === 'APPROVED');
@@ -60,23 +63,99 @@ export default function HousingManagementClient({
     const handleAssignRoom = async (applicationId: string, roomId: string) => {
         setAssignLoading(true);
         setError('');
-
         try {
-            const response = await fetch('/api/admin/housing/assign-room', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ applicationId, roomId })
-            });
+            const supabase = createClient();
 
-            const data = await response.json();
+            // 1. Get application details
+            const { data: application, error: appError } = await supabase
+                .from('housing_applications')
+                .select('*')
+                .eq('id', applicationId)
+                .single();
 
-            if (data.success) {
-                setShowAssignModal(false);
-                setSelectedApplication(null);
-                window.location.reload();
-            } else {
-                setError(data.error || 'Failed to assign room');
+            if (appError || !application) throw new Error(`Application not found: ${appError?.message}`);
+
+            // 2. Get student info
+            const { data: student, error: studentError } = await supabase
+                .from('students')
+                .select('id, user:profiles(email, first_name, last_name)') // Fetch profile for email/name if needed for invoice metadata
+                .eq('id', application.student_id)
+                .single();
+
+            if (studentError || !student) throw new Error(`Student not found: ${studentError?.message}`);
+
+            // 3. Check room availability
+            const { data: room, error: roomError } = await supabase
+                .from('housing_rooms')
+                .select('*, building:housing_buildings(name)')
+                .eq('id', roomId)
+                .eq('status', 'AVAILABLE')
+                .single();
+
+            if (roomError || !room) throw new Error('Room not available');
+
+            // 4. Create assignment
+            const { error: assignmentError } = await supabase
+                .from('housing_assignments')
+                .insert({
+                    application_id: applicationId,
+                    room_id: roomId,
+                    student_id: student.id,
+                    start_date: application.move_in_date,
+                    end_date: application.move_out_date,
+                    status: 'ASSIGNED'
+                });
+
+            if (assignmentError) throw assignmentError;
+
+            // 5. Generate Invoice
+            const dueDate = new Date();
+            dueDate.setDate(dueDate.getDate() + 14); // Due in 14 days by default
+
+            const { data: invoice, error: invoiceError } = await supabase
+                .from('housing_invoices')
+                .insert({
+                    student_id: student.id,
+                    application_id: applicationId,
+                    total_amount: room.monthly_rate,
+                    paid_amount: 0,
+                    currency: 'EUR', // Default currency
+                    status: 'PENDING',
+                    due_date: dueDate.toISOString(),
+                    description: `Housing Rent - ${room.building?.name} Room ${room.room_number}`,
+                    metadata: {
+                        month: new Date().toLocaleString('default', { month: 'long', year: 'numeric' }),
+                        room_id: roomId
+                    }
+                })
+                .select()
+                .single();
+
+            if (invoiceError) throw new Error(`Assignment created, but invoice failed: ${invoiceError.message}`);
+
+            // 6. Create Invoice Item
+            if (invoice) {
+                const { error: itemError } = await supabase
+                    .from('housing_invoice_items')
+                    .insert({
+                        invoice_id: invoice.id,
+                        description: `Monthly Rent - Room ${room.room_number}`,
+                        amount: room.monthly_rate,
+                        quantity: 1,
+                        item_type: 'RENT'
+                    });
+
+                if (itemError) console.error("Failed to create invoice item:", itemError);
             }
+
+            // 7. Update statuses
+            await Promise.all([
+                supabase.from('housing_applications').update({ status: 'APPROVED' }).eq('id', applicationId),
+                supabase.from('housing_rooms').update({ status: 'OCCUPIED' }).eq('id', roomId)
+            ]);
+
+            setShowAssignModal(false);
+            window.location.reload();
         } catch (err: any) {
             setError(err.message || 'An error occurred');
         } finally {
@@ -88,7 +167,32 @@ export default function HousingManagementClient({
         if (!window.confirm('Are you sure you want to PERMANENTLY delete this housing application? This will also remove associated invoices and payment records.')) return;
         setAssignLoading(true);
         try {
-            await deleteHousingApplication(id);
+            const supabase = createClient();
+
+            // 1. Get associated invoices
+            const { data: invoices } = await supabase.from('housing_invoices').select('id').eq('application_id', id);
+            if (invoices && invoices.length > 0) {
+                const ids = invoices.map(i => i.id);
+                await supabase.from('housing_payments').delete().in('invoice_id', ids);
+                await supabase.from('housing_invoice_items').delete().in('invoice_id', ids);
+                await supabase.from('housing_invoices').delete().in('id', ids);
+            }
+
+            // 2. Free up room if assigned
+            const { data: assignments } = await supabase.from('housing_assignments').select('room_id').eq('application_id', id);
+            if (assignments && assignments.length > 0) {
+                await supabase.from('housing_rooms').update({ status: 'AVAILABLE' }).in('id', assignments.map(a => a.room_id));
+            }
+
+            // 3. Delete related
+            await supabase.from('housing_deposits').delete().eq('application_id', id);
+            await supabase.from('housing_assignments').delete().eq('application_id', id);
+            await supabase.from('housing_audit_logs').delete().eq('target_id', id);
+
+            // 4. Delete application
+            const { error } = await supabase.from('housing_applications').delete().eq('id', id);
+            if (error) throw error;
+
             window.location.reload();
         } catch (err: any) {
             alert(err.message);
@@ -101,7 +205,12 @@ export default function HousingManagementClient({
         if (!window.confirm('Are you sure you want to remove this assignment? The room will become available again.')) return;
         setAssignLoading(true);
         try {
-            await deleteHousingAssignment(id);
+            const supabase = createClient();
+            const { data: assignment } = await supabase.from('housing_assignments').select('room_id').eq('id', id).single();
+            if (assignment) {
+                await supabase.from('housing_rooms').update({ status: 'AVAILABLE' }).eq('id', assignment.room_id);
+            }
+            await supabase.from('housing_assignments').delete().eq('id', id);
             window.location.reload();
         } catch (err: any) {
             alert(err.message);
@@ -114,7 +223,9 @@ export default function HousingManagementClient({
         if (!window.confirm('Are you sure you want to delete this room?')) return;
         setAssignLoading(true);
         try {
-            await deleteHousingRoom(id);
+            const supabase = createClient();
+            const { error } = await supabase.from('housing_rooms').delete().eq('id', id);
+            if (error) throw error;
             window.location.reload();
         } catch (err: any) {
             alert(err.message);
@@ -127,7 +238,9 @@ export default function HousingManagementClient({
         if (!window.confirm('Are you sure you want to delete this entire building? This will only work if the building has no rooms.')) return;
         setAssignLoading(true);
         try {
-            await deleteHousingBuilding(id);
+            const supabase = createClient();
+            const { error } = await supabase.from('housing_buildings').delete().eq('id', id);
+            if (error) throw error;
             window.location.reload();
         } catch (err: any) {
             alert(err.message);
@@ -139,7 +252,9 @@ export default function HousingManagementClient({
     const handleUpdateBuilding = async (id: string) => {
         setAssignLoading(true);
         try {
-            await updateBuilding(id, editBuildingData);
+            const supabase = createClient();
+            const { error } = await supabase.from('housing_buildings').update(editBuildingData).eq('id', id);
+            if (error) throw error;
             setEditingBuildingId(null);
             window.location.reload();
         } catch (err: any) {
@@ -152,7 +267,9 @@ export default function HousingManagementClient({
     const handleUpdateRoom = async (id: string) => {
         setAssignLoading(true);
         try {
-            await updateRoom(id, editRoomData);
+            const supabase = createClient();
+            const { error } = await supabase.from('housing_rooms').update(editRoomData).eq('id', id);
+            if (error) throw error;
             setEditingRoomId(null);
             window.location.reload();
         } catch (err: any) {
@@ -682,7 +799,9 @@ export default function HousingManagementClient({
                                 onClick={async () => {
                                     setAssignLoading(true);
                                     try {
-                                        await createBuilding(newBuilding);
+                                        const supabase = createClient();
+                                        const { error } = await supabase.from('housing_buildings').insert(newBuilding);
+                                        if (error) throw error;
                                         setShowAddBuildingModal(false);
                                         window.location.reload();
                                     } catch (err: any) {
@@ -759,7 +878,12 @@ export default function HousingManagementClient({
                                 onClick={async () => {
                                     setAssignLoading(true);
                                     try {
-                                        await createRoom(newRoom);
+                                        const supabase = createClient();
+                                        const { error } = await supabase.from('housing_rooms').insert({
+                                            ...newRoom,
+                                            amenities: []
+                                        });
+                                        if (error) throw error;
                                         setShowAddRoomModal(false);
                                         window.location.reload();
                                     } catch (err: any) {

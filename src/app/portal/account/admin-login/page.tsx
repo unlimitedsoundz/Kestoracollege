@@ -4,12 +4,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { CircleNotch as Loader2, ShieldCheck, Envelope as Mail, Calendar } from "@phosphor-icons/react/dist/ssr";
-import { adminLoginWithEmail } from '../actions';
-import DateSelector from '@/components/ui/DateSelector';
+import { createClient } from '@/utils/supabase/client';
 
 export default function AdminLoginPage() {
     const [email, setEmail] = useState('');
-    const [dob, setDob] = useState('');
+    const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
     const router = useRouter();
@@ -20,15 +19,49 @@ export default function AdminLoginPage() {
         setMessage(null);
 
         try {
-            const result = await adminLoginWithEmail(email, dob);
+            const supabase = createClient();
 
-            if (result.error) {
-                setMessage({ type: 'error', text: result.error });
-            } else {
-                // Success! The user is signed in on the server via verifyOtp
-                router.push('/admin/admissions');
-                router.refresh();
+            // 1. Authenticate with Real Supabase Auth (Email + Password)
+            const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+                email: email.toLowerCase(),
+                password: password
+            });
+
+            if (authError) {
+                setMessage({ type: 'error', text: authError.message });
+                setIsLoading(false);
+                return;
             }
+
+            // 2. Double check if profile exists and is ADMIN
+            const { data: profile, error: profileError } = await supabase
+                .from('profiles')
+                .select('email, role, first_name, avatar_url')
+                .eq('id', authData.user.id)
+                .single();
+
+            if (profileError || profile?.role !== 'ADMIN') {
+                await supabase.auth.signOut();
+                setMessage({ type: 'error', text: 'You do not have administrative access.' });
+                setIsLoading(false);
+                return;
+            }
+
+            // 3. Set local cache for layout fallback and navigation sync
+            localStorage.setItem('sykli_user', JSON.stringify({
+                id: authData.user.id,
+                email: profile.email,
+                role: profile.role,
+                first_name: profile.first_name,
+                avatar_url: profile.avatar_url
+            }));
+
+            window.dispatchEvent(new Event('storage')); // Notify other components
+            setMessage({ type: 'success', text: 'Authentication successful! Redirecting...' });
+
+            router.push('/admin');
+            router.refresh();
+
         } catch (error: any) {
             setMessage({
                 type: 'error',
@@ -87,13 +120,20 @@ export default function AdminLoginPage() {
                     </div>
                 </div>
 
-                <DateSelector
-                    name="dob"
-                    label="Date of Birth"
-                    required
-                    value={dob}
-                    onChange={(name, value) => setDob(value)}
-                />
+                <div>
+                    <label className="block text-[10px] font-black uppercase text-neutral-400 mb-2 ml-1">Administrative Password</label>
+                    <div className="relative">
+                        <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" size={18} weight="bold" />
+                        <input
+                            type="password"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="w-full pl-12 pr-4 py-3 bg-neutral-50 border border-neutral-100 rounded-xl focus:ring-2 focus:ring-black focus:bg-white outline-none transition-all font-bold text-sm"
+                            placeholder="••••••••••••"
+                        />
+                    </div>
+                </div>
 
                 <div className="pt-2">
                     <button

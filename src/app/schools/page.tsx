@@ -1,5 +1,4 @@
 
-import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 import Image from 'next/image';
 import { School } from '@/types/database';
@@ -13,8 +12,10 @@ export const revalidate = 0;
 
 import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
 
+import { createStaticClient } from '@/lib/supabase/static';
+
 export default async function SchoolsPage() {
-    const supabase = await createClient();
+    const supabase = createStaticClient();
     const { data: schools, error } = await supabase
         .from('School')
         .select('*')

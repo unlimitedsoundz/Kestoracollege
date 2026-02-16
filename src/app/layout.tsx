@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Open_Sans, Playfair_Display, Rubik, Roboto } from "next/font/google";
+import { Inter, Open_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -8,27 +8,19 @@ import { CookieConsent } from "@/components/layout/CookieConsent";
 const inter = Inter({
     subsets: ["latin"],
     variable: "--font-inter",
+    display: "swap",
 });
 
 const openSans = Open_Sans({
     subsets: ["latin"],
     variable: "--font-open-sans",
+    display: "swap",
 });
 
 const playfair = Playfair_Display({
     subsets: ["latin"],
     variable: "--font-playfair",
-});
-
-const rubik = Rubik({
-    subsets: ["latin"],
-    variable: "--font-rubik",
-});
-
-const roboto = Roboto({
-    weight: ["400", "500", "700"],
-    subsets: ["latin"],
-    variable: "--font-roboto",
+    display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -42,7 +34,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" className={`${inter.variable} ${openSans.variable} ${playfair.variable}`}>
             <head>
                 <script
                     type="application/ld+json"
@@ -76,7 +68,7 @@ export default function RootLayout({
                 />
             </head>
             <body
-                className={`${inter.variable} ${inter.className} ${openSans.variable} ${playfair.variable} ${rubik.variable} ${roboto.variable} font-sans antialiased`}
+                className={`font-sans antialiased`}
             >
                 <Header />
                 {children}

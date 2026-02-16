@@ -12,17 +12,7 @@ import { UserAvatar } from '@/components/ui/UserAvatar';
 import { LanguageSelector } from '@/components/ui/LanguageSelector';
 import { Plus, Minus } from "@phosphor-icons/react";
 
-export default function PortalHeader({
-    userEmail,
-    studentId,
-    avatarUrl,
-    firstName
-}: {
-    userEmail?: string,
-    studentId?: string | null,
-    avatarUrl?: string | null,
-    firstName?: string | null
-}) {
+export default function PortalHeader() {
     const pathname = usePathname();
     const router = useRouter();
     const supabase = createClient();
@@ -30,6 +20,42 @@ export default function PortalHeader({
     const [expandedMobileSections, setExpandedMobileSections] = useState<Record<string, boolean>>({});
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+
+    // Client-side state for user data
+    const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
+    const [firstName, setFirstName] = useState<string | undefined>(undefined);
+    const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined);
+    const [studentId, setStudentId] = useState<string | undefined>(undefined);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                    setUserEmail(user.email);
+
+                    const { data: profile } = await supabase
+                        .from('profiles')
+                        .select('student_id, first_name, avatar_url')
+                        .eq('id', user.id)
+                        .single();
+
+                    if (profile) {
+                        setFirstName(profile.first_name);
+                        setAvatarUrl(profile.avatar_url);
+                        setStudentId(profile.student_id);
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching user:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUser();
+    }, [supabase]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -54,8 +80,10 @@ export default function PortalHeader({
 
     const handleSignOut = async () => {
         await supabase.auth.signOut();
+        localStorage.removeItem('sykli_user');
         router.push('/portal/account/login');
         router.refresh();
+        window.dispatchEvent(new Event('storage'));
     };
 
     const navItems = [

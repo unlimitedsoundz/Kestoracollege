@@ -1,32 +1,84 @@
-import { createClient } from '@/utils/supabase/server';
+'use client';
+
+import { createClient } from '@/utils/supabase/client';
+import { getAdmissionsApplications } from '@/app/admin/actions';
 import { Application } from '@/types/database';
 import Link from 'next/link';
-import { User, Clock, FileText, CheckCircle, XCircle, CaretRight as ChevronRight, MagnifyingGlass as Search } from "@phosphor-icons/react/dist/ssr";
-import { updateApplicationStatus } from './actions';
+import { useState, useEffect } from 'react';
+import { User, Clock, FileText, CheckCircle, XCircle, CaretRight as ChevronRight, MagnifyingGlass as Search, CircleNotch as Loader2 } from "@phosphor-icons/react";
 import { formatToDDMMYYYY } from '@/utils/date';
 
-export const revalidate = 0;
+export default function AdmissionsPage() {
+    const [applications, setApplications] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [user, setUser] = useState<any>(null);
 
-export default async function AdmissionsPage() {
-    const supabase = await createClient();
+    useEffect(() => {
+        const fetchApplications = async () => {
+            const supabase = createClient();
+            try {
+                const { data: { user: currentUser } } = await supabase.auth.getUser();
+                setUser(currentUser);
 
-    // Fetch all applications with user profiles and courses
-    const { data: applicationsRaw } = await supabase
-        .from('applications')
-        .select(`
-            *,
-            course:Course(title),
-            user:profiles(first_name, last_name, email, student_id)
-        `)
-        .order('submitted_at', { ascending: false });
+                // Fetch via Server Action to bypass RLS issues on client
+                const result = await getAdmissionsApplications();
 
-    const applications = (applicationsRaw || []) as (Application & {
-        course: { title: string },
-        user: { first_name: string, last_name: string, email: string, student_id: string }
-    })[];
+                if (!result.success) {
+                    throw new Error(result.error);
+                }
+
+                setApplications(result.data || []);
+            } catch (err: any) {
+                console.error("Error fetching applications:", err);
+                setError(err.message || "Failed to fetch applications");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchApplications();
+    }, []);
+
+    const filteredApplications = applications.filter(app => {
+        const searchStr = searchQuery.toLowerCase();
+        if (!searchStr) return true;
+
+        return (
+            app.user?.first_name?.toLowerCase().includes(searchStr) ||
+            app.user?.last_name?.toLowerCase().includes(searchStr) ||
+            app.user?.email?.toLowerCase().includes(searchStr) ||
+            app.course?.title?.toLowerCase().includes(searchStr)
+        );
+    });
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-20">
+                <Loader2 className="animate-spin text-neutral-400" size={40} weight="bold" />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="p-8 bg-red-50 border border-red-100 rounded-3xl text-center">
+                <XCircle size={40} className="text-red-500 mx-auto mb-4" />
+                <h3 className="text-lg font-bold text-red-900 uppercase">Fetch Error</h3>
+                <p className="text-red-600 font-medium text-sm mt-1">{error}</p>
+                <button
+                    onClick={() => window.location.reload()}
+                    className="mt-6 px-6 py-2 bg-red-600 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-red-700 transition-all"
+                >
+                    Retry Fetch
+                </button>
+            </div>
+        );
+    }
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 animate-in fade-in duration-500">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-semibold text-neutral-900 uppercase tracking-tight">Admissions Dashboard</h1>
@@ -38,6 +90,8 @@ export default async function AdmissionsPage() {
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" size={16} weight="bold" />
                         <input
                             placeholder="Search applications..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             className="bg-white border-none pl-10 pr-4 py-2.5 rounded-xl text-sm outline-none focus:ring-1 focus:ring-black transition-all w-64 font-medium"
                         />
                     </div>
@@ -49,6 +103,8 @@ export default async function AdmissionsPage() {
                 {[
                     { label: 'All', count: applications.length, status: null },
                     { label: 'Submitted', count: applications.filter(a => a.status === 'SUBMITTED').length, status: 'SUBMITTED' },
+                    { label: 'Paid', count: applications.filter(a => a.status === 'PAYMENT_SUBMITTED').length, status: 'PAYMENT_SUBMITTED' },
+                    { label: 'Enrolled', count: applications.filter(a => a.status === 'ENROLLED').length, status: 'ENROLLED' },
                     { label: 'Reviewing', count: applications.filter(a => a.status === 'UNDER_REVIEW' || a.status === 'DOCS_REQUIRED').length, status: 'UNDER_REVIEW' },
                     { label: 'Admitted', count: applications.filter(a => a.status === 'ADMITTED' || a.status === 'OFFER_ACCEPTED').length, status: 'ADMITTED' },
                     { label: 'Drafts', count: applications.filter(a => a.status === 'DRAFT').length, status: 'DRAFT' },
@@ -60,7 +116,29 @@ export default async function AdmissionsPage() {
                 ))}
             </div>
 
-            <div className="bg-white rounded-3xl overflow-hidden">
+            {/* Debug Info (Only for Admins) */}
+            <div className="bg-neutral-900 text-white p-6 rounded-3xl space-y-4">
+                <div className="flex items-center justify-between">
+                    <h2 className="text-xs font-black uppercase tracking-widest text-neutral-400">System Diagnostic</h2>
+                    <span className="text-[10px] font-bold px-2 py-1 bg-neutral-800 rounded text-emerald-400">Connected</span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <p className="text-[10px] font-black text-neutral-500 uppercase tracking-widest mb-1">Authenticated As</p>
+                        <p className="text-sm font-bold truncate">{user?.email || 'Not Authenticated'}</p>
+                    </div>
+                    <div>
+                        <p className="text-[10px] font-black text-neutral-500 uppercase tracking-widest mb-1">User ID</p>
+                        <p className="text-[10px] font-mono opacity-50">{user?.id || 'N/A'}</p>
+                    </div>
+                    <div>
+                        <p className="text-[10px] font-black text-neutral-500 uppercase tracking-widest mb-1">Applications Loaded</p>
+                        <p className="text-sm font-bold">{applications.length}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-neutral-100">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
@@ -73,8 +151,8 @@ export default async function AdmissionsPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-neutral-50 text-neutral-900">
-                            {applications.length > 0 ? (
-                                applications.map((app) => (
+                            {filteredApplications.length > 0 ? (
+                                filteredApplications.map((app) => (
                                     <tr key={app.id} className="hover:bg-neutral-50/50 transition-colors group">
                                         <td className="p-6">
                                             <div className="flex items-center gap-4">
@@ -83,7 +161,9 @@ export default async function AdmissionsPage() {
                                                 </div>
                                                 <div>
                                                     <div className="font-semibold text-base uppercase tracking-tight">
-                                                        {app.user?.first_name} {app.user?.last_name}
+                                                        {(!app.user?.first_name || app.user?.first_name === 'Applicant') && app.personal_info?.firstName
+                                                            ? `${app.personal_info.firstName} ${app.personal_info.lastName || ''}`
+                                                            : `${app.user?.first_name || ''} ${app.user?.last_name || ''}`}
                                                     </div>
                                                     <div className="text-xs font-semibold text-neutral-400">
                                                         {app.user?.email} • ID: <span className="text-neutral-900">{app.user?.student_id || 'N/A'}</span>
@@ -104,7 +184,7 @@ export default async function AdmissionsPage() {
                                         </td>
                                         <td className="p-6 text-right">
                                             <Link
-                                                href={`/admin/admissions/${app.id}`}
+                                                href={`/admin/admissions/review?id=${app.id}`}
                                                 className="inline-flex items-center gap-2 bg-neutral-100 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-sm active:scale-95"
                                             >
                                                 Review <ChevronRight size={14} weight="bold" />
@@ -135,6 +215,8 @@ function StatusBadge({ status }: { status: string }) {
     const variants: Record<string, string> = {
         'DRAFT': 'bg-neutral-100 text-neutral-400 border-neutral-200',
         'SUBMITTED': 'bg-blue-50 text-blue-600 border-blue-100',
+        'PAYMENT_SUBMITTED': 'bg-cyan-50 text-cyan-600 border-cyan-100',
+        'ENROLLED': 'bg-emerald-900 text-white border-emerald-900',
         'UNDER_REVIEW': 'bg-amber-50 text-amber-600 border-amber-100',
         'DOCS_REQUIRED': 'bg-purple-50 text-purple-600 border-purple-100',
         'ADMITTED': 'bg-emerald-50 text-emerald-600 border-emerald-100',

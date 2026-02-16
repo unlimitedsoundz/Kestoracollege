@@ -1,34 +1,86 @@
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
 import { OfferClient } from './OfferClient';
 
-export default async function StudentOfferPage() {
-    const supabase = await createClient();
+export default function StudentOfferPage() {
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState<{
+        admission: any;
+        appStatus: string | null;
+    } | null>(null);
+    const router = useRouter();
+    const supabase = createClient();
 
-    // 1. Auth check
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) redirect('/portal/account/login');
+    useEffect(() => {
+        const fetchOfferData = async () => {
+            try {
+                // 1. Primary Auth Check (Supabase)
+                const { data: { user: sbUser } } = await supabase.auth.getUser();
+                let currentUserEmail = sbUser?.email;
+                let currentUserId = sbUser?.id;
 
-    // 2. Fetch Admission record
-    const { data: admission } = await supabase
-        .from('admissions')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
+                // 2. Secondary Auth Check (LocalStorage Fallback)
+                if (!sbUser) {
+                    const savedUser = localStorage.getItem('sykli_user');
+                    if (savedUser) {
+                        const localProfile = JSON.parse(savedUser);
+                        currentUserEmail = localProfile.email;
+                        currentUserId = localProfile.id;
+                    }
+                }
 
-    if (!admission) {
-        // 2.5 Fallback: Check application status
-        const { data: app } = await supabase
-            .from('applications')
-            .select('status')
-            .eq('user_id', user.id)
-            .order('created_at', { ascending: false })
-            .limit(1)
-            .single();
+                if (!currentUserEmail) {
+                    router.push('/portal/account/login');
+                    return;
+                }
 
-        if (app?.status === 'ADMITTED') {
+                // 2. Fetch Admission record
+                const { data: admission } = await supabase
+                    .from('admissions')
+                    .select('*')
+                    .eq('user_id', currentUserId || '')
+                    .order('created_at', { ascending: false })
+                    .limit(1)
+                    .single();
+
+                let appStatus = null;
+                if (!admission) {
+                    const { data: app } = await supabase
+                        .from('applications')
+                        .select('status')
+                        .eq('user_id', currentUserId || '')
+                        .order('created_at', { ascending: false })
+                        .limit(1)
+                        .single();
+                    appStatus = app?.status || null;
+                }
+
+                setData({ admission, appStatus });
+            } catch (err) {
+                console.error('CRITICAL: Fetching offer data failed', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchOfferData();
+    }, [router, supabase]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-neutral-50/50 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-neutral-900"></div>
+            </div>
+        );
+    }
+
+    if (!data) return null;
+
+    if (!data.admission) {
+        if (data.appStatus === 'ADMITTED') {
             return (
                 <div className="min-h-screen bg-neutral-50 flex items-center justify-center p-4">
                     <div className="bg-white p-8 rounded-xl shadow-sm border border-neutral-100 text-center max-w-sm">
@@ -65,7 +117,7 @@ export default async function StudentOfferPage() {
                     <p className="text-neutral-500 text-[10px] font-bold uppercase tracking-widest">Formal Invitation for Enrollment</p>
                 </div>
 
-                <OfferClient admission={admission} />
+                <OfferClient admission={data.admission} />
             </div>
         </div>
     );

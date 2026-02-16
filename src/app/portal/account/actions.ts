@@ -37,7 +37,7 @@ export async function loginWithStudentId(studentId: string, dateOfBirth: string)
         type: 'magiclink',
         email: profile.email,
         options: {
-            redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/portal/dashboard`
+            redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/portal`
         }
     });
 
@@ -48,7 +48,7 @@ export async function loginWithStudentId(studentId: string, dateOfBirth: string)
 
     // 3. Verify the OTP on the server to set session cookies
     const supabase = await createClient();
-    const { error: verifyError } = await supabase.auth.verifyOtp({
+    const { error: verifyError, data: sessionData } = await supabase.auth.verifyOtp({
         token_hash: adminData.properties.hashed_token,
         type: 'magiclink'
     });
@@ -58,7 +58,11 @@ export async function loginWithStudentId(studentId: string, dateOfBirth: string)
         return { error: 'Session verification failed. Please try again.' };
     }
 
-    return { success: true };
+    console.log('[LOGIN] OTP Verified Successfully. Session User:', sessionData.user?.id);
+    console.log('[LOGIN] Session created:', !!sessionData.session);
+
+    // Return session to client for explicit setting
+    return { success: true, session: sessionData.session };
 }
 
 export async function adminLoginWithEmail(email: string, dateOfBirth: string) {
@@ -83,7 +87,7 @@ export async function adminLoginWithEmail(email: string, dateOfBirth: string) {
         type: 'magiclink',
         email: profile.email,
         options: {
-            redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/portal/dashboard`
+            redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/portal`
         }
     });
 
@@ -195,9 +199,33 @@ export async function registerApplicant(formData: {
     // 4. Fetch the generated Student ID for the UI
     const { data: profile } = await (await createClient())
         .from('profiles')
-        .select('student_id')
+        .select('student_id, id')
         .eq('email', formData.email)
         .single();
+
+    if (profile?.student_id) {
+        // 5. Update User Metadata with Student ID for faster client-side access
+        await adminClient.auth.admin.updateUserById(profile.id, {
+            user_metadata: {
+                ...userData.user?.user_metadata,
+                student_id: profile.student_id,
+                date_of_birth: formData.dateOfBirth
+            }
+        });
+
+        // 6. Send Welcome Email
+        const { sendEmail } = await import('@/lib/email');
+        const WelcomeEmail = (await import('@/emails/WelcomeEmail')).default;
+
+        await sendEmail({
+            to: formData.email,
+            subject: 'Welcome to SYKLI College!',
+            react: WelcomeEmail({
+                firstName: formData.firstName,
+                studentId: profile.student_id
+            })
+        });
+    }
 
     return {
         success: true,

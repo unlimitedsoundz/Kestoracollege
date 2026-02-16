@@ -70,7 +70,6 @@ export async function updateCourse(id: string, formData: FormData) {
 
     if (error) throw new Error(error.message);
     revalidatePath('/admin/courses');
-    revalidatePath(`/admin/courses/${id}`);
     redirect('/admin/courses');
 }
 
@@ -483,4 +482,95 @@ export async function deleteResearchProject(formData: FormData) {
     if (error) throw new Error(error.message);
     revalidatePath('/admin/research/projects');
     revalidatePath('/research/projects');
+}
+
+export async function getAdmissionsApplications() {
+    console.log('SERVER ACTION: getAdmissionsApplications called');
+    const adminClient = createAdminClient();
+
+    try {
+        const { data, error } = await adminClient
+            .from('applications')
+            .select(`
+                *,
+                course:Course(title),
+                user:profiles(first_name, last_name, email, student_id)
+            `)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        return { success: true, data };
+    } catch (e: any) {
+        console.error('getAdmissionsApplications Error:', e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function getAdmissionsApplicationById(id: string) {
+    console.log('SERVER ACTION: getAdmissionsApplicationById called for', id);
+    const adminClient = createAdminClient();
+
+    try {
+        const { data, error } = await adminClient
+            .from('applications')
+            .select(`
+                *,
+                course:Course(*, school:School(slug)),
+                user:profiles(*),
+                documents:application_documents(*),
+                offer:admission_offers(*)
+            `)
+            .eq('id', id)
+            .single();
+
+        if (error) throw error;
+
+        const { data: admData } = await adminClient
+            .from('admissions')
+            .select('*')
+            .eq('user_id', data.user_id)
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .maybeSingle();
+
+        return { success: true, data, admissions: admData };
+    } catch (e: any) {
+        console.error('getAdmissionsApplicationById Error:', e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function updateApplicationStatusAdmin(id: string, status: string) {
+    console.log('SERVER ACTION: updateApplicationStatusAdmin called for', id, 'to', status);
+    const adminClient = createAdminClient();
+    try {
+        const { error } = await adminClient
+            .from('applications')
+            .update({ status })
+            .eq('id', id);
+        if (error) throw error;
+        revalidatePath('/admin/admissions');
+        revalidatePath(`/admin/admissions/review?id=${id}`);
+        return { success: true };
+    } catch (e: any) {
+        console.error('updateApplicationStatusAdmin Error:', e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function updateApplicationInternalNotesAdmin(id: string, notes: string) {
+    console.log('SERVER ACTION: updateApplicationInternalNotesAdmin called for', id);
+    const adminClient = createAdminClient();
+    try {
+        const { error } = await adminClient
+            .from('applications')
+            .update({ internal_notes: notes })
+            .eq('id', id);
+        if (error) throw error;
+        revalidatePath(`/admin/admissions/review?id=${id}`);
+        return { success: true };
+    } catch (e: any) {
+        console.error('updateApplicationInternalNotesAdmin Error:', e);
+        return { success: false, error: e.message };
+    }
 }

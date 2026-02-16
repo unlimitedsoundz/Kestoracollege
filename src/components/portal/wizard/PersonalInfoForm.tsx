@@ -25,9 +25,10 @@ type PersonalInfoValues = z.infer<typeof personalInfoSchema>;
 interface Props {
     applicationId: string;
     initialData?: any;
+    onUpdate?: () => Promise<void>;
 }
 
-export default function PersonalInfoForm({ applicationId, initialData }: Props) {
+export default function PersonalInfoForm({ applicationId, initialData, onUpdate }: Props) {
     const [isSaving, setIsSaving] = useState(false);
     const router = useRouter();
 
@@ -47,7 +48,8 @@ export default function PersonalInfoForm({ applicationId, initialData }: Props) 
         setIsSaving(true);
         try {
             await updateApplicationStep(applicationId, 'personal', data);
-            router.push('?step=3');
+            if (onUpdate) await onUpdate(); // Refresh parent state
+            router.push(`?id=${applicationId}&step=3`);
             router.refresh();
             // In a real wizard, we might navigate to next step or update local state
             // For now, refresh keeps us on same page but implementation plan says we switch components based on status.

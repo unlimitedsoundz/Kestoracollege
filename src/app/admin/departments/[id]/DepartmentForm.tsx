@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { FloppyDisk as Save, UploadSimple as Upload } from "@phosphor-icons/react/dist/ssr";
 import Image from 'next/image';
 
+import { uploadToHosting } from '@/utils/hostingUpload';
+
 interface DepartmentFormProps {
     department: any;
     schools: any[];
@@ -28,22 +30,35 @@ export default function DepartmentForm({ department, schools, facultyMembers }: 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSaving(true);
+        const supabase = createClient();
 
         try {
             const formData = new FormData(e.currentTarget);
-            formData.append('id', department.id);
 
-            const response = await fetch('/api/departments', {
-                method: 'POST',
-                body: formData,
-            });
+            const updateData: any = {
+                name: formData.get('name') as string,
+                slug: formData.get('slug') as string,
+                description: formData.get('description') as string,
+                schoolId: formData.get('schoolId') as string,
+                headOfDepartmentId: (formData.get('headOfDepartmentId') as string) || null,
+            };
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to save department');
+            // Handle Image Upload (Hostinger PHP)
+            const imageFile = formData.get('image') as File;
+            if (imageFile && imageFile.size > 0) {
+                const imageUrl = await uploadToHosting(imageFile);
+                if (imageUrl) {
+                    updateData.imageUrl = imageUrl;
+                }
             }
 
-            // Success - redirect or show message
+            const { error } = await supabase
+                .from('Department')
+                .update(updateData)
+                .eq('id', department.id);
+
+            if (error) throw error;
+
             window.location.href = '/admin/departments';
         } catch (error: any) {
             console.error('Error saving department:', error);

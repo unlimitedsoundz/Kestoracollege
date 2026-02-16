@@ -26,9 +26,10 @@ type AcademicHistoryValues = z.infer<typeof academicHistorySchema>;
 interface Props {
     applicationId: string;
     initialData?: any;
+    onUpdate?: () => Promise<void>;
 }
 
-export default function AcademicHistoryForm({ applicationId, initialData }: Props) {
+export default function AcademicHistoryForm({ applicationId, initialData, onUpdate }: Props) {
     const [isSaving, setIsSaving] = useState(false);
     const router = useRouter();
 
@@ -48,7 +49,8 @@ export default function AcademicHistoryForm({ applicationId, initialData }: Prop
         setIsSaving(true);
         try {
             await updateApplicationStep(applicationId, 'academic', data);
-            router.push('?step=5');
+            if (onUpdate) await onUpdate();
+            router.push(`?id=${applicationId}&step=5`);
             router.refresh();
         } catch (error) {
             console.error('Failed to save:', error);
@@ -151,7 +153,7 @@ export default function AcademicHistoryForm({ applicationId, initialData }: Prop
             <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
                 <div className="flex items-center gap-4">
                     <Link
-                        href="?step=3"
+                        href={`?id=${applicationId}&step=3`}
                         className="text-[#2d2d2d] hover:text-primary font-semibold text-xs uppercase tracking-widest transition-colors"
                     >
                         Back

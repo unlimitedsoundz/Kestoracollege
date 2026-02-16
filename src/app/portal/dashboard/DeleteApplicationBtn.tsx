@@ -1,11 +1,13 @@
 'use client';
 
 import { Trash as Trash2 } from "@phosphor-icons/react/dist/ssr";
-import { deleteApplication } from '../actions';
+import { createClient } from '@/utils/supabase/client'; // Use client-side supabase
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function DeleteApplicationBtn({ id }: { id: string }) {
+export default function DeleteApplicationBtn({ id, onSuccess }: { id: string, onSuccess?: () => void }) {
     const [isDeleting, setIsDeleting] = useState(false);
+    const router = useRouter();
 
     const handleDelete = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -18,8 +20,23 @@ export default function DeleteApplicationBtn({ id }: { id: string }) {
 
         setIsDeleting(true);
         try {
-            await deleteApplication(id);
+            const supabase = createClient();
+
+            // 1. Client-Side Delete (Relies on RLS)
+            const { error } = await supabase
+                .from('applications')
+                .delete()
+                .eq('id', id);
+
+            if (error) throw error;
+
+            if (onSuccess) {
+                onSuccess();
+            } else {
+                router.refresh();
+            }
         } catch (error: any) {
+            console.error('Delete error:', error);
             alert(error.message || "Failed to delete application");
             setIsDeleting(false);
         }

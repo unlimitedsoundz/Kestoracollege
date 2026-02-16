@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { Course } from '@/types/database';
 import { ArrowRight, BookOpen, Lightning as Zap } from "@phosphor-icons/react/dist/ssr";
 import { getTuitionFee, calculateDiscountedFee, mapSchoolToTuitionField } from '@/utils/tuition';
-import { createApplication } from '../actions';
+import { createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
 
 interface CourseSelectorProps {
     initialCourses: (Course & { school: { name: string, slug: string } | null })[];
@@ -13,11 +14,95 @@ interface CourseSelectorProps {
 export default function CourseSelector({ initialCourses }: CourseSelectorProps) {
     const [filter, setFilter] = useState<'ALL' | 'BACHELOR' | 'MASTER'>('ALL');
     const [searchQuery, setSearchQuery] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState<string | null>(null);
+    const router = useRouter();
+    const supabase = createClient();
+
+    const handleSelectProgramme = async (courseId: string) => {
+        setIsSubmitting(courseId);
+        try {
+            // 1. Get current user & credentials
+            const { data: { user: currentUser }, error: authError } = await supabase.auth.getUser();
+
+            console.log('[CourseSelector] Auth Check:', {
+                hasUser: !!currentUser,
+                userId: currentUser?.id,
+                error: authError
+            });
+
+            if (authError || !currentUser) {
+                console.error('[CourseSelector] Auth failed:', authError);
+                alert(`Session validation failed: ${authError?.message || 'No active session'}`);
+                // router.push('/portal/account/login?redirect=/portal/apply'); // Temporarily disable auto-redirect to see the alert
+                return;
+            }
+
+            let studentId = (currentUser as any)?.user_metadata?.student_id;
+            let dob = (currentUser as any)?.user_metadata?.date_of_birth;
+
+            // Fallback: If we have a user but metadata is missing, fetch from profiles
+            if (!studentId || !dob) {
+                console.log('Metadata missing, fetching profile fallback...');
+                const { data: dbProfile } = await supabase
+                    .from('profiles')
+                    .select('student_id, date_of_birth')
+                    .eq('id', currentUser.id)
+                    .single();
+
+                if (dbProfile) {
+                    studentId = dbProfile.student_id;
+                    dob = dbProfile.date_of_birth;
+                    console.log('Profile fallback successful');
+                }
+            }
+
+            if (!studentId || !dob) {
+                console.error('Missing credentials for RPC:', { studentId, dob });
+                alert('Your profile is incomplete. Please contact support.');
+                return;
+            }
+
+            console.log('Calling Secure Application Creation RPC...', {
+                userId: currentUser.id,
+                courseId,
+                studentId
+            });
+
+            // 2. Call the Secure RPC (Bypasses RLS with local validation)
+            const { data, error: rpcError } = await supabase.rpc('create_application_v2', {
+                p_user_id: currentUser.id,
+                p_course_id: courseId,
+                p_student_id: studentId,
+                p_dob: dob
+            });
+
+            if (rpcError) {
+                console.error('RPC Error:', rpcError);
+                throw rpcError;
+            }
+
+            if (data?.error) {
+                throw new Error(data.error);
+            }
+
+            router.push(`/portal/application?id=${data.id}`);
+        } catch (error: any) {
+            console.error('Detailed Application Creation Error:', {
+                message: error.message,
+                code: error.code,
+                details: error.details,
+                fullError: JSON.stringify(error, Object.getOwnPropertyNames(error))
+            });
+            alert(`Failed to create application: ${error.message || 'Unknown error'}`);
+        } finally {
+            setIsSubmitting(null);
+        }
+    };
 
     const filteredCourses = initialCourses.filter(course => {
         const matchesFilter = filter === 'ALL' || course.degreeLevel === filter;
         const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            course.school?.name.toLowerCase().includes(searchQuery.toLowerCase());
+            course.school?.name?.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesFilter && matchesSearch;
     });
 
@@ -104,18 +189,14 @@ export default function CourseSelector({ initialCourses }: CourseSelectorProps) 
                         </div>
 
                         <div className="flex flex-col justify-center min-w-[160px]">
-                            <form action={async (formData) => {
-                                // Since this is a client component, we handle the action here or pass it through
-                                await createApplication(course.id);
-                            }}>
-                                <button
-                                    type="submit"
-                                    className="w-full bg-transparent border border-neutral-900 text-neutral-900 font-bold text-[10px] uppercase tracking-widest py-4 rounded-sm hover:bg-neutral-900 hover:text-white transition-all flex items-center justify-center gap-2 group/btn"
-                                >
-                                    Select Programme
-                                    <ArrowRight size={14} weight="bold" className="group-hover/btn:translate-x-1 transition-transform" />
-                                </button>
-                            </form>
+                            <button
+                                onClick={() => handleSelectProgramme(course.id)}
+                                disabled={isSubmitting !== null}
+                                className="w-full bg-transparent border border-neutral-900 text-neutral-900 font-bold text-[10px] uppercase tracking-widest py-4 rounded-sm hover:bg-neutral-900 hover:text-white transition-all flex items-center justify-center gap-2 group/btn disabled:opacity-50"
+                            >
+                                {isSubmitting === course.id ? 'Processing...' : 'Select Programme'}
+                                {isSubmitting !== course.id && <ArrowRight size={14} weight="bold" className="group-hover/btn:translate-x-1 transition-transform" />}
+                            </button>
                         </div>
                     </div>
                 ))}

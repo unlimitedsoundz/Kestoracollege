@@ -1,71 +1,93 @@
+'use client';
 
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { CaretLeft as ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import HousingDashboardClient from './HousingClient';
 
-export default async function HousingPage() {
-    const supabase = await createClient();
+export default function HousingPage() {
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState<{
+        application: any;
+        assignment: any;
+        buildings: any[];
+        semesters: any[];
+        invoices: any[];
+    } | null>(null);
+    const router = useRouter();
+    const supabase = createClient();
 
-    // 1. Auth & Student Context
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) redirect('/portal/account/login');
+    useEffect(() => {
+        const fetchHousingData = async () => {
+            try {
+                // 1. Primary Auth Check (Supabase)
+                const { data: { user: sbUser } } = await supabase.auth.getUser();
+                let currentUserEmail = sbUser?.email;
+                let currentUserId = sbUser?.id;
 
-    const { data: student } = await supabase
-        .from('students')
-        .select('id')
-        .eq('user_id', user.id)
-        .single();
+                // 2. Secondary Auth Check (LocalStorage Fallback)
+                if (!sbUser) {
+                    const savedUser = localStorage.getItem('sykli_user');
+                    if (savedUser) {
+                        const localProfile = JSON.parse(savedUser);
+                        currentUserEmail = localProfile.email;
+                        currentUserId = localProfile.id;
+                    }
+                }
 
-    if (!student) redirect('/portal/dashboard');
+                if (!currentUserEmail) {
+                    router.push('/portal/account/login');
+                    return;
+                }
 
-    // 2. Fetch Housing Application (most recent)
-    const { data: application } = await supabase
-        .from('housing_applications')
-        .select(`
-            *,
-            deposit:housing_deposits(*)
-        `)
-        .eq('student_id', student.id)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
+                const { data: student } = await supabase
+                    .from('students')
+                    .select('id')
+                    .eq('user_id', currentUserId || '')
+                    .maybeSingle();
 
-    // 3. Fetch Housing Assignment (if exists)
-    const { data: assignment } = await supabase
-        .from('housing_assignments')
-        .select(`
-            *,
-            room:housing_rooms(*, building:housing_buildings(*))
-        `)
-        .eq('student_id', student.id)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
+                if (!student) {
+                    router.push('/portal/dashboard');
+                    return;
+                }
 
-    // 4. Fetch available buildings
-    const { data: buildings } = await supabase
-        .from('housing_buildings')
-        .select('*')
-        .order('name');
+                // Parallel fetches
+                const [appRes, assignRes, buildRes, semRes, invRes] = await Promise.all([
+                    supabase.from('housing_applications').select('*, deposit:housing_deposits(*)').eq('student_id', student.id).order('created_at', { ascending: false }).limit(1).maybeSingle(),
+                    supabase.from('housing_assignments').select('*, room:housing_rooms(*, building:housing_buildings(*))').eq('student_id', student.id).order('created_at', { ascending: false }).limit(1).maybeSingle(),
+                    supabase.from('housing_buildings').select('*').order('name'),
+                    supabase.from('semesters').select('*').order('start_date'),
+                    supabase.from('housing_invoices').select('*, items:housing_invoice_items(*), payments:housing_payments(*)').eq('student_id', student.id).order('created_at', { ascending: false })
+                ]);
 
-    // 5. Fetch active/upcoming semesters
-    const { data: semesters } = await supabase
-        .from('semesters')
-        .select('*')
-        .order('start_date');
+                setData({
+                    application: appRes.data,
+                    assignment: assignRes.data,
+                    buildings: buildRes.data || [],
+                    semesters: semRes.data || [],
+                    invoices: invRes.data || []
+                });
+            } catch (err) {
+                console.error('CRITICAL: Fetching housing data failed', err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    // 6. Fetch invoices
-    const { data: invoices } = await supabase
-        .from('housing_invoices')
-        .select(`
-            *,
-            items:housing_invoice_items(*),
-            payments:housing_payments(*)
-        `)
-        .eq('student_id', student.id)
-        .order('created_at', { ascending: false });
+        fetchHousingData();
+    }, [router, supabase]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-neutral-50/50 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-neutral-900"></div>
+            </div>
+        );
+    }
+
+    if (!data) return null;
 
     return (
         <div className="min-h-screen bg-neutral-50/50 p-2 md:p-6 font-sans">
@@ -80,11 +102,11 @@ export default async function HousingPage() {
                 </div>
 
                 <HousingDashboardClient
-                    application={application}
-                    assignment={assignment}
-                    buildings={buildings || []}
-                    semesters={semesters || []}
-                    invoices={invoices || []}
+                    application={data.application}
+                    assignment={data.assignment}
+                    buildings={data.buildings}
+                    semesters={data.semesters}
+                    invoices={data.invoices}
                 />
             </div>
         </div>

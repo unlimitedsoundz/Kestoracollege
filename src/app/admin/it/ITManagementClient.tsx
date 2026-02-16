@@ -18,7 +18,7 @@ import {
     CheckCircle
 } from "@phosphor-icons/react/dist/ssr";
 import { formatToDDMMYYYY } from '@/utils/date';
-import { manualProvisionItAsset, provisionItMaterials } from '@/app/portal/it-actions';
+import { createClient } from '@/utils/supabase/client';
 
 interface ITManagementClientProps {
     assets: any[];
@@ -54,18 +54,86 @@ export default function ITManagementClient({
         r.asset?.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const generateToken = () => {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    };
+
+    const generateCredentials = (assetType: string) => {
+        switch (assetType) {
+            case 'EMAIL':
+                return {
+                    email: `student${Math.floor(Math.random() * 10000)}@sykli.edu`,
+                    password: 'SET_ON_FIRST_LOGIN'
+                };
+            case 'LMS':
+                return {
+                    username: `student${Math.floor(Math.random() * 10000)}`,
+                    access_token: `lms_${generateToken()}`
+                };
+            case 'VPN':
+                return {
+                    vpn_key: generateToken(),
+                    config_url: 'https://vpn.sykli.edu/config'
+                };
+            case 'LIBRARY':
+                return {
+                    library_id: `LIB${Math.floor(Math.random() * 100000)}`,
+                    pin: Math.floor(1000 + Math.random() * 9000).toString()
+                };
+            case 'VIRTUAL_LAB':
+                return {
+                    lab_username: `vlab_${Math.floor(Math.random() * 10000)}`,
+                    access_url: 'https://labs.sykli.edu'
+                };
+            default:
+                return {
+                    license_key: generateToken()
+                };
+        }
+    };
+
     const handleManualProvision = async () => {
         if (!selectedStudent || !selectedAsset) return;
         setLoading(true);
         try {
-            const result = await manualProvisionItAsset(selectedStudent, selectedAsset);
-            if (result.success) {
-                alert('Asset provisioned successfully.');
-                setShowProvisionModal(false);
-                window.location.reload();
-            } else {
-                alert(result.error);
-            }
+            const supabase = createClient();
+
+            // 1. Fetch asset details
+            const { data: asset, error: assetError } = await supabase
+                .from('it_assets')
+                .select('*')
+                .eq('id', selectedAsset)
+                .single();
+
+            if (assetError || !asset) throw new Error('Asset not found');
+
+            const credentials = generateCredentials(asset.asset_type);
+            const expiresAt = new Date();
+            expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+
+            // 2. Upsert access record
+            const { error: upsertError } = await supabase
+                .from('student_it_access')
+                .upsert({
+                    student_id: selectedStudent,
+                    asset_id: selectedAsset,
+                    credentials,
+                    activated_at: new Date().toISOString(),
+                    expires_at: expiresAt.toISOString(),
+                    status: 'ACTIVE'
+                });
+
+            if (upsertError) throw upsertError;
+
+            // 3. Update usage counter
+            await supabase
+                .from('it_assets')
+                .update({ current_usage: asset.current_usage + 1 })
+                .eq('id', selectedAsset);
+
+            alert('Asset provisioned successfully.');
+            setShowProvisionModal(false);
+            window.location.reload();
         } catch (error: any) {
             alert(error.message);
         } finally {

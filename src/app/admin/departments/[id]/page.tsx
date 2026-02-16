@@ -1,35 +1,59 @@
-import { createClient } from '@/utils/supabase/server';
-import { CaretLeft as ArrowLeft } from "@phosphor-icons/react/dist/ssr";
+'use client';
+
+import { createClient } from '@/utils/supabase/client';
+import { CaretLeft as ArrowLeft, CircleNotch as Loader2 } from "@phosphor-icons/react";
 import Link from 'next/link';
 import DepartmentForm from './DepartmentForm';
+import { useState, useEffect, use } from 'react';
 
-export const revalidate = 0;
+export default function DepartmentEditorPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
+    const params = use(paramsPromise);
+    const id = params.id;
+    const [department, setDepartment] = useState<any>(null);
+    const [schools, setSchools] = useState<any[]>([]);
+    const [facultyMembers, setFacultyMembers] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const supabase = createClient();
 
-export default async function DepartmentEditorPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
-    const supabase = await createClient();
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [
+                    { data: dept },
+                    { data: schoolsData },
+                    { data: facultyData }
+                ] = await Promise.all([
+                    supabase.from('Department').select('*').eq('id', id).single(),
+                    supabase.from('School').select('id, name'),
+                    supabase.from('Faculty').select('id, name, role').order('name', { ascending: true })
+                ]);
 
-    // Fetch department data
-    const { data: department } = await supabase
-        .from('Department')
-        .select('*')
-        .eq('id', id)
-        .single();
+                setDepartment(dept);
+                setSchools(schoolsData || []);
+                setFacultyMembers(facultyData || []);
+            } catch (error) {
+                console.error("Error fetching department data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    // Fetch dependencies for the form
-    const { data: schools } = await supabase.from('School').select('id, name');
+        fetchData();
+    }, [id]);
 
-    // Fetch faculty for HOD selection - filter by department if assigned
-    const { data: facultyMembers } = await supabase
-        .from('Faculty')
-        .select('id, name, role')
-        .order('name', { ascending: true });
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-20 min-h-[60vh]">
+                <Loader2 className="animate-spin text-neutral-400" size={40} weight="bold" />
+            </div>
+        );
+    }
 
     if (!department) {
         return (
             <div className="p-12 text-center">
                 <h1 className="text-2xl font-bold mb-4">Department Not Found</h1>
-                <Link href="/admin/departments" className="text-blue-600 hover:underline">
+                <Link href="/admin/departments" className="text-blue-600 font-bold hover:underline">
                     Back to Departments
                 </Link>
             </div>
@@ -37,18 +61,18 @@ export default async function DepartmentEditorPage({ params }: { params: Promise
     }
 
     return (
-        <div className="max-w-4xl mx-auto pb-24">
+        <div className="max-w-4xl mx-auto pb-24 animate-in fade-in duration-500">
             <div className="mb-8 flex items-center justify-between">
                 <Link href="/admin/departments" className="flex items-center gap-2 text-neutral-500 hover:text-black transition-colors font-bold">
                     <ArrowLeft size={18} weight="bold" /> Back to Departments
                 </Link>
-                <h1 className="text-3xl font-bold">Edit Department</h1>
+                <h1 className="text-3xl font-bold uppercase tracking-tight text-neutral-900">Edit Department</h1>
             </div>
 
             <DepartmentForm
                 department={department}
-                schools={schools || []}
-                facultyMembers={facultyMembers || []}
+                schools={schools}
+                facultyMembers={facultyMembers}
             />
         </div>
     );

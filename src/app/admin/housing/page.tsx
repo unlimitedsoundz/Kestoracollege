@@ -1,171 +1,89 @@
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
+'use client';
+
+import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
-import { CaretLeft as ArrowLeft } from "@phosphor-icons/react/dist/ssr";
+import { CaretLeft as ArrowLeft, CircleNotch as Loader2 } from "@phosphor-icons/react";
 import HousingManagementClient from './HousingManagementClient';
+import { useState, useEffect } from 'react';
 
-export default async function AdminHousingPage() {
-    const supabase = await createClient();
+export default function AdminHousingPage() {
+    const [data, setData] = useState({
+        applications: [],
+        availableRooms: [],
+        assignments: [],
+        buildings: []
+    });
+    const [loading, setLoading] = useState(true);
 
-    // Check authentication and admin role
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) redirect('/portal/account/login');
+    useEffect(() => {
+        const fetchHousingData = async () => {
+            const supabase = createClient();
+            try {
+                // Fetch all housing applications with student info (joined)
+                const { data: apps } = await supabase
+                    .from('housing_applications')
+                    .select('*, student:students(*, user:profiles(*)), semester:semesters(name), preferred_building:housing_buildings(name, campus_location)')
+                    .order('created_at', { ascending: false });
 
-    const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single();
+                console.log('Fetched Housing Apps:', apps);
 
-    if (profile?.role !== 'ADMIN') {
-        redirect('/portal/dashboard');
-    }
-
-    // Fetch all housing applications with student info
-    const { data: applications, error: appError } = await supabase
-        .from('housing_applications')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-    console.log('Applications:', applications, 'Error:', appError);
-
-    // Debug: Check what students exist
-    const { data: allStudents } = await supabase.from('students').select('id, student_id, user_id');
-    console.log('All students in database:', allStudents);
-
-    // Fetch student and profile data for each application
-    let applicationsWithDetails = [];
-    if (applications) {
-        applicationsWithDetails = await Promise.all(
-            applications.map(async (app) => {
-                console.log('Processing application:', app.id, 'student_id:', app.student_id);
-
-                const { data: student, error: studentError } = await supabase
-                    .from('students')
-                    .select('id, student_id, user_id')
-                    .eq('id', app.student_id)
-                    .single();
-
-                console.log('Student lookup result:', student, 'Error:', studentError);
-
-                let userProfile = null;
-                if (student?.user_id) {
-                    const { data: profile, error: profileError } = await supabase
-                        .from('profiles')
-                        .select('*')
-                        .eq('id', student.user_id)
-                        .single();
-                    console.log('Profile lookup result (all fields):', profile, 'Error:', profileError);
-                    userProfile = profile;
-                }
-
-                const { data: semester } = await supabase
-                    .from('semesters')
-                    .select('name')
-                    .eq('id', app.semester_id)
-                    .single();
-
-                let building = null;
-                if (app.preferred_building_id) {
-                    const { data: bldg } = await supabase
-                        .from('housing_buildings')
-                        .select('name, campus_location')
-                        .eq('id', app.preferred_building_id)
-                        .single();
-                    building = bldg;
-                }
-
-                return {
-                    ...app,
-                    student: student ? {
-                        ...student,
-                        user: userProfile
-                    } : null,
-                    semester,
-                    preferred_building: building
-                };
-            })
-        );
-    }
-
-    // Fetch all available rooms with building info
-    const { data: availableRooms } = await supabase
-        .from('housing_rooms')
-        .select('*, building:housing_buildings(*)')
-        .eq('status', 'AVAILABLE')
-        .order('building_id');
-
-    // Fetch all housing assignments with complete data
-    const { data: assignments, error: assignmentsError } = await supabase
-        .from('housing_assignments')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-    console.log('Assignments:', assignments, 'Error:', assignmentsError);
-
-    // Fetch student, room, and building data for each assignment
-    let assignmentsWithDetails = [];
-    if (assignments) {
-        assignmentsWithDetails = await Promise.all(
-            assignments.map(async (assignment) => {
-                // Get student data
-                const { data: student } = await supabase
-                    .from('students')
-                    .select('id, student_id, user_id')
-                    .eq('id', assignment.student_id)
-                    .single();
-
-                let userProfile = null;
-                if (student?.user_id) {
-                    const { data: profile } = await supabase
-                        .from('profiles')
-                        .select('*')
-                        .eq('id', student.user_id)
-                        .single();
-                    userProfile = profile;
-                }
-
-                // Get room data
-                const { data: room } = await supabase
+                // Fetch all available rooms with building info
+                const { data: rooms } = await supabase
                     .from('housing_rooms')
+                    .select('*, building:housing_buildings(*)')
+                    .eq('status', 'AVAILABLE')
+                    .order('building_id');
+
+                // Fetch all housing assignments with complete data
+                // Explicitly use the foreign key name if needed, but standard joining should work.
+                // Reducing complexity: fetching room and building data separately if deep nesting fails,
+                // but first trying a cleaner syntax.
+                const { data: assign, error: assignError } = await supabase
+                    .from('housing_assignments')
+                    .select(`
+                        *,
+                        student:students(*, user:profiles(*)),
+                        room:housing_rooms(
+                            *,
+                            building:housing_buildings(*)
+                        )
+                    `)
+                    .order('created_at', { ascending: false });
+
+                if (assignError) console.error("Error fetching assignments:", assignError);
+
+                // Fetch all buildings for stats
+                const { data: bldgs } = await supabase
+                    .from('housing_buildings')
                     .select('*')
-                    .eq('id', assignment.room_id)
-                    .single();
+                    .order('name');
 
-                // Get building data
-                let building = null;
-                if (room?.building_id) {
-                    const { data: bldg } = await supabase
-                        .from('housing_buildings')
-                        .select('name, campus_location')
-                        .eq('id', room.building_id)
-                        .single();
-                    building = bldg;
-                }
+                setData({
+                    applications: apps || [],
+                    availableRooms: rooms || [],
+                    assignments: assign || [],
+                    buildings: bldgs || []
+                });
+            } catch (error) {
+                console.error("Error fetching housing data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-                return {
-                    ...assignment,
-                    student: student ? {
-                        ...student,
-                        user: userProfile
-                    } : null,
-                    room: room ? {
-                        ...room,
-                        building
-                    } : null
-                };
-            })
+        fetchHousingData();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-20">
+                <Loader2 className="animate-spin text-neutral-400" size={40} weight="bold" />
+            </div>
         );
     }
-
-    // Fetch all buildings for stats
-    const { data: buildings } = await supabase
-        .from('housing_buildings')
-        .select('*')
-        .order('name');
 
     return (
-        <div className="min-h-screen bg-neutral-50/50 p-4 md:p-8 font-sans">
+        <div className="min-h-screen bg-neutral-50/50 p-4 md:p-8 font-sans animate-in fade-in duration-500">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-6">
                     <Link
@@ -177,10 +95,10 @@ export default async function AdminHousingPage() {
                 </div>
 
                 <HousingManagementClient
-                    applications={applicationsWithDetails || []}
-                    availableRooms={availableRooms || []}
-                    assignments={assignmentsWithDetails || []}
-                    buildings={buildings || []}
+                    applications={data.applications}
+                    availableRooms={data.availableRooms}
+                    assignments={data.assignments}
+                    buildings={data.buildings}
                 />
             </div>
         </div>

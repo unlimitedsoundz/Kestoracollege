@@ -1,18 +1,9 @@
 'use client';
 
+import { createClient } from '@/utils/supabase/client';
+import { uploadToHosting } from '@/utils/hostingUpload';
 import { FloppyDisk as Save, Image as ImageIcon, Calendar, FileText, Globe } from "@phosphor-icons/react/dist/ssr";
 import Image from 'next/image';
-
-// Removed unused import: import ImageUpload from '../ImageUpload';
-// No, the import was `import ImageUpload from '../ImageUpload';` inside `src/app/admin/faculty/[id]/FacultyForm.tsx`.
-// So it is in `src/app/admin/faculty/ImageUpload.tsx`?
-// Let's check where ImageUpload is. 
-// The prompt said `src/app/admin/faculty/[id]/FacultyForm.tsx`. Import is `../ImageUpload`. So it's in `src/app/admin/faculty/ImageUpload.tsx`.
-// I should probably duplicate it or move it to a shared location, but for now I will just look for it or inline a simple one. 
-// Actually, the News form I read earlier used a raw input type='file'.
-// I'll stick to raw input for now to minimize dependencies, or duplicate the logic if needed.
-// Better: implement the same simple file input but with client-side state.
-
 import { useState } from 'react';
 
 interface NewsFormProps {
@@ -31,22 +22,43 @@ export default function NewsForm({ id, isNew, newsItem }: NewsFormProps) {
         setIsSubmitting(true);
 
         const formData = new FormData(event.currentTarget);
-
-        // Append ID if updating
-        if (!isNew && id) {
-            formData.append('id', id);
-        }
+        const supabase = createClient();
 
         try {
-            const res = await fetch('/api/news', {
-                method: 'POST',
-                body: formData,
-            });
+            const title = formData.get('title') as string;
+            const content = formData.get('content') as string;
+            const slug = formData.get('slug') as string;
+            const publishDate = formData.get('publishDate') as string;
 
-            const data = await res.json();
+            // Generate excerpt (first 160 chars)
+            const excerpt = content
+                ? content.replace(/[#*`]/g, '').slice(0, 160).trim() + '...'
+                : '';
 
-            if (!res.ok || !data.success) {
-                throw new Error(data.error || 'Failed to save');
+            const newsData: any = {
+                title,
+                slug,
+                content,
+                excerpt,
+                publishDate,
+                published: true
+            };
+
+            // Handle Image Upload (Hostinger PHP)
+            const imageFile = formData.get('image') as File;
+            if (imageFile && imageFile.size > 0) {
+                const imageUrl = await uploadToHosting(imageFile);
+                if (imageUrl) {
+                    newsData.imageUrl = imageUrl;
+                }
+            }
+
+            if (isNew) {
+                const { error } = await supabase.from('News').insert(newsData);
+                if (error) throw error;
+            } else {
+                const { error } = await supabase.from('News').update(newsData).eq('id', id);
+                if (error) throw error;
             }
 
             // Success! Redirect

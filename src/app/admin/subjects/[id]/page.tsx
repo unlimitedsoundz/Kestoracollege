@@ -1,41 +1,93 @@
+'use client';
 
-import { createClient } from '@/utils/supabase/server';
-import { createSubject, updateSubject } from '../../actions';
-import { CaretLeft as ArrowLeft, FloppyDisk as Save, Book, Hash, Stack as Layers } from "@phosphor-icons/react/dist/ssr";
+import { createClient } from '@/utils/supabase/client';
+import { CaretLeft as ArrowLeft, FloppyDisk as Save, Book, Hash, Stack as Layers, CircleNotch as Loader2 } from "@phosphor-icons/react";
 import Link from 'next/link';
+import { useState, useEffect, use } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default async function SubjectEditorPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
+export default function SubjectEditorPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
+    const params = use(paramsPromise);
+    const id = params.id;
     const isNew = id === 'new';
-    const supabase = await createClient();
+    const [subject, setSubject] = useState<any>(null);
+    const [courses, setCourses] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const router = useRouter();
+    const supabase = createClient();
 
-    let subject: any = null;
-    if (!isNew) {
-        const { data } = await supabase.from('Subject').select('*').eq('id', id).single();
-        subject = data;
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [coursesRes, subjectRes] = await Promise.all([
+                    supabase.from('Course').select('id, title').order('title'),
+                    !isNew ? supabase.from('Subject').select('*').eq('id', id).single() : Promise.resolve({ data: null })
+                ]);
+
+                setCourses(coursesRes.data || []);
+                if (subjectRes.data) {
+                    setSubject(subjectRes.data);
+                }
+            } catch (error) {
+                console.error("Error fetching subject data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [id, isNew]);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSaving(true);
+        const formData = new FormData(e.currentTarget);
+        const data = {
+            name: formData.get('name') as string,
+            code: formData.get('code') as string,
+            courseId: formData.get('courseId') as string,
+            creditUnits: parseInt(formData.get('creditUnits') as string),
+            semester: parseInt(formData.get('semester') as string),
+        };
+
+        try {
+            if (isNew) {
+                const { error } = await supabase.from('Subject').insert(data);
+                if (error) throw error;
+            } else {
+                const { error } = await supabase.from('Subject').update(data).eq('id', id);
+                if (error) throw error;
+            }
+            router.push('/admin/subjects');
+            router.refresh();
+        } catch (error) {
+            console.error("Error saving subject:", error);
+            alert("Error saving subject");
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-20 min-h-[60vh]">
+                <Loader2 className="animate-spin text-neutral-400" size={40} weight="bold" />
+            </div>
+        );
     }
 
-    // Fetch courses for selection
-    const { data: courses } = await supabase.from('Course').select('id, title').order('title');
-
     return (
-        <div className="max-w-4xl mx-auto pt-12 pl-12">
+        <div className="max-w-4xl mx-auto pt-12 pl-12 animate-in fade-in duration-500">
             <div className="mb-8 flex items-center justify-between">
                 <Link href="/admin/subjects" className="flex items-center gap-2 text-neutral-500 hover:text-black transition-colors font-bold">
                     <ArrowLeft size={18} weight="bold" /> Back to Subjects
                 </Link>
-                <h1 className="text-3xl font-bold">{isNew ? 'New Subject' : 'Edit Subject'}</h1>
+                <h1 className="text-3xl font-bold uppercase tracking-tight text-neutral-900">{isNew ? 'New Subject' : 'Edit Subject'}</h1>
             </div>
 
             <form
-                action={async (formData: FormData) => {
-                    'use server';
-                    if (isNew) {
-                        await createSubject(formData);
-                    } else {
-                        await updateSubject(id, formData);
-                    }
-                }}
+                onSubmit={handleSubmit}
                 className="bg-white rounded-2xl border border-neutral-200 shadow-xl overflow-hidden"
             >
                 <div className="p-8 space-y-6">
@@ -106,9 +158,11 @@ export default async function SubjectEditorPage({ params }: { params: Promise<{ 
                 <div className="bg-neutral-50 p-6 border-t border-neutral-200 flex justify-end">
                     <button
                         type="submit"
-                        className="bg-black text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-neutral-800 transition-colors shadow-lg"
+                        disabled={saving}
+                        className="bg-black text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-neutral-800 transition-colors shadow-lg disabled:opacity-50"
                     >
-                        <Save size={18} weight="bold" /> {isNew ? 'Create Subject' : 'Save Changes'}
+                        {saving ? <Loader2 className="animate-spin" size={18} weight="bold" /> : <Save size={18} weight="bold" />}
+                        {isNew ? 'Create Subject' : 'Save Changes'}
                     </button>
                 </div>
             </form>

@@ -1,62 +1,82 @@
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { formatToDDMMYYYY } from '@/utils/date';
-import { Plus, CreditCard, WarningCircle as AlertCircle, GraduationCap, SquaresFour as LayoutDashboard } from "@phosphor-icons/react/dist/ssr";
-import { Application } from '@/types/database';
-import AcademicDashboard from '@/components/portal/AcademicDashboard';
+import { Plus, CreditCard, WarningCircle as AlertCircle, GraduationCap, SquaresFour as LayoutDashboard, FileText } from "@phosphor-icons/react/dist/ssr";
 import DeleteApplicationBtn from './DeleteApplicationBtn';
 
-export default async function DashboardPage() {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+export default function DashboardPage() {
+    const [user, setUser] = useState<any>(null);
+    const [profile, setProfile] = useState<any>(null);
+    const [applications, setApplications] = useState<any[]>([]);
+    const [student, setStudent] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+    const router = useRouter();
+    const supabase = createClient();
 
-    if (!user) {
-        redirect('/portal/account/login');
+    const fetchDashboardData = async () => {
+        try {
+            // 1. Auth Check
+            const { data: { user: sbUser } } = await supabase.auth.getUser();
+            if (!sbUser) {
+                router.push('/portal/account/login');
+                return;
+            }
+            setUser(sbUser);
+
+            // Fetch Data
+            const [profileRes, appsRes, studentRes, admissionRes] = await Promise.all([
+                supabase.from('profiles').select('*').eq('id', sbUser.id).single(),
+                supabase.from('applications').select('*, course:Course(title, duration), offer:admission_offers(*)').eq('user_id', sbUser.id).order('updated_at', { ascending: false }),
+                supabase.from('students').select('*, program:Course(*), user:profiles(*)').eq('user_id', sbUser.id).maybeSingle(),
+                supabase.from('admissions').select('*').eq('user_id', sbUser.id)
+            ]);
+
+            const admissionsMap = new Map((admissionRes.data || []).map(a => [a.program, a]));
+
+            if (profileRes.data) setProfile(profileRes.data);
+            if (appsRes.data) {
+                // Enrich apps with admission letter info
+                const enrichedApps = appsRes.data.map(app => ({
+                    ...app,
+                    admission_details: admissionsMap.get(app.course?.title)
+                }));
+                setApplications(enrichedApps);
+
+                // Auto-redirect to student portal if enrolled and no urgent actions required
+                if (studentRes.data) {
+                    const hasUrgentAction = (appsRes.data || []).some(app =>
+                        app.status === 'ADMITTED' || app.status === 'OFFER_ACCEPTED'
+                    );
+                    if (!hasUrgentAction) {
+                        // Smoothly transition to student portal
+                        router.push('/portal/student');
+                        return; // Stop further execution for this render
+                    }
+                }
+            }
+            if (studentRes.data) setStudent(studentRes.data);
+        } catch (err) {
+            console.error('Error fetching dashboard data:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchDashboardData();
+    }, [router, supabase]);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[400px]">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            </div>
+        );
     }
-
-    // Fetch Profile
-    const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-    // Fetch Applications
-    const { data: applicationsRaw } = await supabase
-        .from('applications')
-        .select(`
-            *,
-            course:Course(title),
-            offer:admission_offers(*)
-        `)
-        .eq('user_id', user.id)
-        .order('updated_at', { ascending: false });
-
-    // Fetch Student Record (SIS)
-    const { data: student } = await supabase
-        .from('students')
-        .select(`
-            *,
-            program:Course(*),
-            user:profiles(*)
-        `)
-        .eq('user_id', user.id)
-        .single();
-
-    // If student is enrolled/active, show Academic Dashboard
-    // Or if application is ENROLLED but SIS record not found (edge case sync issue), we still treat as enrolled conceptually? 
-    // Actually, confirmEnrollment creates the SIS record. So if that succeeded, 'student' should exist. 
-    // If 'application.status' is ENROLLED but 'student' is missing, that's a data integrity issue.
-    // However, let's also check if user has ANY 'ENROLLED' application to be safe.
-
-    // Auto-switch removed to prefer explicit navigation via button
-    // as per user request to "add button" and fix switching issues.
-
-    const enrolledApp = applicationsRaw?.find((app: any) => app.status === 'ENROLLED');
-
-    // Cast the specific structure we asked for
-    const applications = applicationsRaw as any[];
 
     return (
         <div className="space-y-4">
@@ -71,15 +91,17 @@ export default async function DashboardPage() {
                         )}
                     </div>
                     <p className="text-neutral-600 text-xs font-medium uppercase tracking-widest mt-1">
-                        Welcome back, <span className="text-primary">{profile?.first_name || user.email}</span>
+                        Welcome back, <span className="text-primary">{profile?.first_name || user?.email}</span>
                     </p>
                 </div>
-                <Link
-                    href="/portal/apply"
-                    className="border border-primary text-primary px-4 py-2 rounded-sm text-[10px] font-semibold uppercase tracking-widest hover:bg-neutral-50 transition-all self-start md:self-auto"
-                >
-                    New Application
-                </Link>
+                {!student && (
+                    <Link
+                        href="/portal/apply"
+                        className="border border-primary text-primary px-4 py-2 rounded-sm text-[10px] font-semibold uppercase tracking-widest hover:bg-neutral-50 transition-all self-start md:self-auto"
+                    >
+                        New Application
+                    </Link>
+                )}
             </div>
 
             {/* Enrolled Student Alert Card */}
@@ -111,7 +133,7 @@ export default async function DashboardPage() {
                         <div key={app.id}>
                             {/* Decision Alert Card - ADMITTED */}
                             {app.status === 'ADMITTED' && (
-                                <div className="flex items-start justify-between border-2 border-black p-6 md:p-8 rounded-sm text-black relative overflow-hidden bg-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+                                <div className="flex items-start justify-between border-2 border-black p-6 md:p-8 rounded-sm text-black relative overflow-hidden bg-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] mb-4">
                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10 w-full">
                                         <div>
                                             <h4 className="font-black text-[12px] uppercase tracking-widest flex items-center gap-2">
@@ -123,17 +145,10 @@ export default async function DashboardPage() {
                                         </div>
                                         <div className="flex flex-col md:flex-row gap-2">
                                             <Link
-                                                href={`/portal/application/${app.id}/letter`}
-                                                className="bg-white text-black border-2 border-black px-8 py-4 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-50 transition-all whitespace-nowrap"
+                                                href={`/portal/application/letter?id=${app.id}`}
+                                                className="bg-black text-white px-8 py-4 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-800 transition-all whitespace-nowrap text-center shadow-lg"
                                             >
-                                                View Offer Letter
-                                            </Link>
-                                            <Link
-                                                href={`/portal/application/${app.id}/offer/payment`}
-                                                className="bg-black text-white px-8 py-4 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-800 transition-all whitespace-nowrap flex items-center justify-center gap-2"
-                                            >
-                                                <CreditCard size={14} weight="bold" />
-                                                Pay Tuition
+                                                Accept Official Offer
                                             </Link>
                                         </div>
                                     </div>
@@ -152,23 +167,29 @@ export default async function DashboardPage() {
                                                 Complete your tuition payment via PayGoWire to secure your enrollment.
                                             </p>
                                         </div>
-                                        {app.offer?.[0] && (
+                                        <div className="flex flex-col md:flex-row gap-2">
                                             <Link
-                                                href={`/portal/application/${app.id}/offer/payment`}
-                                                className="bg-black text-white px-6 py-3 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-800 transition-all whitespace-nowrap"
+                                                href={`/portal/application/letter?id=${app.id}`}
+                                                className="px-6 py-3 border border-neutral-200 text-neutral-600 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-50 transition-all whitespace-nowrap text-center"
+                                            >
+                                                View Offer
+                                            </Link>
+                                            <Link
+                                                href={`/portal/application/payment?id=${app.id}`}
+                                                className="bg-black text-white px-6 py-3 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-800 transition-all whitespace-nowrap text-center"
                                             >
                                                 Pay Tuition
                                             </Link>
-                                        )}
+                                        </div>
                                     </div>
                                 </div>
                             )}
 
                             {/* Payment Verification Pending - PAYMENT_SUBMITTED */}
                             {app.status === 'PAYMENT_SUBMITTED' && (
-                                <div className="flex items-start justify-between border border-neutral-200 p-6 md:p-8 rounded-sm text-black relative overflow-hidden bg-neutral-50 mb-4">
+                                <div className="flex items-start justify-between border border-neutral-200 p-6 md:p-8 rounded-sm text-black relative overflow-hidden bg-neutral-50 mb-4 shadow-sm">
                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10 w-full">
-                                        <div>
+                                        <div className="flex-1">
                                             <h4 className="font-black text-[10px] uppercase tracking-widest flex items-center gap-2 text-black">
                                                 <AlertCircle size={14} weight="bold" /> Payment Verification Pending
                                             </h4>
@@ -176,22 +197,31 @@ export default async function DashboardPage() {
                                                 Your payment has been received. Our team is verifying the transaction before finalizing your enrollment.
                                             </p>
                                         </div>
-                                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-neutral-200">
-                                            <span className="w-2 h-2 bg-black rounded-full animate-pulse" />
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-black">Verifying</span>
+                                        <div className="flex flex-col md:flex-row items-center gap-3">
+                                            <Link
+                                                href={`/portal/application/receipt?id=${app.id}`}
+                                                className="px-4 py-2 border border-neutral-200 text-neutral-600 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-50 transition-all whitespace-nowrap text-center flex items-center gap-2"
+                                            >
+                                                <FileText size={12} weight="bold" />
+                                                View Receipt
+                                            </Link>
+                                            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-neutral-200 whitespace-nowrap">
+                                                <span className="w-2 h-2 bg-black rounded-full animate-pulse" />
+                                                <span className="text-[10px] font-black uppercase tracking-widest text-black">Verifying</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             )}
 
                             {app.status === 'REJECTED' && (
-                                <div className="border border-neutral-200 p-6 rounded-sm transition-all flex flex-col md:flex-row md:items-center justify-between gap-6">
+                                <div className="border border-neutral-200 p-6 rounded-sm transition-all flex flex-col md:flex-row md:items-center justify-between gap-6 mb-4">
                                     <div>
                                         <h4 className="font-semibold text-[10px] uppercase tracking-widest">Decision updated</h4>
                                         <p className="text-neutral-400 text-[10px] font-medium uppercase tracking-tight mt-0.5">A decision has been reached regarding your application.</p>
                                     </div>
                                     <Link
-                                        href={`/portal/application/${app.id}`}
+                                        href={`/portal/application?id=${app.id}`}
                                         className="border border-neutral-200 text-neutral-600 px-4 py-2 rounded-sm text-[10px] font-semibold uppercase tracking-widest hover:bg-neutral-50 transition-all whitespace-nowrap"
                                     >
                                         Details
@@ -226,7 +256,7 @@ export default async function DashboardPage() {
                                     {/* Draft State */}
                                     {app.status === 'DRAFT' && (
                                         <Link
-                                            href={`/portal/application/${app.id}`}
+                                            href={`/portal/application?id=${app.id}`}
                                             className="px-4 py-2 border border-primary text-primary rounded-sm text-[10px] font-bold uppercase tracking-widest hover:bg-neutral-50 transition-all"
                                         >
                                             Continue
@@ -236,7 +266,7 @@ export default async function DashboardPage() {
                                     {/* Submitted / Under Review */}
                                     {(app.status === 'SUBMITTED' || app.status === 'UNDER_REVIEW') && (
                                         <Link
-                                            href={`/portal/application/${app.id}/view`}
+                                            href={`/portal/application/view?id=${app.id}`}
                                             className="px-4 py-2 border border-neutral-200 text-neutral-500 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:bg-neutral-50 transition-all"
                                         >
                                             View Form
@@ -244,9 +274,9 @@ export default async function DashboardPage() {
                                     )}
 
                                     {/* Decision / Pay Buttons */}
-                                    {app.status === 'ADMITTED' && app.offer?.[0] && (
+                                    {app.status === 'ADMITTED' && (
                                         <Link
-                                            href={`/portal/application/${app.id}/letter`}
+                                            href={`/portal/application/letter?id=${app.id}`}
                                             className="px-4 py-2 bg-black text-white rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-800 transition-all flex items-center gap-2"
                                         >
                                             <CreditCard size={12} />
@@ -254,30 +284,65 @@ export default async function DashboardPage() {
                                         </Link>
                                     )}
 
-                                    {(app.status === 'ADMITTED' || app.status === 'OFFER_ACCEPTED') && app.offer?.[0] && (
+                                    {(app.status === 'ADMITTED' || app.status === 'OFFER_ACCEPTED') && (
                                         <Link
-                                            href={`/portal/application/${app.id}/offer/payment`}
-                                            className="px-4 py-2 bg-black text-white rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-800 transition-all flex items-center gap-2"
+                                            href={app.status === 'OFFER_ACCEPTED' ? `/portal/application/payment?id=${app.id}` : '#'}
+                                            className={`px-4 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 ${app.status === 'OFFER_ACCEPTED'
+                                                ? 'bg-black text-white hover:bg-neutral-800'
+                                                : 'bg-neutral-100 text-neutral-400 cursor-not-allowed border border-neutral-200'
+                                                }`}
+                                            onClick={(e) => app.status === 'ADMITTED' && e.preventDefault()}
                                         >
                                             <CreditCard size={12} />
-                                            Pay with PayGoWire
+                                            Pay Tuition
                                         </Link>
                                     )}
 
                                     {/* Enrolled State */}
                                     {app.status === 'ENROLLED' && (
-                                        <Link
-                                            href={`/portal/student`}
-                                            className="px-4 py-2 bg-black text-white rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-800 transition-all flex items-center gap-2"
+                                        <div className="flex gap-2">
+                                            {app.admission_details?.admission_letter_url && (
+                                                <a
+                                                    href={app.admission_details.admission_letter_url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="px-4 py-2 border border-emerald-600 text-emerald-600 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:bg-emerald-50 transition-all flex items-center gap-2"
+                                                >
+                                                    Admission Letter
+                                                </a>
+                                            )}
+                                            <Link
+                                                href={`/portal/application/receipt?id=${app.id}`}
+                                                className="px-4 py-2 border border-neutral-200 text-neutral-600 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:bg-neutral-50 transition-all flex items-center gap-2"
+                                            >
+                                                <FileText size={12} weight="bold" />
+                                                Receipt
+                                            </Link>
+                                            <Link
+                                                href={`/portal/student`}
+                                                className="px-4 py-2 bg-black text-white rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-800 transition-all flex items-center gap-2"
+                                            >
+                                                <LayoutDashboard size={12} weight="bold" />
+                                                Enter Portal
+                                            </Link>
+                                        </div>
+                                    )}
+
+                                    {/* Offer Letter link for other states if available */}
+                                    {app.status !== 'ENROLLED' && app.admission_details?.offer_letter_url && (
+                                        <a
+                                            href={app.admission_details.offer_letter_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="px-4 py-2 border border-neutral-200 text-neutral-500 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:bg-neutral-50 transition-all"
                                         >
-                                            <LayoutDashboard size={12} weight="bold" />
-                                            Enter Portal
-                                        </Link>
+                                            Offer Letter
+                                        </a>
                                     )}
 
                                     {/* Delete Button for non-enrolled */}
                                     {app.status !== 'ENROLLED' && (
-                                        <DeleteApplicationBtn id={app.id} />
+                                        <DeleteApplicationBtn id={app.id} onSuccess={fetchDashboardData} />
                                     )}
                                 </div>
                             </div>
@@ -294,15 +359,15 @@ export default async function DashboardPage() {
                         Start Journey
                     </Link>
                 </div>
-            )
-            }
+            )}
+
             <div className="mt-12 pt-6 border-t border-neutral-200 text-center">
                 <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-semibold flex flex-wrap justify-center gap-6">
                     <Link href="/student-handbook" className="hover:text-black transition-colors">Student Handbook</Link>
                     <Link href="/code-of-conduct" className="hover:text-black transition-colors">Code of Conduct</Link>
-                    <Link href="/refund-withdrawal-policy" className="hover:text-black transition-colors">Refund Policy</Link>
+                    <Link href="/refund-withdrawal-policy/" className="hover:text-black transition-colors">Refund Policy</Link>
                 </p>
             </div>
-        </div >
+        </div>
     );
 }
