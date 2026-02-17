@@ -206,7 +206,7 @@ export const AdmissionLetterPDF = ({ data }: AdmissionLetterProps) => (
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Refund Policy</Text>
                 <Text style={{ fontSize: 9 }}>
-                    For refund policy details, please visit: https://syklicollege.fi/refund-policy
+                    For refund policy details, please visit: https://syklicollege.fi/refund-withdrawal-policy/
                 </Text>
             </View>
 

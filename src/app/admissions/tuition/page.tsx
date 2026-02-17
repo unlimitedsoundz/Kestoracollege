@@ -638,7 +638,7 @@ export default function TuitionPaymentPage() {
                                         To request a refund, contact the College’s tuition fee team. You must submit the request by the relevant deadline.
                                     </p>
                                     <div className="text-sm text-black">
-                                        <strong>Note:</strong> Refunds normally exclude service and bank charges.
+                                        <strong>Note:</strong> Refunds normally exclude service and bank charges. For full details, please visit our <Link href="/refund-withdrawal-policy/" className="underline font-bold">Refund & Withdrawal Policy</Link>.
                                     </div>
                                 </div>
                             </div>

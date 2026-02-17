@@ -68,6 +68,7 @@ export function Footer() {
                             <li><Link href="/admissions-policy" className="text-neutral-400 text-sm hover:text-white transition-colors">Admissions Policy</Link></li>
                             <li><Link href="/academic-regulations" className="text-neutral-400 text-sm hover:text-white transition-colors">Academic Regulations</Link></li>
                             <li><Link href="/student-handbook" className="text-neutral-400 text-sm hover:text-white transition-colors">Student Handbook</Link></li>
+                            <li><Link href="/refund-withdrawal-policy/" className="text-neutral-400 text-sm hover:text-white transition-colors">Refund Policy</Link></li>
                             <li><Link href="/code-of-conduct" className="text-neutral-400 text-sm hover:text-white transition-colors">Code of Conduct</Link></li>
                             <li><Link href="/alumni" className="text-neutral-400 text-sm hover:text-white transition-colors">Alumni</Link></li>
                             <li><Link href="/portal/support" className="text-neutral-400 text-sm hover:text-white transition-colors">IT Support</Link></li>

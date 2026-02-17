@@ -39,8 +39,9 @@ export default function AdminStudentsPage() {
                 .from('students')
                 .select(`
                     *,
-                    user:profiles!user_id(first_name, last_name, email),
-                    program:Course!program_id(title)
+                    user:profiles(first_name, last_name, email),
+                    program:Course(title),
+                    application:applications!application_id(personal_info)
                 `)
                 .order('created_at', { ascending: false });
 
@@ -53,11 +54,11 @@ export default function AdminStudentsPage() {
                 .from('applications')
                 .select(`
                     *,
-                    user:profiles!user_id(first_name, last_name, email),
-                    offer:admission_offers!application_id(*),
-                    course:Course!course_id(title)
+                    user:profiles(first_name, last_name, email),
+                    program:Course(title)
                 `)
-                .in('status', ['OFFER_ACCEPTED', 'PAYMENT_SUBMITTED', 'ENROLLED', 'ADMISSION_LETTER_GENERATED'])
+                // .in('status', ['OFFER_ACCEPTED', 'PAYMENT_SUBMITTED', 'ENROLLED', 'ADMISSION_LETTER_GENERATED']) // Removed filter to catch ALL potential stuck states
+                .neq('status', 'REJECTED') // Optional: exclude rejected keys to keep list clean, but keep everything else
                 .order('updated_at', { ascending: false });
 
             if (appError) {
@@ -67,9 +68,15 @@ export default function AdminStudentsPage() {
             setEnrolledStudents(students || []);
 
             // Filter out applications that are already fully enrolled (exist in students table)
-            // This ensures that "ENROLLED" apps only appear here if they represent a data desync (missing student record)
             const enrolledAppIds = new Set(students?.map((s: any) => s.application_id));
-            const pendingApps = apps?.filter((app: any) => !enrolledAppIds.has(app.id)) || [];
+
+            // Define statuses that should appear in Pending list
+            // We include ENROLLED and ADMISSION_LETTER_GENERATED here because if they are NOT in enrolledAppIds, they are "Stuck" and need manual repair.
+            const pendingStatuses = ['OFFER_ACCEPTED', 'PAYMENT_SUBMITTED', 'ENROLLED', 'ADMISSION_LETTER_GENERATED'];
+
+            const pendingApps = apps?.filter((app: any) =>
+                !enrolledAppIds.has(app.id) && pendingStatuses.includes(app.status)
+            ) || [];
 
             setPendingApplications(pendingApps);
 
@@ -163,8 +170,8 @@ export default function AdminStudentsPage() {
                                 {pendingApplications.map((app: any) => (
                                     <tr key={app.id} className="hover:bg-neutral-50 transition-colors">
                                         <td className="p-4">
-                                            <div className="font-bold text-neutral-900 text-sm">{app.user?.first_name} {app.user?.last_name}</div>
-                                            <div className="text-xs text-neutral-500">{app.user?.email}</div>
+                                            <div className="font-bold text-neutral-900 text-sm">{app.user?.first_name || app.personal_info?.firstName} {app.user?.last_name || app.personal_info?.lastName}</div>
+                                            <div className="text-xs text-neutral-500">{app.user?.email || app.personal_info?.email || 'No Email'}</div>
                                         </td>
                                         <td className="p-4 text-xs font-medium text-neutral-600">
                                             {app.course?.title}
@@ -239,10 +246,10 @@ export default function AdminStudentsPage() {
                                 <td className="p-4">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 bg-neutral-100 rounded-full flex items-center justify-center text-neutral-500 font-bold text-xs">
-                                            {student.user?.first_name?.[0]}
+                                            {(student.user?.first_name || student.application?.personal_info?.firstName)?.[0]}
                                         </div>
                                         <div>
-                                            <div className="font-bold text-neutral-900 text-sm">{student.user?.first_name} {student.user?.last_name}</div>
+                                            <div className="font-bold text-neutral-900 text-sm">{student.user?.first_name || student.application?.personal_info?.firstName} {student.user?.last_name || student.application?.personal_info?.lastName}</div>
                                         </div>
                                     </div>
                                 </td>

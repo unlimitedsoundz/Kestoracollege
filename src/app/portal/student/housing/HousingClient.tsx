@@ -224,7 +224,7 @@ export default function HousingDashboardClient({ student, application, assignmen
                         {/* PDF Generation disabled for static export stability */}
                         {/* <button className="px-4 py-2 bg-neutral-100 border-2 border-neutral-200 text-[10px] font-black uppercase tracking-widest rounded-sm text-neutral-400 cursor-not-allowed">
                             Download Lease PDF (Coming Soon)
-                        </button> */}
+                            </button> */}
                     </div>
                 </div>
             ) : application ? (

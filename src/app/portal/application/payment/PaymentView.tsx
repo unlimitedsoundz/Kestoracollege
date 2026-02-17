@@ -36,25 +36,32 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
         setIsProcessing(true);
         setError(null);
         try {
-            console.log('PaymentView: Import actions...');
-            const { recordTuitionPayment } = await import('./actions');
-
-            console.log('PaymentView: Calling recordTuitionPayment...');
-            const result = await recordTuitionPayment(
-                admissionOffer.id,
-                application.id,
-                finalAmount,
-                {
-                    method: details.method,
-                    country: details.country,
-                    currency: details.currency,
-                    fxMetadata: details.fxMetadata
+            console.log('PaymentView: Calling process-tuition-payment edge function...');
+            const supabase = createClient();
+            const { data, error: functionError } = await supabase.functions.invoke('process-tuition-payment', {
+                body: {
+                    offerId: admissionOffer.id,
+                    applicationId: application.id,
+                    amount: finalAmount,
+                    details: {
+                        method: details.method,
+                        country: details.country,
+                        currency: details.currency,
+                        fxMetadata: details.fxMetadata
+                    }
                 }
-            );
-            console.log('PaymentView: Result from server action', result);
+            });
+
+            if (functionError) {
+                console.error('PaymentView: Edge function call failed', functionError);
+                throw new Error(functionError.message || 'Failed to process payment');
+            }
+
+            const result = data;
+            console.log('PaymentView: Result from edge function', result);
 
             if (!result.success) {
-                console.error('PaymentView: Server action failed', result.error);
+                console.error('PaymentView: Processing failed', result.error);
                 throw new Error(result.error);
             }
 

@@ -113,12 +113,14 @@ export default function HousingManagementClient({
             // 5. Generate Invoice
             const dueDate = new Date();
             dueDate.setDate(dueDate.getDate() + 14); // Due in 14 days by default
+            const referenceNumber = `INV-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
             const { data: invoice, error: invoiceError } = await supabase
                 .from('housing_invoices')
                 .insert({
                     student_id: student.id,
                     application_id: applicationId,
+                    reference_number: referenceNumber,
                     total_amount: room.monthly_rate,
                     paid_amount: 0,
                     currency: 'EUR', // Default currency
