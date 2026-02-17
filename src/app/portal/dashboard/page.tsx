@@ -45,18 +45,6 @@ export default function DashboardPage() {
                     admission_details: admissionsMap.get(app.course?.title)
                 }));
                 setApplications(enrichedApps);
-
-                // Auto-redirect to student portal if enrolled and no urgent actions required
-                if (studentRes.data) {
-                    const hasUrgentAction = (appsRes.data || []).some(app =>
-                        app.status === 'ADMITTED' || app.status === 'OFFER_ACCEPTED'
-                    );
-                    if (!hasUrgentAction) {
-                        // Smoothly transition to student portal
-                        router.push('/portal/student');
-                        return; // Stop further execution for this render
-                    }
-                }
             }
             if (studentRes.data) setStudent(studentRes.data);
         } catch (err) {
@@ -307,7 +295,7 @@ export default function DashboardPage() {
                                     {app.status === 'ENROLLED' && (
                                         <div className="flex gap-2">
                                             <Link
-                                                href={`/portal/application/admission-letter?id=${app.id}`}
+                                                href={`/portal/application/admission-letter/?id=${app.id}`}
                                                 className="px-4 py-2 border border-emerald-600 text-emerald-600 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:bg-emerald-50 transition-all flex items-center gap-2"
                                             >
                                                 <FileText size={12} weight="bold" />

@@ -38,13 +38,20 @@ export async function generateAndUploadAdmissionLetter(applicationId: string) {
             if (payment) paymentRef = payment.transaction_reference;
         }
 
-        // 4. Prepare Data for PDF
+        // 4. Fetch Student record for the official ID
+        const { data: studentRecord } = await supabase
+            .from('students')
+            .select('student_id')
+            .eq('application_id', applicationId)
+            .maybeSingle();
+
+        // 5. Prepare Data for PDF
         const firstName = app.personal_info?.firstName || app.user?.first_name || 'Student';
         const lastName = app.personal_info?.lastName || app.user?.last_name || '';
         const fullName = `${firstName} ${lastName}`;
         const programTitle = app.course?.title || 'N/A';
         const degreeLevel = app.course?.degreeLevel === 'MASTER' ? "Master's Degree" : "Bachelor's Degree";
-        const studentId = app.user?.student_id || 'PENDING';
+        const studentId = studentRecord?.student_id || app.user?.student_id || 'PENDING';
 
         // Dates
         const today = new Date();

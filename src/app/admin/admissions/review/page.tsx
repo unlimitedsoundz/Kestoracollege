@@ -327,7 +327,7 @@ function ApplicationReviewContent() {
                                     {(app.offer?.[0]?.document_url || (app.status === 'ENROLLED' || app.status === 'ADMISSION_LETTER_GENERATED')) && (
                                         <a
                                             href={(app.status === 'ENROLLED' || app.status === 'ADMISSION_LETTER_GENERATED')
-                                                ? `/portal/application/admission-letter?id=${id}`
+                                                ? `/portal/application/admission-letter/?id=${id}`
                                                 : app.offer?.[0]?.document_url}
                                             target="_blank"
                                             rel="noopener noreferrer"

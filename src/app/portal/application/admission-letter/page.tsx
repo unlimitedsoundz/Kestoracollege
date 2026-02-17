@@ -19,6 +19,7 @@ function AdmissionLetterContent() {
     const [data, setData] = useState<any>(null);
     const [admission, setAdmission] = useState<any>(null);
     const [profile, setProfile] = useState<any>(null);
+    const [student, setStudent] = useState<any>(null);
     const [payment, setPayment] = useState<any>(null);
 
     useEffect(() => {
@@ -49,7 +50,9 @@ function AdmissionLetterContent() {
                     .single();
 
                 if (error || !applicationRaw) {
+                    console.error('Fetch error:', error || 'Application not found');
                     setData(null);
+                    setLoading(false);
                     return;
                 }
 
@@ -65,7 +68,7 @@ function AdmissionLetterContent() {
 
                 if (admissionData) setAdmission(admissionData);
 
-                // Fetch full profile for name
+                // Fetch profile
                 const { data: profileData } = await supabase
                     .from('profiles')
                     .select('first_name, last_name, student_id, address_line1, city, country_of_residence')
@@ -73,6 +76,15 @@ function AdmissionLetterContent() {
                     .single();
 
                 if (profileData) setProfile(profileData);
+
+                // Fetch Student record for the official ID
+                const { data: studentRecord } = await supabase
+                    .from('students')
+                    .select('*')
+                    .eq('application_id', id)
+                    .maybeSingle();
+
+                if (studentRecord) setStudent(studentRecord);
 
                 // Get completed payment
                 const completedPayment = applicationRaw.offer?.[0]?.payments?.find((p: any) => p.status === 'COMPLETED');
@@ -99,7 +111,18 @@ function AdmissionLetterContent() {
         );
     }
 
-    if (!data) return notFound();
+    if (!data && !loading) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+                <p className="text-xl font-bold text-neutral-900 uppercase tracking-tight">Document Not Found</p>
+                <p className="text-sm text-neutral-500 max-w-md text-center">We couldn't retrieve your admission letter. This might be due to a session timeout or a temporary connection issue.</p>
+                <div className="flex gap-4">
+                    <button onClick={() => window.location.reload()} className="px-6 py-2 bg-black text-white text-[10px] font-bold uppercase tracking-widest rounded-sm">Retry</button>
+                    <Link href="/portal/dashboard" className="px-6 py-2 border border-neutral-200 text-[10px] font-bold uppercase tracking-widest rounded-sm">Dashboard</Link>
+                </div>
+            </div>
+        );
+    }
 
     const application = data;
     // Check if enrolled or admitted/paid
@@ -127,12 +150,21 @@ function AdmissionLetterContent() {
     const intake = "Spring 2025";
 
     // Dynamic Student ID (if available, otherwise fallback)
-    const displayStudentId = admission?.student_id || profile?.student_id || application.user?.student_id || "Generating...";
-    const studentName = profile ? `${profile.first_name} ${profile.last_name}` : application.user?.email;
-    const studentAddress = profile ? (
+    const displayStudentId = student?.student_id || admission?.student_id || profile?.student_id || application.user?.student_id || "Generating...";
+
+    // Improved Name detection
+    const firstName = profile?.first_name || application.personal_info?.firstName || application.user?.first_name;
+    const lastName = profile?.last_name || application.personal_info?.lastName || application.user?.last_name;
+    const studentName = firstName && lastName ? `${firstName} ${lastName}` : application.user?.email;
+
+    // Data for detailed wording
+    const passportNumber = application.personal_info?.passportNumber || "N/A";
+    const dob = application.personal_info?.dateOfBirth ? format(new Date(application.personal_info.dateOfBirth), "MMMM d, yyyy") : "N/A";
+
+    const studentAddress = (profile?.address_line1 || application.contact_details?.addressLine1) ? (
         <>
-            {profile.address_line1 || 'Address Pending'}<br />
-            {profile.city ? `${profile.city}, ` : ''}{profile.country_of_residence || ''}
+            {profile?.address_line1 || application.contact_details?.addressLine1 || 'Address Pending'}<br />
+            {(profile?.city || application.contact_details?.city) ? `${profile?.city || application.contact_details?.city}, ` : ''}{profile?.country_of_residence || application.contact_details?.country || ''}
         </>
     ) : 'Address Pending';
 
@@ -200,7 +232,7 @@ function AdmissionLetterContent() {
                         </div>
                         <div>
                             <span className="block text-[8px] font-black text-neutral-400 uppercase tracking-widest mb-1">Admission Reference</span>
-                            <span className="font-bold text-xs font-mono">{admission?.admission_reference || 'PENDING'}</span>
+                            <span className="font-bold text-xs font-mono">{admission?.admission_reference || application.application_number || 'PENDING'}</span>
                         </div>
                         <div>
                             <span className="block text-[8px] font-black text-neutral-400 uppercase tracking-widest mb-1">Official Student ID</span>
@@ -209,9 +241,9 @@ function AdmissionLetterContent() {
                     </div>
 
                     {/* 3. Confirmation Box (Locked Wording) */}
-                    <div className="border-l-4 border-black pl-6 py-2 mb-8 bg-neutral-50/50">
-                        <p className="text-sm font-medium text-neutral-900 leading-relaxed italic">
-                            “We are pleased to confirm that you have been officially admitted and enrolled as a student of SYKLI College for the above-named programme and academic year.”
+                    <div className="border-l-4 border-black pl-6 py-4 mb-8 bg-neutral-50/50">
+                        <p className="text-sm font-medium text-neutral-900 leading-relaxed text-justify">
+                            This letter serves as official notification that <strong className="text-black uppercase">{studentName}</strong> (Passport: <strong className="text-black">{passportNumber}</strong>, DOB: <strong className="text-black">{dob}</strong>) has been formally admitted and fully enrolled as a degree student at SYKLI College for the <strong className="text-black">{academicYear}</strong> academic year. Having satisfied all academic entrance criteria and fulfilled the mandated tuition fee obligations, the student is officially registered for the <strong className="text-black underline">{application.course?.title}</strong>. This program is a full-time course of study conducted in the English language at our Helsinki campus location (Pohjoisesplanadi 51, 00150 Helsinki, Finland).
                         </p>
                     </div>
 
@@ -242,83 +274,75 @@ function AdmissionLetterContent() {
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Tuition Confirmation */}
-            <div className="mb-8">
-                <h4 className="text-[11px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Tuition & Fees</h4>
-                <p className="text-[11px] leading-relaxed text-neutral-900">
-                    We acknowledge receipt of your tuition fee payment. Your financial obligations for the initial enrollment period have been satisfied.
-                </p>
-            </div>
-
-            {/* Rights & Access */}
-            <div className="mb-8">
-                <h4 className="text-[11px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Student Rights & Access</h4>
-                <p className="text-[11px] leading-relaxed text-neutral-900 mb-2">
-                    As an enrolled student, you are granted full access to:
-                </p>
-                <ul className="list-disc list-inside text-[11px] leading-relaxed text-neutral-900 ml-2 space-y-0.5">
-                    <li>Campus facilities (Library, Labs, Study Areas)</li>
-                    <li>Digital learning resources and student portal</li>
-                    <li>Academic advising and student support services</li>
-                </ul>
-            </div>
-
-            {/* 7. Official Use Statement */}
-            <div className="mb-6">
-                <h4 className="text-[12px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Immigration / Official Use</h4>
-                <p className="text-[11px] leading-relaxed text-neutral-900">
-                    This document is an official certificate of admission and may be used for visa applications, residence permit processing (Migri), and other official purposes requiring proof of student status in Finland.
-                </p>
-            </div>
-
-            {/* 8. Next Steps */}
-            <div className="mb-6">
-                <h4 className="text-[12px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Next Steps</h4>
-                <ul className="text-[11px] leading-relaxed text-neutral-900 list-disc ml-4 space-y-1">
-                    <li>Activate your student email and IT account (credentials sent separately).</li>
-                    <li>Register for the orientation week sessions via the student portal.</li>
-                    <li>Submit your housing application if you have not done so.</li>
-                    <li>Arrival instructions will be communicated to your student email.</li>
-                </ul>
-            </div>
-
-            {/* 9. Refund Policy */}
-            <div className="mb-8">
-                <h4 className="text-[11px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Refund Policy</h4>
-                <p className="text-[11px] leading-relaxed text-neutral-900">
-                    Tuition fees are subject to the college’s refund policy. Full details can be found at <a href="https://syklicollege.fi/refund-withdrawal-policy/" className="underline text-black">https://syklicollege.fi/refund-withdrawal-policy/</a>.
-                </p>
-            </div>
-
-            {/* Footer Content */}
-            <div>
-                {/* 10. Authorization */}
-                <div className="mt-8 pt-6 border-t border-black flex flex-row justify-between items-end">
-                    <div>
-                        <div className="w-40 h-16 mb-2 relative">
-                            <Image
-                                src="/images/anna-virtanen-signature.jpg"
-                                alt="Official Signature"
-                                fill
-                                style={{ objectFit: 'contain', objectPosition: 'left bottom' }}
-                            />
-                        </div>
-                        <div className="text-[11px] font-black text-black uppercase">Office of the Registrar</div>
-                        <div className="text-[11px] font-bold text-neutral-900 mt-0.5">Dosentti (Docent) Anna Virtanen, FT (Doctor of Philosophy)</div>
-                        <div className="text-[10px] font-bold text-black uppercase tracking-widest">SYKLI College | Finland</div>
-                    </div>
-                    <div className="text-right">
-                        {/* Authentication Code or QR could go here in future */}
-                    </div>
+                {/* Rights & Access */}
+                <div className="mb-8">
+                    <h4 className="text-[11px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Student Rights & Access</h4>
+                    <p className="text-[11px] leading-relaxed text-neutral-900 mb-2">
+                        As an enrolled student, you are granted full access to:
+                    </p>
+                    <ul className="list-disc list-inside text-[11px] leading-relaxed text-neutral-900 ml-2 space-y-0.5">
+                        <li>Campus facilities (Library, Labs, Study Areas)</li>
+                        <li>Digital learning resources and student portal</li>
+                        <li>Academic advising and student support services</li>
+                    </ul>
                 </div>
 
-                {/* Footer Legal */}
-                <div className="mt-8 text-center border-t border-neutral-100 pt-4">
-                    <p className="text-[10px] text-neutral-900 uppercase tracking-widest">
-                        Generated electronically via Sykli SIS. Valid without physical signature if verified online.
+                {/* 7. Official Use Statement */}
+                <div className="mb-6">
+                    <h4 className="text-[12px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Immigration / Official Use</h4>
+                    <p className="text-[11px] leading-relaxed text-neutral-900">
+                        This document is an official certificate of admission and may be used for visa applications, residence permit processing (Migri), and other official purposes requiring proof of student status in Finland.
                     </p>
+                </div>
+
+                {/* 8. Next Steps */}
+                <div className="mb-6">
+                    <h4 className="text-[12px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Next Steps</h4>
+                    <ul className="text-[11px] leading-relaxed text-neutral-900 list-disc ml-4 space-y-1">
+                        <li>Activate your student email and IT account (credentials sent separately).</li>
+                        <li>Register for the orientation week sessions via the student portal.</li>
+                        <li>Submit your housing application if you have not done so.</li>
+                        <li>Arrival instructions will be communicated to your student email.</li>
+                    </ul>
+                </div>
+
+                {/* 9. Refund Policy */}
+                <div className="mb-8">
+                    <h4 className="text-[11px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Refund Policy</h4>
+                    <p className="text-[11px] leading-relaxed text-neutral-900">
+                        Tuition fees are subject to the college’s refund policy. Full details can be found at <a href="https://syklicollege.fi/refund-withdrawal-policy/" className="underline text-black">https://syklicollege.fi/refund-withdrawal-policy/</a>.
+                    </p>
+                </div>
+
+                {/* Footer Content */}
+                <div>
+                    {/* 10. Authorization */}
+                    <div className="mt-8 pt-6 border-t border-black flex flex-row justify-between items-end">
+                        <div>
+                            <div className="w-40 h-16 mb-2 relative">
+                                <Image
+                                    src="/images/anna-virtanen-signature.jpg"
+                                    alt="Official Signature"
+                                    fill
+                                    style={{ objectFit: 'contain', objectPosition: 'left bottom' }}
+                                />
+                            </div>
+                            <div className="text-[11px] font-black text-black uppercase">Office of the Registrar</div>
+                            <div className="text-[11px] font-bold text-neutral-900 mt-0.5">Dosentti (Docent) Anna Virtanen, FT (Doctor of Philosophy)</div>
+                            <div className="text-[10px] font-bold text-black uppercase tracking-widest">SYKLI College | Finland</div>
+                        </div>
+                        <div className="text-right">
+                            {/* Authentication Code or QR could go here in future */}
+                        </div>
+                    </div>
+
+                    {/* Footer Legal */}
+                    <div className="mt-8 text-center border-t border-neutral-100 pt-4">
+                        <p className="text-[10px] text-neutral-900 uppercase tracking-widest">
+                            Generated electronically via Sykli SIS. Valid without physical signature if verified online.
+                        </p>
+                    </div>
                 </div>
             </div>
 

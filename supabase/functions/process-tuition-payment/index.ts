@@ -24,18 +24,24 @@ Deno.serve(async (req) => {
             Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
         );
 
-        // 1. Get User
+        const authHeader = req.headers.get('Authorization');
+        console.log('Auth Header present:', !!authHeader);
+
         const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+
         if (authError || !user) {
-            return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            console.error('Auth Error:', authError);
+            return new Response(JSON.stringify({
+                error: 'Unauthorized',
+                details: authError?.message || 'No user found',
+                hasHeader: !!authHeader
+            }), {
                 headers: { ...corsHeaders, 'Content-Type': 'application/json' },
                 status: 401,
             });
         }
 
         const { offerId, applicationId, amount, details } = await req.json();
-
-        console.log('Processing payment for User:', user.id, 'Offer:', offerId);
 
         const reference = `TXN_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
@@ -63,8 +69,7 @@ Deno.serve(async (req) => {
             .single();
 
         if (!appError && application) {
-            const currentYear = new Date().getFullYear();
-            const studentId = `SYK-${currentYear}-${Math.floor(1000 + Math.random() * 9000)}`;
+            const studentId = `SK${Math.floor(1000000 + Math.random() * 9000000)}`;
             const appUser = application.user;
             const institutionalEmail = `${appUser.first_name.toLowerCase()}.${appUser.last_name.toLowerCase()}@syklicollege.fi`;
 
@@ -98,7 +103,7 @@ Deno.serve(async (req) => {
             .eq('id', offerId);
 
         // 5. Update Offer Document URL (Admission Letter)
-        const admissionLetterUrl = `https://syklicollege.fi/portal/application/admission-letter?id=${applicationId}`;
+        const admissionLetterUrl = `https://syklicollege.fi/portal/application/admission-letter/?id=${applicationId}`;
         await adminClient
             .from('admission_offers')
             .update({ document_url: admissionLetterUrl })

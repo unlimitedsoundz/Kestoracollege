@@ -3,8 +3,6 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
 import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-
 const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -14,6 +12,16 @@ serve(async (req) => {
     if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
     try {
+        const resendKey = Deno.env.get("RESEND_API_KEY");
+        if (!resendKey) {
+            console.error("Missing RESEND_API_KEY environment variable");
+            return new Response(JSON.stringify({ error: "Email service not configured (Missing API Key)" }), {
+                status: 500,
+                headers: { ...corsHeaders, "Content-Type": "application/json" },
+            });
+        }
+
+        const resend = new Resend(resendKey);
         const { record, old_record, type, table, applicationId, documentUrl } = await req.json();
 
         const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
@@ -101,7 +109,7 @@ serve(async (req) => {
             case 'ADMISSION_LETTER_READY':
                 subject = "Official Admission Letter - SYKLI College";
                 const docLink = documentUrl || "https://syklicollege.fi/portal/student/offer";
-                html = `<h1>Admission Confirmed</h1><p>Dear ${firstName}, your official admission letter has been generated.</p><p>You can download it directly here:</p><a href="${docLink}" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;font-weight:bold;">Download Admission Letter</a><p>Or log in to the student portal to view details.</p>`;
+                html = `<h1>Admission Confirmed</h1><p>Dear ${firstName}, your official admission letter has been generated.</p><p>You can view it directly here:</p><a href="${docLink}" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;font-weight:bold;">View Admission Letter</a><p>Or log in to the student portal to view details.</p>`;
                 break;
             case 'PAYMENT_CONFIRMED':
                 subject = "Tuition Payment Confirmed";

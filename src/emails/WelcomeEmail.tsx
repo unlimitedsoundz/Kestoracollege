@@ -22,7 +22,7 @@ interface WelcomeEmailProps {
 
 export default function WelcomeEmail({
     firstName = 'Student',
-    studentId = 'SK1234567',
+    studentId = 'SK12345678',
 }: WelcomeEmailProps) {
     const previewText = `Welcome to SYKLI College! Your Student ID is ${studentId}.`;
 
@@ -63,7 +63,7 @@ export default function WelcomeEmail({
                                 {studentId}
                             </Text>
                             <Text className="text-white text-[10px] font-medium mt-4 opacity-80 leading-relaxed uppercase">
-                                Use this ID along with your Date of Birth to access the student portal.
+                                This is your official student ID.
                             </Text>
                         </Section>
 

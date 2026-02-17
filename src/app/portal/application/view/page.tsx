@@ -136,7 +136,7 @@ function ViewApplicationContent() {
                 <div className="flex items-center gap-3">
                     {isOfferAccepted ? (
                         <Link
-                            href={`/portal/application/letter?id=${application.id}`}
+                            href={`/portal/application/admission-letter/?id=${application.id}`}
                             className="px-4 py-2 border border-primary text-primary rounded-sm text-[10px] font-bold uppercase tracking-widest hover:bg-neutral-50 transition-all flex items-center gap-2"
                         >
                             <FileText size={14} weight="bold" />

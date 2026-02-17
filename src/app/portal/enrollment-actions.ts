@@ -65,8 +65,8 @@ export async function confirmEnrollment(applicationId: string) {
             return { success: true, studentId: existingStudent.student_id, message: 'Student was already enrolled.' };
         }
 
-        // 3. Generate Student Identity
-        const studentId = `SYK-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+        // 3. Generate Student Identity (Format: SKXXXXXXXX)
+        const studentId = `SK${Math.floor(1000000 + Math.random() * 9000000)}`;
         const studentUser = application.user;
 
         if (!studentUser) {
