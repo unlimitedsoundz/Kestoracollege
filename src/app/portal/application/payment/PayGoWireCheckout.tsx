@@ -246,7 +246,7 @@ export default function PayGoWireCheckout({
             {fxData && (
                 <div className="bg-white px-4 py-3 border-b border-neutral-100 flex items-center justify-between text-[10px] md:text-xs font-rubik animate-in fade-in slide-in-from-top-1 duration-500">
                     <div className="flex flex-col">
-                        <span className="text-neutral-400 uppercase tracking-widest mb-0.5">You send</span>
+                        <span className="text-black uppercase tracking-widest mb-0.5">You send</span>
                         <span className="font-medium text-black text-sm md:text-base">
                             {fxData.localCurrency} {Number(fxData.localAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </span>
@@ -259,8 +259,8 @@ export default function PayGoWireCheckout({
                     </div>
 
                     <div className="flex flex-col text-right">
-                        <span className="text-neutral-400 uppercase tracking-widest mb-0.5">SYKLI College receives</span>
-                        <span className="font-medium text-[#00A651] text-sm md:text-base">
+                        <span className="text-black uppercase tracking-widest mb-0.5">SYKLI College receives</span>
+                        <span className="font-medium text-black text-sm md:text-base">
                             € {amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </span>
                     </div>

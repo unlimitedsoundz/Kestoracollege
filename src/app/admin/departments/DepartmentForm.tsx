@@ -42,25 +42,45 @@ export default function DepartmentForm({ department, schools, facultyMembers }: 
                 description: formData.get('description') as string,
                 schoolId: formData.get('schoolId') as string,
                 headOfDepartmentId: (formData.get('headOfDepartmentId') as string) || null,
+                updatedAt: new Date().toISOString(),
             };
 
             // Handle Image Upload (Hostinger PHP)
             const imageFile = formData.get('image') as File;
             if (imageFile && imageFile.size > 0) {
-                const imageUrl = await uploadToHosting(imageFile);
-                if (imageUrl) {
-                    updateData.imageUrl = imageUrl;
+                console.log('--- Starting image upload to hosting ---');
+                try {
+                    const imageUrl = await uploadToHosting(imageFile);
+                    if (imageUrl) {
+                        console.log('✅ Image upload successful:', imageUrl);
+                        updateData.imageUrl = imageUrl;
+                    } else {
+                        console.warn('⚠️ Image upload returned no URL');
+                    }
+                } catch (uploadError) {
+                    console.error('❌ Hosting upload error:', uploadError);
+                    alert('Image upload failed, but attempting to save other changes.');
                 }
             }
 
-            const { error } = await supabase
+            console.log('--- Updating Department in Supabase ---', updateData);
+            const { error, data } = await supabase
                 .from('Department')
                 .update(updateData)
-                .eq('id', department.id);
+                .eq('id', department.id)
+                .select();
 
-            if (error) throw error;
+            if (error) {
+                console.error('❌ Supabase update error:', error);
+                throw error;
+            }
 
-            window.location.href = '/admin/departments';
+            console.log('✅ Department updated successfully:', data);
+
+            // Give it a small delay for DB consistency before redirect
+            setTimeout(() => {
+                window.location.href = '/admin/departments';
+            }, 500);
         } catch (error: any) {
             console.error('Error saving department:', error);
             alert(error.message || 'Error saving department. Please try again.');
