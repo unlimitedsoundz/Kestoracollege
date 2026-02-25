@@ -7,68 +7,9 @@ import { createStaticClient } from "@/lib/supabase/static";
 import { formatToDDMMYYYY } from '@/utils/date';
 
 
+import DynamicNewsSection from "@/components/news/DynamicNewsSection";
+
 export default async function Home() {
-  const supabase = createStaticClient();
-
-  // Fetch most recent news & events
-  const { data: newsData } = await supabase
-    .from('News')
-    .select('*')
-    .eq('published', true)
-    .order('publishDate', { ascending: false })
-    .limit(9);
-
-  const { data: eventsData } = await supabase
-    .from('Event')
-    .select('*')
-    .eq('published', true)
-    .order('date', { ascending: true })
-    .limit(9);
-
-  // Combine and take the 9 most relevant items (latest news or upcoming events)
-  const items = [
-    ...(newsData || []).map((n: any) => ({ ...n, type: 'news', sortDate: n.publishDate })),
-    ...(eventsData || []).map((e: any) => ({ ...e, type: 'event', sortDate: e.date }))
-  ].sort((a, b) => new Date(b.sortDate).getTime() - new Date(a.sortDate).getTime())
-    .slice(0, 9);
-
-  // Helper to render card
-  const renderCard = (item: any) => {
-    if (!item) return null;
-
-    const isEvent = item.type === 'event';
-    const href = isEvent ? `/news/events/${item.slug}` : `/news/${item.slug}`;
-    const dateLabel = formatToDDMMYYYY(item.sortDate);
-    const label = isEvent ? 'Event' : 'News';
-    const fallbackImage = "/images/admissions/events.jpg";
-
-    return (
-      <Link key={item.id} href={href} className="group flex flex-col h-full bg-neutral-100 shadow-none">
-        <div className="aspect-video bg-neutral-200 overflow-hidden mb-4 relative">
-          <Image
-            src={item.imageUrl || fallbackImage}
-            alt={item.title}
-            fill
-            unoptimized
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-          <div className="absolute top-4 left-4">
-            <span className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest ${isEvent ? 'bg-amber-500 text-black' : 'bg-black text-white'}`}>
-              {label}
-            </span>
-          </div>
-        </div>
-        <div className="flex-1 flex flex-col p-5">
-          <h3 className="text-xl font-bold mb-2 group-hover:underline leading-tight">{item.title}</h3>
-          <p className="text-[18px] text-black line-clamp-3 mb-4 flex-1">{item.excerpt || item.content?.replace(/[#*`]/g, '')}</p>
-          <div className="mt-auto pt-3 flex items-center justify-between text-xs text-neutral-500 uppercase tracking-wider">
-            <span>{dateLabel} {isEvent && item.location ? `| ${item.location}` : ''}</span>
-          </div>
-        </div>
-      </Link>
-    );
-  };
 
   return (
     <div className="flex flex-col min-h-screen bg-white text-black">
@@ -78,15 +19,15 @@ export default async function Home() {
         <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-16 pt-32 pb-4 h-auto min-h-[600px] md:pt-48 lg:h-[600px] lg:py-0 relative mb-12">
           {/* Left Content */}
           <div className="lg:w-1/2 space-y-2 relative z-10 flex flex-col justify-center h-full pt-0 lg:pt-0">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight pt-8">
-              You may already be connected to SYKLI
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight pt-8 lg:pt-24">
+              SYKLI College – English-Taught Bachelor’s & Master’s Degrees in Finland
             </h1>
             <p className="text-[21px] text-white max-w-xl leading-relaxed my-4">
-              Sykli&apos;s work impacts our daily lives more than we realize. That&apos;s why we all have a reason to support our mission.
+              SYKLI College is an independent higher education institution based in Helsinki, Finland, offering internationally focused Bachelor’s and Master’s degree programmes taught in English for students from around the world.
             </p>
             <div className="space-y-3 pt-2">
               <Link href="/admissions" className="flex items-center gap-2 text-[18px] font-bold underline hover:opacity-70 group">
-                <ArrowRight size={18} weight="bold" className="group-hover:translate-x-1 transition-transform" /> Start the test
+                <ArrowRight size={18} weight="bold" className="group-hover:translate-x-1 transition-transform" /> Start your application
               </Link>
             </div>
 
@@ -179,13 +120,8 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-          {/* Dynamic Cards */}
-          {(items || []).map(item => renderCard(item))}
-          {/* Fill remaining slots if items length < 9 */}
-          {(items.length < 9) && Array.from({ length: 9 - items.length }).map((_, i) => (
-            <React.Fragment key={`empty-${i}`}>{renderCard(null)}</React.Fragment>
-          ))}
+        <div className="min-h-[400px]">
+          <DynamicNewsSection limit={9} />
         </div>
 
         {/* Mobile View All Button - visible only on small screens */}
@@ -207,7 +143,7 @@ export default async function Home() {
             <div className="relative h-[300px] md:h-[500px] overflow-hidden rounded-2xl">
               <Image
                 src="/images/admissions/campus_welcome.jpg"
-                alt="Sykli campus"
+                alt="SYKLI campus"
                 fill
                 className="object-cover"
               />
@@ -216,7 +152,10 @@ export default async function Home() {
           <div className="lg:w-1/2 space-y-6">
             <h2 className="text-[28px] font-bold">Welcome to our campus!</h2>
             <p className="text-lg text-neutral-600">
-              Are you hosting a group or organizing a visit? Contact our admissions team to arrange a tour or discover how to maximize your time on the Sykli campus.
+              Are you hosting a group or organizing a visit? Contact our admissions team to arrange a tour or discover how to maximize your time on the SYKLI campus.
+            </p>
+            <p className="text-lg text-neutral-600">
+              SYKLI College welcomes prospective Bachelor’s and Master’s degree students to learn more about studying in Finland through guided visits and virtual consultations.
             </p>
           </div>
         </div>
@@ -228,11 +167,18 @@ export default async function Home() {
       {/* 5. BLACK FOOTER BAR */}
       <section className="bg-black text-white py-8 md:py-16">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <h2 className="text-3xl font-bold">Welcome to Sykli College!</h2>
+          <div className="max-w-2xl">
+            <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+              SYKLI College is an independent higher education institution in Helsinki, Finland, offering English-taught Bachelor’s and Master’s degree programmes focused on engineering, technology, business, science, and the arts.
+            </h2>
+            <p className="text-white/50 text-xs mt-4">
+              SYKLI College is not affiliated with Suomen ympäristöopisto SYKLI or any other institution with a similar name.
+            </p>
+          </div>
 
           <div className="space-y-4 md:space-y-2 w-full md:w-auto">
             {[
-              { label: "Study at Sykli", href: "/studies" },
+              { label: "Study at SYKLI", href: "/studies" },
               { label: "Open positions", href: "/careers" },
               { label: "Contact us", href: "/contact" }
             ].map((link) => (

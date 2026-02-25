@@ -17,7 +17,7 @@ const sections = [
         title: "Description",
         id: "description",
         content: `
-            <p class="mb-4">The Accounting & Finance BSc program at Sykli College provides a solid foundation in accounting, finance, and management. Students gain practical and theoretical knowledge in financial accounting, management accounting, corporate governance, auditing, performance management, and financial decision-making.</p>
+            <p class="mb-4">The Accounting & Finance BSc program at SYKLI College provides a solid foundation in accounting, finance, and management. Students gain practical and theoretical knowledge in financial accounting, management accounting, corporate governance, auditing, performance management, and financial decision-making.</p>
             <p>The program equips students with analytical skills and business understanding necessary for careers in accounting, finance, and corporate administration.</p>
         `
     },
@@ -43,7 +43,7 @@ const sections = [
                     <li>Need-based financial aid</li>
                     <li>Support for international students</li>
                 </ul>
-                <p class="mt-2 text-sm text-neutral-500">Detailed scholarship information is available on the Sykli College Scholarships page.</p>
+                <p class="mt-2 text-sm text-neutral-500">Detailed scholarship information is available on the SYKLI College Scholarships page.</p>
             </div>
         `
     },
@@ -177,9 +177,9 @@ const sections = [
         title: "Contact Information",
         id: "contact",
         content: `
-            <p><strong>Sykli College School of Business – Accounting & Finance Department</strong></p>
+            <p><strong>SYKLI College School of Business – Accounting & Finance Department</strong></p>
             <p>Email: <a href="mailto:accounting@syklicollege.com" class="text-emerald-600 hover:underline">accounting@syklicollege.com</a></p>
-            <p>Address: Sykli College, Otaniemi Campus, Finland</p>
+            <p>Address: SYKLI College, Otaniemi Campus, Finland</p>
             <p>Office Hours: Monday–Friday, 9:00–17:00</p>
         `
     }

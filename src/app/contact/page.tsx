@@ -2,6 +2,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Envelope as Mail, Phone, MapPin, Clock, Building, Globe, FileText, CreditCard } from "@phosphor-icons/react/dist/ssr";
+import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
+import { SchemaLD } from '@/components/seo/SchemaLD';
 
 export const metadata: Metadata = {
     title: 'Contact Information | SYKLI College',
@@ -11,6 +13,29 @@ export const metadata: Metadata = {
 export default function ContactPage() {
     return (
         <main className="min-h-screen bg-neutral-50 pb-10 md:pb-20">
+            <BreadcrumbSchema items={[
+                { name: 'Home', item: '/' },
+                { name: 'Contact', item: '/contact' }
+            ]} />
+
+            <SchemaLD data={{
+                "@context": "https://schema.org",
+                "@type": "ContactPage",
+                "name": "Contact SYKLI College",
+                "url": "https://syklicollege.fi/contact",
+                "mainEntity": {
+                    "@type": "EducationalOrganization",
+                    "name": "SYKLI College",
+                    "email": "SYKLI@syklicollege.fi",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "Pohjoisesplanadi 51",
+                        "addressLocality": "Helsinki",
+                        "postalCode": "00150",
+                        "addressCountry": "FI"
+                    }
+                }
+            }} />
             {/* Hero Section */}
             <section className="bg-black text-white pt-32 pb-10 md:pt-48 md:pb-16">
                 <div className="container mx-auto px-4">
@@ -42,7 +67,7 @@ export default function ContactPage() {
                                 Postal Address
                             </h3>
                             <address className="not-italic text-neutral-600 leading-relaxed">
-                                SYKLI College<br />
+                                SYKLI College – Helsinki Campus<br />
                                 Pohjoisesplanadi 51,<br />
                                 00150 Helsinki, Uusimaa,<br />
                                 Finland
@@ -66,7 +91,7 @@ export default function ContactPage() {
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <MapPin className="w-4 h-4" weight="regular" />
-                                    <span className="text-sm">Pohjoisesplanadi 51, Helsinki</span>
+                                    <span className="text-sm">SYKLI College – Helsinki Campus, Pohjoisesplanadi 51</span>
                                 </div>
                             </div>
                         </div>

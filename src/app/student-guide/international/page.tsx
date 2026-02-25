@@ -5,7 +5,7 @@ import Image from 'next/image';
 import TableOfContents from '@/components/course/TableOfContents';
 
 export const metadata = {
-    title: 'International Students Guide | Sykli College',
+    title: 'International Students Guide | SYKLI College',
     description: 'Practical guide for international students: permits, housing, moving to Finland, and settling in.',
 };
 
@@ -67,7 +67,7 @@ export default function InternationalGuidePage() {
                             International Students
                         </h1>
                         <p className="text-xl text-neutral-300 max-w-2xl leading-relaxed">
-                            Practical guidance for your journey to Finland and Sykli College.
+                            Practical guidance for your journey to Finland and SYKLI College.
                         </p>
                     </div>
                 </div>
@@ -112,7 +112,7 @@ export default function InternationalGuidePage() {
                                             Nature is also an integral part of life in the capital city, Helsinki. The city is safe, compact, and located by the sea, combining vibrant urban culture with easy access to green spaces. With over 70,000 university students, Helsinki provides a dynamic student environment with diverse leisure opportunities and comprehensive student services.
                                         </p>
                                         <p className="font-bold text-black border-l-2 border-black pl-5 py-1">
-                                            Sykli College operates across four campuses within the city, along with 15 additional locations across Finland and internationally, offering a broad and flexible academic environment.
+                                            SYKLI College operates across four campuses within the city, along with 15 additional locations across Finland and internationally, offering a broad and flexible academic environment.
                                         </p>
 
                                         <div className="pt-6 space-y-4">
@@ -276,7 +276,7 @@ export default function InternationalGuidePage() {
                                 <div className="space-y-4">
                                     <h3 className="text-xl font-bold">Student Health Care (FSHS)</h3>
                                     <p className="text-neutral-700 text-sm">
-                                        Attending degree students must pay the healthcare fee to Kela. This grants access to the Finnish Student Health Service (FSHS) for general, mental, and oral health care.
+                                        Attending degree students must pay the healthcare fee to <a href="https://www.kela.fi/in-english" target="_blank" rel="noopener noreferrer" className="underline hover:text-black transition-colors">Kela</a>. This grants access to the Finnish Student Health Service (FSHS) for general, mental, and oral health care.
                                     </p>
                                 </div>
                                 <div className="space-y-4">
@@ -304,7 +304,7 @@ export default function InternationalGuidePage() {
                         <section id="graduation" className="scroll-mt-32 bg-neutral-900 text-white p-10 rounded-3xl">
                             <h2 className="text-3xl font-bold mb-6">After Graduation</h2>
                             <p className="text-neutral-300 leading-relaxed max-w-2xl mb-8">
-                                Sykli College supports your transition to working life. We offer resources for job seeking, career guidance, and alumni networking both in Finland and internationally.
+                                SYKLI College supports your transition to working life. We offer resources for job seeking, career guidance, and alumni networking both in Finland and internationally.
                             </p>
                             <Link href="#" className="inline-flex items-center gap-2 font-bold hover:underline">
                                 Explore Career Services <ArrowRight size={18} weight="bold" />

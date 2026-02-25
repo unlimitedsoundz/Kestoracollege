@@ -19,7 +19,9 @@ import {
     CaretRight as ChevronRight,
     CaretDoubleLeft as ChevronsLeft,
     CaretDoubleRight as ChevronsRight,
-    CreditCard
+    CreditCard,
+    X,
+    CircleNotch as Loader2
 } from "@phosphor-icons/react/dist/ssr";
 
 interface RegistrarClientProps {
@@ -835,6 +837,138 @@ export default function RegistrarClient({
                                 </div>
                             ))
                         )}
+                    </div>
+                </div>
+            )}
+
+            {/* Session Modal */}
+            {showSessionModal && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300">
+                        <div className="p-8 border-b border-neutral-100 flex justify-between items-center bg-neutral-50/50">
+                            <div>
+                                <h3 className="text-xl font-bold text-neutral-900">{editingSession ? 'Edit Class Session' : 'Schedule New Session'}</h3>
+                                <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-widest mt-1">Class Timetable Management</p>
+                            </div>
+                            <button onClick={() => setShowSessionModal(false)} className="p-2 hover:bg-neutral-100 rounded-xl transition-colors">
+                                <X size={20} weight="bold" />
+                            </button>
+                        </div>
+
+                        <div className="p-8 space-y-6 max-h-[60vh] overflow-y-auto">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-400 block ml-1">Academic Module</label>
+                                    <select
+                                        value={sessionFormData.module_id}
+                                        onChange={(e) => setSessionFormData({ ...sessionFormData, module_id: e.target.value })}
+                                        className="w-full bg-neutral-50 border border-neutral-100 p-3 rounded-xl text-sm font-bold focus:ring-2 focus:ring-black outline-none transition-all"
+                                    >
+                                        <option value="">Select Module...</option>
+                                        {moduleStats.map(m => (
+                                            <option key={m.id} value={m.id}>{m.code} - {m.title}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-400 block ml-1">Semester</label>
+                                    <select
+                                        value={sessionFormData.semester_id}
+                                        onChange={(e) => setSessionFormData({ ...sessionFormData, semester_id: e.target.value })}
+                                        className="w-full bg-neutral-50 border border-neutral-100 p-3 rounded-xl text-sm font-bold focus:ring-2 focus:ring-black outline-none transition-all"
+                                    >
+                                        <option value="">Select Semester...</option>
+                                        {semesters.map(s => (
+                                            <option key={s.id} value={s.id}>{s.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-400 block ml-1">Day</label>
+                                    <select
+                                        value={sessionFormData.day_of_week}
+                                        onChange={(e) => setSessionFormData({ ...sessionFormData, day_of_week: parseInt(e.target.value) })}
+                                        className="w-full bg-neutral-50 border border-neutral-100 p-3 rounded-xl text-sm font-bold focus:ring-2 focus:ring-black outline-none transition-all"
+                                    >
+                                        {[
+                                            { v: 1, l: 'Monday' }, { v: 2, l: 'Tuesday' }, { v: 3, l: 'Wednesday' },
+                                            { v: 4, l: 'Thursday' }, { v: 5, l: 'Friday' }, { v: 6, l: 'Saturday' }, { v: 7, l: 'Sunday' }
+                                        ].map(d => (
+                                            <option key={d.v} value={d.v}>{d.l}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-400 block ml-1">Start Time</label>
+                                    <input
+                                        type="time"
+                                        value={sessionFormData.start_time}
+                                        onChange={(e) => setSessionFormData({ ...sessionFormData, start_time: e.target.value })}
+                                        className="w-full bg-neutral-50 border border-neutral-100 p-3 rounded-xl text-sm font-bold focus:ring-2 focus:ring-black outline-none transition-all"
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-400 block ml-1">End Time</label>
+                                    <input
+                                        type="time"
+                                        value={sessionFormData.end_time}
+                                        onChange={(e) => setSessionFormData({ ...sessionFormData, end_time: e.target.value })}
+                                        className="w-full bg-neutral-50 border border-neutral-100 p-3 rounded-xl text-sm font-bold focus:ring-2 focus:ring-black outline-none transition-all"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-400 block ml-1">Location Type</label>
+                                    <div className="flex gap-2">
+                                        {['CAMPUS', 'ONLINE'].map(t => (
+                                            <button
+                                                key={t}
+                                                type="button"
+                                                onClick={() => setSessionFormData({ ...sessionFormData, location_type: t as any })}
+                                                className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${sessionFormData.location_type === t ? 'bg-black text-white' : 'bg-neutral-100 text-neutral-400 hover:bg-neutral-200'}`}
+                                            >
+                                                {t}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-400 block ml-1">Detail (Room/Link)</label>
+                                    <input
+                                        type="text"
+                                        placeholder={sessionFormData.location_type === 'CAMPUS' ? 'e.g. Room 402' : 'e.g. Microsoft Teams Link'}
+                                        value={sessionFormData.location_detail}
+                                        onChange={(e) => setSessionFormData({ ...sessionFormData, location_detail: e.target.value })}
+                                        className="w-full bg-neutral-50 border border-neutral-100 p-3 rounded-xl text-sm font-bold focus:ring-2 focus:ring-black outline-none transition-all placeholder:text-neutral-300"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="p-8 bg-neutral-50/50 flex gap-4">
+                            <button
+                                onClick={() => setShowSessionModal(false)}
+                                className="flex-1 px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest border border-neutral-200 hover:bg-neutral-100 transition-all"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleSaveSession}
+                                disabled={isLoading || !sessionFormData.module_id || !sessionFormData.semester_id}
+                                className="flex-1 px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest bg-black text-white hover:bg-neutral-800 transition-all shadow-xl shadow-black/10 flex items-center justify-center gap-2 disabled:opacity-50"
+                            >
+                                {isLoading ? <Loader2 className="animate-spin" size={14} weight="bold" /> : (editingSession ? 'Update Session' : 'Save Session')}
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

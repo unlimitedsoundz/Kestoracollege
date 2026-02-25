@@ -26,8 +26,8 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://www.syklicollege.fi'),
-    title: "SYKLI College — Study in Finland in English | Bachelor's & Master's Programmes",
-    description: "SYKLI College in Helsinki, Finland. Bachelor's and Master's programmes taught in English in sustainability, technology, business, and arts. Apply now for Autumn 2026.",
+    title: "SYKLI College Helsinki | English-Taught Degrees in Finland",
+    description: "SYKLI College Helsinki is an independent higher education institution in Finland offering English-taught degree programs for international students. Not affiliated with Suomen ympäristöopisto SYKLI.",
     alternates: {
         canonical: '/',
     },
@@ -46,22 +46,27 @@ export default function RootLayout({
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify({
                             "@context": "https://schema.org",
-                            "@type": "EducationalOrganization",
+                            "@type": "CollegeOrUniversity",
                             "name": "SYKLI College",
+                            "description": "SYKLI College is an independent higher education institution in Helsinki, Finland offering English-taught degree programs for international students. SYKLI College is not affiliated with Suomen ympäristöopisto SYKLI.",
+                            "alternateName": "SYKLI College Helsinki",
                             "url": "https://www.syklicollege.fi",
                             "logo": "https://www.syklicollege.fi/logo.png",
-                            "sameAs": [
-                                "https://www.facebook.com/syklicollege",
-                                "https://www.instagram.com/syklicollege",
-                                "https://www.linkedin.com/school/syklicollege"
-                            ],
                             "address": {
                                 "@type": "PostalAddress",
-                                "streetAddress": "Malmin kauppatie 8",
+                                "streetAddress": "SYKLI College – Helsinki Campus, Pohjoisesplanadi 51",
                                 "addressLocality": "Helsinki",
-                                "postalCode": "00700",
+                                "postalCode": "00150",
+                                "addressRegion": "Uusimaa",
                                 "addressCountry": "FI"
                             },
+                            "location": {
+                                "@type": "Place",
+                                "name": "Helsinki, Finland"
+                            },
+                            "sameAs": [
+                                "https://www.linkedin.com/company/sykli-college"
+                            ],
                             "contactPoint": {
                                 "@type": "ContactPoint",
                                 "telephone": "+358-20-4721-739",

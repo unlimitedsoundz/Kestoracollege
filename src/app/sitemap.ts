@@ -47,7 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Institutional pages
     const institutionalPages = [
-        { url: `${baseUrl}/about`, changeFrequency: 'monthly' as const, priority: 0.5 },
+        { url: `${baseUrl}/about-sykli-college`, changeFrequency: 'monthly' as const, priority: 0.5 },
         { url: `${baseUrl}/contact`, changeFrequency: 'monthly' as const, priority: 0.5 },
         { url: `${baseUrl}/news`, changeFrequency: 'daily' as const, priority: 0.6 },
         { url: `${baseUrl}/alumni`, changeFrequency: 'monthly' as const, priority: 0.4 },

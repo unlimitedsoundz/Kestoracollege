@@ -22,7 +22,10 @@ export function Footer() {
                         <div>
                             <Logo className="h-16 md:h-20 text-white mb-4" />
                             <p className="text-neutral-400 text-sm max-w-md leading-relaxed">
-                                SYKLI College is a premier institution dedicated to sustainability, innovation, and practical excellence.
+                                SYKLI College is an independent higher education institution in Helsinki, Finland, offering English-taught Bachelor’s and Master’s degree programmes focused on engineering, technology, business, science, and the arts.
+                            </p>
+                            <p className="text-neutral-500 text-[10px] max-w-md mt-2 leading-tight">
+                                SYKLI College is not affiliated with Suomen ympäristöopisto SYKLI or any other institution with a similar name.
                             </p>
                         </div>
                         <div className="flex gap-3">
@@ -51,7 +54,7 @@ export function Footer() {
                     <div>
                         <h3 className="font-bold text-sm uppercase tracking-widest mb-5 text-white">About</h3>
                         <ul className="space-y-3">
-                            <li><Link href="/about" className="text-neutral-400 text-sm hover:text-white transition-colors">Our Story</Link></li>
+                            <li><Link href="/about-sykli-college" className="text-neutral-400 text-sm hover:text-white transition-colors">Our Story</Link></li>
                             <li><Link href="/news" className="text-neutral-400 text-sm hover:text-white transition-colors">News & Events</Link></li>
                             <li><Link href="/research" className="text-neutral-400 text-sm hover:text-white transition-colors">Research</Link></li>
                             <li><Link href="/student-life" className="text-neutral-400 text-sm hover:text-white transition-colors">Campus Life</Link></li>
@@ -78,12 +81,11 @@ export function Footer() {
                         <h3 className="font-bold text-sm uppercase tracking-widest mb-5 text-white">Contact</h3>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3 text-neutral-400 text-sm">
-                                <MapPin size={16} className="mt-0.5 shrink-0 text-neutral-500" />
-                                <span>Pohjoisesplanadi 51,<br />00150 Helsinki, Uusimaa</span>
+                                <span>SYKLI College – Helsinki Campus<br />Pohjoisesplanadi 51,<br />00150 Helsinki, Uusimaa</span>
                             </li>
                             <li className="flex items-center gap-3 text-neutral-400 text-sm">
                                 <EnvelopeSimple size={16} className="shrink-0 text-neutral-500" />
-                                <a href="mailto:sykli@syklicollege.fi" className="hover:text-white transition-colors">sykli@syklicollege.fi</a>
+                                <a href="mailto:sykli@syklicollege.fi" className="hover:text-white transition-colors">SYKLI@syklicollege.fi</a>
                             </li>
                         </ul>
                     </div>
@@ -95,7 +97,7 @@ export function Footer() {
                 <div className="container mx-auto px-4 py-6">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <p className="text-neutral-500 text-xs order-2 md:order-1">
-                            © {new Date().getFullYear()} SYKLI College. All rights reserved.
+                            © 2026 SYKLI College – Independent higher education institution in Helsinki, Finland. All rights reserved.
                         </p>
                         <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 order-1 md:order-2">
                             <Link href="/site-index" className="text-neutral-500 text-xs hover:text-white transition-colors">Site Index</Link>
@@ -107,6 +109,6 @@ export function Footer() {
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer >
     )
 }

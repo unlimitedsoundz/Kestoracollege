@@ -5,8 +5,8 @@ import { ArrowRight, CheckCircle, Globe, Users, BookOpen, Briefcase, GraduationC
 import TableOfContents from '@/components/course/TableOfContents';
 
 export const metadata = {
-    title: 'Kandidaattiohjelmat (Suomi ja Ruotsi) | Sykli College',
-    description: 'Hae Sykli Collegen suomen- ja ruotsinkielisiin kandidaattiohjelmiin. Tietoa hyödyistä, opintopoluista, apurahoista ja valinnoista.',
+    title: 'Kandidaattiohjelmat (Suomi ja Ruotsi) | SYKLI College',
+    description: 'Hae SYKLI Collegen suomen- ja ruotsinkielisiin kandidaattiohjelmiin. Tietoa hyödyistä, opintopoluista, apurahoista ja valinnoista.',
     alternates: {
         canonical: 'https://www.syklicollege.fi/admissions/bachelor-fi',
         languages: {
@@ -46,7 +46,7 @@ export default function BachelorAdmissionsFiPage() {
                     <div className="max-w-4xl">
                         <p className="text-white font-bold tracking-wider uppercase mb-4">Opiskelijavalinnat</p>
                         <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-white">Hae suomen- ja ruotsinkielisiin kandidaattiohjelmiin</h1>
-                        <p className="text-xl text-neutral-200 mb-8">Aloita matkasi Sykli Collegessa ja hanki taidot, kansainvälinen näkökulma ja verkostot menestyäksesi maailmanlaajuisesti.</p>
+                        <p className="text-xl text-neutral-200 mb-8">Aloita matkasi SYKLI Collegessa ja hanki taidot, kansainvälinen näkökulma ja verkostot menestyäksesi maailmanlaajuisesti.</p>
                         <div className="flex flex-wrap gap-4">
                             <Link href="/admissions/application-process" className="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-neutral-200 transition-colors inline-flex items-center gap-2">
                                 Aloita Haku <ArrowRight size={20} weight="bold" />
@@ -99,7 +99,7 @@ export default function BachelorAdmissionsFiPage() {
                                 </div>
                                 <div className="bg-neutral-100 rounded-2xl h-80 overflow-hidden relative group">
                                     <div className="absolute inset-0 bg-neutral-200 flex items-center justify-center text-neutral-400">
-                                        <Image src="/images/admissions/benefits.jpg" alt="Hyödyt Sykli Collegessa opiskelusta" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+                                        <Image src="/images/admissions/benefits.jpg" alt="Hyödyt SYKLI Collegessa opiskelusta" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
                                     </div>
                                 </div>
                             </div>
@@ -117,9 +117,9 @@ export default function BachelorAdmissionsFiPage() {
                                     </div>
                                 </div>
                                 <div className="space-y-6 text-lg text-neutral-600">
-                                    <p>Kandidaatin tutkinnon suorittaminen Sykli Collegessa avaa saumattoman tien jatko-opintoihin:</p>
+                                    <p>Kandidaatin tutkinnon suorittaminen SYKLI Collegessa avaa saumattoman tien jatko-opintoihin:</p>
                                     <ul className="space-y-3">
-                                        <li><strong>Sisäinen Jatkoväylä:</strong> Suora polku Syklin maisteriohjelmiin.</li>
+                                        <li><strong>Sisäinen Jatkoväylä:</strong> Suora polku SYKLIn maisteriohjelmiin.</li>
                                         <li><strong>Erikoistumislinjat:</strong> Keskity laskentatoimeen, taloustieteeseen tai johtamiseen.</li>
                                         <li><strong>Kansainväliset Mahdollisuudet:</strong> Hae huippuyliopistoihin ympäri maailmaa.</li>
                                         <li><strong>Tutkimusintegraatio:</strong> Kandidaatintutkielma askeleena kohti syvällisempää tutkimusta.</li>
@@ -231,7 +231,7 @@ export default function BachelorAdmissionsFiPage() {
 
                         {/* Learn More */}
                         <section id="more" className="scroll-mt-32 text-center max-w-4xl mx-auto">
-                            <h2 className="text-3xl font-bold mb-8">Lue Lisää Sykli Collegessa Opiskelusta</h2>
+                            <h2 className="text-3xl font-bold mb-8">Lue Lisää SYKLI Collegessa Opiskelusta</h2>
                             <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-left">
                                 <div className="p-4 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors group">
                                     <h4 className="font-bold mb-1">Moderni Kampus</h4>

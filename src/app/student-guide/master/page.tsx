@@ -27,7 +27,7 @@ export default function MastersGuidePage() {
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold mb-6 pt-8">Master’s Students Guide</h1>
                         <p className="text-xl text-neutral-300 leading-relaxed">
-                            Essential steps and instructions for newly admitted Master’s students at Sykli College.
+                            Essential steps and instructions for newly admitted Master’s students at SYKLI College.
                             Follow this guide to ensure a smooth start to your studies in the academic year 2026–2027.
                         </p>
                     </div>
@@ -149,7 +149,7 @@ export default function MastersGuidePage() {
                                     <strong> You are strongly encouraged to pay by 14 August 2026.</strong>
                                 </p>
                                 <p className="mb-6">
-                                    If you have a <strong>Sykli College Excellence Scholarship</strong>, you must accept the terms before the scholarship is valid.
+                                    If you have a <strong>SYKLI College Excellence Scholarship</strong>, you must accept the terms before the scholarship is valid.
                                     Failure to accept in time may result in forfeiting the scholarship.
                                 </p>
                             </div>
@@ -245,7 +245,7 @@ export default function MastersGuidePage() {
                                 <li className="bg-neutral-100 p-4 rounded-lg flex gap-3">
                                     <FileText className="text-black" weight="regular" />
                                     <div>
-                                        <span className="font-bold block text-sm">Sykli IT Account</span>
+                                        <span className="font-bold block text-sm">SYKLI IT Account</span>
                                         <span className="text-xs text-neutral-500">Email, Moodle, Course Registration</span>
                                     </div>
                                 </li>

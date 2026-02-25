@@ -56,11 +56,13 @@ export default function CourseSelector({ initialCourses }: CourseSelectorProps) 
                 }
             }
 
-            if (!studentId || !dob) {
-                console.error('Missing credentials for RPC:', { studentId, dob });
-                alert('Your profile is incomplete. Please contact support.');
-                return;
-            }
+            // Proceed without DOB/Student ID blockers as requested
+            console.log('Proceeding to application creation...', {
+                userId: currentUser.id,
+                courseId,
+                hasStudentId: !!studentId,
+                hasDob: !!dob
+            });
 
             console.log('Calling Secure Application Creation RPC...', {
                 userId: currentUser.id,
@@ -72,12 +74,12 @@ export default function CourseSelector({ initialCourses }: CourseSelectorProps) 
             const { data, error: rpcError } = await supabase.rpc('create_application_v2', {
                 p_user_id: currentUser.id,
                 p_course_id: courseId,
-                p_student_id: studentId,
-                p_dob: dob
+                p_student_id: studentId || null,
+                p_dob: dob || null
             });
 
             if (rpcError) {
-                console.error('RPC Error:', rpcError);
+                console.error('RPC Execution Error:', rpcError);
                 throw rpcError;
             }
 
@@ -165,6 +167,11 @@ export default function CourseSelector({ initialCourses }: CourseSelectorProps) 
                                 <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-neutral-600">
                                     <BookOpen size={14} weight="regular" className="text-neutral-400" />
                                     {course.duration}
+                                    {course.programType && (
+                                        <span className="ml-2 px-2 py-0.5 rounded-sm bg-neutral-100 text-neutral-500 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
+                                            {course.programType}
+                                        </span>
+                                    )}
                                 </span>
                                 {(() => {
                                     const baseFee = getTuitionFee(

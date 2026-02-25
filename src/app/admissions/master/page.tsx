@@ -6,8 +6,8 @@ import AdmissionsCTA from '@/components/admissions/AdmissionsCTA';
 
 
 export const metadata = {
-    title: 'Apply to Master’s Programmes | Sykli College',
-    description: 'Application guide for Master’s programmes at Sykli College. Deadlines, eligibility, and steps for 2026 admission.',
+    title: 'Apply to Master’s Programmes | SYKLI College',
+    description: 'Application guide for Master’s programmes at SYKLI College. Deadlines, eligibility, and steps for 2026 admission.',
 };
 
 const tocSections = [
@@ -195,7 +195,7 @@ export default function MasterAdmissionsPage() {
                         <section id="study-options" className="scroll-mt-32">
                             <h2 className="text-3xl font-bold mb-6 text-black">2. Study Options</h2>
                             <p className="text-lg text-neutral-700 mb-6">
-                                Sykli College offers Master’s programmes in several fields. Applicants may apply to a maximum of <strong>two programmes</strong> per application.
+                                SYKLI College offers Master’s programmes in several fields. Applicants may apply to a maximum of <strong>two programmes</strong> per application.
                             </p>
                             <div className="grid md:grid-cols-3 gap-6">
                                 <div className="p-6 bg-neutral-50 rounded-xl transition-colors">
@@ -221,7 +221,7 @@ export default function MasterAdmissionsPage() {
                             <div className="grid md:grid-cols-2 gap-12 items-start">
                                 <div className="space-y-6">
                                     <p className="text-lg text-neutral-700 leading-relaxed">
-                                        At Sykli College, we believe in rewarding academic excellence and supporting students through various financial aid options.
+                                        At SYKLI College, we believe in rewarding academic excellence and supporting students through various financial aid options.
                                         Our scholarship programme is designed to help international talent thrive in Finland.
                                     </p>
                                     <ul className="space-y-4">
@@ -459,7 +459,7 @@ export default function MasterAdmissionsPage() {
                                     </li>
                                 </ul>
                                 <p className="mt-8 text-sm text-neutral-500 italic">
-                                    * Scores must be sent directly by the testing organization to Sykli College.
+                                    * Scores must be sent directly by the testing organization to SYKLI College.
                                 </p>
                             </div>
                         </section>

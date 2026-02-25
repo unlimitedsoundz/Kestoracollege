@@ -17,7 +17,7 @@ const sharedSections = (title: string, degree: string) => [
         id: "description",
         title: "Programme Description",
         content: `
-            <p class="mb-4">The ${title} ${degree} programme at Sykli College offers a comprehensive curriculum designed to prepare students for leadership roles in the global economy. The programme integrates theoretical foundations with practical applications, focusing on sustainable practices and innovative thinking.</p>
+            <p class="mb-4">The ${title} ${degree} programme at SYKLI College offers a comprehensive curriculum designed to prepare students for leadership roles in the global economy. The programme integrates theoretical foundations with practical applications, focusing on sustainable practices and innovative thinking.</p>
             <p>Students will engage in multi-disciplinary projects, case studies, and corporate collaborations to develop the skills necessary for a successful career in ${title}.</p>
         `
     },

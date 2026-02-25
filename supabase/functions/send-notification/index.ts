@@ -73,6 +73,8 @@ serve(async (req) => {
                 notificationType = 'ADMISSION_LETTER_READY';
             } else if (status === 'REJECTED' && oldStatus !== 'REJECTED') {
                 notificationType = 'APPLICATION_REJECTED';
+            } else if (status === 'DOCS_REQUIRED' && oldStatus !== 'DOCS_REQUIRED') {
+                notificationType = 'DOCS_REQUIRED';
             }
         }
 
@@ -208,6 +210,36 @@ serve(async (req) => {
                     <p>Dear ${firstName},</p>
                     <p>Thank you for your interest in SYKLI College. After careful review of your application, we regret to inform you that we cannot offer you admission at this time.</p>
                     <p>We wish you the best in your future creative endeavors.</p>
+                `;
+                break;
+            case 'DOCS_REQUIRED':
+                studentSubject = "Action Required: Documents Requested - SYKLI College";
+                const docsList = (additionalData?.requestedDocuments as string[]) || [];
+                const note = additionalData?.note || "";
+
+                studentHtml = `
+                    <h1 style="color: #9333ea;">Action Required: Documents Requested</h1>
+                    <p>Dear ${firstName},</p>
+                    <p>The admissions team has reviewed your application for <strong>${applicationData?.course_title || 'your program'}</strong> and requires additional information to proceed.</p>
+                    
+                    ${note ? `
+                    <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #eaeaea; margin: 20px 0;">
+                        <p style="text-transform: uppercase; font-size: 11px; font-weight: bold; color: #666; margin-bottom: 8px; letter-spacing: 0.05em;">Message from Admissions:</p>
+                        <p style="font-style: italic; margin: 0; color: #1a1a1a;">"${note}"</p>
+                    </div>
+                    ` : ''}
+
+                    ${docsList.length > 0 ? `
+                    <div style="margin: 20px 0;">
+                        <p style="font-weight: bold; margin-bottom: 10px;">Required Documents:</p>
+                        <ul>
+                            ${docsList.map(doc => `<li>${doc.replaceAll('_', ' ')}</li>`).join('')}
+                        </ul>
+                    </div>
+                    ` : ''}
+
+                    <p>Please log in to your portal dashboard to upload the missing documents.</p>
+                    <a href="${portalUrl}/dashboard" style="display:inline-block;background:#9333ea;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold;">Upload Documents</a>
                 `;
                 break;
         }

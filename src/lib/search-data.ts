@@ -52,7 +52,7 @@ export const searchablePages: SearchablePage[] = [
     { title: "Campus Information", href: "/student-guide", category: "Student Life & Guides" },
 
     // About SYKLI
-    { title: "Our Story", href: "/about", category: "About SYKLI" },
+    { title: "Our Story", href: "/about-sykli-college", category: "About SYKLI" },
     { title: "Contact Information", href: "/contact", category: "About SYKLI" },
     { title: "News & Events", href: "/news", category: "About SYKLI" },
     { title: "Collaboration", href: "/collaboration", category: "About SYKLI" },

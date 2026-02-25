@@ -180,8 +180,8 @@ export default function AdminStudentsPage() {
                         Pending Enrollments
                         <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">{pendingApplications.length}</span>
                     </h2>
-                    <div className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden">
-                        <table className="w-full text-left">
+                    <div className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-x-auto">
+                        <table className="w-full text-left min-w-[800px]">
                             <thead className="bg-amber-50/50 border-b border-neutral-200">
                                 <tr>
                                     <th className="p-4 font-bold text-neutral-600 text-xs uppercase">Applicant</th>
@@ -253,8 +253,8 @@ export default function AdminStudentsPage() {
                 <CheckCircle size={20} weight="bold" className="text-emerald-500" />
                 Active Student Body
             </h2>
-            <div className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden">
-                <table className="w-full text-left">
+            <div className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-x-auto">
+                <table className="w-full text-left min-w-[1000px]">
                     <thead className="bg-neutral-50 border-b border-neutral-200">
                         <tr>
                             <th className="p-4 font-bold text-neutral-600 text-xs uppercase">Student ID</th>

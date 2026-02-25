@@ -44,7 +44,10 @@ function ReceiptContent() {
                     .eq('user_id', user.id)
                     .single();
 
-                if (error || !applicationRaw || !applicationRaw.offer?.[0]) {
+                const application = applicationRaw;
+                const offer = Array.isArray(application.offer) ? application.offer[0] : application.offer;
+
+                if (error || !applicationRaw || !offer) {
                     setData(null);
                     setLoading(false);
                     return;
@@ -76,7 +79,8 @@ function ReceiptContent() {
     useEffect(() => {
         if (!loading && data) {
             const application = data;
-            const payment = application.offer?.[0]?.payments?.[0];
+            const offer = Array.isArray(application.offer) ? application.offer[0] : application.offer;
+            const payment = offer?.payments?.[0];
 
             if (!payment || (application.status !== 'ENROLLED' && application.status !== 'PAYMENT_SUBMITTED')) {
                 router.push(`/portal/application/payment?id=${id}`);
@@ -98,8 +102,13 @@ function ReceiptContent() {
     if (!data) return notFound();
 
     const application = data;
-    const offer = application.offer[0];
-    const payment = offer.payments?.[0]; // Assuming single payment for now
+    // Safely extract offer (handles both object and single-item array)
+    const offer = Array.isArray(application?.offer)
+        ? application.offer[0]
+        : application?.offer;
+
+    // Safely extract payment
+    const payment = offer?.payments?.[0];
 
     if (!payment || (application.status !== 'ENROLLED' && application.status !== 'PAYMENT_SUBMITTED')) {
         return null;
@@ -116,7 +125,7 @@ function ReceiptContent() {
                     </div>
                     <h2 className="text-lg font-black uppercase tracking-tight text-neutral-900 mb-2">Payment Under Review</h2>
                     <p className="text-xs text-neutral-500 font-medium leading-relaxed mb-8">
-                        Your transaction has been recorded (Ref: <span className="font-mono text-black">{payment.transaction_reference}</span>).<br />
+                        Your transaction has been recorded (Ref: <span className="font-mono text-black">{payment?.transaction_reference || 'N/A'}</span>).<br />
                         The official receipt will be available here once our finance team confirms the funds.
                     </p>
                     <Link
@@ -131,7 +140,7 @@ function ReceiptContent() {
     }
 
     // Calculate years paid
-    const yearsPaid = Math.max(1, Math.round(payment.amount / offer.tuition_fee));
+    const yearsPaid = Math.max(1, Math.round((payment?.amount || 0) / (offer?.tuition_fee || 1)));
     const intake = admission?.intake || 'Autumn 2026';
     const academicYear = admission?.academic_year || '2026/2027';
     const isPending = application.status === 'PAYMENT_SUBMITTED';
@@ -165,7 +174,7 @@ function ReceiptContent() {
                         <div className="relative w-40 h-10">
                             <Image
                                 src="/images/sykli-logo-official.png"
-                                alt="Sykli College"
+                                alt="SYKLI College"
                                 fill
                                 style={{ objectFit: 'contain', objectPosition: 'left center' }}
                             />
@@ -173,7 +182,7 @@ function ReceiptContent() {
                         <div className="space-y-0.5">
                             <div className="text-[12px] font-black uppercase tracking-[0.05em] text-black">SYKLI College</div>
                             <div className="text-[9px] text-neutral-500 font-medium leading-relaxed max-w-[200px]">
-                                Pohjoisesplanadi 51, 00150 Helsinki, Finland<br />
+                                SYKLI College – Helsinki Campus, Pohjoisesplanadi 51, 00150 Helsinki, Finland<br />
                                 financial.services@syklicollege.fi
                             </div>
                         </div>
@@ -182,7 +191,7 @@ function ReceiptContent() {
                         <div className="text-2xl font-black text-black uppercase tracking-tighter leading-none mb-1">Receipt</div>
                         <div className="flex flex-col items-end gap-0.5">
                             <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Transaction ID</span>
-                            <span className="text-xs font-mono font-bold text-black border-r-4 border-black pr-3">{payment.transaction_reference}</span>
+                            <span className="text-xs font-mono font-bold text-black border-r-4 border-black pr-3">{payment?.transaction_reference || 'N/A'}</span>
                         </div>
                     </div>
                 </div>
@@ -234,12 +243,12 @@ function ReceiptContent() {
                         <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-sm space-y-4">
                             <div className="flex flex-col gap-0.5 pr-4">
                                 <span className="text-[8px] font-bold text-neutral-400 uppercase">Amount Paid (EUR)</span>
-                                <span className="text-2xl font-black text-black leading-none">€ {payment.amount.toLocaleString()}</span>
+                                <span className="text-2xl font-black text-black leading-none">€ {payment?.amount?.toLocaleString() || '0'}</span>
                             </div>
                             <div className="space-y-2 pt-4 border-t border-neutral-200">
                                 <div className="flex justify-between items-center text-[9px] font-bold">
                                     <span className="text-neutral-500 uppercase tracking-wider">Date Received</span>
-                                    <span className="text-black">{formatToDDMMYYYY(payment.created_at)}</span>
+                                    <span className="text-black">{formatToDDMMYYYY(payment?.created_at)}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-[9px] font-bold">
                                     <span className="text-neutral-500 uppercase tracking-wider">Currency</span>
@@ -280,7 +289,7 @@ function ReceiptContent() {
                         <tfoot>
                             <tr className="border-t-2 border-black">
                                 <td colSpan={2} className="py-4 px-2 text-[9px] font-black uppercase tracking-widest text-right">Total Net Paid</td>
-                                <td className="py-4 px-2 text-right text-lg font-black text-black">€ {payment.amount.toLocaleString()}</td>
+                                <td className="py-4 px-2 text-right text-lg font-black text-black">€ {payment?.amount?.toLocaleString() || '0'}</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -288,7 +297,7 @@ function ReceiptContent() {
 
                 <div className="relative z-10 mt-auto pt-8">
                     <p className="text-[8px] text-black uppercase tracking-widest leading-relaxed text-center font-medium">
-                        This document serves as an official proof of payment for the specified student and program. It is electronically generated and verified through the Sykli SIS Gateway.
+                        This document serves as an official proof of payment for the specified student and program. It is electronically generated and verified through the SYKLI SIS Gateway.
                     </p>
                 </div>
 

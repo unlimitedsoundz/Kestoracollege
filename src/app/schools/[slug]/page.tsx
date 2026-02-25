@@ -201,7 +201,7 @@ export default async function SchoolDetails({ params }: Props) {
                                             fallbackSrc={school.imageUrl || '/images/placeholders/design.png'}
                                             fill
                                             className="object-cover"
-                                            alt={`Study ${course.title} at Sykli College`}
+                                            alt={`Study ${course.title} at SYKLI College`}
                                             sizes="(max-width: 768px) 100vw, 25vw"
                                         />
                                         <span className="absolute top-2 right-2 bg-white/90 text-xs font-bold px-2 py-1 rounded text-neutral-800 z-10">
@@ -352,8 +352,8 @@ export default async function SchoolDetails({ params }: Props) {
                             <div className="space-y-8">
                                 <div className="flex gap-4 items-start">
                                     <div className="bg-neutral-100 p-10 border border-black">
-                                        <p className="font-bold">Pohjoisesplanadi 51, Helsinki</p>
-                                        <p className="text-neutral-500">Sykli College</p>
+                                        <p className="font-bold text-lg">SYKLI College – Helsinki Campus</p>
+                                        <p className="font-medium text-neutral-800">Pohjoisesplanadi 51, 00150 Helsinki</p>
                                     </div>
                                 </div>
                                 <div className="space-y-4">

@@ -65,8 +65,14 @@ export default function NewsForm({ id, isNew, newsItem }: NewsFormProps) {
             window.location.href = '/admin/news';
 
         } catch (error: any) {
-            console.error('Error submitting form:', error);
-            alert(`Failed to save: ${error.message}`);
+            console.error('Error submitting form:', {
+                message: error.message,
+                details: error.details,
+                hint: error.hint,
+                code: error.code,
+                error
+            });
+            alert(`Failed to save: ${error.message || 'Unknown error'}`);
             setIsSubmitting(false);
         }
     }

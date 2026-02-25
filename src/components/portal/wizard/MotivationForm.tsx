@@ -65,7 +65,7 @@ export default function MotivationForm({ applicationId, initialData, onUpdate }:
                 <div>
                     <label className="block text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-1">Motivation Letter / Statement of Purpose</label>
                     <p className="text-xs text-[#2d2d2d] mb-2 leading-relaxed">
-                        Tell us why you want to study at Sykli College and why you are a good fit for this programme.
+                        Tell us why you want to study at SYKLI College and why you are a good fit for this programme.
                     </p>
                     <textarea
                         {...form.register('statementOfPurpose')}

@@ -121,7 +121,10 @@ function AdmissionLetterContent() {
     const application = data;
 
     // Determine Fees (Fallback to defaults if missing in DB)
-    let displayOffer = data.offer?.[0] || {};
+    // Handle both array and single object due to recent UNIQUE constraint change
+    let displayOffer = Array.isArray(data.offer) ? data.offer[0] : data.offer;
+    displayOffer = displayOffer || {};
+
     let tuitionFee = displayOffer.tuition_fee;
     let discountAmount = displayOffer.discount_amount || 0;
 
@@ -180,7 +183,7 @@ function AdmissionLetterContent() {
                         <div className="mb-4 relative w-48 h-12">
                             <Image
                                 src="/images/sykli-logo-official.png"
-                                alt="Sykli College Official Logo"
+                                alt="SYKLI College Official Logo"
                                 fill
                                 style={{ objectFit: 'contain', objectPosition: 'left center' }}
                                 priority
@@ -188,7 +191,7 @@ function AdmissionLetterContent() {
                         </div>
                     </div>
                     <div className="text-left md:text-right text-[10px] font-medium text-neutral-600 leading-relaxed uppercase tracking-wide">
-                        <strong className="text-black">SYKLI College</strong><br />
+                        <strong className="text-black">SYKLI College – Helsinki Campus</strong><br />
                         Pohjoisesplanadi 51<br />
                         00150 Helsinki, Finland<br />
                         Website: <a href="https://syklicollege.fi" className="underline">https://syklicollege.fi</a><br />
@@ -235,6 +238,10 @@ function AdmissionLetterContent() {
                             <div className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Degree Level</div>
                             <div className="text-sm font-bold text-neutral-900">{application.course?.degreeLevel === 'MASTER' ? "Master's Degree" : "Bachelor's Degree"}</div>
                         </div>
+                        <div>
+                            <div className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Study Mode</div>
+                            <div className="text-sm font-bold text-neutral-900">{application.course?.programType || 'Full-time'}</div>
+                        </div>
                     </div>
                 </div>
 
@@ -244,7 +251,7 @@ function AdmissionLetterContent() {
                         Dear {application.personal_info?.firstName},
                     </p>
                     <p className="text-sm leading-relaxed text-neutral-700 mb-3">
-                        We are pleased to inform you that, following a thorough review of your application, the Admissions Committee of SYKLI College has decided to offer you a place in the <strong>{application.course?.title}</strong> ({application.course?.degreeLevel === 'MASTER' ? "Master's Degree" : "Bachelor's Degree"}) programme for the <strong>Autumn 2026</strong> intake.
+                        We are pleased to inform you that, following a thorough review of your application, the Admissions Committee of SYKLI College has decided to offer you a place in the <strong>{application.course?.title}</strong> ({application.course?.programType || 'Full-time'}) programme for the <strong>Autumn 2026</strong> intake.
                     </p>
                     <p className="text-sm leading-relaxed text-neutral-600">
                         This offer is subject to the conditions outlined below, including acceptance of the offer via the student portal and confirmation of tuition payment by the specified deadline. Upon fulfillment of these conditions, an official Letter of Admission will be issued confirming your enrollment.

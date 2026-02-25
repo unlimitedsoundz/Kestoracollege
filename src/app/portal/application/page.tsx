@@ -135,9 +135,11 @@ function ApplicationWizardContent() {
         const step = stepsConf[index];
         if (step.key === 'instructions') return true;
         if (step.key === 'documents') {
-            const requiredTypes = ['PASSPORT', 'TRANSCRIPT', 'CERTIFICATE', 'CV'];
+            const baseRequired = ['PASSPORT', 'TRANSCRIPT', 'CERTIFICATE', 'CV', 'MOTIVATION_LETTER'];
+            const requested = application.requested_documents || [];
+            const allRequired = Array.from(new Set([...baseRequired, ...requested]));
             const uploadedTypes = application.documents?.map(d => d.type) || [];
-            return requiredTypes.every(type => uploadedTypes.includes(type));
+            return allRequired.every(type => uploadedTypes.includes(type));
         }
         if (step.key === 'review') return false;
         return (application as any)[step.key] != null;
@@ -156,7 +158,7 @@ function ApplicationWizardContent() {
     }
 
     // Determine requested step vs allowed step
-    const defaultStep = hasStartedFilling ? maxAllowedStep : 1;
+    const defaultStep = application.status === 'DOCS_REQUIRED' ? 6 : (hasStartedFilling ? maxAllowedStep : 1);
     const requestedStep = stepParam ? parseInt(stepParam) : defaultStep;
     const currentStepId = Math.min(requestedStep, maxAllowedStep);
     const currentStep = stepsConf.find(s => s.id === currentStepId) || stepsConf[0];
@@ -186,6 +188,9 @@ function ApplicationWizardContent() {
                 </div>
                 <h1 className="text-2xl font-black tracking-tighter uppercase leading-none mb-1">
                     {application.course?.title}
+                    {application.course?.programType && (
+                        <span className="text-primary font-bold lowercase"> — {application.course.programType}</span>
+                    )}
                     {application.course?.duration && (
                         <span className="text-neutral-500 font-bold lowercase"> — {application.course.duration}</span>
                     )}
@@ -304,6 +309,8 @@ function ApplicationWizardContent() {
                             <DocumentsForm
                                 applicationId={application.id}
                                 existingDocuments={application.documents}
+                                requestedDocuments={application.requested_documents}
+                                documentRequestNote={application.document_request_note}
                                 onUpdate={refreshApplication}
                             />
                         )}
@@ -315,8 +322,8 @@ function ApplicationWizardContent() {
                 </div>
 
                 {/* Summary Sidebar (Always On) */}
-                <div className="lg:col-span-3 space-y-4">
-                    <div className="bg-white md:bg-neutral-50/50 p-4 md:p-8 rounded-sm border border-neutral-100 min-h-[500px]">
+                <div className="lg:col-span-3">
+                    <div className="bg-white p-6 rounded-sm border border-neutral-100 lg:sticky lg:top-8">
                         <h3 className="text-xs font-semibold uppercase tracking-widest text-[#2d2d2d] mb-4">Application Summary</h3>
 
                         <div className="space-y-4">
@@ -363,10 +370,43 @@ function ApplicationWizardContent() {
                                 </div>
                             )}
 
-                            <div className="pt-4 border-t border-neutral-200">
-                                <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-tight text-[#2d2d2d]">
+                            <div className="pt-4 border-t border-neutral-100 mt-2">
+                                <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-neutral-900">
                                     <span>Documents</span>
-                                    <span>{application.documents?.length || 0} / 4</span>
+                                    <span className="flex items-center gap-1.5">
+                                        {(() => {
+                                            const baseRequired = ['PASSPORT', 'TRANSCRIPT', 'CERTIFICATE', 'CV', 'MOTIVATION_LETTER'];
+                                            const requested = application.requested_documents || [];
+                                            const allRequired = Array.from(new Set([...baseRequired, ...requested]));
+                                            const uploadedCount = application.documents?.filter(d => allRequired.includes(d.type)).length || 0;
+                                            const totalRequired = allRequired.length;
+                                            return (
+                                                <>
+                                                    <span className={uploadedCount >= totalRequired ? 'text-emerald-600' : 'text-primary'}>
+                                                        {uploadedCount}
+                                                    </span>
+                                                    <span className="text-neutral-400">/</span>
+                                                    <span>{totalRequired}</span>
+                                                </>
+                                            );
+                                        })()}
+                                    </span>
+                                </div>
+                                <div className="mt-2 w-full bg-neutral-100 h-1 rounded-full overflow-hidden">
+                                    <div
+                                        className="bg-primary h-full transition-all duration-500"
+                                        style={{
+                                            width: `${Math.min(100, (
+                                                (() => {
+                                                    const baseRequired = ['PASSPORT', 'TRANSCRIPT', 'CERTIFICATE', 'CV', 'MOTIVATION_LETTER'];
+                                                    const requested = application.requested_documents || [];
+                                                    const allRequired = Array.from(new Set([...baseRequired, ...requested]));
+                                                    const uploadedCount = application.documents?.filter(d => allRequired.includes(d.type)).length || 0;
+                                                    return (uploadedCount / allRequired.length) * 100;
+                                                })()
+                                            ))}%`
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>

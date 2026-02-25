@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export const metadata = {
-    title: 'Accessibility Statement | Sykli College',
+    title: 'Accessibility Statement | SYKLI College',
     description: 'Our commitment to ensuring digital accessibility for all users including students, staff and partners.',
 };
 

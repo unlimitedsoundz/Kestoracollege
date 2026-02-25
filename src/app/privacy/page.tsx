@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-    title: 'Privacy Policy | Sykli College',
-    description: 'Learn how Sykli College protects your personal data and respects your privacy in accordance with GDPR and Finnish laws.',
+    title: 'Privacy Policy | SYKLI College',
+    description: 'Learn how SYKLI College protects your personal data and respects your privacy in accordance with GDPR and Finnish laws.',
 };
 
 export default function PrivacyPolicyPage() {
@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
                             Privacy Policy
                         </h1>
                         <p className="text-lg text-neutral-600 leading-relaxed">
-                            How Sykli College handles personal data in accordance with the GDPR and Finnish data protection legislation.
+                            How SYKLI College handles personal data in accordance with the GDPR and Finnish data protection legislation.
                         </p>
                     </div>
                 </div>

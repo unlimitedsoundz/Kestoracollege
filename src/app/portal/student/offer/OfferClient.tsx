@@ -18,10 +18,13 @@ export function OfferClient({ admission }: OfferClientProps) {
     const [decisionFeedback, setDecisionFeedback] = useState<string | null>(null);
     const [generatingLetter, setGeneratingLetter] = useState(false);
 
-    const hasResponded = admission.offer_status !== 'PENDING';
-    const isAccepted = admission.offer_status === 'ACCEPTED' || admission.offer_status === 'PAID';
-    const isRejected = admission.offer_status === 'REJECTED';
-    const isOfferAcceptedOnly = isAccepted && admission.application_status === 'OFFER_ACCEPTED';
+    // Harden status detection: handle both legacy 'offer_status' and new 'status' from admission_offers table
+    const currentStatus = admission.offer_status || admission.status;
+    const hasResponded = (currentStatus && currentStatus !== 'PENDING') || admission.application_status === 'DOCS_REQUIRED';
+    const isAccepted = currentStatus === 'ACCEPTED' || currentStatus === 'PAID' || admission.application_status === 'DOCS_REQUIRED';
+    const isRejected = currentStatus === 'REJECTED';
+
+    const isOfferAcceptedOnly = isAccepted && (admission.application_status === 'OFFER_ACCEPTED' || admission.application_status === 'DOCS_REQUIRED');
     // If payment is submitted, do not consider letter "generated" for UI purposes to prevent "Pay Tuition" button from showing
     const isLetterGenerated = admission.application_status === 'ADMISSION_LETTER_GENERATED' && admission.application_status !== 'PAYMENT_SUBMITTED';
 
@@ -158,7 +161,7 @@ export function OfferClient({ admission }: OfferClientProps) {
                             <div className="flex flex-col items-center">
                                 <div className="space-y-6 max-w-2xl w-full">
                                     <div className="text-center space-y-2 border-b border-neutral-200 pb-6">
-                                        <h2 className="text-2xl font-bold text-neutral-900">Welcome to Sykli College!</h2>
+                                        <h2 className="text-2xl font-bold text-neutral-900">Welcome to SYKLI College!</h2>
                                         <p className="text-sm text-neutral-600">
                                             Your Journey Starts Here
                                         </p>
@@ -181,7 +184,7 @@ export function OfferClient({ admission }: OfferClientProps) {
                                                     <h4 className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Next Steps for Enrollment:</h4>
                                                     <div className="grid gap-4">
                                                         <WelcomeStep number="01" title="Tuition Clearance" description="Proceed to the finance section to settle your initial tuition fees." />
-                                                        <WelcomeStep number="02" title="IT Credentials" description="You will receive your Sykli credentials once the payment is confirmed." />
+                                                        <WelcomeStep number="02" title="IT Credentials" description="You will receive your SYKLI credentials once the payment is confirmed." />
                                                         <WelcomeStep number="03" title="Orientation" description="Check your portal for the upcoming orientation schedule." />
                                                     </div>
                                                 </div>

@@ -26,7 +26,7 @@ export default function ExchangeStudentsPage() {
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold mb-6 pt-8">Exchange Students Guide</h1>
                         <p className="text-xl text-neutral-300 leading-relaxed">
-                            Everything you need to know for your exchange semester or year at Sykli College.
+                            Everything you need to know for your exchange semester or year at SYKLI College.
                             We look forward to welcoming you to our vibrant international community!
                         </p>
                     </div>
@@ -51,9 +51,9 @@ export default function ExchangeStudentsPage() {
 
                         {/* Welcome */}
                         <section id="intro" className="scroll-mt-32">
-                            <h2 className="text-3xl font-bold mb-6">Welcome to Sykli College!</h2>
+                            <h2 className="text-3xl font-bold mb-6">Welcome to SYKLI College!</h2>
                             <p className="text-lg text-neutral-700 leading-relaxed">
-                                Completing an exchange at Sykli College is a unique opportunity to experience Finnish education,
+                                Completing an exchange at SYKLI College is a unique opportunity to experience Finnish education,
                                 culture, and student life. This guide will help you navigate the practical steps of your exchange.
                             </p>
                             <div className="mt-8 grid md:grid-cols-2 gap-6">
@@ -122,7 +122,7 @@ export default function ExchangeStudentsPage() {
                                     <ul className="space-y-4 text-neutral-600 text-sm">
                                         <li className="flex gap-3">
                                             <div className="w-1.5 h-1.5 rounded-full bg-black mt-1.5 shrink-0"></div>
-                                            <span><strong>Initial LA:</strong> Should be signed by your home university and Sykli before arrival.</span>
+                                            <span><strong>Initial LA:</strong> Should be signed by your home university and SYKLI before arrival.</span>
                                         </li>
                                         <li className="flex gap-3">
                                             <div className="w-1.5 h-1.5 rounded-full bg-black mt-1.5 shrink-0"></div>
@@ -175,7 +175,7 @@ export default function ExchangeStudentsPage() {
                                 </p>
                                 <div className="bg-neutral-50 p-4 rounded-lg flex gap-3 text-sm">
                                     <Info className="text-neutral-400 shrink-0" size={18} weight="regular" />
-                                    <p>Sykli College does not provide on-campus housing directly, but we assist with the application process.</p>
+                                    <p>SYKLI College does not provide on-campus housing directly, but we assist with the application process.</p>
                                 </div>
                             </div>
                             <div className="grid md:grid-cols-2 gap-6">
@@ -227,7 +227,7 @@ export default function ExchangeStudentsPage() {
                             <ul className="space-y-3">
                                 {[
                                     'Valid Passport / ID card',
-                                    'Acceptance Letter from Sykli College',
+                                    'Acceptance Letter from SYKLI College',
                                     'Signed Learning Agreement',
                                     'Health Insurance (EHIC for EU, private for non-EU)',
                                     'Housing contract and first month\'s rent receipt',

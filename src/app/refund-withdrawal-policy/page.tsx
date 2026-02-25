@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata = {
-    title: 'Refund & Withdrawal Policy | Sykli College',
-    description: 'Guidelines on financial obligations, withdrawals, and refunds for tuition, fees, and housing at Sykli College.',
+    title: 'Refund & Withdrawal Policy | SYKLI College',
+    description: 'Guidelines on financial obligations, withdrawals, and refunds for tuition, fees, and housing at SYKLI College.',
 };
 
 export default function RefundWithdrawalPolicyPage() {

@@ -58,13 +58,15 @@ function OfferContent() {
                     .eq('user_id', user.id)
                     .single();
 
-                if (appError || !application || !application.offer?.[0]) {
+                const offer = Array.isArray(application.offer) ? application.offer[0] : application.offer;
+
+                if (appError || !application || !offer) {
                     console.error('Application or offer not found', appError);
                     router.push('/portal/dashboard');
                     return;
                 }
 
-                setData({ application, offer: application.offer[0] });
+                setData({ application, offer });
             } catch (err) {
                 console.error('Error fetching offer data', err);
                 router.push('/portal/dashboard');
@@ -177,7 +179,8 @@ function OfferContent() {
                     <section className="p-8 rounded-sm border border-primary">
                         <h2 className="text-2xl font-bold uppercase tracking-tight text-primary leading-none mb-3">Admission Granted</h2>
                         <p className="text-black font-semibold text-sm leading-relaxed max-w-lg uppercase tracking-tight">
-                            Invitation for enrollment into the <span className="text-primary">{application.course?.title}</span> program.
+                            Invitation for enrollment into the <span className="text-primary">{application.course?.title}</span> program
+                            {application.course?.programType && <span className="text-primary capitalize"> ({application.course.programType})</span>}.
                             {application.course?.duration && (
                                 <span className="text-black block mt-1 font-medium lowercase text-sm">Duration: {application.course.duration}</span>
                             )}
@@ -196,9 +199,14 @@ function OfferContent() {
                                     <div className="space-y-4">
                                         <h3 className="text-2xl font-bold text-neutral-900 leading-tight">
                                             {application.course?.title}
-                                            {application.course?.duration && (
-                                                <span className="text-black block mt-1 font-medium lowercase text-sm">Duration: {application.course.duration}</span>
-                                            )}
+                                            <div className="flex gap-2 mt-1">
+                                                {application.course?.programType && (
+                                                    <span className="text-primary font-bold lowercase text-sm">{application.course.programType}</span>
+                                                )}
+                                                {application.course?.duration && (
+                                                    <span className="text-black font-medium lowercase text-sm">— {application.course.duration}</span>
+                                                )}
+                                            </div>
                                         </h3>
                                     </div>
                                 </div>

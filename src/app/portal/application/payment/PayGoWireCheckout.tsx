@@ -478,7 +478,7 @@ export default function PayGoWireCheckout({
                         <button
                             onClick={() => {
                                 if (selectedMethod?.id === 'flutterwave_uae') {
-                                    window.open('https://flutterwave.com/pay/sykli', '_blank');
+                                    window.open('https://flutterwave.com/pay/SYKLI', '_blank');
                                     handleConfirmPayment();
                                 } else if (selectedCountry === 'Nigeria') {
                                     handleStepChange('BANK_INSTRUCTIONS');
@@ -508,7 +508,7 @@ export default function PayGoWireCheckout({
 
                         <div className="pt-4 flex flex-col gap-2">
                             <p className="text-sm text-black font-medium text-center mt-2 max-w-sm mx-auto leading-relaxed">
-                                Your payment is protected by enterprise-grade security and verified directly by the Sykli College finance team.
+                                Your payment is protected by enterprise-grade security and verified directly by the SYKLI College finance team.
                             </p>
                         </div>
                     </div>

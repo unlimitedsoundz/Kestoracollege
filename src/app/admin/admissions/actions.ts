@@ -1,20 +1,49 @@
 import { createClient } from '@/utils/supabase/client';
+import { createAdminClient } from '@/utils/supabase/admin';
 import { ApplicationStatus } from '@/types/database';
 
-export async function updateApplicationStatus(applicationId: string, status: ApplicationStatus) {
+export async function updateApplicationStatus(applicationId: string, status: ApplicationStatus, requestedDocuments: any = null, documentRequestNote: string | null = null) {
     const supabase = createClient();
+
+    const updateData: any = {
+        status,
+        updated_at: new Date().toISOString()
+    };
+
+    if (requestedDocuments) {
+        updateData.requested_documents = requestedDocuments;
+    }
+
+    if (documentRequestNote !== null) {
+        updateData.document_request_note = documentRequestNote;
+    }
 
     const { error } = await supabase
         .from('applications')
-        .update({
-            status,
-            updated_at: new Date().toISOString()
-        })
+        .update(updateData)
         .eq('id', applicationId);
 
     if (error) {
         console.error('Error updating application status:', error);
         throw new Error('Failed to update status');
+    }
+
+    // Email Notification for Document Request
+    if (status === 'DOCS_REQUIRED') {
+        try {
+            await supabase.functions.invoke('send-notification', {
+                body: {
+                    applicationId: applicationId,
+                    type: 'DOCS_REQUIRED',
+                    additionalData: {
+                        requestedDocuments: requestedDocuments || [],
+                        note: documentRequestNote
+                    }
+                }
+            });
+        } catch (emailError) {
+            console.error('Failed to trigger document request email:', emailError);
+        }
     }
 
     // TRIGGER LOGIC: Automatically create admission offer + generate Letter of Offer on approval
@@ -114,31 +143,55 @@ export async function updateInternalNotes(applicationId: string, notes: string) 
 export async function createAdmissionOffer(applicationId: string, tuitionFee: number, deadline: string, offerType: 'DEPOSIT' | 'FULL_TUITION' = 'DEPOSIT', discountAmount: number = 0) {
     const supabase = createClient();
 
-    const { error } = await supabase
+    // 1. Get current application status
+    const { data: application } = await supabase
+        .from('applications')
+        .select('status')
+        .eq('id', applicationId)
+        .single();
+
+    // 2. Upsert the offer (handle re-issuing)
+    const { error: offerError } = await supabase
         .from('admission_offers')
-        .insert({
+        .upsert({
             application_id: applicationId,
             tuition_fee: tuitionFee,
             payment_deadline: deadline,
             offer_type: offerType,
             discount_amount: discountAmount,
             status: 'PENDING'
-        });
+        }, { onConflict: 'application_id' });
 
-    if (error) {
-        console.error('Error creating offer:', error);
+    if (offerError) {
+        console.error('Error creating/updating offer:', offerError);
         throw new Error('Failed to create offer');
     }
 
-    // Trigger PDF Generation & Email
+    // 3. Status Transition Logic
+    // If the application is in a state before ADMITTED, move it to ADMITTED
+    // so the student sees the "Accept Offer" button in their dashboard.
+    const statusesToAdvance = ['DRAFT', 'SUBMITTED', 'UNDER_REVIEW', 'REJECTED', 'DOCS_REQUIRED', 'OFFER_ACCEPTED', 'PAYMENT_SUBMITTED'];
+    if (application && statusesToAdvance.includes(application.status)) {
+        const { error: statusError } = await supabase
+            .from('applications')
+            .update({
+                status: 'ADMITTED',
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', applicationId);
+
+        if (statusError) {
+            console.error('Failed to auto-advance status to ADMITTED:', statusError);
+        }
+    }
+
+    // 4. Trigger PDF Generation & Email
     try {
         const { generateAndStoreOfferLetter } = await import('./pdf-actions');
         await generateAndStoreOfferLetter(applicationId);
     } catch (pdfError) {
         console.error('Failed to generate offer letter after manual creation:', pdfError);
-        // We don't throw here to avoid rolling back the offer creation, but we log the error.
     }
-
 
     return { success: true };
 }

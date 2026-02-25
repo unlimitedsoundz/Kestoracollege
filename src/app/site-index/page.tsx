@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata = {
-    title: 'Site Index | Sykli College',
-    description: 'A comprehensive map of all pages and resources on the Sykli College website.',
+    title: 'Site Index | SYKLI College',
+    description: 'A comprehensive map of all pages and resources on the SYKLI College website.',
 };
 
 const categories = [
@@ -43,7 +43,7 @@ const categories = [
     {
         title: 'About SYKLI',
         links: [
-            { name: 'Our Story', href: '/about' },
+            { name: 'Our Story', href: '/about-sykli-college' },
             { name: 'Contact Information', href: '/contact' },
             { name: 'News & Events', href: '/news' },
             { name: 'Collaboration', href: '/collaboration' },

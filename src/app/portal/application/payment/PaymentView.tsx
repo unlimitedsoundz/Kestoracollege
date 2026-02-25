@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Check, FileText } from "@phosphor-icons/react/dist/ssr";
 import { createClient } from '@/utils/supabase/client';
+import { invokeEdgeFunction } from '@/utils/supabase/invoke';
 import PayGoWireCheckout from './PayGoWireCheckout';
 import { calculateDiscountedFee, EARLY_PAYMENT_DISCOUNT_PERCENT, getProgramYears } from '@/utils/tuition';
 import Image from 'next/image';
@@ -36,9 +37,8 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
         setIsProcessing(true);
         setError(null);
         try {
-            console.log('PaymentView: Calling process-tuition-payment edge function...');
             const supabase = createClient();
-            const { data, error: functionError } = await supabase.functions.invoke('process-tuition-payment', {
+            const { data, error: functionError } = await invokeEdgeFunction('process-tuition-payment', {
                 body: {
                     offerId: admissionOffer.id,
                     applicationId: application.id,
@@ -100,7 +100,7 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
                 </h2>
                 <p className="text-sm text-neutral-600 mb-8 max-w-[280px] mx-auto leading-relaxed">
                     {isEnrolled
-                        ? <>Your enrollment is now confirmed. Welcome to <span className="font-semibold text-black">Sykli College</span>.</>
+                        ? <>Your enrollment is now confirmed. Welcome to <span className="font-semibold text-black">SYKLI College</span>.</>
                         : <>Your payment has been recorded and is currently under review. <span className="font-semibold text-black">Access to student services is paused</span> until our finance team verifies the transaction.</>
                     }
                 </p>
@@ -119,6 +119,15 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
     return (
         <div className="max-w-6xl mx-auto py-6 md:py-12 md:px-4 font-rubik text-black">
             <div className="mb-6 md:mb-12 text-center md:text-left bg-neutral-50 md:bg-transparent -mx-4 md:mx-0 p-6 md:p-0 border-y md:border-none border-neutral-100">
+                <div className="mb-4 flex justify-center md:justify-start">
+                    <Image
+                        src="/images/paygowire-logo-v2.png"
+                        alt="Paygowire Logo"
+                        width={120}
+                        height={40}
+                        className="h-8 w-auto object-contain"
+                    />
+                </div>
                 <h1 className="text-[20px] md:text-[24px] font-normal uppercase tracking-tighter text-black leading-tight md:leading-none">Tuition Payment via PAYGOWIRE</h1>
                 <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-3 mt-4">
                     <p className="text-sm text-black font-normal uppercase tracking-widest">

@@ -33,7 +33,7 @@ function PaymentContent() {
 
                 // 2. Secondary Auth Check (LocalStorage Fallback)
                 if (!sbUser) {
-                    const savedUser = localStorage.getItem('sykli_user');
+                    const savedUser = localStorage.getItem('SYKLI_user');
                     if (savedUser) {
                         const localProfile = JSON.parse(savedUser);
                         currentUserEmail = localProfile.email;
@@ -58,14 +58,21 @@ function PaymentContent() {
                     .eq('user_id', currentUserId || '')
                     .single();
 
-                if (appError || !applicationRaw || !applicationRaw.offer?.[0]) {
+                if (appError || !applicationRaw || (!applicationRaw.offer && (!Array.isArray(applicationRaw.offer) || applicationRaw.offer.length === 0))) {
                     console.error('Application or offer not found', appError);
                     router.push('/portal/dashboard');
                     return;
                 }
 
                 const application = applicationRaw;
-                const offer = application.offer[0];
+                // Handle both 1:1 (object) and 1:N (array) returns from Supabase
+                const offer = Array.isArray(application.offer) ? application.offer[0] : application.offer;
+
+                if (!offer) {
+                    console.error('Offer object is null or empty');
+                    router.push('/portal/dashboard');
+                    return;
+                }
 
                 // Security Check: Only allow if OFFER_ACCEPTED, ADMISSION_LETTER_GENERATED, or if already ENROLLED (to view receipt)
                 if (application.status === 'ADMITTED') {

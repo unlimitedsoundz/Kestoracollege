@@ -72,7 +72,7 @@ export default function DashboardPage() {
                 <div>
                     <div className="flex items-center gap-2">
                         <h1 className="text-xl font-semibold uppercase tracking-tight text-neutral-900 leading-none">My Applications</h1>
-                        {profile?.student_id && (
+                        {profile?.student_id && applications.some(app => app.status === 'ENROLLED') && (
                             <span className="border border-primary text-primary px-2 py-0.5 rounded-sm text-[10px] font-semibold uppercase tracking-widest leading-none">
                                 ID: {profile.student_id}
                             </span>
@@ -119,6 +119,46 @@ export default function DashboardPage() {
                 <div className="grid gap-3">
                     {applications.map((app) => (
                         <div key={app.id}>
+                            {/* Action Needed - DOCS_REQUIRED */}
+                            {app.status === 'DOCS_REQUIRED' && (
+                                <div className="flex items-start justify-between border-2 border-purple-600 p-6 md:p-8 rounded-sm text-purple-900 relative overflow-hidden bg-purple-50 mb-4 shadow-[6px_6px_0px_0px_rgba(147,51,234,0.3)] border-l-[8px]">
+                                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10 w-full">
+                                        <div>
+                                            <h4 className="font-black text-[12px] uppercase tracking-widest flex items-center gap-2">
+                                                <AlertCircle size={16} weight="bold" /> Additional Documents Requested
+                                            </h4>
+                                            {app.document_request_note && (
+                                                <div className="mt-3 bg-white/50 p-4 rounded-sm border border-purple-200/50 backdrop-blur-sm">
+                                                    <p className="text-[10px] font-black uppercase tracking-widest text-purple-600 mb-1 leading-none">Note from Admissions:</p>
+                                                    <p className="text-xs font-bold text-purple-900 leading-relaxed italic">"{app.document_request_note}"</p>
+                                                </div>
+                                            )}
+                                            {app.requested_documents && app.requested_documents.length > 0 ? (
+                                                <div className="mt-4 flex flex-wrap gap-2">
+                                                    {app.requested_documents.map((docId: string) => (
+                                                        <span key={docId} className="bg-purple-100 text-purple-700 px-2 py-1 rounded-sm text-[9px] font-black uppercase tracking-tight border border-purple-200">
+                                                            {docId.replaceAll('_', ' ')}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <p className="text-purple-700 text-[10px] font-bold uppercase tracking-tight mt-1">
+                                                    The admissions team has requested additional documents. Please check your uploads.
+                                                </p>
+                                            )}
+                                        </div>
+                                        <div className="flex flex-col md:flex-row gap-2">
+                                            <Link
+                                                href={`/portal/application?id=${app.id}&step=6`}
+                                                className="bg-purple-600 text-white px-8 py-4 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-purple-700 transition-all whitespace-nowrap text-center shadow-lg"
+                                            >
+                                                Upload Missing Documents
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
                             {/* Decision Alert Card - ADMITTED */}
                             {app.status === 'ADMITTED' && (
                                 <div className="flex items-start justify-between border-2 border-black p-6 md:p-8 rounded-sm text-black relative overflow-hidden bg-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] mb-4">

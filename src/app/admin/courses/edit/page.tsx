@@ -157,6 +157,29 @@ function CourseEditorContent() {
                                 className="w-full p-4 bg-neutral-50 border border-neutral-200 rounded-xl outline-none font-bold text-sm"
                             />
                         </div>
+
+                        <div className="space-y-1.5">
+                            <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">Program Type</label>
+                            <select
+                                name="programType"
+                                defaultValue={course?.programType || 'Full-time'}
+                                className="w-full p-4 bg-neutral-50 border border-neutral-200 rounded-xl outline-none font-bold text-sm"
+                            >
+                                <option value="Full-time">Full-time</option>
+                                <option value="Part-time">Part-time</option>
+                                <option value="Distance Learning">Distance Learning</option>
+                            </select>
+                        </div>
+
+                        <div className="space-y-1.5">
+                            <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">Study Mode (Detail)</label>
+                            <input
+                                name="studyMode"
+                                defaultValue={course?.studyMode || 'On-Campus'}
+                                className="w-full p-4 bg-neutral-50 border border-neutral-200 rounded-xl outline-none font-bold text-sm"
+                                placeholder="e.g. On-Campus, Hybrid"
+                            />
+                        </div>
                     </div>
 
                     <div className="space-y-1.5">

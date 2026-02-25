@@ -20,14 +20,14 @@ export function CookieConsent() {
     });
 
     useEffect(() => {
-        const savedPrefs = localStorage.getItem('sykli-cookie-preferences');
+        const savedPrefs = localStorage.getItem('SYKLI-cookie-preferences');
         if (!savedPrefs) {
             setShowConsent(true);
         }
     }, []);
 
     const savePreferences = (updatedPrefs: CookiePreferences) => {
-        localStorage.setItem('sykli-cookie-preferences', JSON.stringify(updatedPrefs));
+        localStorage.setItem('SYKLI-cookie-preferences', JSON.stringify(updatedPrefs));
         localStorage.setItem('cookie-consent-accepted', 'true');
         setShowConsent(false);
     };

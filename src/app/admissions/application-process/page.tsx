@@ -4,8 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const metadata = {
-    title: 'How to Apply | Sykli College',
-    description: 'Step-by-step guide to applying to Sykli College. Deadlines, requirements, and admission procedures.',
+    title: 'How to Apply | SYKLI College',
+    description: 'Step-by-step guide to applying to SYKLI College. Deadlines, requirements, and admission procedures.',
 };
 
 export default function ApplicationProcessPage() {
@@ -23,11 +23,14 @@ export default function ApplicationProcessPage() {
                     sizes="100vw"
                 />
                 <div className="absolute inset-0 bg-black/50" />
-                <div className="absolute bottom-0 left-0 w-full pt-32 pb-8 px-4 md:pt-48 md:pb-16 relative z-10">
+                <div className="absolute bottom-0 left-0 w-full pt-32 pb-8 px-4 md:pt-48 md:pb-16 z-10">
                     <div className="container mx-auto">
                         <h1 className="text-5xl font-bold mb-6">How to Apply</h1>
                         <p className="text-xl max-w-2xl text-neutral-300 leading-relaxed">
-                            Follow our step-by-step guide to ensure a smooth application process for your studies at Sykli College.
+                            Follow our step-by-step guide to ensure a smooth application process for your studies at SYKLI College.
+                        </p>
+                        <p className="mt-4 text-lg max-w-2xl text-neutral-400 leading-relaxed">
+                            Learn more about <Link href="/" className="underline text-white font-medium hover:text-neutral-300 hover:no-underline transition-colors">SYKLI College Helsinki</Link>, our independent higher education institution in Finland.
                         </p>
                     </div>
                 </div>
@@ -183,7 +186,7 @@ export default function ApplicationProcessPage() {
                         <div>
                             <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Start Your Journey?</h2>
                             <p className="text-sm md:text-base text-neutral-400 max-w-xl mx-auto">
-                                Join the next generation of global leaders at Sykli College. Create your portal account to begin your official application.
+                                Join the next generation of global leaders at SYKLI College. Create your portal account to begin your official application.
                             </p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">

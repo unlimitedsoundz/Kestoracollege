@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Trophy as Award, Info, Percent } from "@phosphor-icons/react/dist/ssr";
+import { Trophy as Award, Info, Percent, CheckCircle as CheckCircle2 } from "@phosphor-icons/react/dist/ssr";
 import { createAdmissionOffer } from './actions';
 import {
     EARLY_PAYMENT_DISCOUNT_PERCENT,
@@ -12,11 +12,13 @@ interface FinancialOfferFormProps {
     applicationId: string;
     baseTuition: number;
     programYears: number;
+    onSuccess?: () => void;
 }
 
-export function FinancialOfferForm({ applicationId, baseTuition, programYears }: FinancialOfferFormProps) {
+export function FinancialOfferForm({ applicationId, baseTuition, programYears, onSuccess }: FinancialOfferFormProps) {
     const [offerType, setOfferType] = useState<'FIRST_YEAR' | 'FULL_PROGRAM'>('FIRST_YEAR');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     // Calculations
     const fullProgramBase = baseTuition * programYears;
@@ -33,6 +35,8 @@ export function FinancialOfferForm({ applicationId, baseTuition, programYears }:
         try {
             const mappedOfferType = offerType === 'FULL_PROGRAM' ? 'FULL_TUITION' : 'DEPOSIT';
             await createAdmissionOffer(applicationId, discountedFee, deadline, mappedOfferType, discountAmount);
+            setShowSuccess(true);
+            if (onSuccess) onSuccess();
         } catch (error) {
             console.error(error);
             alert('Failed to issue financial offer');
@@ -40,6 +44,28 @@ export function FinancialOfferForm({ applicationId, baseTuition, programYears }:
             setIsSubmitting(false);
         }
     };
+
+    if (showSuccess) {
+        return (
+            <div className="p-8 rounded-2xl border-2 border-dashed border-emerald-200 bg-emerald-50 text-center space-y-4">
+                <div className="w-12 h-12 bg-emerald-600 rounded-2xl flex items-center justify-center text-white mx-auto shadow-lg shadow-emerald-200">
+                    <CheckCircle2 size={24} weight="bold" />
+                </div>
+                <div>
+                    <h3 className="text-sm font-black text-emerald-900 uppercase tracking-widest leading-none mb-2">Offer Issued</h3>
+                    <p className="text-[10px] font-bold text-emerald-600 uppercase leading-relaxed">
+                        Financial offer for €{discountedFee.toLocaleString()} has been generated and student notification triggered.
+                    </p>
+                </div>
+                <button
+                    onClick={() => setShowSuccess(false)}
+                    className="text-[10px] font-black text-emerald-700 uppercase tracking-widest hover:underline"
+                >
+                    Issue Another
+                </button>
+            </div>
+        );
+    }
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">

@@ -116,27 +116,6 @@ export default function AdmissionsPage() {
                 ))}
             </div>
 
-            {/* Debug Info (Only for Admins) */}
-            <div className="bg-neutral-900 text-white p-6 rounded-3xl space-y-4">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-xs font-black uppercase tracking-widest text-neutral-400">System Diagnostic</h2>
-                    <span className="text-[10px] font-bold px-2 py-1 bg-neutral-800 rounded text-emerald-400">Connected</span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <p className="text-[10px] font-black text-neutral-500 uppercase tracking-widest mb-1">Authenticated As</p>
-                        <p className="text-sm font-bold truncate">{user?.email || 'Not Authenticated'}</p>
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-black text-neutral-500 uppercase tracking-widest mb-1">User ID</p>
-                        <p className="text-[10px] font-mono opacity-50">{user?.id || 'N/A'}</p>
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-black text-neutral-500 uppercase tracking-widest mb-1">Applications Loaded</p>
-                        <p className="text-sm font-bold">{applications.length}</p>
-                    </div>
-                </div>
-            </div>
 
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-neutral-100">
                 <div className="overflow-x-auto">

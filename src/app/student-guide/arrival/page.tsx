@@ -5,14 +5,14 @@ import Image from 'next/image';
 import TableOfContents from '@/components/course/TableOfContents';
 
 export const metadata = {
-    title: 'Arrival Guide | Sykli College',
-    description: 'Prepare for your journey to Sykli College. Enrolment, visa, housing, and settling in instructions.',
+    title: 'Arrival Guide | SYKLI College',
+    description: 'Prepare for your journey to SYKLI College. Enrolment, visa, housing, and settling in instructions.',
 };
 
 const tocSections = [
     { id: 'before-you-arrive', title: 'Before You Arrive', content: '' },
     { id: 'arriving', title: 'Arriving in the Country', content: '' },
-    { id: 'starting', title: 'Starting at Sykli', content: '' },
+    { id: 'starting', title: 'Starting at SYKLI', content: '' },
     { id: 'living', title: 'Living & Studying', content: '' },
     { id: 'welcome', title: 'Welcome Message', content: '' },
 ];
@@ -24,7 +24,7 @@ export default function ArrivalGuidePage() {
             <div className="w-full h-[60vh] relative bg-neutral-900 overflow-hidden">
                 <Image
                     src="/images/arrival-hero-v2.jpg"
-                    alt="Sykli College Students Arriving"
+                    alt="SYKLI College Students Arriving"
                     fill
                     priority
                     className="object-cover"

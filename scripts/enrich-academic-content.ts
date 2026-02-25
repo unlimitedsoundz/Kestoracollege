@@ -35,7 +35,7 @@ async function main() {
                 id: 'overview',
                 title: 'Programme Overview',
                 content: `
-                    <p class="mb-4">The ${course.title} at Sykli College offers a rigorous and future-oriented curriculum designed to equip students with the technical skills and theoretical foundation needed to lead in the modern ${course.slug.includes('business') ? 'business' : 'technological'} landscape.</p>
+                    <p class="mb-4">The ${course.title} at SYKLI College offers a rigorous and future-oriented curriculum designed to equip students with the technical skills and theoretical foundation needed to lead in the modern ${course.slug.includes('business') ? 'business' : 'technological'} landscape.</p>
                     <p>Our approach combines intensive classroom learning with hands-on laboratory work and industry-integrated projects, ensuring that graduates are prepared for high-impact careers in global markets.</p>
                 `
             },

@@ -4,10 +4,12 @@ import Image from 'next/image';
 import { ArrowRight, CheckCircle, Globe, Users, BookOpen, Briefcase, GraduationCap, Calendar, MapPin } from '@phosphor-icons/react/dist/ssr';
 
 import TableOfContents from '@/components/course/TableOfContents';
+import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
+import { SchemaLD } from '@/components/seo/SchemaLD';
 
 export const metadata = {
-    title: 'Bachelor\'s Admissions | Sykli College',
-    description: 'Apply to Bachelor\'s Programmes in English at Sykli College. Information on benefits, progression, scholarships, and admissions.',
+    title: 'Bachelor\'s Admissions | SYKLI College',
+    description: 'Apply to Bachelor\'s Programmes in English at SYKLI College. Information on benefits, progression, scholarships, and admissions.',
     alternates: {
         canonical: 'https://www.syklicollege.fi/admissions/bachelor',
         languages: {
@@ -29,6 +31,28 @@ const tocSections = [
 export default function BachelorAdmissionsPage() {
     return (
         <div className="min-h-screen bg-white">
+            <BreadcrumbSchema items={[
+                { name: 'Home', item: '/' },
+                { name: 'Admissions', item: '/admissions' },
+                { name: 'Bachelor\'s Admissions', item: '/admissions/bachelor' }
+            ]} />
+
+            <SchemaLD data={{
+                "@context": "https://schema.org",
+                "@type": "EducationalOccupationalProgram",
+                "name": "Bachelor's Degree Programmes",
+                "description": "Information on Bachelor's degree programmes taught in English at SYKLI College.",
+                "provider": {
+                    "@type": "CollegeOrUniversity",
+                    "name": "SYKLI College",
+                    "url": "https://www.syklicollege.fi"
+                },
+                "educationalLevel": "Bachelor",
+                "offers": {
+                    "@type": "Offer",
+                    "category": "Bachelor's Programmes"
+                }
+            }} />
             {/* 1. HERO SECTION (Split Style) */}
             <section className="bg-neutral-900 text-white overflow-hidden">
                 <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-16 pt-32 pb-12 h-auto min-h-[500px] md:pt-48 lg:h-[600px] lg:py-0 relative mb-12">
@@ -39,7 +63,7 @@ export default function BachelorAdmissionsPage() {
                             Apply to Bachelor's Programmes in English
                         </h1>
                         <p className="text-lg text-neutral-300 max-w-xl leading-relaxed">
-                            Start your journey at Sykli College and gain the skills, international perspective, and network to succeed globally.
+                            Start your journey at SYKLI College and gain the skills, international perspective, and network to succeed globally.
                         </p>
                         <div className="flex flex-wrap gap-4 pt-4">
                             <Link href="/admissions/application-process" className="bg-[#fd6402] text-black px-8 py-4 font-bold hover:bg-white transition-all inline-flex items-center gap-2 shadow-xl">
@@ -108,7 +132,7 @@ export default function BachelorAdmissionsPage() {
                                 </div>
                                 <div className="bg-neutral-100 rounded-2xl h-80 overflow-hidden relative group">
                                     <div className="absolute inset-0 bg-neutral-200 flex items-center justify-center text-neutral-400">
-                                        <Image src="/images/admissions/benefits.jpg" alt="Benefits of studying at Sykli" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+                                        <Image src="/images/admissions/benefits.jpg" alt="Benefits of studying at SYKLI" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
                                     </div>
                                 </div>
                             </div>
@@ -126,9 +150,9 @@ export default function BachelorAdmissionsPage() {
                                     </div>
                                 </div>
                                 <div className="space-y-6 text-lg text-neutral-600">
-                                    <p>Completing a Bachelor’s degree at Sykli College opens up seamless progression paths:</p>
+                                    <p>Completing a Bachelor’s degree at SYKLI College opens up seamless progression paths:</p>
                                     <ul className="space-y-3">
-                                        <li><strong>Internal Continuation:</strong> Direct path to Sykli Master’s programmes.</li>
+                                        <li><strong>Internal Continuation:</strong> Direct path to SYKLI Master’s programmes.</li>
                                         <li><strong>Specialised Tracks:</strong> Focus on Accounting, Economics, or Management.</li>
                                         <li><strong>International Opportunities:</strong> Apply to top partner universities worldwide.</li>
                                         <li><strong>Research Integration:</strong> Bachelor theses as stepping stones for advanced research.</li>
@@ -241,7 +265,7 @@ export default function BachelorAdmissionsPage() {
                         {/* Learn More */}
                         {/* Learn More */}
                         <section id="more" className="scroll-mt-32 text-center max-w-4xl mx-auto">
-                            <h2 className="text-3xl font-bold mb-8">Learn More About Studying at Sykli</h2>
+                            <h2 className="text-3xl font-bold mb-8">Learn More About Studying at SYKLI</h2>
                             <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-left">
                                 <Link href="/student-life#facilities" className="p-4 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors group block">
                                     <h4 className="font-bold mb-1">Modern Campus</h4>

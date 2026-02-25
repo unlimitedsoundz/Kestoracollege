@@ -78,7 +78,7 @@ export async function acceptApplicationOffer(applicationId: string) {
     if (fetchError || !application) throw new Error('Application not found');
 
     if (application.status !== 'ADMITTED') {
-        if (application.status === 'OFFER_ACCEPTED' || application.status === 'ENROLLED') {
+        if (application.status === 'OFFER_ACCEPTED' || application.status === 'ENROLLED' || application.status === 'DOCS_REQUIRED') {
             return { success: true };
         }
         throw new Error('This application is not in a state to accept an offer.');

@@ -3,10 +3,12 @@ import Image from 'next/image';
 import { ArrowLeft, ArrowRight, CreditCard, Bank as Landmark, ArrowsClockwise as RefreshCw, Calendar, GraduationCap } from "@phosphor-icons/react/dist/ssr";
 import TableOfContents from '@/components/course/TableOfContents';
 import TuitionFAQ from '@/components/admissions/TuitionFAQ';
+import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
+import { SchemaLD } from '@/components/seo/SchemaLD';
 
 export const metadata = {
-    title: 'Paying the Tuition Fee | Sykli College',
-    description: 'Structure of tuition fees, payment methods (Bank Transfer), and refund policies for international students at Sykli College.',
+    title: 'Paying the Tuition Fee | SYKLI College',
+    description: 'Structure of tuition fees, payment methods (Bank Transfer), and refund policies for international students at SYKLI College.',
 };
 
 const tocSections = [
@@ -22,8 +24,6 @@ const tocSections = [
     { id: 'contact', title: 'Contact Support', content: '' },
 ];
 
-import { SchemaLD } from '@/components/seo/SchemaLD';
-
 export default function TuitionPaymentPage() {
     const faqSchema = {
         "@context": "https://schema.org",
@@ -31,7 +31,7 @@ export default function TuitionPaymentPage() {
         "mainEntity": [
             {
                 "@type": "Question",
-                "name": "Who is required to pay tuition fees at Sykli College?",
+                "name": "Who is required to pay tuition fees at SYKLI College?",
                 "acceptedAnswer": {
                     "@type": "Answer",
                     "text": "Tuition fees are mandatory for students who are not citizens of the European Union (EU), European Economic Area (EEA), or Switzerland, and who are enrolled in English-taught Bachelor's or Master's degree programmes. Exemptions apply for holders of permanent Finnish residence permits, EU Blue Cards, and EU Family Member's Residence Cards."
@@ -42,7 +42,7 @@ export default function TuitionPaymentPage() {
                 "name": "How do I pay my tuition fees?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Sykli College partners with Paygowire for secure international tuition payments. To pay: 1) Log in to your Sykli Applicant Portal. 2) Negotiate to the 'Payment' section. 3) You will be redirected to the secure Paygowire gateway. 4) Select your country and preferred payment method to complete the transfer."
+                    "text": "SYKLI College partners with Paygowire for secure international tuition payments. To pay: 1) Log in to your SYKLI Applicant Portal. 2) Negotiate to the 'Payment' section. 3) You will be redirected to the secure Paygowire gateway. 4) Select your country and preferred payment method to complete the transfer."
                 }
             },
             {
@@ -50,7 +50,7 @@ export default function TuitionPaymentPage() {
                 "name": "What are the specific requirements for the Early Payment Discount?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "We offer a 25% reduction on the first year's tuition fee if you accept your study offer within 14 days of receiving the admission letter AND the full payment reaches Sykli College's account within 21 days of the admission offer."
+                    "text": "We offer a 25% reduction on the first year's tuition fee if you accept your study offer within 14 days of receiving the admission letter AND the full payment reaches SYKLI College's account within 21 days of the admission offer."
                 }
             },
             {
@@ -81,7 +81,20 @@ export default function TuitionPaymentPage() {
     };
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white text-black font-sans">
+            <BreadcrumbSchema items={[
+                { name: 'Home', item: '/' },
+                { name: 'Admissions', item: '/admissions' },
+                { name: 'Tuition Fees', item: '/admissions/tuition' }
+            ]} />
+
+            <SchemaLD data={{
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Paying the Tuition Fee | SYKLI College",
+                "description": "Details about tuition fees, scholarships, and payment procedures at SYKLI College Helsinki, Finland.",
+                "url": "https://www.syklicollege.fi/admissions/tuition"
+            }} />
             <SchemaLD data={faqSchema} />
 
             {/* Hero Section - Phase 3 Standard */}
@@ -129,7 +142,7 @@ export default function TuitionPaymentPage() {
                                 How Much is the Tuition Fee?
                             </h2>
                             <p className="text-lg text-black leading-relaxed mb-6">
-                                Tuition fees at Sykli College depend on your degree level, your field of study, and the start date of your study right.
+                                Tuition fees at SYKLI College depend on your degree level, your field of study, and the start date of your study right.
                                 The exact amount for your programme is always listed in your personal admission letter.
                             </p>
                             <div className="bg-neutral-50 p-6 md:p-12 pl-6 md:pl-16 rounded-xl">
@@ -369,7 +382,7 @@ export default function TuitionPaymentPage() {
                                         <div>
                                             <h3 className="text-2xl font-black mb-4 uppercase tracking-tight">Continuing Merit Scholarship</h3>
                                             <p className="text-lg text-black mb-6 leading-relaxed">
-                                                Sykli College rewards academic excellence. After the first year of study, international students can apply for a merit scholarship that covers <strong>50% of the tuition fee</strong> for the next academic year.
+                                                SYKLI College rewards academic excellence. After the first year of study, international students can apply for a merit scholarship that covers <strong>50% of the tuition fee</strong> for the next academic year.
                                             </p>
 
                                             <div className="grid md:grid-cols-2 gap-8">
@@ -650,7 +663,7 @@ export default function TuitionPaymentPage() {
                                     <div className="grid md:grid-cols-2 gap-12">
                                         <div className="space-y-4">
                                             <p className="text-neutral-600 leading-relaxed">
-                                                Please note that you need to pay Finnish Student Health Service fee directly to <strong>Kela</strong> according to their instructions.
+                                                Please note that you need to pay Finnish Student Health Service fee directly to <strong><a href="https://www.kela.fi/in-english" target="_blank" rel="noopener noreferrer" className="underline hover:text-black transition-colors">Kela</a></strong> according to their instructions.
                                             </p>
                                             <div className="p-8 pl-14 md:pl-20 bg-black text-white rounded-2xl border-l-4 border-l-neutral-700">
                                                 <p className="text-sm text-white/90 leading-relaxed">

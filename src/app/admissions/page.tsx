@@ -6,8 +6,8 @@ import TableOfContents from '@/components/course/TableOfContents';
 import StudentStoriesCarousel from '@/components/admissions/StudentStoriesCarousel';
 
 export const metadata = {
-    title: 'Admissions | Sykli College',
-    description: 'Overview of admissions, degree programmes, and student life at Sykli College.',
+    title: 'Admissions | SYKLI College',
+    description: 'Overview of admissions, degree programmes, and student life at SYKLI College.',
 };
 
 const tocSections = [
@@ -29,6 +29,7 @@ const tocSections = [
 ];
 
 import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
+import { SchemaLD } from '@/components/seo/SchemaLD';
 
 export default function AdmissionsPage() {
     return (
@@ -38,6 +39,35 @@ export default function AdmissionsPage() {
                 { name: 'Admissions', item: '/admissions' }
             ]} />
 
+            <SchemaLD data={{
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Admissions to SYKLI College",
+                "url": "https://syklicollege.fi/admissions",
+                "description": "Admissions information for Bachelor’s and Master’s level programmes at SYKLI College in Helsinki, Finland.",
+                "mainEntity": {
+                    "@type": "EducationalOccupationalProgram",
+                    "name": "Degree Programmes at SYKLI College",
+                    "educationalLevel": [
+                        "BachelorLevel",
+                        "MasterLevel"
+                    ],
+                    "provider": {
+                        "@type": "EducationalOrganization",
+                        "name": "SYKLI College",
+                        "url": "https://syklicollege.fi"
+                    },
+                    "inLanguage": "en",
+                    "availableChannel": {
+                        "@type": "ServiceChannel",
+                        "serviceLocation": {
+                            "@type": "Place",
+                            "name": "Helsinki, Finland"
+                        }
+                    }
+                }
+            }} />
+
 
             {/* HERO SECTION (Orange Split - Match Home Layout) */}
             <section className="bg-[#fd6402] text-black overflow-hidden">
@@ -45,10 +75,10 @@ export default function AdmissionsPage() {
                     {/* Left Content */}
                     <div className="lg:w-1/2 space-y-2 relative z-10 flex flex-col justify-center h-full pt-0 lg:pt-0">
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight pt-8">
-                            Admissions to SYKLI College
+                            Admissions to SYKLI College Helsinki
                         </h1>
                         <p className="text-[21px] text-neutral-800 max-w-xl leading-relaxed">
-                            Apply to SYKLI College and begin your Bachelor’s or Master’s studies in an internationally focused learning environment. Our admissions process is transparent, supportive, and open to students from around the world.
+                            Apply to SYKLI College Helsinki and begin your Bachelor’s or Master’s studies in an internationally focused learning environment. Our admissions process is transparent, supportive, and open to students from around the world.
                         </p>
                         <div className="space-y-3 pt-2">
                             <Link href="#how-to-apply" className="flex items-center gap-2 font-bold hover:underline group">
@@ -66,7 +96,7 @@ export default function AdmissionsPage() {
                             <div className="relative w-[368px] h-[368px] lg:w-full lg:h-full bg-neutral-800">
                                 <Image
                                     src="/images/admissions/hero-new.jpg"
-                                    alt="International students exploring Sykli College campus"
+                                    alt="International students exploring SYKLI College campus"
                                     fill
                                     priority
                                     className="object-cover opacity-90"
@@ -98,13 +128,13 @@ export default function AdmissionsPage() {
                         <section id="overview" className="scroll-mt-32">
                             <h2 className="text-3xl font-bold mb-6">Explore our fields</h2>
                             <p className="text-lg text-neutral-700 leading-relaxed mb-4">
-                                Studying at Sykli College offers a rich academic experience where innovation, multidisciplinary collaboration, and student community thrive together. You can pursue degree education at all levels Bachelor’s and Master’s as well as various lifelong learning options. In the Sykli College community, students have the freedom to specialise in one field or combine courses across several fields.
+                                Studying at SYKLI College offers a rich academic experience where innovation, multidisciplinary collaboration, and student community thrive together. You can pursue degree education at all levels Bachelor’s and Master’s as well as various lifelong learning options. In the SYKLI College community, students have the freedom to specialise in one field or combine courses across several fields.
                             </p>
                         </section>
 
                         <section id="degree-programmes" className="scroll-mt-32">
                             <h2 className="text-3xl font-bold mb-6">Degree Programmes & Fields of Study</h2>
-                            <p className="text-lg text-neutral-700 mb-6">Sykli College offers degree programmes across multiple fields:</p>
+                            <p className="text-lg text-neutral-700 mb-6">SYKLI College offers degree programmes across multiple fields:</p>
                             <div className="grid md:grid-cols-3 gap-6 mb-6">
                                 <div className="bg-neutral-100 p-10">
                                     <h3 className="font-bold text-xl mb-2">Business and Economics</h3>
@@ -123,6 +153,9 @@ export default function AdmissionsPage() {
 
                         <section id="how-to-apply" className="scroll-mt-32">
                             <h2 className="text-3xl font-bold mb-6">How to Apply</h2>
+                            <p className="text-lg text-neutral-700 mb-6">
+                                Ready to apply to <Link href="/" className="underline font-medium hover:text-black hover:no-underline transition-colors">SYKLI College Helsinki</Link>? Learn more about our programmes and campus in Finland.
+                            </p>
                             <p className="text-lg text-neutral-700 mb-6">You can explore admissions details and requirements for:</p>
                             <div className="flex flex-col md:flex-row gap-6 mb-6">
                                 <Link href="/admissions/bachelor" className="flex-1 bg-black text-white p-10 hover:bg-neutral-800 transition-colors group">
@@ -135,13 +168,13 @@ export default function AdmissionsPage() {
                                 </Link>
                             </div>
                             <p className="text-neutral-700">
-                                The application process, deadlines, and eligibility criteria vary by degree level and study option. Full details can be found in the Sykli College admissions guide.
+                                The application process, deadlines, and eligibility criteria vary by degree level and study option. Full details can be found in the SYKLI College admissions guide.
                             </p>
                         </section>
 
                         <section id="events" className="scroll-mt-32 bg-black text-white p-12 rounded-3xl relative overflow-hidden">
                             <h2 className="text-3xl font-bold mb-6 text-white">Events for Applicants</h2>
-                            <p className="text-neutral-300 mb-8">Sykli College regularly organises events designed to help prospective students learn more about studying and applying:</p>
+                            <p className="text-neutral-300 mb-8">SYKLI College regularly organises events designed to help prospective students learn more about studying and applying:</p>
                             <ul className="space-y-4">
                                 {[
                                     { title: "Webinars on degree programmes", desc: "Interact with programme heads and faculty" },
@@ -163,7 +196,7 @@ export default function AdmissionsPage() {
                             <div>
                                 <h2 className="text-3xl font-bold mb-6">Student Stories</h2>
                                 <p className="text-lg text-neutral-700 mb-8">
-                                    Hear first-hand experiences from current students and alumni about life at Sykli College, academic projects, internships, and perspectives on how the College supports personal and professional growth.
+                                    Hear first-hand experiences from current students and alumni about life at SYKLI College, academic projects, internships, and perspectives on how the College supports personal and professional growth.
                                 </p>
                             </div>
                             <StudentStoriesCarousel />
@@ -172,14 +205,14 @@ export default function AdmissionsPage() {
                         <section id="campus" className="scroll-mt-32">
                             <h2 className="text-3xl font-bold mb-6">Studying on Campus</h2>
                             <p className="text-lg text-neutral-700 leading-relaxed">
-                                Sykli College’s campus provides vibrant learning spaces, studios, libraries, and collaborative hubs where students experience academic life and community activities. The campus environment supports both study and leisure, encouraging a balanced student experience.
+                                SYKLI College’s campus provides vibrant learning spaces, studios, libraries, and collaborative hubs where students experience academic life and community activities. The campus environment supports both study and leisure, encouraging a balanced student experience.
                             </p>
                         </section>
 
                         <section id="careers" className="scroll-mt-32">
                             <h2 className="text-3xl font-bold mb-6">Career Opportunities</h2>
                             <p className="text-lg text-neutral-700 mb-8">
-                                Sykli College offers support and services to help students plan and pursue careers after graduation. Our strong industry ties ensure your education translates into real-world success.
+                                SYKLI College offers support and services to help students plan and pursue careers after graduation. Our strong industry ties ensure your education translates into real-world success.
                             </p>
                             <div className="grid md:grid-cols-3 gap-8">
                                 {[
@@ -191,7 +224,7 @@ export default function AdmissionsPage() {
                                         <div className="h-56 w-full relative overflow-hidden">
                                             <Image
                                                 src={item.image}
-                                                alt={`${item.title} at Sykli College`}
+                                                alt={`${item.title} at SYKLI College`}
                                                 fill
                                                 className="object-cover"
                                             />
@@ -214,7 +247,7 @@ export default function AdmissionsPage() {
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold mb-2">Podcasts About Studying</h3>
-                                    <p className="text-neutral-700">Listen to podcasts where current students and staff discuss what it’s like to study at Sykli College, how programmes are structured, and tips for success.</p>
+                                    <p className="text-neutral-700">Listen to podcasts where current students and staff discuss what it’s like to study at SYKLI College, how programmes are structured, and tips for success.</p>
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold mb-2">Chat with Students</h3>
@@ -228,7 +261,7 @@ export default function AdmissionsPage() {
                                 <div className="max-w-2xl">
                                     <h2 className="text-3xl font-bold mb-4">Student Life</h2>
                                     <p className="text-lg text-neutral-700 leading-relaxed">
-                                        Discover stories and highlights about student life, community projects, extracurricular activities, and how students grow beyond academics at Sykli College.
+                                        Discover stories and highlights about student life, community projects, extracurricular activities, and how students grow beyond academics at SYKLI College.
                                     </p>
                                 </div>
                                 <Link href="/student-life" className="text-sm font-bold uppercase tracking-widest border-b-2 border-black pb-1 hover:bg-black hover:text-white transition-all">
@@ -238,7 +271,7 @@ export default function AdmissionsPage() {
                             <div className="relative h-[400px] w-full overflow-hidden group">
                                 <Image
                                     src="/images/admissions/student_life_events.png"
-                                    alt="Students enjoying a community event at Sykli College"
+                                    alt="Students enjoying a community event at SYKLI College"
                                     fill
                                     className="object-cover"
                                 />
@@ -246,7 +279,7 @@ export default function AdmissionsPage() {
                                     <div className="max-w-md text-white">
                                         <p className="text-sm font-bold uppercase tracking-[0.2em] mb-4 text-[#fd6402]">Vibrant Community</p>
                                         <h3 className="text-3xl font-bold mb-4">Life Beyond the Classroom</h3>
-                                        <p className="text-neutral-200">From music festivals to tech hackathons, your time at Sykli is about more than just studies.</p>
+                                        <p className="text-neutral-200">From music festivals to tech hackathons, your time at SYKLI is about more than just studies.</p>
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +289,7 @@ export default function AdmissionsPage() {
                             <div className="bg-black text-white overflow-hidden">
                                 <div className="grid md:grid-cols-2">
                                     <div className="p-12 md:p-16 flex flex-col justify-center">
-                                        <h2 className="text-3xl font-bold mb-8">Study in Finland with Sykli College</h2>
+                                        <h2 className="text-3xl font-bold mb-8">Study in Finland with SYKLI College</h2>
                                         <ul className="space-y-6 mb-8">
                                             {[
                                                 { title: "Quality & Safety", desc: "World-leading education in a safe, equal society." },
@@ -293,7 +326,7 @@ export default function AdmissionsPage() {
                             <div className="flex flex-col md:flex-row gap-8 items-center">
                                 <div className="flex-1">
                                     <p className="text-lg text-neutral-700 mb-4">
-                                        Sykli College encourages cross-field learning. You can take courses in areas such as business, arts, technology, and design, enabling you to create a personalised and comprehensive academic pathway.
+                                        SYKLI College encourages cross-field learning. You can take courses in areas such as business, arts, technology, and design, enabling you to create a personalised and comprehensive academic pathway.
                                     </p>
                                     <p className="text-neutral-700">
                                         Students are encouraged to combine studies across fields to gain broader perspectives and prepare for diverse career environments.
@@ -336,14 +369,14 @@ export default function AdmissionsPage() {
                         <section id="summer" className="scroll-mt-32">
                             <h2 className="text-3xl font-bold mb-6">Summer and Continuing Education</h2>
                             <p className="text-lg text-neutral-700 leading-relaxed">
-                                Sykli College hosts summer courses and programmes that allow students and professionals to deepen specific skills and knowledge in compact, high-impact formats. These programmes offer valuable opportunities for networking and learning from experienced faculty and industry experts.
+                                SYKLI College hosts summer courses and programmes that allow students and professionals to deepen specific skills and knowledge in compact, high-impact formats. These programmes offer valuable opportunities for networking and learning from experienced faculty and industry experts.
                             </p>
                         </section>
 
                         <section id="collaboration" className="scroll-mt-32">
                             <h2 className="text-3xl font-bold mb-6">Collaboration and Community</h2>
                             <p className="text-lg text-neutral-700 leading-relaxed mb-4">
-                                Sykli College actively partners with industries, research institutions, and international universities to provide students with collaborative projects, internships, and global exchange opportunities.
+                                SYKLI College actively partners with industries, research institutions, and international universities to provide students with collaborative projects, internships, and global exchange opportunities.
                             </p>
                             <p className="text-neutral-700">
                                 Students benefit from a connected academic community that supports innovation, entrepreneurship and real-world problem solving.
@@ -354,7 +387,7 @@ export default function AdmissionsPage() {
                         <section id="contact" className="scroll-mt-32 mb-24 -mx-4 md:mx-0">
                             <div className="bg-black text-white p-12">
                                 <p className="text-lg mb-6">
-                                    Prospective and current students can find support and contact information for admissions, campus visits, and student services through the official Sykli College contact pages.
+                                    Prospective and current students can find support and contact information for admissions, campus visits, and student services through the official SYKLI College contact pages.
                                 </p>
                                 <p className="text-neutral-300 mb-6">
                                     Whether you’re planning a campus visit or seeking guidance on admissions, resources are available to help guide your academic journey.

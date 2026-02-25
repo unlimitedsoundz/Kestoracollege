@@ -11,6 +11,8 @@ import { CaretRight as ChevronRight, CircleNotch as Loader2, UploadSimple as Upl
 interface Props {
     applicationId: string;
     existingDocuments: ApplicationDocument[];
+    requestedDocuments?: string[];
+    documentRequestNote?: string | null;
     onUpdate?: () => Promise<void>;
 }
 
@@ -23,7 +25,7 @@ const DOCUMENT_TYPES: { type: DocumentType; label: string; description: string; 
     { type: 'LANGUAGE_CERT', label: 'English Proficiency', description: 'IELTS/TOEFL or equivalent (if applicable).', required: false },
 ];
 
-export default function DocumentsForm({ applicationId, existingDocuments, onUpdate }: Props) {
+export default function DocumentsForm({ applicationId, existingDocuments, requestedDocuments, documentRequestNote, onUpdate }: Props) {
     const [uploading, setUploading] = useState<string | null>(null);
     const [deleting, setDeleting] = useState<string | null>(null);
     const [isSaving, setIsSaving] = useState(false);
@@ -94,24 +96,56 @@ export default function DocumentsForm({ applicationId, existingDocuments, onUpda
 
     return (
         <div className="space-y-8">
+            {documentRequestNote && (
+                <div className="bg-purple-50 border-2 border-purple-200 p-6 rounded-sm flex items-start gap-4 shadow-sm">
+                    <div className="bg-purple-600 p-2.5 rounded-sm text-white shrink-0 shadow-lg">
+                        <AlertCircle size={22} weight="bold" />
+                    </div>
+                    <div className="flex-1">
+                        <h4 className="text-purple-900 font-black text-[10px] uppercase tracking-widest leading-none mb-2">Message from Admissions Office</h4>
+                        <p className="text-purple-800 text-xs font-bold leading-relaxed italic block bg-white/50 p-3 rounded-sm border border-purple-100">
+                            "{documentRequestNote}"
+                        </p>
+                    </div>
+                </div>
+            )}
+
+            {requestedDocuments && requestedDocuments.length > 0 && (
+                <div className="bg-neutral-50 border border-neutral-200 p-4 rounded-sm flex items-start gap-4">
+                    <div className="bg-neutral-900 p-2 rounded-sm text-white shrink-0">
+                        <FileText size={20} weight="bold" />
+                    </div>
+                    <div>
+                        <h4 className="text-neutral-900 font-black text-xs uppercase tracking-widest leading-none mb-1">Items to be Uploaded</h4>
+                        <p className="text-neutral-500 text-[10px] font-bold uppercase tracking-tight">The admissions team has specifically flagged the document types highlighted below.</p>
+                    </div>
+                </div>
+            )}
+
             <div className="grid grid-cols-1 gap-4">
                 {DOCUMENT_TYPES.map((docType) => {
                     const doc = existingDocuments.find(d => d.type === docType.type);
                     const isUploading = uploading === docType.type;
+                    const isRequested = requestedDocuments?.includes(docType.type);
 
                     return (
-                        <div key={docType.type} className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white gap-4 rounded-sm border border-neutral-100">
+                        <div key={docType.type} className={`flex flex-col md:flex-row md:items-center justify-between p-4 bg-white gap-4 rounded-sm border transition-all ${isRequested ? 'border-purple-200 bg-purple-50/30' : 'border-neutral-100'}`}>
                             <div className="flex-1 text-left">
-                                <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-900 flex items-center gap-2">
-                                    {docType.label} {docType.required && <span className="text-red-500">*</span>}
-                                    {doc && <CheckCircle className="text-primary" size={14} weight="bold" />}
-                                </h3>
+                                <div className="flex items-center gap-2 mb-1">
+                                    <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-900 flex items-center gap-2">
+                                        {docType.label} {docType.required && <span className="text-red-500">*</span>}
+                                        {doc && <CheckCircle className="text-primary" size={14} weight="bold" />}
+                                    </h3>
+                                    {isRequested && (
+                                        <span className="bg-purple-600 text-white px-2 py-0.5 rounded-sm text-[8px] font-black uppercase tracking-widest">Requested</span>
+                                    )}
+                                </div>
                                 <p className="text-[10px] text-[#2d2d2d] font-medium uppercase tracking-tight">{docType.description}</p>
                             </div>
 
                             <div className="flex items-center gap-3">
                                 {doc ? (
-                                    <div className="flex items-center gap-2 border border-primary/20 p-2 px-3 rounded-sm">
+                                    <div className="flex items-center gap-2 border border-primary/20 p-2 px-3 rounded-sm bg-white">
                                         <FileText size={14} weight="regular" className="text-primary" />
                                         <span className="text-xs font-medium truncate max-w-[120px] text-primary">{doc.name}</span>
                                         <button
@@ -123,7 +157,7 @@ export default function DocumentsForm({ applicationId, existingDocuments, onUpda
                                         </button>
                                     </div>
                                 ) : (
-                                    <label className={`cursor-pointer border border-primary text-primary px-4 py-2 rounded-sm text-xs font-semibold uppercase tracking-widest flex items-center gap-2 hover:bg-neutral-50 transition-all ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
+                                    <label className={`cursor-pointer border ${isRequested ? 'border-purple-600 text-purple-600 bg-white' : 'border-primary text-primary bg-white'} px-4 py-2 rounded-sm text-xs font-semibold uppercase tracking-widest flex items-center gap-2 hover:bg-neutral-50 transition-all ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
                                         {isUploading ? <Loader2 className="animate-spin" size={14} weight="bold" /> : <Upload size={14} weight="bold" />}
                                         {isUploading ? 'Uploading...' : 'Upload'}
                                         <input
@@ -150,44 +184,47 @@ export default function DocumentsForm({ applicationId, existingDocuments, onUpda
                 </div>
             )}
 
-            <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
-                <div className="flex items-center gap-4">
+            <div className="flex flex-col md:flex-row gap-4 pt-6 border-t border-neutral-100">
+                <div className="flex items-center gap-6 order-2 md:order-1">
                     <Link
                         href={`?id=${applicationId}&step=5`}
-                        className="text-[#2d2d2d] hover:text-primary font-semibold text-xs uppercase tracking-widest transition-colors"
+                        className="text-[#2d2d2d] hover:text-primary font-bold text-[10px] uppercase tracking-widest transition-colors flex items-center gap-2 group"
                     >
+                        <ChevronRight size={14} weight="bold" className="rotate-180 group-hover:-translate-x-1 transition-transform" />
                         Back
                     </Link>
                     <button
                         type="button"
                         onClick={() => router.push('/portal/dashboard')}
-                        className="text-[#2d2d2d] hover:text-primary font-semibold text-xs uppercase tracking-widest transition-colors"
+                        className="text-[#2d2d2d] hover:text-primary font-bold text-[10px] uppercase tracking-widest transition-colors flex items-center gap-2"
                     >
                         Save & Exit
                     </button>
                 </div>
 
-                <button
-                    onClick={async () => {
-                        setIsSaving(true);
-                        router.push(`?id=${applicationId}&step=7`);
-                        setIsSaving(false);
-                    }}
-                    disabled={!allRequiredUploaded || isSaving}
-                    className="w-full flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 rounded-sm text-xs font-black uppercase tracking-widest hover:bg-blue-700 transition-all disabled:opacity-50"
-                >
-                    {isSaving ? (
-                        <>
-                            <Loader2 className="animate-spin" size={16} weight="bold" />
-                            Processing...
-                        </>
-                    ) : (
-                        <>
-                            Continue
-                            <ChevronRight size={16} weight="bold" />
-                        </>
-                    )}
-                </button>
+                <div className="flex-1 order-1 md:order-2">
+                    <button
+                        onClick={async () => {
+                            setIsSaving(true);
+                            router.push(`?id=${applicationId}&step=7`);
+                            setIsSaving(false);
+                        }}
+                        disabled={!allRequiredUploaded || isSaving}
+                        className="w-full flex items-center justify-center gap-3 bg-primary text-white px-8 py-5 rounded-sm text-[11px] font-black uppercase tracking-widest hover:bg-blue-700 transition-all disabled:opacity-50 shadow-lg shadow-blue-100/50"
+                    >
+                        {isSaving ? (
+                            <>
+                                <Loader2 className="animate-spin" size={18} weight="bold" />
+                                Processing...
+                            </>
+                        ) : (
+                            <>
+                                Continue to Review
+                                <ChevronRight size={18} weight="bold" />
+                            </>
+                        )}
+                    </button>
+                </div>
             </div>
         </div >
     );

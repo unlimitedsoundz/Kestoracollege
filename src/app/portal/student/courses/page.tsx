@@ -28,7 +28,7 @@ export default function CourseRegistrationPage() {
 
             // 2. Secondary Auth Check (LocalStorage Fallback)
             if (!sbUser) {
-                const savedUser = localStorage.getItem('sykli_user');
+                const savedUser = localStorage.getItem('SYKLI_user');
                 if (savedUser) {
                     const localProfile = JSON.parse(savedUser);
                     currentUserEmail = localProfile.email;

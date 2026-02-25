@@ -105,7 +105,7 @@ function EnrollmentContent() {
                         <div className="mb-4 relative w-48 h-16">
                             <Image
                                 src="/images/sykli-logo-official.png"
-                                alt="Sykli College Official Logo"
+                                alt="SYKLI College Official Logo"
                                 fill
                                 style={{ objectFit: 'contain', objectPosition: 'left center' }}
                                 priority
@@ -113,8 +113,8 @@ function EnrollmentContent() {
                         </div>
                     </div>
                     <div className="text-right text-[10px] font-medium text-neutral-600 leading-relaxed uppercase tracking-wide">
-                        <strong className="text-black">Office of the Registrar</strong><br />
-                        Student Records Division<br />
+                        <strong className="text-black">SYKLI College – Helsinki Campus</strong><br />
+                        Office of the Registrar<br />
                         Pohjoisesplanadi 51<br />
                         00150 Helsinki, Finland
                     </div>
@@ -160,7 +160,7 @@ function EnrollmentContent() {
                 <div className="mb-12 text-sm leading-relaxed text-neutral-800">
                     <p className="mb-6">
                         This is to certify that <strong>{application.personal_info?.firstName} {application.personal_info?.lastName}</strong> is officially
-                        enrolled as a full-time student at Sykli College.
+                        enrolled as a full-time student at SYKLI College.
                     </p>
                     <p className="mb-6">
                         The student has successfully completed all admission requirements, accepted the offer of place, and satisfied the initial tuition payment obligations for the <strong>{application.course?.title}</strong> programme.
@@ -186,7 +186,9 @@ function EnrollmentContent() {
                             </tr>
                             <tr>
                                 <td className="py-3 font-bold text-neutral-600">Study Mode</td>
-                                <td className="py-3">Full-time, On-Campus</td>
+                                <td className="py-3">
+                                    {application.course?.programType || 'Full-time'}{application.course?.studyMode ? `, ${application.course.studyMode}` : ', On-Campus'}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -225,7 +227,7 @@ function EnrollmentContent() {
                 {/* Footer */}
                 <div className="absolute bottom-[10mm] left-[20mm] right-[20mm] border-t border-neutral-100 pt-2 flex justify-between items-center opacity-60">
                     <div className="text-[8px] font-bold uppercase tracking-widest text-neutral-400">
-                        Sykli College | Pohjoisesplanadi 51, 00150 Helsinki, Finland
+                        SYKLI College – Helsinki Campus | Pohjoisesplanadi 51, 00150 Helsinki, Finland
                     </div>
                     <div className="text-[8px] font-bold uppercase tracking-widest text-neutral-400">
                         Page 1 of 1

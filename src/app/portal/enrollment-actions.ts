@@ -34,7 +34,12 @@ export async function confirmEnrollment(applicationId: string) {
         }
 
         // 2. Validate State
-        const offer = application.offer[0];
+        // Handle both 1:1 (object) and 1:N (array) returns from Supabase
+        const offer = Array.isArray(application.offer) ? application.offer[0] : application.offer;
+
+        if (!offer) {
+            throw new Error('Associated admission offer not found');
+        }
         const { data: payment } = await adminClient
             .from('tuition_payments')
             .select('*')
@@ -74,7 +79,7 @@ export async function confirmEnrollment(applicationId: string) {
         }
 
         const firstName = studentUser.first_name || 'Student';
-        const lastName = studentUser.last_name || 'Sykli';
+        const lastName = studentUser.last_name || 'SYKLI';
         let institutionalEmail = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@syklicollege.fi`.replace(/\s/g, '');
         let emailCounter = 0;
 
@@ -113,13 +118,28 @@ export async function confirmEnrollment(applicationId: string) {
             throw new Error(`Failed to create student record: ${studentError.message}`);
         }
 
-        // 5. Lock Admissions
+        // 5. Lock Admissions & Propagate Student ID to Profile
         const { error: updateError } = await adminClient
             .from('applications')
             .update({ status: 'ENROLLED' })
             .eq('id', applicationId);
 
         if (updateError) throw updateError;
+
+        // Also update the profile with the student_id and enrollment_date
+        const { error: profileError } = await adminClient
+            .from('profiles')
+            .update({
+                student_id: studentId,
+                enrollment_date: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', application.user_id);
+
+        if (profileError) {
+            console.error('Failed to update student profile with ID:', profileError);
+            // Non-blocking but should be logged
+        }
 
         // 6. Audit Logging
         await adminClient.from('audit_logs').insert({

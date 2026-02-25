@@ -154,7 +154,7 @@ export default function SupportPage() {
                                     Security Tip
                                 </h3>
                                 <p className="text-neutral-600 text-sm leading-relaxed">
-                                    Sykli College IT department will never ask for your password via email or phone. Always use official login portals to access your accounts.
+                                    SYKLI College IT department will never ask for your password via email or phone. Always use official login portals to access your accounts.
                                 </p>
                             </div>
                         </div>

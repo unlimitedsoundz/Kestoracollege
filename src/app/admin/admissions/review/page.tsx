@@ -1,6 +1,7 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
+import { invokeEdgeFunction } from '@/utils/supabase/invoke';
 import {
     getAdmissionsApplicationById,
     updateApplicationInternalNotesAdmin
@@ -35,6 +36,19 @@ function ApplicationReviewContent() {
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    const [showDocsModal, setShowDocsModal] = useState(false);
+    const [selectedDocs, setSelectedDocs] = useState<string[]>([]);
+    const [docsNote, setDocsNote] = useState('');
+
+    const DOC_TYPES = [
+        { id: 'PASSPORT', label: 'International Passport' },
+        { id: 'TRANSCRIPT', label: 'Academic Transcript' },
+        { id: 'CERTIFICATE', label: 'Degree Certificate' },
+        { id: 'CV', label: 'Curriculum Vitae (CV)' },
+        { id: 'MOTIVATION_LETTER', label: 'Motivation Letter' },
+        { id: 'LANGUAGE_CERT', label: 'Language Proficiency' },
+    ];
 
     const fetchData = async () => {
         if (!id) return;
@@ -264,8 +278,14 @@ function ApplicationReviewContent() {
                         <div className="space-y-3 pt-6 border-t border-neutral-100">
                             <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest block mb-2">Update Pipeline</span>
                             <div className="grid grid-cols-1 gap-2">
-                                <StatusBtn label="Move to Review" status="UNDER_REVIEW" currentStatus={app.status} variant="warning" onClick={handleUpdateStatus} disabled={updating} />
-                                <StatusBtn label="Request Documents" status="DOCS_REQUIRED" currentStatus={app.status} variant="purple" onClick={handleUpdateStatus} disabled={updating} />
+                                <StatusBtn
+                                    label="Request Documents"
+                                    status="DOCS_REQUIRED"
+                                    currentStatus={app.status}
+                                    variant="purple"
+                                    onClick={() => setShowDocsModal(true)}
+                                    disabled={updating}
+                                />
                                 <StatusBtn label="Admit Student" status="ADMITTED" currentStatus={app.status} variant="success" onClick={handleUpdateStatus} disabled={updating} />
                                 {(app.status === 'PAYMENT_SUBMITTED' || app.status === 'OFFER_ACCEPTED' || app.status === 'ADMISSION_LETTER_GENERATED') && (
                                     <StatusBtn label="Finalize Enrollment" status="ENROLLED" currentStatus={app.status} variant="success" onClick={handleUpdateStatus} disabled={updating} />
@@ -273,6 +293,103 @@ function ApplicationReviewContent() {
                                 <StatusBtn label="Reject Application" status="REJECTED" currentStatus={app.status} variant="danger" onClick={handleUpdateStatus} disabled={updating} />
                             </div>
                         </div>
+
+                        {/* Document Request Modal */}
+                        {showDocsModal && (
+                            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
+                                <div className="bg-white rounded-[32px] w-full max-w-md overflow-hidden shadow-2xl border border-neutral-100 animate-in zoom-in-95 duration-300">
+                                    <div className="bg-neutral-900 p-6 text-white">
+                                        <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-3">
+                                            <FileText size={24} weight="bold" className="text-purple-400" />
+                                            Request Documents
+                                        </h3>
+                                        <p className="text-neutral-400 text-[10px] font-black uppercase tracking-widest mt-1">Select the required files and provide details</p>
+                                    </div>
+
+                                    <div className="p-8 space-y-6 overflow-y-auto max-h-[70vh]">
+                                        <div className="space-y-4">
+                                            <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest block mb-1">Required Documents</span>
+                                            <div className="grid grid-cols-1 gap-3">
+                                                {DOC_TYPES.map((doc) => (
+                                                    <label
+                                                        key={doc.id}
+                                                        className={`flex items-center justify-between p-4 rounded-2xl border transition-all cursor-pointer group ${selectedDocs.includes(doc.id)
+                                                            ? 'bg-purple-50 border-purple-200'
+                                                            : 'hover:bg-neutral-50 border-neutral-100'
+                                                            }`}
+                                                    >
+                                                        <div className="flex items-center gap-3">
+                                                            <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${selectedDocs.includes(doc.id)
+                                                                ? 'bg-purple-600 border-purple-600'
+                                                                : 'border-neutral-300 group-hover:border-purple-400'
+                                                                }`}>
+                                                                {selectedDocs.includes(doc.id) && <CheckCircle2 size={14} weight="bold" className="text-white" />}
+                                                            </div>
+                                                            <span className="text-xs font-black uppercase tracking-tight text-neutral-800">{doc.label}</span>
+                                                        </div>
+                                                        <input
+                                                            type="checkbox"
+                                                            className="hidden"
+                                                            checked={selectedDocs.includes(doc.id)}
+                                                            onChange={() => {
+                                                                setSelectedDocs(prev =>
+                                                                    prev.includes(doc.id)
+                                                                        ? prev.filter(id => id !== doc.id)
+                                                                        : [...prev, doc.id]
+                                                                );
+                                                            }}
+                                                        />
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest block mb-1">Internal Note to Student (Optional)</span>
+                                            <textarea
+                                                className="w-full bg-neutral-50 border border-neutral-100 rounded-2xl p-4 text-xs font-bold outline-none focus:border-purple-500 transition-all min-h-[100px] shadow-inner"
+                                                placeholder="e.g. Please upload high-resolution scans of your original documents..."
+                                                value={docsNote}
+                                                onChange={(e) => setDocsNote(e.target.value)}
+                                            />
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <button
+                                                onClick={async () => {
+                                                    if (selectedDocs.length === 0) {
+                                                        alert("Please select at least one document.");
+                                                        return;
+                                                    }
+                                                    setUpdating(true);
+                                                    setShowDocsModal(false);
+                                                    try {
+                                                        const result = await updateApplicationStatus(id!, 'DOCS_REQUIRED', selectedDocs, docsNote) as any;
+                                                        if (!result.success) throw new Error(result.error);
+                                                        setDocsNote('');
+                                                        await fetchData();
+                                                    } catch (error: any) {
+                                                        alert("Error updating docs request: " + error.message);
+                                                    } finally {
+                                                        setUpdating(false);
+                                                    }
+                                                }}
+                                                disabled={updating || selectedDocs.length === 0}
+                                                className="w-full bg-neutral-900 text-white rounded-2xl py-4 text-xs font-black uppercase tracking-widest hover:bg-black transition-all shadow-xl disabled:opacity-50"
+                                            >
+                                                {updating ? 'Processing...' : 'Send Request to Applicant'}
+                                            </button>
+                                            <button
+                                                onClick={() => setShowDocsModal(false)}
+                                                className="w-full text-neutral-400 py-2 text-[10px] font-black uppercase tracking-widest hover:text-black transition-colors"
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Access Control */}
                         <div className="space-y-3 pt-6 border-t border-neutral-100">
@@ -401,11 +518,12 @@ function ApplicationReviewContent() {
                                             // but the function should handle it (or we might need a server action if RLS blocks it)
                                             // The function `send-notification` is accessible via `supabase.functions.invoke`.
 
-                                            const { data, error } = await supabase.functions.invoke('send-notification', {
+                                            const offer = Array.isArray(app.offer) ? app.offer[0] : app.offer;
+                                            const { data, error } = await invokeEdgeFunction('send-notification', {
                                                 body: {
                                                     applicationId: id,
                                                     type: notifType,
-                                                    documentUrl: app.offer?.[0]?.document_url
+                                                    documentUrl: offer?.document_url
                                                 }
                                             });
 
@@ -434,6 +552,7 @@ function ApplicationReviewContent() {
                                         applicationId={id!}
                                         baseTuition={getTuitionFee(app.course?.degreeLevel || 'BACHELOR', mapSchoolToTuitionField(app.course?.school?.slug || 'technology'))}
                                         programYears={getProgramYears(app.course?.duration || '3 years')}
+                                        onSuccess={fetchData}
                                     />
                                 </div>
                             )}

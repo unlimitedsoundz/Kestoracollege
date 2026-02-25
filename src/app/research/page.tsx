@@ -14,7 +14,7 @@ export default function ResearchPage() {
                 <div className="absolute inset-0">
                     <Image
                         src="/images/research-hero.jpg"
-                        alt="Researchers collaborating in a modern lab environment at Sykli College"
+                        alt="Researchers collaborating in a modern lab environment at SYKLI College"
                         fill
                         priority
                         className="object-cover opacity-60"
@@ -25,7 +25,7 @@ export default function ResearchPage() {
                 <div className="container mx-auto px-4 relative z-10 h-full flex flex-col justify-center">
                     <span className="text-white/80 font-bold tracking-wider text-sm md:text-base mb-4 uppercase">From Ideas to Impact</span>
                     <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white max-w-4xl leading-tight pt-8">
-                        Research & Creative Exploration at Sykli College
+                        Research & Creative Exploration at SYKLI College
                     </h1>
                     <p className="text-xl md:text-2xl text-neutral-200 max-w-2xl font-light">
                         Where curiosity meets creation, connecting theory with hands on practice.
@@ -39,7 +39,7 @@ export default function ResearchPage() {
                     <h2 className="text-3xl font-bold mb-6 text-white">Where Curiosity Meets Creation</h2>
                     <div className="prose prose-lg text-neutral-300 max-w-none">
                         <p className="mb-4">
-                            At <strong>Sykli College</strong>, research is not locked away in labs or journals it lives in studios, classrooms, communities, and real-world projects. We explore questions that matter now and ideas that shape what comes next, blending <strong>technology, design, business, science, and culture</strong> into a shared space of experimentation and discovery.
+                            At <strong>SYKLI College</strong>, research is not locked away in labs or journals it lives in studios, classrooms, communities, and real-world projects. We explore questions that matter now and ideas that shape what comes next, blending <strong>technology, design, business, science, and culture</strong> into a shared space of experimentation and discovery.
                         </p>
                         <p>
                             Our research culture welcomes both analytical thinkers and creative makers. Whether through data, design, systems, or stories, we believe knowledge grows stronger when disciplines cross paths.
@@ -188,10 +188,10 @@ export default function ResearchPage() {
                     <div>
                         <h2 className="text-3xl font-bold mb-6 text-neutral-900">Doing the Right Thing</h2>
                         <p className="text-neutral-600 mb-6 text-lg leading-relaxed">
-                            All research and creative activity at Sykli College follows clear ethical guidelines and quality standards. Integrity, transparency, and accountability are central to how we work and collaborate.
+                            All research and creative activity at SYKLI College follows clear ethical guidelines and quality standards. Integrity, transparency, and accountability are central to how we work and collaborate.
                         </p>
                         <h3 className="text-xl font-bold mb-4 text-neutral-900 mt-10">Where Disciplines Collide</h3>
-                        <p className="text-neutral-600 mb-4">Sykli College supports research through:</p>
+                        <p className="text-neutral-600 mb-4">SYKLI College supports research through:</p>
                         <div className="grid grid-cols-2 gap-4">
                             {["Interdisciplinary labs", "Industry partnerships", "Collaboration platforms", "Global networks"].map((item) => (
                                 <div key={item} className="bg-black p-4 rounded text-sm font-semibold text-white border border-neutral-800">
@@ -208,7 +208,7 @@ export default function ResearchPage() {
                 <div className="container mx-auto px-4">
                     <h2 className="text-4xl font-bold mb-6 text-neutral-900">Jump In, Try Things, Make Your Mark</h2>
                     <p className="text-xl text-neutral-600 max-w-2xl mx-auto mb-10">
-                        Students and staff are invited to actively engage in research. At Sykli College, research is not just something you study <strong>it’s something you do</strong>.
+                        Students and staff are invited to actively engage in research. At SYKLI College, research is not just something you study <strong>it’s something you do</strong>.
                     </p>
                     <div className="flex justify-center gap-4">
                         <Link href="/research/projects" className="bg-neutral-900 text-white px-8 py-3 rounded-full font-bold hover:bg-neutral-800 transition-colors">

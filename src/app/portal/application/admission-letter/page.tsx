@@ -87,7 +87,8 @@ function AdmissionLetterContent() {
                 if (studentRecord) setStudent(studentRecord);
 
                 // Get completed payment
-                const completedPayment = applicationRaw.offer?.[0]?.payments?.find((p: any) => p.status === 'COMPLETED');
+                const offer = Array.isArray(applicationRaw.offer) ? applicationRaw.offer[0] : applicationRaw.offer;
+                const completedPayment = offer?.payments?.find((p: any) => p.status === 'COMPLETED');
                 setPayment(completedPayment);
 
             } catch (e) {
@@ -195,7 +196,7 @@ function AdmissionLetterContent() {
                             <div className="relative w-48 h-12">
                                 <Image
                                     src="/images/sykli-logo-official.png"
-                                    alt="Sykli College"
+                                    alt="SYKLI College"
                                     fill
                                     style={{ objectFit: 'contain', objectPosition: 'left center' }}
                                 />
@@ -209,7 +210,7 @@ function AdmissionLetterContent() {
                             </div>
                         </div>
                         <div className="text-left md:text-right text-[10px] font-medium text-neutral-600 leading-relaxed uppercase tracking-wide">
-                            <strong className="text-black block mb-2 text-xs">SYKLI College Registrar</strong>
+                            <strong className="text-black block mb-2 text-xs">SYKLI College – Helsinki Campus</strong>
                             Pohjoisesplanadi 51<br />
                             00150 Helsinki, Finland<br />
                             <div className="mt-2 space-y-0.5 text-[9px] text-neutral-500">
@@ -240,10 +241,9 @@ function AdmissionLetterContent() {
                         </div>
                     </div>
 
-                    {/* 3. Confirmation Box (Locked Wording) */}
                     <div className="border-l-4 border-black pl-6 py-4 mb-8 bg-neutral-50/50">
                         <p className="text-sm font-medium text-neutral-900 leading-relaxed text-justify">
-                            This letter serves as official notification that <strong className="text-black uppercase">{studentName}</strong> (Passport: <strong className="text-black">{passportNumber}</strong>, DOB: <strong className="text-black">{dob}</strong>) has been formally admitted and fully enrolled as a degree student at SYKLI College for the <strong className="text-black">{academicYear}</strong> academic year. Having satisfied all academic entrance criteria and fulfilled the mandated tuition fee obligations, the student is officially registered for the <strong className="text-black underline">{application.course?.title}</strong>. This program is a full-time course of study conducted in the English language at our Helsinki campus location (Pohjoisesplanadi 51, 00150 Helsinki, Finland).
+                            This letter serves as official notification that <strong className="text-black uppercase">{studentName}</strong> (Passport: <strong className="text-black">{passportNumber}</strong>, DOB: <strong className="text-black">{dob}</strong>) has been formally admitted and fully enrolled as a degree student at SYKLI College for the <strong className="text-black">{academicYear}</strong> academic year. Having satisfied all academic entrance criteria and fulfilled the mandated tuition fee obligations, the student is officially registered for the <strong className="text-black underline">{application.course?.title}</strong> ({application.course?.programType || 'Full-time'}). This program is a {application.course?.programType?.toLowerCase() || 'full-time'} course of study conducted in the English language at our Helsinki campus location (Pohjoisesplanadi 51, 00150 Helsinki, Finland).
                         </p>
                     </div>
 
@@ -270,7 +270,7 @@ function AdmissionLetterContent() {
                     <div className="col-span-2">
                         <div className="text-[10px] font-bold text-black uppercase tracking-widest mb-1">Programme of Study</div>
                         <div className="text-sm font-bold text-neutral-900 border-b border-black pb-1">
-                            {application.course?.title}
+                            {application.course?.title} ({application.course?.programType || 'Full-time'})
                         </div>
                     </div>
                 </div>
@@ -340,7 +340,7 @@ function AdmissionLetterContent() {
                     {/* Footer Legal */}
                     <div className="mt-8 text-center border-t border-neutral-100 pt-4">
                         <p className="text-[10px] text-neutral-900 uppercase tracking-widest">
-                            Generated electronically via Sykli SIS. Valid without physical signature if verified online.
+                            Generated electronically via SYKLI SIS. Valid without physical signature if verified online.
                         </p>
                     </div>
                 </div>

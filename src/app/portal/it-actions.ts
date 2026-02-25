@@ -151,7 +151,7 @@ function generateCredentials(assetType: string) {
     switch (assetType) {
         case 'EMAIL':
             return {
-                email: `student${Math.floor(Math.random() * 10000)}@sykli.edu`,
+                email: `student${Math.floor(Math.random() * 10000)}@SYKLI.edu`,
                 password: 'SET_ON_FIRST_LOGIN'
             };
         case 'LMS':
@@ -162,7 +162,7 @@ function generateCredentials(assetType: string) {
         case 'VPN':
             return {
                 vpn_key: generateToken(),
-                config_url: 'https://vpn.sykli.edu/config'
+                config_url: 'https://vpn.SYKLI.edu/config'
             };
         case 'LIBRARY':
             return {

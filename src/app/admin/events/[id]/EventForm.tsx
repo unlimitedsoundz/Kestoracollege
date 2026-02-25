@@ -12,6 +12,7 @@ interface EventFormProps {
 
 export default function EventForm({ id, isNew, eventItem }: EventFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [previewImage, setPreviewImage] = useState<string | null>(eventItem?.imageUrl || null);
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -29,6 +30,7 @@ export default function EventForm({ id, isNew, eventItem }: EventFormProps) {
                 date: formData.get('date') as string,
                 location: formData.get('location') as string,
                 content: formData.get('content') as string,
+                published: true
             };
 
             // Handle Image Upload (Hostinger PHP)
@@ -57,6 +59,14 @@ export default function EventForm({ id, isNew, eventItem }: EventFormProps) {
         }
     }
 
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const url = URL.createObjectURL(file);
+            setPreviewImage(url);
+        }
+    };
+
     return (
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-neutral-200 shadow-xl overflow-hidden">
             <div className="p-8 space-y-8">
@@ -66,13 +76,14 @@ export default function EventForm({ id, isNew, eventItem }: EventFormProps) {
                         <ImageIcon size={14} /> Event Cover Image
                     </label>
                     <div className="flex items-start gap-4">
-                        {eventItem?.imageUrl && (
+                        {previewImage && (
                             <div className="w-32 h-20 bg-neutral-100 rounded-lg overflow-hidden border border-neutral-200 flex-shrink-0 relative">
                                 <Image
-                                    src={eventItem.imageUrl}
+                                    src={previewImage}
                                     alt="Preview"
                                     fill
                                     className="object-cover"
+                                    unoptimized
                                 />
                             </div>
                         )}
@@ -81,6 +92,7 @@ export default function EventForm({ id, isNew, eventItem }: EventFormProps) {
                                 name="image"
                                 type="file"
                                 accept="image/*"
+                                onChange={handleImageChange}
                                 className="w-full text-sm text-neutral-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-neutral-100 file:text-black hover:file:bg-neutral-200 cursor-pointer border border-neutral-200 rounded-lg p-1"
                             />
                             <p className="text-[10px] text-neutral-400 mt-2 italic">Recommended size: 1200x630px. Max 5MB.</p>

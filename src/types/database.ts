@@ -56,6 +56,8 @@ export interface Course {
     imageUrl: string | null;
     schoolId: string;
     departmentId: string | null;
+    programType?: 'Full-time' | 'Part-time' | 'Distance Learning';
+    studyMode?: string | null;
     school?: School;
     department?: Department;
     subjects?: Subject[];
@@ -152,6 +154,8 @@ export interface Application {
     education_history: any | null; // JSONB
     motivation: any | null;        // JSONB
     language_proficiency: any | null; // JSONB
+    requested_documents?: any;     // JSONB
+    document_request_note?: string | null;
     internal_notes?: string | null;
     application_number: string | null;
     created_at: string;

@@ -252,7 +252,9 @@ export async function getAdmissionLetterData(applicationId: string) {
             throw new Error('Unauthorized access to application');
         }
 
-        if (!applicationRaw.offer?.[0]) {
+        const offer = Array.isArray(applicationRaw.offer) ? applicationRaw.offer[0] : applicationRaw.offer;
+
+        if (!offer) {
             return { success: false, error: 'Offer not found' };
         }
 
@@ -260,7 +262,7 @@ export async function getAdmissionLetterData(applicationId: string) {
             success: true,
             data: {
                 application: applicationRaw,
-                offer: applicationRaw.offer[0]
+                offer: offer
             }
         };
     } catch (e: any) {
@@ -419,7 +421,7 @@ export async function acceptOffer(applicationId: string) {
     }
 
     // Check if offer exists
-    const offer = app.offer?.[0] as any;
+    const offer = Array.isArray(app.offer) ? app.offer[0] : app.offer;
     if (!offer) throw new Error('No admission offer found to accept.');
 
     // 2. Transaction: Update Offer -> ACCEPTED, Update App -> OFFER_ACCEPTED
@@ -493,7 +495,7 @@ export async function rejectOffer(applicationId: string) {
     }
 
     // Check if offer exists
-    const offer = app.offer?.[0] as any;
+    const offer = Array.isArray(app.offer) ? app.offer[0] : app.offer;
     if (!offer) throw new Error('No admission offer found to decline.');
 
     // 2. Transaction: Update Offer -> DECLINED, Update App -> OFFER_DECLINED

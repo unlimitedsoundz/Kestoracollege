@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props) {
         .single();
 
     return {
-        title: dept ? `${dept.name} — ${(Array.isArray(dept.school) ? dept.school[0] : dept.school)?.name || 'School'} | SYKLI College` : 'Department | Sykli College',
+        title: dept ? `${dept.name} — ${(Array.isArray(dept.school) ? dept.school[0] : dept.school)?.name || 'School'} | SYKLI College` : 'Department | SYKLI College',
         description: dept?.description?.substring(0, 160) || `Learn about the ${dept?.name} at SYKLI College. Research, faculty, and academic programs.`,
     };
 }

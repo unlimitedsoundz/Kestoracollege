@@ -84,7 +84,7 @@ async function main() {
             name: name,
             email: email,
             role: role,
-            bio: `${role} at Sykli College. Expert in their field with a focus on sustainable development and academic excellence.`,
+            bio: `${role} at SYKLI College. Expert in their field with a focus on sustainable development and academic excellence.`,
             imageUrl: `/images/faculty/${names[0].replace('.', '').toLowerCase()}-${lastName}.png`, // Professional portrait
             schoolId: department ? department.schoolId : null, // Fallback need a school? Maybe fetch schools.
             departmentId: department ? department.id : null
