@@ -30,7 +30,7 @@ export default async function AboutPage() {
                 "url": "https://syklicollege.fi/about-sykli-college",
                 "mainEntity": {
                     "@type": "EducationalOrganization",
-                    "name": "SYKLI College",
+                    "name": "SYKLI College Helsinki",
                     "description": "SYKLI College is an independent higher education institution in Helsinki, Finland. It is not affiliated with Suomen ympäristöopisto SYKLI.",
                     "url": "https://syklicollege.fi"
                 }
@@ -144,22 +144,22 @@ export default async function AboutPage() {
                         <div className="grid md:grid-cols-2 gap-8 text-black">
                             <div className="bg-neutral-50 p-10 border border-neutral-100 flex flex-col justify-between">
                                 <h3 className="text-xl font-bold mb-4">School of Arts & Design</h3>
-                                <p className="text-neutral-600 mb-6">Focusing on ecological responsibility in the creative industries, from sustainable fashion to regenerative architecture.</p>
+                                <p className="text-neutral-600 mb-6">Preparing students for international careers in the creative industries, from digital design to contemporary architecture.</p>
                                 <Link href="/schools/arts" className="text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">Explore Campus <ArrowRight size={14} weight="bold" /></Link>
                             </div>
                             <div className="bg-neutral-50 p-10 border border-neutral-100 flex flex-col justify-between">
                                 <h3 className="text-xl font-bold mb-4">School of Business</h3>
-                                <p className="text-neutral-600 mb-6">Developing leaders for the green economy, specializing in circular business models and impact investing.</p>
+                                <p className="text-neutral-600 mb-6">Empowering future leaders with English-taught programmes in international management, finance, and entrepreneurship.</p>
                                 <Link href="/schools/business" className="text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">Explore Campus <ArrowRight size={14} weight="bold" /></Link>
                             </div>
                             <div className="bg-neutral-50 p-10 border border-neutral-100 flex flex-col justify-between">
                                 <h3 className="text-xl font-bold mb-4">School of Technology</h3>
-                                <p className="text-neutral-600 mb-6">Pioneering sustainable infrastructure, renewable energy systems, and smart-city hardware solutions.</p>
+                                <p className="text-neutral-600 mb-6">Specializing in the development of smart infrastructure, automation, and industrial engineering solutions.</p>
                                 <Link href="/schools/technology" className="text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">Explore Campus <ArrowRight size={14} weight="bold" /></Link>
                             </div>
                             <div className="bg-neutral-50 p-10 border border-neutral-100 flex flex-col justify-between">
                                 <h3 className="text-xl font-bold mb-4">School of Science</h3>
-                                <p className="text-neutral-600 mb-6">Advancing fundamental research in biodiversity, climate science, and transformative materials for a sustainable future.</p>
+                                <p className="text-neutral-600 mb-6">Focusing on applied scientific research, data-driven innovation, and the development of transformative materials.</p>
                                 <Link href="/schools/science" className="text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">Explore Campus <ArrowRight size={14} weight="bold" /></Link>
                             </div>
                         </div>

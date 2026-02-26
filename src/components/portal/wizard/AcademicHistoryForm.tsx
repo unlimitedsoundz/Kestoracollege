@@ -84,7 +84,7 @@ export default function AcademicHistoryForm({ applicationId, initialData, onUpda
                                 <input
                                     {...form.register(`education.${index}.institution`)}
                                     className="w-full px-3 py-1.5 bg-neutral-50 rounded text-sm focus:ring-1 focus:ring-black outline-none font-medium"
-                                    placeholder="e.g. University of Helsinki"
+                                    placeholder="e.g. SYKLI College"
                                 />
                                 {form.formState.errors.education?.[index]?.institution && (
                                     <p className="text-red-500 text-xs font-bold uppercase mt-1">{form.formState.errors.education[index]?.institution?.message}</p>

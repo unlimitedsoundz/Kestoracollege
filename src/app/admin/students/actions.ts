@@ -119,10 +119,8 @@ export async function enrollStudent(applicationId: string) {
             await generateAndStoreAdmissionLetter(applicationId);
             await generateAndStoreReceipt(applicationId);
 
-            // Trigger Welcome Email (Edge Function)
-            await supabase.functions.invoke('resend-welcome-email', {
-                body: { applicationId, type: 'ENROLLMENT_CONFIRMED' }
-            });
+            // Welcome Email and other notifications are now handled by database 
+            // triggers on 'applications' and 'tuition_payments' status changes.
         } catch (postError) {
             console.error('Enrollment: Post-action error', postError);
         }

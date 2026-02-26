@@ -60,7 +60,7 @@ export default async function Home() {
           <Link href="/schools/arts" className="group flex bg-neutral-100 hover:bg-neutral-200 transition-colors h-[82px] md:h-[160px] overflow-hidden shadow-none">
             <div className="flex-1 p-4 md:p-6 flex flex-col justify-center md:justify-between">
               <h3 className="text-xl font-bold group-hover:underline leading-tight">School of Arts & Design</h3>
-              <p className="hidden md:block text-sm text-neutral-600">Fusing aesthetics with ecological responsibility.</p>
+              <p className="hidden md:block text-sm text-neutral-600">Fusing creative excellence with modern design and professional practice.</p>
             </div>
             <div className="w-1/3 relative">
               <Image src="/images/admissions/school_arts.jpg" alt="Arts" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
@@ -71,7 +71,7 @@ export default async function Home() {
           <Link href="/schools/business" className="group flex bg-neutral-100 hover:bg-neutral-200 transition-colors h-[82px] md:h-[160px] overflow-hidden shadow-none">
             <div className="flex-1 p-4 md:p-6 flex flex-col justify-center md:justify-between">
               <h3 className="text-xl font-bold group-hover:underline leading-tight">School of Business</h3>
-              <p className="hidden md:block text-sm text-neutral-600">Developing leaders for the green economy and circular business models.</p>
+              <p className="hidden md:block text-sm text-neutral-600">Developing innovative leaders for global markets and digital entrepreneurship.</p>
             </div>
             <div className="w-1/3 relative">
               <Image src="/images/admissions/school_business.jpg" alt="Business" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
@@ -82,7 +82,7 @@ export default async function Home() {
           <Link href="/schools/technology" className="group flex bg-neutral-100 hover:bg-neutral-200 transition-colors h-[82px] md:h-[160px] overflow-hidden shadow-none">
             <div className="flex-1 p-4 md:p-6 flex flex-col justify-center md:justify-between">
               <h3 className="text-xl font-bold group-hover:underline leading-tight">School of Technology</h3>
-              <p className="hidden md:block text-sm text-neutral-600">Pioneering sustainable infrastructure and renewable energy solutions.</p>
+              <p className="hidden md:block text-sm text-neutral-600">Pioneering advanced engineering and smart-city technical solutions.</p>
             </div>
             <div className="w-1/3 relative">
               <Image src="/images/admissions/school_technology.jpg" alt="Technology" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
@@ -93,7 +93,7 @@ export default async function Home() {
           <Link href="/schools/science" className="group flex bg-neutral-100 hover:bg-neutral-200 transition-colors h-[82px] md:h-[160px] overflow-hidden shadow-none">
             <div className="flex-1 p-4 md:p-6 flex flex-col justify-center md:justify-between">
               <h3 className="text-xl font-bold group-hover:underline leading-tight">School of Science</h3>
-              <p className="hidden md:block text-sm text-neutral-600">Advancing fundamental research and scientific breakthroughs for a sustainable future.</p>
+              <p className="hidden md:block text-sm text-neutral-600">Advancing applied research and innovation for a changing global landscape.</p>
             </div>
             <div className="w-1/3 relative">
               <Image src="/images/admissions/school_science.jpg" alt="Science" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />

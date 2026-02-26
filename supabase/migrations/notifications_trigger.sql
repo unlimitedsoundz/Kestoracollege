@@ -17,7 +17,7 @@ BEGIN
 
   -- Perform async HTTP POST to the Edge Function
   PERFORM net.http_post(
-    url := 'https://pvkjojdngwzphntuqqof.supabase.co/functions/v1/send-notification',
+    url := 'https://mrqzlmkdhzwvbpljikjz.supabase.co/functions/v1/send-notification',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
       'Authorization', 'Bearer ' || current_setting('app.settings.service_role_key', true)
@@ -42,7 +42,7 @@ DROP TRIGGER IF EXISTS "on_payment_status_update" ON public.tuition_payments;
 CREATE TRIGGER "on_payment_status_update"
   AFTER UPDATE OF status ON public.tuition_payments
   FOR EACH ROW
-  WHEN (NEW.status = 'COMPLETED' AND OLD.status IS DISTINCT FROM 'COMPLETED')
+  WHEN (NEW.status = 'verified' AND OLD.status IS DISTINCT FROM 'verified')
   EXECUTE PROCEDURE public.handle_notification_trigger();
 
 -- Trigger for Housing Application Status Updates

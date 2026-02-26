@@ -48,6 +48,32 @@ serve(async (req) => {
                     course_title: app.course?.title
                 };
             }
+        } else if (table === 'tuition_payments' && record) {
+            // New: Resolve application from payment record
+            const { data: offer } = await supabase
+                .from('admission_offers')
+                .select('application_id')
+                .eq('id', record.offer_id)
+                .single();
+
+            if (offer?.application_id) {
+                const { data: app } = await supabase
+                    .from('applications')
+                    .select('*, user:profiles(*), course:Course(title)')
+                    .eq('id', offer.application_id)
+                    .single();
+
+                if (app) {
+                    applicationData = {
+                        ...app,
+                        email: app.user?.email,
+                        first_name: app.user?.first_name || app.personal_info?.firstName,
+                        last_name: app.user?.last_name || app.personal_info?.lastName,
+                        student_id: app.user?.student_id,
+                        course_title: app.course?.title
+                    };
+                }
+            }
         }
 
         if (!applicationData && !record && !type) {
@@ -75,6 +101,13 @@ serve(async (req) => {
                 notificationType = 'APPLICATION_REJECTED';
             } else if (status === 'DOCS_REQUIRED' && oldStatus !== 'DOCS_REQUIRED') {
                 notificationType = 'DOCS_REQUIRED';
+            }
+        }
+
+        // New: Support for tuition_payments table trigger
+        if (!notificationType && table === 'tuition_payments' && record) {
+            if (record.status === 'verified' && old_record?.status !== 'verified') {
+                notificationType = 'TUITION_PAYMENT_VERIFIED';
             }
         }
 
@@ -168,21 +201,42 @@ serve(async (req) => {
                 break;
 
             case 'PAYMENT_RECEIVED':
-                studentSubject = "Payment Confirmation - SYKLI College";
-                const isHousing = additionalData?.paymentType === 'HOUSING';
+                studentSubject = "Payment Received - Pending Verification";
+                const isHousingRec = additionalData?.paymentType === 'HOUSING';
                 studentHtml = `
-                    <h1>Payment Successful</h1>
-                    <p>Hello ${firstName}, we have successfully received your payment of <strong>${additionalData?.amount} ${additionalData?.currency || 'EUR'}</strong>.</p>
+                    <h1>Payment Received</h1>
+                    <p>Hello ${firstName}, we have received your payment of <strong>${additionalData?.amount} ${additionalData?.currency || 'EUR'}</strong>.</p>
                     <p><strong>Reference:</strong> ${additionalData?.reference || 'N/A'}</p>
-                    <p>Your ${isHousing ? 'housing application' : 'enrollment'} status has been updated accordingly.</p>
+                    <p>Our team is now verifying the transaction. This usually takes 1-2 business days. You will receive another email once your ${isHousingRec ? 'housing' : 'enrollment'} is confirmed.</p>
                 `;
-                adminSubject = `Payment Received: ${fullName}`;
+                adminSubject = `New Payment (Pending): ${fullName}`;
                 adminHtml = `
-                    <h2>Payment Notification</h2>
+                    <h2>Payment Verification Required</h2>
                     <p><strong>From:</strong> ${fullName}</p>
                     <p><strong>Amount:</strong> ${additionalData?.amount} ${additionalData?.currency || 'EUR'}</p>
                     <p><strong>Ref:</strong> ${additionalData?.reference || 'N/A'}</p>
                     <p><strong>Type:</strong> ${additionalData?.paymentType || 'TUITION'}</p>
+                    <a href="https://syklicollege.fi/admin/registrar" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Verify in Registrar Panel</a>
+                `;
+                break;
+
+            case 'TUITION_PAYMENT_VERIFIED':
+                studentSubject = "Payment Verified - Enrollment Confirmed!";
+                studentHtml = `
+                    <h1 style="color: #034737;">Payment Verified!</h1>
+                    <p>Hello ${firstName},</p>
+                    <p>Great news! Your tuition payment has been officially verified by our registrar's office.</p>
+                    <p><strong>Status:</strong> ENROLLED</p>
+                    <p>You can now log in to the student portal to access your official admission letter, payment receipt, and other academic resources.</p>
+                    <a href="${portalUrl}/dashboard" style="display:inline-block;background:#034737;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold;">Student Dashboard</a>
+                `;
+                adminSubject = `Payment Verified: ${fullName}`;
+                adminHtml = `
+                    <h2>Payment Confirmation</h2>
+                    <p><strong>Student:</strong> ${fullName}</p>
+                    <p><strong>Amount:</strong> ${record?.amount} ${record?.currency || 'EUR'}</p>
+                    <p><strong>Ref:</strong> ${record?.transaction_reference || 'N/A'}</p>
+                    <p>The student has been officially enrolled and their documents have been prepared.</p>
                 `;
                 break;
 
@@ -214,8 +268,9 @@ serve(async (req) => {
                 break;
             case 'DOCS_REQUIRED':
                 studentSubject = "Action Required: Documents Requested - SYKLI College";
-                const docsList = (additionalData?.requestedDocuments as string[]) || [];
-                const note = additionalData?.note || "";
+                const docsList = (additionalData?.requestedDocuments as string[]) ||
+                    (applicationData?.requested_documents as string[]) || [];
+                const note = additionalData?.note || applicationData?.document_request_note || "";
 
                 studentHtml = `
                     <h1 style="color: #9333ea;">Action Required: Documents Requested</h1>

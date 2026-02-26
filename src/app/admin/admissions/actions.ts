@@ -28,23 +28,8 @@ export async function updateApplicationStatus(applicationId: string, status: App
         throw new Error('Failed to update status');
     }
 
-    // Email Notification for Document Request
-    if (status === 'DOCS_REQUIRED') {
-        try {
-            await supabase.functions.invoke('send-notification', {
-                body: {
-                    applicationId: applicationId,
-                    type: 'DOCS_REQUIRED',
-                    additionalData: {
-                        requestedDocuments: requestedDocuments || [],
-                        note: documentRequestNote
-                    }
-                }
-            });
-        } catch (emailError) {
-            console.error('Failed to trigger document request email:', emailError);
-        }
-    }
+    // Email Notification for Document Request is now handled by database 
+    // triggers on 'applications' status changes.
 
     // TRIGGER LOGIC: Automatically create admission offer + generate Letter of Offer on approval
     if (status === 'ADMITTED') {
