@@ -1,6 +1,7 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
+import Link from 'next/link';
 import { User, Envelope as Mail, Globe, CheckCircle, XCircle, Clock, CreditCard, ShieldCheck, CircleNotch as Loader2 } from "@phosphor-icons/react";
 import { formatToDDMMYYYY } from '@/utils/date';
 import DeleteStudentBtn from './DeleteStudentBtn';
@@ -300,9 +301,12 @@ export default function AdminStudentsPage() {
                                 </td>
                                 <td className="p-4">
                                     <div className="flex items-center justify-end gap-3">
-                                        <button className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:text-black">
+                                        <Link
+                                            href={`/admin/admissions/review?id=${student.application_id}`}
+                                            className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:text-black"
+                                        >
                                             View
-                                        </button>
+                                        </Link>
                                         <DeleteStudentBtn id={student.id} />
                                     </div>
                                 </td>
