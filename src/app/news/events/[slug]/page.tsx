@@ -48,12 +48,13 @@ export default async function EventDetailPage({ params }: Props) {
         eventStatus: 'https://schema.org/EventScheduled',
         location: {
             '@type': 'Place',
-            name: item.location || 'SYKLI College',
+            name: item.location || 'SYKLI College – Helsinki Campus',
             address: {
                 '@type': 'PostalAddress',
-                streetAddress: 'Malmin kauppatie 8',
+                streetAddress: 'Pohjoisesplanadi 51',
                 addressLocality: 'Helsinki',
-                postalCode: '00700',
+                postalCode: '00150',
+                addressRegion: 'Uusimaa',
                 addressCountry: 'FI'
             }
         },
@@ -62,7 +63,7 @@ export default async function EventDetailPage({ params }: Props) {
         organizer: {
             '@type': 'EducationalOrganization',
             name: 'SYKLI College',
-            url: 'https://www.sykli.fi'
+            url: 'https://www.syklicollege.fi'
         }
     };
 

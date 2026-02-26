@@ -17,11 +17,11 @@ END $$;
 -- 2. Seed IT Assets
 INSERT INTO it_assets (asset_type, name, description, auto_provision, access_url)
 VALUES 
-    ('LMS', 'Canvas LMS', 'Primary Learning Management System', true, 'https://canvas.syklicollege.edu'),
+    ('LMS', 'Canvas LMS', 'Primary Learning Management System', true, 'https://canvas.syklicollege.fi'),
     ('EMAIL', 'Student Email', 'Official College Email (Outlook)', true, 'https://outlook.office.com'),
-    ('VPN', 'College VPN', 'Secure Access to Campus Network', true, 'https://vpn.syklicollege.edu'),
-    ('LIBRARY', 'Digital Library', 'Access to JSTOR, EBSCO, and Research DBs', true, 'https://library.syklicollege.edu'),
-    ('VIRTUAL_LAB', 'Cloud Computer Lab', 'Virtual Desktop Infrastructure (VDI)', false, 'https://vdi.syklicollege.edu')
+    ('VPN', 'College VPN', 'Secure Access to Campus Network', true, 'https://vpn.syklicollege.fi'),
+    ('LIBRARY', 'Digital Library', 'Access to JSTOR, EBSCO, and Research DBs', true, 'https://library.syklicollege.fi'),
+    ('VIRTUAL_LAB', 'Cloud Computer Lab', 'Virtual Desktop Infrastructure (VDI)', false, 'https://vdi.syklicollege.fi')
 ON CONFLICT DO NOTHING;
 
 -- 3. Provision Access for YOUR Specific User
@@ -60,7 +60,7 @@ BEGIN
                     jsonb_build_object(
                         'username', 'student_' || substr(v_student_id, 1, 6),
                         'password', 'Welcome2026!',
-                        'email', 'student@syklicollege.edu'
+                        'email', 'student@syklicollege.fi'
                     ),
                     NOW(),
                     NOW() + INTERVAL '1 year'

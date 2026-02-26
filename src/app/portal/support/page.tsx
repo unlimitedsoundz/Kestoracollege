@@ -47,9 +47,9 @@ export default function SupportPage() {
         {
             icon: <Mail className="text-black" size={24} weight="bold" />,
             title: "Email Support",
-            value: "it.support@sykli.fi",
+            value: "it.support@syklicollege.fi",
             desc: "Primary channel for all technical inquiries.",
-            link: "mailto:it.support@sykli.fi"
+            link: "mailto:it.support@syklicollege.fi"
         },
         {
             icon: <Phone className="text-black" size={24} weight="bold" />,

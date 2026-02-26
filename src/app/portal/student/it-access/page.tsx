@@ -15,6 +15,13 @@ export default function ItAccessPage() {
 
     useEffect(() => {
         const fetchItAccessData = async () => {
+            // Check for required env vars
+            if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+                console.error("CRITICAL: Supabase environment variables are missing!");
+                setLoading(false);
+                return;
+            }
+
             try {
                 // 1. Primary Auth Check (Supabase)
                 const { data: { user: sbUser } } = await supabase.auth.getUser();
@@ -57,7 +64,13 @@ export default function ItAccessPage() {
                     .eq('student_id', student.id)
                     .order('created_at', { ascending: false });
 
-                if (error) console.error('Error fetching IT access:', error);
+                if (error) {
+                    console.error('Error fetching IT access:', error.message, error.details);
+                    // On static site, RLS might block if session isn't synced correctly
+                    if (error.code === '42501') {
+                        console.warn('RLS Policy violation: Ensure user is properly authenticated in Supabase.');
+                    }
+                }
                 setAccess(accessData || []);
             } catch (err) {
                 console.error('CRITICAL: Fetching IT access data failed', err);
