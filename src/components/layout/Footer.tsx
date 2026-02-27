@@ -80,7 +80,11 @@ export function Footer() {
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3 text-neutral-400 text-sm">
                                 <MapPin size={16} className="shrink-0 text-neutral-500 mt-0.5" />
-                                <span className="leading-relaxed">Kestora College – Helsinki Campus<br />Pohjoisesplanadi 51,<br />00150 Helsinki, Uusimaa</span>
+                                <div className="space-y-1.5">
+                                    <span className="block">Kestora College – Helsinki Campus</span>
+                                    <span className="block">Pohjoisesplanadi 51,</span>
+                                    <span className="block">00150 Helsinki, Uusimaa</span>
+                                </div>
                             </li>
                             <li className="flex items-center gap-3 text-neutral-400 text-sm">
                                 <EnvelopeSimple size={16} className="shrink-0 text-neutral-500" />
