@@ -220,12 +220,15 @@ export default function RegistrationClient({
                                         <p className="text-sm text-neutral-500 mb-4 line-clamp-2">
                                             {module.description}
                                         </p>
-                                        <div className="flex items-center gap-4 text-xs font-medium text-neutral-400">
+                                        <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-neutral-400">
                                             <span className="flex items-center gap-1.5">
                                                 <User size={14} /> {module.instructor}
                                             </span>
                                             <span className="flex items-center gap-1.5">
                                                 <BookOpen size={14} /> {module.academic_level}
+                                            </span>
+                                            <span className="flex items-center gap-1.5 text-[#fd6402]/80">
+                                                <AlertCircle size={14} /> Prereq: {module.prerequisites || 'None'}
                                             </span>
                                         </div>
                                     </div>

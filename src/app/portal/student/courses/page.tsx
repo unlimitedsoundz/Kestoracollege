@@ -100,7 +100,8 @@ export default function CourseRegistrationPage() {
                     description: richData?.description || `Curriculum subject for ${student.program?.title || 'your program'}.`,
                     capacity: richData?.capacity || 100, // Fallback if no specific module data
                     instructor: richData?.instructor || 'Department Faculty',
-                    academic_level: richData?.academic_level || student.program?.degreeLevel || 'Bachelor'
+                    academic_level: richData?.academic_level || student.program?.degreeLevel || 'Bachelor',
+                    prerequisites: s.eligibility || 'None'
                 };
             });
 
