@@ -381,7 +381,7 @@ export default function MasterAdmissionsPage() {
                                     <div className="text-5xl font-bold text-neutral-200">04</div>
                                     <div>
                                         <h3 className="text-xl font-bold mb-4">Upload Required Documents</h3>
-                                        <p className="mb-4 font-bold text-black">Deadline: 24 February 2026 at 15:00 (UTC+2)</p>
+                                        <p className="mb-4 font-bold text-black">Deadline: 7 April 2026 at 15:00 (UTC+2)</p>
                                         <ul className="grid sm:grid-cols-2 gap-2 text-sm text-neutral-700 mb-4">
                                             <li className="flex gap-2 items-center text-neutral-600"><FileText size={16} weight="regular" /> Bachelor’s degree & transcripts</li>
                                             <li className="flex gap-2 items-center"><FileText size={16} weight="regular" /> Proof of English proficiency (optional)</li>
