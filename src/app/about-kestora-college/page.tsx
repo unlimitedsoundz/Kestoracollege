@@ -174,11 +174,11 @@ export default async function AboutPage() {
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-16 text-center max-w-5xl mx-auto">
                         <div className="space-y-3">
-                            <div className="text-6xl md:text-7xl font-bold tracking-tight">4.5k</div>
+                            <div className="text-6xl md:text-7xl font-bold tracking-tight">2.4k</div>
                             <div className="text-sm font-bold uppercase tracking-[0.2em] text-black/60">Students</div>
                         </div>
                         <div className="space-y-3">
-                            <div className="text-6xl md:text-7xl font-bold tracking-tight">350</div>
+                            <div className="text-6xl md:text-7xl font-bold tracking-tight">250</div>
                             <div className="text-sm font-bold uppercase tracking-[0.2em] text-black/60">Faculty</div>
                         </div>
                         <div className="space-y-3">
