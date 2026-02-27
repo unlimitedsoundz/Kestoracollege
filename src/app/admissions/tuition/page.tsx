@@ -226,34 +226,58 @@ export default function TuitionPaymentPage() {
                                     <div className="bg-black text-white p-2 rounded-full mt-1">
                                         <CreditCard size={24} weight="regular" />
                                     </div>
-                                    <div>
+                                    <div className="flex-1">
                                         <h4 className="text-xl font-bold mb-3">Early Payment Discount</h4>
                                         <p className="text-black mb-4">
-                                            New Bachelor’s students may receive a <strong>25% discount</strong> on their first academic year’s tuition if they:
+                                            New Bachelor’s and Master’s students may receive a <strong>25% discount</strong> on their first academic year’s tuition if they:
                                         </p>
                                         <ul className="space-y-2 mb-6 text-sm text-black">
                                             <li className="flex gap-3 items-start"><div className="min-w-[6px] h-[6px] rounded-full bg-black mt-1.5"></div> Accept their admission offer as instructed</li>
                                             <li className="flex gap-3 items-start"><div className="min-w-[6px] h-[6px] rounded-full bg-black mt-1.5"></div> Pay tuition by the deadline (usually within 21 days of offer)</li>
                                         </ul>
 
-                                        <div className="bg-neutral-100 p-6 md:p-12 pl-6 md:pl-16 rounded-xl shadow-sm">
-                                            <h5 className="font-bold text-sm mb-4 uppercase tracking-wider text-black">Discounted Fees (1st Year Only)</h5>
-                                            <div className="space-y-2">
-                                                <div className="flex justify-between">
-                                                    <span>Business</span>
-                                                    <span className="font-bold">€3 000</span>
+                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                            <div className="bg-neutral-100 p-6 rounded-xl shadow-sm">
+                                                <h5 className="font-bold text-sm mb-4 uppercase tracking-wider text-black">Bachelor's Discounted Fees (1st Year)</h5>
+                                                <div className="space-y-2 text-sm md:text-base">
+                                                    <div className="flex justify-between">
+                                                        <span>Business</span>
+                                                        <span className="font-bold">€3 000</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span>Arts and Architecture</span>
+                                                        <span className="font-bold">€3 000</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span>Technology & Engineering</span>
+                                                        <span className="font-bold">€4 500</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span>Science</span>
+                                                        <span className="font-bold">€5 625</span>
+                                                    </div>
                                                 </div>
-                                                <div className="flex justify-between">
-                                                    <span>Arts and Architecture</span>
-                                                    <span className="font-bold">€3 000</span>
-                                                </div>
-                                                <div className="flex justify-between">
-                                                    <span>Technology & Engineering</span>
-                                                    <span className="font-bold">€4 500</span>
-                                                </div>
-                                                <div className="flex justify-between">
-                                                    <span>Science</span>
-                                                    <span className="font-bold">€5 625</span>
+                                            </div>
+
+                                            <div className="bg-neutral-100 p-6 rounded-xl shadow-sm">
+                                                <h5 className="font-bold text-sm mb-4 uppercase tracking-wider text-black">Master's Discounted Fees (1st Year)</h5>
+                                                <div className="space-y-2 text-sm md:text-base">
+                                                    <div className="flex justify-between">
+                                                        <span>Business</span>
+                                                        <span className="font-bold">€4 500</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span>Arts and Architecture</span>
+                                                        <span className="font-bold">€4 500</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span>Technology & Engineering</span>
+                                                        <span className="font-bold">€4 500</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span>Science</span>
+                                                        <span className="font-bold">€7 125</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
