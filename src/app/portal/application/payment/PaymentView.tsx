@@ -209,7 +209,7 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
                         <div className="space-y-4 mb-8">
                             <div className="flex justify-between text-sm">
                                 <span className="text-black font-normal uppercase tracking-wider">{paymentType === 'deposit' ? 'Tuition Deposit' : 'First Year Tuition'}</span>
-                                <span className="font-medium text-black text-right">€ {finalAmount.toLocaleString()}</span>
+                                <span className="font-medium text-black text-right">€ {(paymentType === 'deposit' ? depositAmount : displayOriginalFee).toLocaleString()}</span>
                             </div>
                             {isEarly && paymentType === 'first_year' && (
                                 <div className="flex justify-between items-center text-sm text-black font-normal py-1">
