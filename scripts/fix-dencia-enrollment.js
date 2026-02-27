@@ -81,7 +81,7 @@ async function fixDenciaAde() {
     }
 
     // 3. Create/Update Student Record
-    const institutionalEmail = `${application.personal_info.firstName.toLowerCase()}.${application.personal_info.lastName.toLowerCase()}@syklicollege.fi`;
+    const institutionalEmail = `${application.personal_info.firstName.toLowerCase()}.${application.personal_info.lastName.toLowerCase()}@kestora.fi`;
 
     // Check if record exists
     const { data: existingStudent } = await supabase

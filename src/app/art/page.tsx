@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { Palette, Calendar, MapPin } from '@phosphor-icons/react/dist/ssr';
 
 export const metadata = {
-    title: 'Art & Exhibitions — SYKLI College | Gallery & Creative Showcase',
-    description: 'Explore art exhibitions, creative showcases, and gallery events at SYKLI College Helsinki. Featuring works by students and faculty in fine arts, design, and media.',
+    title: 'Art & Exhibitions — Kestora College | Gallery & Creative Showcase',
+    description: 'Explore art exhibitions, creative showcases, and gallery events at Kestora College Helsinki. Featuring works by students and faculty in fine arts, design, and media.',
 };
 
 export default function ArtPage() {
@@ -33,7 +33,7 @@ export default function ArtPage() {
     return (
         <div className="min-h-screen bg-black text-white">
             <div className="container mx-auto px-4 py-24">
-                <h1 className="text-6xl font-light mb-4 pt-8">SYKLI<span className="font-bold">ART</span></h1>
+                <h1 className="text-6xl font-light mb-4 pt-8">Kestora<span className="font-bold">ART</span></h1>
                 <p className="text-neutral-400 text-xl mb-16 max-w-2xl">
                     Where sustainability meets creativity. Exploring new mediums for environmental expression.
                 </p>

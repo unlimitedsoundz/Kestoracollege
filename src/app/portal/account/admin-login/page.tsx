@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
             }
 
             // 3. Set local cache for layout fallback and navigation sync
-            localStorage.setItem('SYKLI_user', JSON.stringify({
+            localStorage.setItem('Kestora_user', JSON.stringify({
                 id: authData.user.id,
                 email: profile.email,
                 role: profile.role,
@@ -86,7 +86,7 @@ export default function AdminLoginPage() {
                 </div>
                 <div>
                     <h1 className="text-2xl font-bold leading-tight">Admin Login</h1>
-                    <p className="text-neutral-500 text-xs font-medium uppercase tracking-wider">SYKLI College SIS</p>
+                    <p className="text-neutral-500 text-xs font-medium uppercase tracking-wider">Kestora College SIS</p>
                 </div>
             </div>
 
@@ -116,7 +116,7 @@ export default function AdminLoginPage() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full pl-12 pr-4 py-3 bg-neutral-50 border border-neutral-100 rounded-xl focus:ring-2 focus:ring-black focus:bg-white outline-none transition-all font-bold text-sm"
-                            placeholder="name@syklicollege.fi"
+                            placeholder="name@kestora.fi"
                         />
                     </div>
                 </div>

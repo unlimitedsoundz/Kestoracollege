@@ -9,24 +9,24 @@ function fixInFile(filePath) {
         let content = fs.readFileSync(filePath, 'utf8');
         let original = content;
 
-        // 1. Fix image source paths /SYKLI-logo-official.png -> /sykli-logo-official.png
-        content = content.replace(/\/images\/SYKLI/g, '/images/sykli');
+        // 1. Fix image source paths /Kestora-logo-official.png -> /kestora-logo-official.png
+        content = content.replace(/\/images\/Kestora/g, '/images/kestora');
 
-        // 2. Fix external domains labs.SYKLI.edu -> labs.sykli.edu
-        content = content.replace(/labs\.SYKLI\.edu/g, 'labs.sykli.edu');
+        // 2. Fix external domains labs.Kestora.edu -> labs.kestora.edu
+        content = content.replace(/labs\.Kestora\.edu/g, 'labs.kestora.edu');
 
         // 3. System-wide check for any href or item paths that might still be capitalized
         // Use regex to find internal absolute paths that are capitalized
-        content = content.replace(/(href|item|url)="\/([^"]*SYKLI[^"]*)"/g, (match, prefix, pathPart) => {
+        content = content.replace(/(href|item|url)="\/([^"]*Kestora[^"]*)"/g, (match, prefix, pathPart) => {
             return `${prefix}="/${pathPart.toLowerCase()}"`;
         });
 
         // 4. Fix metadata base and schema urls specifically if not caught
-        content = content.replace(/https:\/\/www\.SYKLIcollege\.fi/g, 'https://www.syklicollege.fi');
-        content = content.replace(/https:\/\/SYKLIcollege\.fi/g, 'https://syklicollege.fi');
+        content = content.replace(/https:\/\/www\.Kestoracollege\.fi/g, 'https://www.kestora.fi');
+        content = content.replace(/https:\/\/Kestoracollege\.fi/g, 'https://kestora.fi');
 
-        // 5. Fix email addresses in mailto: or as text if they have SYKLI domain capitalized
-        content = content.replace(/@SYKLIcollege\.fi/g, '@syklicollege.fi');
+        // 5. Fix email addresses in mailto: or as text if they have Kestora domain capitalized
+        content = content.replace(/@Kestoracollege\.fi/g, '@kestora.fi');
 
         if (content !== original) {
             fs.writeFileSync(filePath, content, 'utf8');

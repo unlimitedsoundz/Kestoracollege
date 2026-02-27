@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata = {
-    title: 'Site Index | SYKLI College',
-    description: 'A comprehensive map of all pages and resources on the SYKLI College website.',
+    title: 'Site Index | Kestora College',
+    description: 'A comprehensive map of all pages and resources on the Kestora College website.',
 };
 
 const categories = [
@@ -41,9 +41,9 @@ const categories = [
         ],
     },
     {
-        title: 'About SYKLI',
+        title: 'About Kestora',
         links: [
-            { name: 'Our Story', href: '/about-sykli-college' },
+            { name: 'Our Story', href: '/about-kestora-college' },
             { name: 'Contact Information', href: '/contact' },
             { name: 'News & Events', href: '/news' },
             { name: 'Collaboration', href: '/collaboration' },
@@ -70,7 +70,7 @@ export default function SiteIndexPage() {
                         Site Index
                     </h1>
                     <p className="text-xl text-neutral-600 leading-relaxed">
-                        A comprehensive directory of all public resources, programmes, and informational pages across SYKLI College.
+                        A comprehensive directory of all public resources, programmes, and informational pages across Kestora College.
                     </p>
                 </header>
 

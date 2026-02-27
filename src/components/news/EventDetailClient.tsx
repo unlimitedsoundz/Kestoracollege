@@ -117,7 +117,7 @@ export default function EventDetailClient({ initialEvent }: EventDetailClientPro
                             <div className="bg-neutral-900 text-white p-8 rounded-2xl shadow-xl">
                                 <h3 className="font-bold text-xl mb-4 text-white">Interested?</h3>
                                 <p className="text-neutral-400 text-sm mb-6">
-                                    Join us for this exciting event at SYKLI College. No registration required unless specified.
+                                    Join us for this exciting event at Kestora College. No registration required unless specified.
                                 </p>
                                 <button className="w-full bg-white text-black py-4 rounded-xl font-bold hover:bg-neutral-200 transition-colors">
                                     Add to Calendar

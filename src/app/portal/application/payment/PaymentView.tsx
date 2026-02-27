@@ -20,12 +20,15 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
     const [selectedYears, setSelectedYears] = useState(1);
 
     const isEarly = new Date() <= new Date(admissionOffer.payment_deadline);
-    const baseFee = admissionOffer.tuition_fee;
+    const baseFee = admissionOffer.tuition_fee; // Already the discounted fee from the offer
+    const storedDiscount = admissionOffer.discount_amount || 0; // Discount already applied by admin
     const maxYears = getProgramYears(application.course?.duration || '2 years');
 
-    // Calculate final amount: (Base Fee * Years) - (Discount on first year only)
-    const discount = isEarly ? Math.round(baseFee * (EARLY_PAYMENT_DISCOUNT_PERCENT / 100)) : 0;
-    const finalAmount = (baseFee * selectedYears) - discount;
+    // baseFee is already after early-payment discount, so do NOT apply discount again
+    // storedDiscount is for display only (showing how much was saved)
+    const displayOriginalFee = baseFee + storedDiscount; // Reconstruct original for display
+    const discount = isEarly ? storedDiscount : 0;
+    const finalAmount = baseFee * selectedYears;
 
     const handlePaymentComplete = async (details: {
         method: string;
@@ -98,16 +101,24 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
                 <h2 className="text-2xl font-normal text-black mb-4 uppercase tracking-tighter">
                     {isEnrolled ? 'Tuition Paid Successfully' : 'Payment Verification Pending'}
                 </h2>
-                <p className="text-sm text-neutral-600 mb-8 max-w-[280px] mx-auto leading-relaxed">
+                <p className="text-sm text-black mb-8 max-w-[280px] mx-auto leading-relaxed">
                     {isEnrolled
-                        ? <>Your enrollment is now confirmed. Welcome to <span className="font-semibold text-black">SYKLI College</span>.</>
+                        ? <>Your enrollment is now confirmed. Welcome to <span className="font-semibold text-black">Kestora College</span>.</>
                         : <>Your payment has been recorded and is currently under review. <span className="font-semibold text-black">Access to student services is paused</span> until our finance team verifies the transaction.</>
                     }
                 </p>
                 <div className="flex flex-col gap-3">
+                    {isEnrolled && (
+                        <button
+                            onClick={() => router.push(`/portal/application/receipt?id=${application.id}`)}
+                            className="w-full bg-black text-white px-8 py-4 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all hover:bg-neutral-800 shadow-lg shadow-black/5"
+                        >
+                            View Receipt
+                        </button>
+                    )}
                     <button
                         onClick={() => router.push('/portal/dashboard')}
-                        className="w-full bg-black text-white px-8 py-4 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all hover:bg-neutral-800 shadow-lg shadow-black/5"
+                        className={`w-full px-8 py-4 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${isEnrolled ? 'bg-white text-black border border-neutral-200 hover:bg-neutral-50' : 'bg-black text-white hover:bg-neutral-800 shadow-lg shadow-black/5'}`}
                     >
                         Return to Dashboard
                     </button>
@@ -142,21 +153,21 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
 
             {/* Selection UI */}
             <div className="mb-12 px-2 md:px-0">
-                <h2 className="text-sm font-bold mb-4 uppercase tracking-widest text-neutral-400">Choose Payment Duration</h2>
+                <h2 className="text-sm font-bold mb-4 uppercase tracking-widest text-black">Choose Payment Duration</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                     <button
                         onClick={() => setSelectedYears(1)}
                         className={`p-5 md:p-6 border-2 text-left transition-all rounded-sm ${selectedYears === 1 ? 'border-black bg-neutral-50' : 'border-neutral-100 hover:border-neutral-200'}`}
                     >
                         <div className="font-bold text-base md:text-lg mb-1 uppercase tracking-tight">Pay for 1st Year Only</div>
-                        <p className="text-[11px] md:text-sm text-neutral-600 leading-relaxed">Standard single-year payment plan for immediate requirement.</p>
+                        <p className="text-[11px] md:text-sm text-black leading-relaxed">Standard single-year payment plan for immediate requirement.</p>
                     </button>
                     <button
                         onClick={() => setSelectedYears(maxYears)}
                         className={`p-5 md:p-6 border-2 text-left transition-all rounded-sm ${selectedYears === maxYears ? 'border-black bg-neutral-50' : 'border-neutral-100 hover:border-neutral-200'}`}
                     >
                         <div className="font-bold text-base md:text-lg mb-1 uppercase tracking-tight">Pay for Full Program ({maxYears} Years)</div>
-                        <p className="text-[11px] md:text-sm text-neutral-600 leading-relaxed">Secure your entire education upfront and simplify your residence permit process.</p>
+                        <p className="text-[11px] md:text-sm text-black leading-relaxed">Secure your entire education upfront and simplify your residence permit process.</p>
                     </button>
                 </div>
             </div>
@@ -165,15 +176,15 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
                 {/* Invoice / Summary */}
                 <div className="lg:col-span-4 space-y-6">
                     <div className="bg-white border md:border-neutral-100 p-4 md:p-8 -mx-4 md:mx-0">
-                        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 border-b border-neutral-100 pb-8">
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 border-b border-neutral-100 pb-8 overflow-hidden">
                             <div>
-                                <div className="text-[10px] font-normal text-neutral-400 uppercase tracking-widest mb-1">Student Details</div>
+                                <div className="text-[10px] font-normal text-black uppercase tracking-widest mb-1">Student Details</div>
                                 <div className="font-bold text-black uppercase tracking-tight">{application.personal_info?.firstName} {application.personal_info?.lastName}</div>
-                                <div className="text-sm text-neutral-600 mt-1">{application.contact_details?.email}</div>
+                                <div className="text-sm text-black mt-1">{application.contact_details?.email}</div>
                             </div>
                             <div className="sm:text-right">
-                                <div className="text-[10px] font-normal text-neutral-400 uppercase tracking-widest mb-1">Payment Reference</div>
-                                <div className="font-mono text-sm text-black bg-neutral-50 px-2 py-1 rounded-sm border border-neutral-100 inline-block sm:block">
+                                <div className="text-[10px] font-normal text-black uppercase tracking-widest mb-1">Payment Reference</div>
+                                <div className="font-mono text-sm text-black bg-neutral-50 px-2 py-1 rounded-sm border border-neutral-100 inline-block sm:block break-all">
                                     {(() => {
                                         let hash = 0;
                                         const str = admissionOffer.id;
@@ -191,11 +202,11 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
                         <div className="space-y-4 mb-8">
                             <div className="flex justify-between text-sm">
                                 <span className="text-black font-normal uppercase tracking-wider">Tuition ({selectedYears} {selectedYears === 1 ? 'Year' : 'Years'})</span>
-                                <span className="font-medium text-black text-right">€ {(baseFee * selectedYears).toLocaleString()}</span>
+                                <span className="font-medium text-black text-right">€ {(displayOriginalFee * selectedYears).toLocaleString()}</span>
                             </div>
                             {isEarly && (
-                                <div className="flex justify-between items-center text-sm text-emerald-600 font-normal py-1">
-                                    <span className="uppercase tracking-wider">Early Payment Credit ({EARLY_PAYMENT_DISCOUNT_PERCENT}%)</span>
+                                <div className="flex justify-between items-center text-sm text-black font-normal py-1">
+                                    <span className="uppercase tracking-wider">Early Bird Discount ({EARLY_PAYMENT_DISCOUNT_PERCENT}%)</span>
                                     <span className="font-medium whitespace-nowrap">- € {discount.toLocaleString()}</span>
                                 </div>
                             )}

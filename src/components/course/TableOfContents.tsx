@@ -70,7 +70,7 @@ export default function TableOfContents({ sections }: Props) {
                 className="w-full flex items-center justify-between p-6 bg-neutral-50 hover:bg-neutral-100 transition-colors text-left"
             >
                 <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-bold text-neutral-900">Study at SYKLI</h3>
+                    <h3 className="text-lg font-bold text-neutral-900">Study at Kestora</h3>
                 </div>
                 {isOpen ? <Minus size={20} weight="bold" className="text-black" /> : <Plus size={20} weight="bold" className="text-black" />}
             </button>

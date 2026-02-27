@@ -44,7 +44,7 @@ export default function AdminLayout({
                 }
 
                 // 2. Database-Validated Session (Primary for Static Export)
-                const savedUser = localStorage.getItem('SYKLI_user');
+                const savedUser = localStorage.getItem('Kestora_user');
                 if (savedUser) {
                     const localProfile = JSON.parse(savedUser);
 
@@ -60,7 +60,7 @@ export default function AdminLayout({
                         setUser({ id: dbProfile.id, email: dbProfile.email });
                         setProfile(dbProfile);
                         // Refresh local cache with latest DB data
-                        localStorage.setItem('SYKLI_user', JSON.stringify(dbProfile));
+                        localStorage.setItem('Kestora_user', JSON.stringify(dbProfile));
                     } else {
                         throw new Error('Invalid database session');
                     }
@@ -69,7 +69,7 @@ export default function AdminLayout({
                 }
             } catch (error) {
                 console.error("Admin auth check error:", error);
-                localStorage.removeItem('SYKLI_user');
+                localStorage.removeItem('Kestora_user');
                 router.push('/portal/account/admin-login');
             } finally {
                 setLoading(false);
@@ -86,7 +86,7 @@ export default function AdminLayout({
 
     const handleSignOut = async () => {
         await supabase.auth.signOut();
-        localStorage.removeItem('SYKLI_user');
+        localStorage.removeItem('Kestora_user');
 
         // Clear local state
         setUser(null);

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 
 export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://www.syklicollege.fi';
+    const baseUrl = 'https://www.kestora.fi';
 
     // Core pages with highest priority
     const corePages = [
@@ -47,7 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Institutional pages
     const institutionalPages = [
-        { url: `${baseUrl}/about-sykli-college`, changeFrequency: 'monthly' as const, priority: 0.5 },
+        { url: `${baseUrl}/about-kestora-college`, changeFrequency: 'monthly' as const, priority: 0.5 },
         { url: `${baseUrl}/contact`, changeFrequency: 'monthly' as const, priority: 0.5 },
         { url: `${baseUrl}/news`, changeFrequency: 'daily' as const, priority: 0.6 },
         { url: `${baseUrl}/alumni`, changeFrequency: 'monthly' as const, priority: 0.4 },

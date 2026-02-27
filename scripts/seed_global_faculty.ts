@@ -42,72 +42,72 @@ interface FacultySeed {
 const FACULTY_DATA: FacultySeed[] = [
     // --- SCHOOL OF ARTS, DESIGN AND ARCHITECTURE ---
     // Leadership
-    { name: "Prof. elena Rossi", role: "Head of School", email: "elena.rossi@syklicollege.fi", schoolName: SCHOOL_ARTS, bio: "Expert in sustainable urban aesthetics.", isHeadOfSchool: true, deptName: "Architecture" }, // Fallback dept
+    { name: "Prof. elena Rossi", role: "Head of School", email: "elena.rossi@kestora.fi", schoolName: SCHOOL_ARTS, bio: "Expert in sustainable urban aesthetics.", isHeadOfSchool: true, deptName: "Architecture" }, // Fallback dept
 
     // Design (Dept matches "Design" usually)
-    { name: "Prof. Marcus Lindholm", role: "Programme Director Design", email: "marcus.lindholm@syklicollege.fi", schoolName: SCHOOL_ARTS, deptName: "Design", isHeadOfDept: true, bio: "Focus on industrial design and circular economy." },
-    { name: "Prof. Chloé Dubois", role: "Professor of Design", email: "chloe.dubois@syklicollege.fi", schoolName: SCHOOL_ARTS, deptName: "Design", bio: "Researching biomaterials in fashion." },
-    { name: "Dr. Sofia Korhonen", role: "Senior Lecturer", email: "sofia.korhonen@syklicollege.fi", schoolName: SCHOOL_ARTS, deptName: "Design", bio: "Specializes in user experience and service design." },
-    { name: "Alessandro Moretti", role: "Lecturer", email: "alessandro.moretti@syklicollege.fi", schoolName: SCHOOL_ARTS, deptName: "Design", bio: "Studio instructor for graphical communications." },
+    { name: "Prof. Marcus Lindholm", role: "Programme Director Design", email: "marcus.lindholm@kestora.fi", schoolName: SCHOOL_ARTS, deptName: "Design", isHeadOfDept: true, bio: "Focus on industrial design and circular economy." },
+    { name: "Prof. Chloé Dubois", role: "Professor of Design", email: "chloe.dubois@kestora.fi", schoolName: SCHOOL_ARTS, deptName: "Design", bio: "Researching biomaterials in fashion." },
+    { name: "Dr. Sofia Korhonen", role: "Senior Lecturer", email: "sofia.korhonen@kestora.fi", schoolName: SCHOOL_ARTS, deptName: "Design", bio: "Specializes in user experience and service design." },
+    { name: "Alessandro Moretti", role: "Lecturer", email: "alessandro.moretti@kestora.fi", schoolName: SCHOOL_ARTS, deptName: "Design", bio: "Studio instructor for graphical communications." },
 
     // Architecture
-    { name: "Prof. Henrik Nielsen", role: "Programme Director Architecture", email: "henrik.nielsen@syklicollege.fi", schoolName: SCHOOL_ARTS, deptName: "Architecture", bio: "Leading sustainable housing initiatives.", isHeadOfDept: true },
-    { name: "Prof. Julia Wagner", role: "Professor of Architecture", email: "julia.wagner@syklicollege.fi", schoolName: SCHOOL_ARTS, deptName: "Architecture", bio: "Expert in timber construction and passive design." },
-    { name: "Dr. Thomas Weber", role: "Associate Professor", email: "thomas.weber@syklicollege.fi", schoolName: SCHOOL_ARTS, deptName: "Architecture", bio: "Urban planning and smart city integration." },
-    { name: "Sarah O'Connor", role: "Visiting Architect", email: "sarah.oconnor@syklicollege.fi", schoolName: SCHOOL_ARTS, deptName: "Architecture", bio: "Practicing architect focusing on adaptive reuse." },
+    { name: "Prof. Henrik Nielsen", role: "Programme Director Architecture", email: "henrik.nielsen@kestora.fi", schoolName: SCHOOL_ARTS, deptName: "Architecture", bio: "Leading sustainable housing initiatives.", isHeadOfDept: true },
+    { name: "Prof. Julia Wagner", role: "Professor of Architecture", email: "julia.wagner@kestora.fi", schoolName: SCHOOL_ARTS, deptName: "Architecture", bio: "Expert in timber construction and passive design." },
+    { name: "Dr. Thomas Weber", role: "Associate Professor", email: "thomas.weber@kestora.fi", schoolName: SCHOOL_ARTS, deptName: "Architecture", bio: "Urban planning and smart city integration." },
+    { name: "Sarah O'Connor", role: "Visiting Architect", email: "sarah.oconnor@kestora.fi", schoolName: SCHOOL_ARTS, deptName: "Architecture", bio: "Practicing architect focusing on adaptive reuse." },
 
     // Media (Assuming a Media department or putting in Design/Art if not exists. Let's assume generic or verify.)
     // Checking list: likely "Art & Media" or similar. I'll map to "Media" if it exists, otherwise "Design".
-    { name: "Prof. Klaus Berger", role: "Professor of New Media", email: "klaus.berger@syklicollege.fi", schoolName: SCHOOL_ARTS, deptName: "Media", bio: "Digital arts and interactive installations." },
-    { name: "Dr. Amélie Laurent", role: "Senior Lecturer", email: "amelie.laurent@syklicollege.fi", schoolName: SCHOOL_ARTS, deptName: "Media", bio: "Film theory and visual culture." },
+    { name: "Prof. Klaus Berger", role: "Professor of New Media", email: "klaus.berger@kestora.fi", schoolName: SCHOOL_ARTS, deptName: "Media", bio: "Digital arts and interactive installations." },
+    { name: "Dr. Amélie Laurent", role: "Senior Lecturer", email: "amelie.laurent@kestora.fi", schoolName: SCHOOL_ARTS, deptName: "Media", bio: "Film theory and visual culture." },
 
 
     // --- SCHOOL OF SCIENCE ---
     // Leadership
-    { name: "Prof. Matilda Johansson", role: "Head of School", email: "matilda.johansson@syklicollege.fi", schoolName: SCHOOL_SCIENCE, bio: "Theoretical physicist with a focus on quantum mechanics.", isHeadOfSchool: true, deptName: "Physics" },
+    { name: "Prof. Matilda Johansson", role: "Head of School", email: "matilda.johansson@kestora.fi", schoolName: SCHOOL_SCIENCE, bio: "Theoretical physicist with a focus on quantum mechanics.", isHeadOfSchool: true, deptName: "Physics" },
 
     // Computer Science
-    { name: "Prof. James Smith", role: "Programme Director CS", email: "james.smith@syklicollege.fi", schoolName: SCHOOL_SCIENCE, deptName: "Computer Science", isHeadOfDept: true, bio: "AI ethics and machine learning systems." },
-    { name: "Dr. Lars Mikkelsen", role: "Associate Professor", email: "lars.mikkelsen@syklicollege.fi", schoolName: SCHOOL_SCIENCE, deptName: "Computer Science", bio: "Cybersecurity and distributed systems." },
-    { name: "Dr. Elena Popova", role: "Senior Lecturer", email: "elena.popova@syklicollege.fi", schoolName: SCHOOL_SCIENCE, deptName: "Computer Science", bio: "Data science and algorithmic bias." },
+    { name: "Prof. James Smith", role: "Programme Director CS", email: "james.smith@kestora.fi", schoolName: SCHOOL_SCIENCE, deptName: "Computer Science", isHeadOfDept: true, bio: "AI ethics and machine learning systems." },
+    { name: "Dr. Lars Mikkelsen", role: "Associate Professor", email: "lars.mikkelsen@kestora.fi", schoolName: SCHOOL_SCIENCE, deptName: "Computer Science", bio: "Cybersecurity and distributed systems." },
+    { name: "Dr. Elena Popova", role: "Senior Lecturer", email: "elena.popova@kestora.fi", schoolName: SCHOOL_SCIENCE, deptName: "Computer Science", bio: "Data science and algorithmic bias." },
 
     // Physics
-    { name: "Prof. Giovanni Bianchi", role: "Professor of Physics", email: "giovanni.bianchi@syklicollege.fi", schoolName: SCHOOL_SCIENCE, deptName: "Physics", bio: "Condensed matter physics and renewable energy materials." },
-    { name: "Dr. Annika Virtanen", role: "Lecturer", email: "annika.virtanen@syklicollege.fi", schoolName: SCHOOL_SCIENCE, deptName: "Physics", bio: "Laboratory supervisor for applied physics." },
+    { name: "Prof. Giovanni Bianchi", role: "Professor of Physics", email: "giovanni.bianchi@kestora.fi", schoolName: SCHOOL_SCIENCE, deptName: "Physics", bio: "Condensed matter physics and renewable energy materials." },
+    { name: "Dr. Annika Virtanen", role: "Lecturer", email: "annika.virtanen@kestora.fi", schoolName: SCHOOL_SCIENCE, deptName: "Physics", bio: "Laboratory supervisor for applied physics." },
 
     // Chemistry
-    { name: "Prof. Friedrich Klein", role: "Programme Director Chemistry", email: "friedrich.klein@syklicollege.fi", schoolName: SCHOOL_SCIENCE, deptName: "Chemistry", bio: "Green chemistry and sustainable catalysis.", isHeadOfDept: true },
-    { name: "Dr. Marie Curry", role: "Visiting Scholar", email: "marie.curry2@syklicollege.fi", schoolName: SCHOOL_SCIENCE, deptName: "Chemistry", bio: "Researching next-gen battery technologies." },
+    { name: "Prof. Friedrich Klein", role: "Programme Director Chemistry", email: "friedrich.klein@kestora.fi", schoolName: SCHOOL_SCIENCE, deptName: "Chemistry", bio: "Green chemistry and sustainable catalysis.", isHeadOfDept: true },
+    { name: "Dr. Marie Curry", role: "Visiting Scholar", email: "marie.curry2@kestora.fi", schoolName: SCHOOL_SCIENCE, deptName: "Chemistry", bio: "Researching next-gen battery technologies." },
 
 
     // --- SCHOOL OF TECHNOLOGY ---
     // Leadership
-    { name: "Dean Magnus Svensson", role: "Dean of Technology", email: "magnus.svensson@syklicollege.fi", schoolName: SCHOOL_TECH, bio: "Expert in energy systems and industrial ecology.", isHeadOfSchool: true, deptName: "Energy Technology" },
+    { name: "Dean Magnus Svensson", role: "Dean of Technology", email: "magnus.svensson@kestora.fi", schoolName: SCHOOL_TECH, bio: "Expert in energy systems and industrial ecology.", isHeadOfSchool: true, deptName: "Energy Technology" },
 
     // Engineering Disciplines (Generic "Engineering" or specific if they exist)
-    { name: "Prof. Liam O'Brien", role: "Professor of Civil Engineering", email: "liam.obrien@syklicollege.fi", schoolName: SCHOOL_TECH, deptName: "Civil Engineering", bio: "Sustainable infrastructure and urban resilience." },
-    { name: "Prof. Heidi Mueller", role: "Professor of Electrical Engineering", email: "heidi.mueller@syklicollege.fi", schoolName: SCHOOL_TECH, deptName: "Electrical Engineering", bio: "Smart grids and power systems." },
-    { name: "Dr. Johan Holm", role: "Associate Professor", email: "johan.holm@syklicollege.fi", schoolName: SCHOOL_TECH, deptName: "Mechanical Engineering", bio: "Robotics and automation in manufacturing." },
-    { name: "Dr. Claire Fontaine", role: "Senior Lecturer", email: "claire.fontaine@syklicollege.fi", schoolName: SCHOOL_TECH, deptName: "Industrial Engineering", bio: "Supply chain optimization and logistics." },
-    { name: "Ing. Marco Rossi", role: "Industry Adjunct", email: "marco.rossi@syklicollege.fi", schoolName: SCHOOL_TECH, deptName: "Civil Engineering", bio: "20 years experience in major European infrastructure projects." },
+    { name: "Prof. Liam O'Brien", role: "Professor of Civil Engineering", email: "liam.obrien@kestora.fi", schoolName: SCHOOL_TECH, deptName: "Civil Engineering", bio: "Sustainable infrastructure and urban resilience." },
+    { name: "Prof. Heidi Mueller", role: "Professor of Electrical Engineering", email: "heidi.mueller@kestora.fi", schoolName: SCHOOL_TECH, deptName: "Electrical Engineering", bio: "Smart grids and power systems." },
+    { name: "Dr. Johan Holm", role: "Associate Professor", email: "johan.holm@kestora.fi", schoolName: SCHOOL_TECH, deptName: "Mechanical Engineering", bio: "Robotics and automation in manufacturing." },
+    { name: "Dr. Claire Fontaine", role: "Senior Lecturer", email: "claire.fontaine@kestora.fi", schoolName: SCHOOL_TECH, deptName: "Industrial Engineering", bio: "Supply chain optimization and logistics." },
+    { name: "Ing. Marco Rossi", role: "Industry Adjunct", email: "marco.rossi@kestora.fi", schoolName: SCHOOL_TECH, deptName: "Civil Engineering", bio: "20 years experience in major European infrastructure projects." },
 
 
     // --- SCHOOL OF BUSINESS ---
     // Leadership
-    { name: "Dean Elizabeth Windsor", role: "Dean of Business", email: "elizabeth.windsor@syklicollege.fi", schoolName: SCHOOL_BUSINESS, bio: "Strategic management and corporate governance.", isHeadOfSchool: true, deptName: "Management" },
+    { name: "Dean Elizabeth Windsor", role: "Dean of Business", email: "elizabeth.windsor@kestora.fi", schoolName: SCHOOL_BUSINESS, bio: "Strategic management and corporate governance.", isHeadOfSchool: true, deptName: "Management" },
 
     // Management & Marketing
-    { name: "Prof. Jean-Luc Picard", role: "Professor of Management", email: "jeanluc.picard@syklicollege.fi", schoolName: SCHOOL_BUSINESS, deptName: "Management", bio: "Leadership in times of crisis and organizational behavior." },
-    { name: "Prof. Anna Korhonen", role: "Professor of Marketing", email: "anna.korhonen@syklicollege.fi", schoolName: SCHOOL_BUSINESS, deptName: "Marketing", bio: "Sustainable consumer behavior and brand ethics." },
+    { name: "Prof. Jean-Luc Picard", role: "Professor of Management", email: "jeanluc.picard@kestora.fi", schoolName: SCHOOL_BUSINESS, deptName: "Management", bio: "Leadership in times of crisis and organizational behavior." },
+    { name: "Prof. Anna Korhonen", role: "Professor of Marketing", email: "anna.korhonen@kestora.fi", schoolName: SCHOOL_BUSINESS, deptName: "Marketing", bio: "Sustainable consumer behavior and brand ethics." },
 
     // Finance & Economics
-    { name: "Prof. Hans Gruber", role: "Professor of Finance", email: "hans.gruber@syklicollege.fi", schoolName: SCHOOL_BUSINESS, deptName: "Finance", bio: "Fintech and sustainable investment strategies." },
-    { name: "Dr. Silvia Conti", role: "Associate Professor", email: "silvia.conti@syklicollege.fi", schoolName: SCHOOL_BUSINESS, deptName: "Economics", bio: "Circular economy models and macroeconomics." },
+    { name: "Prof. Hans Gruber", role: "Professor of Finance", email: "hans.gruber@kestora.fi", schoolName: SCHOOL_BUSINESS, deptName: "Finance", bio: "Fintech and sustainable investment strategies." },
+    { name: "Dr. Silvia Conti", role: "Associate Professor", email: "silvia.conti@kestora.fi", schoolName: SCHOOL_BUSINESS, deptName: "Economics", bio: "Circular economy models and macroeconomics." },
 
     // IS / Accounting
-    { name: "Dr. Oliver Twist", role: "Senior Lecturer", email: "oliver.twist@syklicollege.fi", schoolName: SCHOOL_BUSINESS, deptName: "Accounting", bio: "Forensic accounting and transparency." },
-    { name: "Dr. Emma Watson", role: "Lecturer", email: "emma.watson@syklicollege.fi", schoolName: SCHOOL_BUSINESS, deptName: "Information Systems", bio: "Digital transformation and business analytics." },
-    { name: "Robert Langdon", role: "Visiting Professor", email: "robert.langdon@syklicollege.fi", schoolName: SCHOOL_BUSINESS, deptName: "Management", bio: "Expert in symbolism and organizational culture." }
+    { name: "Dr. Oliver Twist", role: "Senior Lecturer", email: "oliver.twist@kestora.fi", schoolName: SCHOOL_BUSINESS, deptName: "Accounting", bio: "Forensic accounting and transparency." },
+    { name: "Dr. Emma Watson", role: "Lecturer", email: "emma.watson@kestora.fi", schoolName: SCHOOL_BUSINESS, deptName: "Information Systems", bio: "Digital transformation and business analytics." },
+    { name: "Robert Langdon", role: "Visiting Professor", email: "robert.langdon@kestora.fi", schoolName: SCHOOL_BUSINESS, deptName: "Management", bio: "Expert in symbolism and organizational culture." }
 ];
 
 async function seedFaculty() {
@@ -146,7 +146,7 @@ async function seedFaculty() {
     // Actually, to be safer and not break random other things, let's just UPSERT based on email? 
     // But user wants a "Complete Roster" and "Generate". Old data might look weird mixed in.
     // I will TRY to delete.
-    const { error: delErr } = await supabase.from('Faculty').delete().neq('email', 'admin@syklicollege.fi'); // Keep admin if exists? Unlikely faculty is admin.
+    const { error: delErr } = await supabase.from('Faculty').delete().neq('email', 'admin@kestora.fi'); // Keep admin if exists? Unlikely faculty is admin.
     if (delErr) {
         console.warn("Could not delete all faculty, maybe some constraints remain. Proceeding to insert/update.", delErr.message);
     } else {

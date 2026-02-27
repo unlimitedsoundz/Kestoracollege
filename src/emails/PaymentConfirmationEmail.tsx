@@ -41,10 +41,10 @@ export default function PaymentConfirmationEmail({
                     <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
                         <Section className="mt-[32px]">
                             <Img
-                                src="https://syklicollege.fi/logo.png"
+                                src="https://kestora.fi/logo-kestora.png"
                                 width="40"
                                 height="40"
-                                alt="SYKLI College"
+                                alt="Kestora College"
                                 className="my-0 mx-auto"
                             />
                         </Section>
@@ -79,7 +79,7 @@ export default function PaymentConfirmationEmail({
                         <Section className="text-center mt-[32px] mb-[32px]">
                             <Link
                                 className="bg-[#000000] rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3"
-                                href="https://syklicollege.fi/portal/dashboard"
+                                href="https://kestora.fi/portal/dashboard"
                             >
                                 View Dashboard
                             </Link>
@@ -91,7 +91,7 @@ export default function PaymentConfirmationEmail({
                             Thank you for your prompt payment.
                         </Text>
                         <Text className="text-[#666666] text-[12px] leading-[24px]">
-                            Finance Department, SYKLI College.
+                            Finance Department, Kestora College.
                         </Text>
                     </Container>
                 </Body>

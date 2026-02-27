@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata = {
-    title: 'Research Projects — SYKLI College | Sustainability & Innovation Research',
-    description: 'Browse active and completed research projects at SYKLI College. Interdisciplinary projects in sustainability, technology, design, and social innovation.',
+    title: 'Research Projects — Kestora College | Sustainability & Innovation Research',
+    description: 'Browse active and completed research projects at Kestora College. Interdisciplinary projects in sustainability, technology, design, and social innovation.',
 };
 
 export default async function ProjectsPage() {

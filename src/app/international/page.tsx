@@ -1,7 +1,7 @@
 
 export const metadata = {
-    title: 'International Students — SYKLI College Finland | Visa, Housing & Work Rights',
-    description: 'Essential information for international students at SYKLI College. Residence permits, student housing, health insurance, working rights, and Finnish language courses in Helsinki.',
+    title: 'International Students — Kestora College Finland | Visa, Housing & Work Rights',
+    description: 'Essential information for international students at Kestora College. Residence permits, student housing, health insurance, working rights, and Finnish language courses in Helsinki.',
 };
 
 export default function InternationalPage() {
@@ -13,7 +13,7 @@ export default function InternationalPage() {
 
                 <div className="prose prose-lg max-w-none text-neutral-600 mb-12">
                     <p>
-                        Welcome to SYKLI! Each year, we welcome hundreds of students from around the world. We are committed to making your transition to Finland as smooth as possible.
+                        Welcome to Kestora! Each year, we welcome hundreds of students from around the world. We are committed to making your transition to Finland as smooth as possible.
                     </p>
                 </div>
 

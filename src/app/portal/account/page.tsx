@@ -197,10 +197,10 @@ export default function ProfilePage() {
                     <div className="bg-neutral-900 p-6 text-white">
                         <h3 className="text-[10px] font-black uppercase tracking-widest text-white/70 mb-2">Account Security</h3>
                         <p className="text-[10px] font-bold leading-relaxed mb-4 uppercase tracking-tight text-white/90">
-                            Your account is protected by SYKLI College biometric-ready authentication.
+                            Your account is protected by Kestora College biometric-ready authentication.
                         </p>
                         <a
-                            href="mailto:sykli@syklicollege.fi?subject=Data Update Request"
+                            href="mailto:kestora@kestora.fi?subject=Data Update Request"
                             className="inline-block text-[9px] font-black uppercase tracking-widest bg-white/10 hover:bg-white/20 px-4 py-2 rounded transition-all"
                         >
                             Request Data Update

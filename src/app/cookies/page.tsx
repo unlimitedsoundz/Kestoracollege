@@ -60,7 +60,7 @@ export default function CookiePolicyPage() {
                             Cookie Policy
                         </h1>
                         <p className="text-lg text-neutral-600 leading-relaxed">
-                            How SYKLI College uses cookies and similar technologies to ensure proper functionality and improve user experience.
+                            How Kestora College uses cookies and similar technologies to ensure proper functionality and improve user experience.
                         </p>
                     </div>
                 </div>
@@ -95,10 +95,10 @@ export default function CookiePolicyPage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">1. Introduction</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        SYKLI College uses cookies and similar technologies on its website and digital platforms to ensure proper functionality improve user experience analyse usage and support institutional services. This Cookie Policy explains what cookies are how they are used and the choices available to users.
+                                        Kestora College uses cookies and similar technologies on its website and digital platforms to ensure proper functionality improve user experience analyse usage and support institutional services. This Cookie Policy explains what cookies are how they are used and the choices available to users.
                                     </p>
                                     <p>
-                                        This policy should be read together with the SYKLI College Privacy Policy and Accessibility Statement.
+                                        This policy should be read together with the Kestora College Privacy Policy and Accessibility Statement.
                                     </p>
                                 </div>
                             </section>
@@ -141,7 +141,7 @@ export default function CookiePolicyPage() {
                                     <div>
                                         <h3 className="text-lg font-bold text-black mb-4">Third Party Cookies</h3>
                                         <p>
-                                            Some services integrated into SYKLI College platforms may place cookies through third party providers such as embedded content analytics tools or payment services. These cookies are governed by the privacy policies of the respective providers.
+                                            Some services integrated into Kestora College platforms may place cookies through third party providers such as embedded content analytics tools or payment services. These cookies are governed by the privacy policies of the respective providers.
                                         </p>
                                     </div>
                                 </div>
@@ -162,7 +162,7 @@ export default function CookiePolicyPage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">5. Managing Cookies</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        Users can manage or disable cookies through their browser settings. Blocking cookies may affect the functionality and usability of SYKLI College digital services.
+                                        Users can manage or disable cookies through their browser settings. Blocking cookies may affect the functionality and usability of Kestora College digital services.
                                     </p>
                                     <p>
                                         Information on managing cookies is available in browser help sections.
@@ -175,7 +175,7 @@ export default function CookiePolicyPage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">6. Changes to the Cookie Policy</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        SYKLI College may update this Cookie Policy to reflect changes in legal requirements or digital services. The latest version will always be published on the official website.
+                                        Kestora College may update this Cookie Policy to reflect changes in legal requirements or digital services. The latest version will always be published on the official website.
                                     </p>
                                 </div>
                             </section>
@@ -185,7 +185,7 @@ export default function CookiePolicyPage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">7. Contact Information</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        Questions regarding this Cookie Policy can be directed to SYKLI College through official contact channels listed on the website.
+                                        Questions regarding this Cookie Policy can be directed to Kestora College through official contact channels listed on the website.
                                     </p>
                                 </div>
                             </section>

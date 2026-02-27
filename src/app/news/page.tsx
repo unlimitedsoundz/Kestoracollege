@@ -6,8 +6,8 @@ import { formatToDDMMYYYY } from '@/utils/date';
 import { Calendar, MapPin, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata = {
-    title: 'News & Events | SYKLI College',
-    description: 'The latest news, announcements, and upcoming events from SYKLI College.',
+    title: 'News & Events | Kestora College',
+    description: 'The latest news, announcements, and upcoming events from Kestora College.',
 };
 
 import { createStaticClient } from '@/lib/supabase/static';

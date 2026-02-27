@@ -137,12 +137,12 @@ serve(async (req) => {
         // =====================================================
         // SECTION 1: HEADER — Institution + Address
         // =====================================================
-        page.drawText('SYKLI COLLEGE', { x: margin, y, size: 14, font: boldFont, color: black });
+        page.drawText('Kestora COLLEGE', { x: margin, y, size: 14, font: boldFont, color: black });
         y -= 16;
         page.drawText('College of Art and Design', { x: margin, y, size: 9, font: regularFont, color: grey });
 
         // Right-aligned address
-        const addr = ['Pohjoisesplanadi 51', '00150 Helsinki, Finland', 'https://syklicollege.fi', 'admissions@syklicollege.fi'];
+        const addr = ['Pohjoisesplanadi 51', '00150 Helsinki, Finland', 'https://kestora.fi', 'admissions@kestora.fi'];
         let ay = height - margin;
         for (const line of addr) {
             const lw = regularFont.widthOfTextAtSize(line, 8);
@@ -225,7 +225,7 @@ serve(async (req) => {
             const offerPara1 = `Dear ${firstName},`;
             y = drawParagraph(page, offerPara1, margin, y, regularFont, 9, cw, black);
             y -= 6;
-            const offerPara2 = `We are pleased to inform you that, following a thorough review of your application, the Admissions Committee of SYKLI College has decided to offer you a place in the ${programTitle} (${degreeLevel}) programme for the Autumn 2026 intake.`;
+            const offerPara2 = `We are pleased to inform you that, following a thorough review of your application, the Admissions Committee of Kestora College has decided to offer you a place in the ${programTitle} (${degreeLevel}) programme for the Autumn 2026 intake.`;
             y = drawParagraph(page, offerPara2, margin, y, regularFont, 9, cw, darkGrey);
             y -= 6;
             const offerPara3 = `This offer is subject to the conditions outlined below, including acceptance of the offer via the student portal and confirmation of tuition payment by the specified deadline. Upon fulfillment of these conditions, an official Letter of Admission will be issued confirming your enrollment.`;
@@ -289,7 +289,7 @@ serve(async (req) => {
             y -= 10; drawLine(page, margin, y, cw, 0.5); y -= 30;
             page.drawText('Admissions Office', { x: margin, y, size: 10, font: boldFont, color: black });
             y -= 13;
-            page.drawText('SYKLI College | Helsinki, Finland', { x: margin, y, size: 8, font: regularFont, color: lightGrey });
+            page.drawText('Kestora College | Helsinki, Finland', { x: margin, y, size: 8, font: regularFont, color: lightGrey });
             const did1 = 'Verified Document ID';
             const dw1 = regularFont.widthOfTextAtSize(did1, 8);
             page.drawText(did1, { x: width - margin - dw1, y: y + 13, size: 8, font: regularFont, color: lightGrey });
@@ -336,7 +336,7 @@ serve(async (req) => {
             // SECTION 3: ADMISSION CONFIRMATION (LOCKED WORDING — black bar)
             const confirmH = 55;
             page.drawRectangle({ x: margin, y: y - confirmH + 15, width: cw, height: confirmH, color: black });
-            const confirmText = '\u201CWe are pleased to confirm that you have been officially admitted and enrolled as a student of SYKLI College for the above-named programme and academic year.\u201D';
+            const confirmText = '\u201CWe are pleased to confirm that you have been officially admitted and enrolled as a student of Kestora College for the above-named programme and academic year.\u201D';
             const cl = wrapText(confirmText, italicFont, 9, cw - 40);
             let cy = y - 2;
             for (const line of cl) {
@@ -406,7 +406,7 @@ serve(async (req) => {
 
             // SECTION 9: REFUND POLICY
             y = drawSectionHeading(page, 'REFUND POLICY', margin, y, cw, boldFont, black);
-            y = drawParagraph(page, 'For details regarding tuition refund terms, please visit: https://syklicollege.fi/refund-policy', margin, y, regularFont, 9, cw, darkGrey);
+            y = drawParagraph(page, 'For details regarding tuition refund terms, please visit: https://kestora.fi/refund-policy', margin, y, regularFont, 9, cw, darkGrey);
             y -= 12;
 
             // SECTION 10: AUTHORIZATION / SIGNATURE
@@ -414,7 +414,7 @@ serve(async (req) => {
             y -= 30;
             page.drawText('Office of the Registrar', { x: margin, y, size: 10, font: boldFont, color: black });
             y -= 13;
-            page.drawText('SYKLI College | Helsinki, Finland', { x: margin, y, size: 8, font: regularFont, color: lightGrey });
+            page.drawText('Kestora College | Helsinki, Finland', { x: margin, y, size: 8, font: regularFont, color: lightGrey });
 
             // Right-aligned doc ID
             const did1 = 'Verified Document ID';
@@ -425,7 +425,7 @@ serve(async (req) => {
 
             // Legal notice
             y -= 30; drawLine(page, margin, y, cw, 0.3); y -= 15;
-            const notice = 'LEGAL NOTICE: This document serves as official confirmation of admission and enrollment. The student is expected to comply with all academic regulations and code of conduct of SYKLI College.';
+            const notice = 'LEGAL NOTICE: This document serves as official confirmation of admission and enrollment. The student is expected to comply with all academic regulations and code of conduct of Kestora College.';
             const nl = wrapText(notice, italicFont, 7, cw - 20);
             for (const line of nl) {
                 const lw = italicFont.widthOfTextAtSize(line, 7);

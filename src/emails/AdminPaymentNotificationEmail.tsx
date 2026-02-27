@@ -45,10 +45,10 @@ export default function AdminPaymentNotificationEmail({
                     <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
                         <Section className="mt-[32px]">
                             <Img
-                                src="https://syklicollege.fi/logo.png"
+                                src="https://kestora.fi/logo-kestora.png"
                                 width="40"
                                 height="40"
-                                alt="SYKLI College"
+                                alt="Kestora College"
                                 className="my-0 mx-auto"
                             />
                         </Section>
@@ -81,7 +81,7 @@ export default function AdminPaymentNotificationEmail({
                         <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
 
                         <Text className="text-[#666666] text-[10px] uppercase font-bold tracking-widest leading-[24px]">
-                            Internal Notification Service — SYKLI College
+                            Internal Notification Service — Kestora College
                         </Text>
                     </Container>
                 </Body>

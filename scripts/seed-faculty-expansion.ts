@@ -26,7 +26,7 @@ const facultyData = [
         name: "Dr. Elena Rossi",
         role: "Professor of Digital Transformation",
         bio: "Expert in digital business models and platform economy.",
-        email: "elena.rossi@syklicollege.fi",
+        email: "elena.rossi@kestora.fi",
         schoolId: SCHOOL_BUSINESS_ID,
         departmentId: DEPT_BUSINESS_ID
     },
@@ -34,7 +34,7 @@ const facultyData = [
         name: "Markus Jääskeläinen",
         role: "Senior Lecturer in Project Management",
         bio: "Specializes in Agile methodologies and global project teams.",
-        email: "markus.j@syklicollege.fi",
+        email: "markus.j@kestora.fi",
         schoolId: SCHOOL_BUSINESS_ID,
         departmentId: DEPT_MGMT_ID
     },
@@ -42,7 +42,7 @@ const facultyData = [
         name: "Prof. Sofia Lindström",
         role: "Associate Professor of Entrepreneurship",
         bio: "Serial entrepreneur and researcher in venture capital.",
-        email: "sofia.l@syklicollege.fi",
+        email: "sofia.l@kestora.fi",
         schoolId: SCHOOL_BUSINESS_ID,
         departmentId: DEPT_BUSINESS_ID
     },
@@ -50,7 +50,7 @@ const facultyData = [
         name: "Dr. Thomas Weber",
         role: "Senior Lecturer in Logistics",
         bio: "Research focus on sustainable supply chain management.",
-        email: "thomas.weber@syklicollege.fi",
+        email: "thomas.weber@kestora.fi",
         schoolId: SCHOOL_BUSINESS_ID,
         departmentId: DEPT_BUSINESS_ID
     },
@@ -60,7 +60,7 @@ const facultyData = [
         name: "Prof. Aleksei Ivanov",
         role: "Professor of Artificial Intelligence",
         bio: "Leading researcher in Deep Learning and Neural Networks.",
-        email: "aleksei.i@syklicollege.fi",
+        email: "aleksei.i@kestora.fi",
         schoolId: SCHOOL_SCIENCE_ID,
         departmentId: DEPT_CS_ID
     },
@@ -68,7 +68,7 @@ const facultyData = [
         name: "Dr. Sarah Chen",
         role: "Associate Professor of Cybersecurity",
         bio: "Expert in cryptographic engineering and network defense.",
-        email: "sarah.chen@syklicollege.fi",
+        email: "sarah.chen@kestora.fi",
         schoolId: SCHOOL_SCIENCE_ID,
         departmentId: DEPT_CS_ID
     },
@@ -76,7 +76,7 @@ const facultyData = [
         name: "Dr. Hans Becker",
         role: "Senior Lecturer in Software Engineering",
         bio: "Focus on DevOps, CI/CD, and software measurement.",
-        email: "hans.becker@syklicollege.fi",
+        email: "hans.becker@kestora.fi",
         schoolId: SCHOOL_SCIENCE_ID,
         departmentId: DEPT_CS_ID
     },
@@ -84,7 +84,7 @@ const facultyData = [
         name: "Prof. Maria Virtanen",
         role: "Professor of Environmental Science",
         bio: "Specializes in climate change science and sustainable policy.",
-        email: "maria.v@syklicollege.fi",
+        email: "maria.v@kestora.fi",
         schoolId: SCHOOL_SCIENCE_ID,
         departmentId: DEPT_CIVIL_ID
     },
@@ -92,7 +92,7 @@ const facultyData = [
         name: "Dr. Kenji Tanaka",
         role: "Associate Professor of Data Science",
         bio: "Expert in predictive analytics and big data systems.",
-        email: "kenji.t@syklicollege.fi",
+        email: "kenji.t@kestora.fi",
         schoolId: SCHOOL_SCIENCE_ID,
         departmentId: DEPT_CS_ID
     }

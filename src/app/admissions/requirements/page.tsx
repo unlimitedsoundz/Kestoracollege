@@ -2,8 +2,8 @@
 import { CheckCircle, X } from '@phosphor-icons/react/dist/ssr';
 
 export const metadata = {
-    title: 'Entry Requirements — SYKLI College | GPA, English Proficiency & Documents',
-    description: 'Admissions requirements for SYKLI College. GPA thresholds, English proficiency (IELTS/TOEFL), required documents, and eligibility criteria for international applicants.',
+    title: 'Entry Requirements — Kestora College | GPA, English Proficiency & Documents',
+    description: 'Admissions requirements for Kestora College. GPA thresholds, English proficiency (IELTS/TOEFL), required documents, and eligibility criteria for international applicants.',
 };
 
 export default function RequirementsPage() {

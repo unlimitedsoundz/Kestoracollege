@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Academic Regulations — SYKLI College',
-    description: 'The Academic Regulations establish the framework governing teaching, learning, assessment, and academic progression at SYKLI College.',
+    title: 'Academic Regulations — Kestora College',
+    description: 'The Academic Regulations establish the framework governing teaching, learning, assessment, and academic progression at Kestora College.',
 };
 
 export default function AcademicRegulationsPage() {
@@ -15,7 +15,7 @@ export default function AcademicRegulationsPage() {
                     <p className="text-xs font-mono uppercase tracking-[0.3em] text-[#f3e600] mb-4">Official Regulations</p>
                     <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">Academic Regulations</h1>
                     <p className="text-neutral-400 text-lg max-w-2xl">
-                        The framework governing teaching, learning, assessment, and academic progression at SYKLI College.
+                        The framework governing teaching, learning, assessment, and academic progression at Kestora College.
                     </p>
                 </div>
             </section>
@@ -32,7 +32,7 @@ export default function AcademicRegulationsPage() {
                                 <h2 className="text-2xl font-bold">Purpose</h2>
                             </div>
                             <p className="text-black leading-relaxed pl-14">
-                                The Academic Regulations establish the framework governing teaching, learning, assessment, and academic progression at SYKLI College.
+                                The Academic Regulations establish the framework governing teaching, learning, assessment, and academic progression at Kestora College.
                             </p>
                         </div>
 
@@ -248,7 +248,7 @@ export default function AcademicRegulationsPage() {
                             <ul className="pl-14 space-y-2">
                                 <li className="flex items-start gap-3 text-black">
                                     <span className="w-1.5 h-1.5 bg-black rounded-full mt-2 shrink-0"></span>
-                                    SYKLI College maintains permanent academic records
+                                    Kestora College maintains permanent academic records
                                 </li>
                                 <li className="flex items-start gap-3 text-black">
                                     <span className="w-1.5 h-1.5 bg-black rounded-full mt-2 shrink-0"></span>
@@ -268,7 +268,7 @@ export default function AcademicRegulationsPage() {
                                 <h2 className="text-2xl font-bold">Amendments</h2>
                             </div>
                             <p className="text-black leading-relaxed pl-14">
-                                SYKLI College reserves the right to amend academic regulations. Changes will be communicated to students in advance where possible.
+                                Kestora College reserves the right to amend academic regulations. Changes will be communicated to students in advance where possible.
                             </p>
                         </div>
 

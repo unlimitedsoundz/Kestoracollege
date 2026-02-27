@@ -269,7 +269,7 @@ export default function PayGoWireCheckout({
                     </div>
 
                     <div className="flex flex-col text-right">
-                        <span className="text-black uppercase tracking-widest mb-0.5">SYKLI College receives</span>
+                        <span className="text-black uppercase tracking-widest mb-0.5">Kestora College receives</span>
                         <span className="font-medium text-black text-sm md:text-base">
                             € {amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </span>
@@ -478,7 +478,7 @@ export default function PayGoWireCheckout({
                         <button
                             onClick={() => {
                                 if (selectedMethod?.id === 'flutterwave_uae') {
-                                    window.open('https://flutterwave.com/pay/SYKLI', '_blank');
+                                    window.open('https://flutterwave.com/pay/Kestora', '_blank');
                                     handleConfirmPayment();
                                 } else if (selectedCountry === 'Nigeria') {
                                     handleStepChange('BANK_INSTRUCTIONS');
@@ -508,7 +508,7 @@ export default function PayGoWireCheckout({
 
                         <div className="pt-4 flex flex-col gap-2">
                             <p className="text-sm text-black font-medium text-center mt-2 max-w-sm mx-auto leading-relaxed">
-                                Your payment is protected by enterprise-grade security and verified directly by the SYKLI College finance team.
+                                Your payment is protected by enterprise-grade security and verified directly by the Kestora College finance team.
                             </p>
                         </div>
                     </div>
@@ -547,7 +547,7 @@ export default function PayGoWireCheckout({
                                 </div>
                                 <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
                                     <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Beneficiary</span>
-                                    <span className="text-xs md:text-sm text-black font-normal text-right">SYKLI EDUCATIONAL SERVICES</span>
+                                    <span className="text-xs md:text-sm text-black font-normal text-right">Kestora EDUCATIONAL SERVICES</span>
                                 </div>
                                 <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
                                     <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Reference</span>

@@ -21,7 +21,7 @@ type NavItem = {
 
 const navigation: NavItem[] = [
     {
-        name: "SYKLI",
+        name: "Kestora",
         href: "#",
         children: [
             { name: "Student Guide", href: "/student-guide" },
@@ -46,27 +46,24 @@ const navigation: NavItem[] = [
             {
                 title: "Departments",
                 items: [
-                    { name: "Accounting & Business Law", href: "/schools/business/accounting" },
-                    { name: "Applied Physics", href: "/schools/science/applied-physics" },
+                    { name: "Accounting & Business Law", href: "/schools/business/accounting-business-law" },
+                    { name: "Applied Physics & Mathematics", href: "/schools/science/physics-math" },
                     { name: "Architecture", href: "/schools/arts/architecture" },
                     { name: "Art and Media", href: "/schools/arts/art-media" },
-                    { name: "Chemical & Metallurgical Engineering", href: "/schools/technology/chemical-metallurgical" },
-                    { name: "Chemistry & Materials Science", href: "/schools/technology/chemistry-materials" },
-                    { name: "Civil Engineering", href: "/schools/technology/civil-engineering" },
-                    { name: "Computer Science", href: "/schools/science/computer-science" },
+                    { name: "Chemical & Metallurgical Engineering", href: "/schools/science/chemical-materials" },
+                    { name: "Civil & Environmental Engineering", href: "/schools/technology/civil-environmental" },
+                    { name: "Computer Science", href: "/schools/science/computer-science-digital" },
                     { name: "Design", href: "/schools/arts/design" },
                     { name: "Economics", href: "/schools/business/economics" },
-                    { name: "Electrical Engineering & Automation", href: "/schools/technology/electrical-automation" },
-                    { name: "Electronics & Nanoengineering", href: "/schools/technology/electronics-nano" },
+                    { name: "Electrical Engineering & Automation", href: "/schools/technology/automation-control" },
                     { name: "Energy & Mechanical Engineering", href: "/schools/technology/energy-mechanical" },
                     { name: "Film, Television and Scenography", href: "/schools/arts/film-tv" },
                     { name: "Finance", href: "/schools/business/finance" },
-                    { name: "Industrial Engineering & Management", href: "/schools/science/industrial-engineering" },
-                    { name: "Information & Communications Engineering", href: "/schools/technology/info-comms" },
-                    { name: "Information and Service Management", href: "/schools/business/info-service" },
+                    { name: "Industrial Engineering & Management", href: "/schools/business/entrepreneurship-digital" },
+                    { name: "Information & Service Management", href: "/schools/business/info-service" },
                     { name: "Management Studies", href: "/schools/business/management" },
                     { name: "Marketing", href: "/schools/business/marketing" },
-                    { name: "Mathematics and Systems Analysis", href: "/schools/science/math-systems" },
+                    { name: "Physics and Math", href: "/schools/science/physics-math" },
                 ]
             }
         ]
@@ -93,7 +90,7 @@ const navigation: NavItem[] = [
         ]
     },
     { name: "Student Life", href: "/student-life" },
-    { name: "About", href: "/about-sykli-college" },
+    { name: "About", href: "/about-kestora-college" },
 ]
 
 export function Header() {
@@ -214,7 +211,7 @@ export function Header() {
                     <div className="flex items-center gap-4 pl-6">
                         <LanguageSelector />
                         <Link href="/admissions/application-process" className="bg-black text-white w-[150px] h-[60px] flex items-center justify-center rounded-full text-xs font-bold tracking-wider hover:bg-neutral-800 transition-colors">
-                            Apply to SYKLI
+                            Apply to Kestora
                         </Link>
                     </div>
                 </div>
@@ -311,7 +308,7 @@ export function Header() {
 
                         <div className="p-4">
                             <Link href="/admissions/application-process" className="flex w-[150px] h-[60px] items-center justify-center bg-black text-white font-bold hover:bg-neutral-800" onClick={() => setIsMobileMenuOpen(false)}>
-                                Apply to SYKLI
+                                Apply to Kestora
                             </Link>
                         </div>
                     </div>

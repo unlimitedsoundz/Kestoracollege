@@ -80,7 +80,7 @@ export default function PortalHeader() {
 
     const handleSignOut = async () => {
         await supabase.auth.signOut();
-        localStorage.removeItem('SYKLI_user');
+        localStorage.removeItem('Kestora_user');
 
         // Clear local state
         setUserEmail(undefined);

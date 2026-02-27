@@ -24,7 +24,7 @@ export default function WelcomeEmail({
     firstName = 'Student',
     studentId = 'SK12345678',
 }: WelcomeEmailProps) {
-    const previewText = `Welcome to SYKLI College! Your Student ID is ${studentId}.`;
+    const previewText = `Welcome to Kestora College! Your Student ID is ${studentId}.`;
 
     return (
         <Html>
@@ -35,16 +35,16 @@ export default function WelcomeEmail({
                     <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
                         <Section className="mt-[32px]">
                             <Img
-                                src="https://syklicollege.fi/logo.png" // Replace with actual logo URL
+                                src="https://kestora.fi/logo-kestora.png" // Replace with actual logo URL
                                 width="40"
                                 height="40"
-                                alt="SYKLI College"
+                                alt="Kestora College"
                                 className="my-0 mx-auto"
                             />
                         </Section>
 
                         <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
-                            Welcome to SYKLI College
+                            Welcome to Kestora College
                         </Heading>
 
                         <Text className="text-black text-[14px] leading-[24px]">
@@ -52,7 +52,7 @@ export default function WelcomeEmail({
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">
-                            Congratulations on creating your student account at SYKLI College! We are excited to have you join our academic community.
+                            Congratulations on creating your student account at Kestora College! We are excited to have you join our academic community.
                         </Text>
 
                         <Section className="bg-neutral-900 rounded-lg p-6 my-8 text-center">
@@ -74,20 +74,20 @@ export default function WelcomeEmail({
                         <Section className="text-center mt-[32px] mb-[32px]">
                             <Link
                                 className="bg-[#000000] rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3"
-                                href="https://syklicollege.fi/portal/account/login"
+                                href="https://kestora.fi/portal/account/login"
                             >
                                 Enter Student Portal
                             </Link>
                         </Section>
 
                         <Text className="text-black text-[14px] leading-[24px]">
-                            If you have any questions or need assistance, please feel free to reach out to our Admissions Office at <Link href="mailto:admissions@syklicollege.fi" className="text-blue-600 no-underline font-bold">admissions@syklicollege.fi</Link>.
+                            If you have any questions or need assistance, please feel free to reach out to our Admissions Office at <Link href="mailto:admissions@kestora.fi" className="text-blue-600 no-underline font-bold">admissions@kestora.fi</Link>.
                         </Text>
 
                         <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
 
                         <Text className="text-[#666666] text-[12px] leading-[24px]">
-                            This email was sent to confirm your account registration at SYKLI College.
+                            This email was sent to confirm your account registration at Kestora College.
                         </Text>
                     </Container>
                 </Body>

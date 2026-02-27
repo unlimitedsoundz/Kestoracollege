@@ -18,7 +18,7 @@ const sections = [
         title: "Description",
         id: "description",
         content: `
-            <p class="mb-4">The Accounting & Finance MSc program at SYKLI College is designed for students seeking advanced knowledge in accounting, corporate finance, auditing, and financial management. The program emphasizes both theoretical understanding and practical application of accounting standards, corporate governance, strategic management accounting, performance management, risk management, and sustainability in accounting.</p>
+            <p class="mb-4">The Accounting & Finance MSc program at Kestora College is designed for students seeking advanced knowledge in accounting, corporate finance, auditing, and financial management. The program emphasizes both theoretical understanding and practical application of accounting standards, corporate governance, strategic management accounting, performance management, risk management, and sustainability in accounting.</p>
             <p>Students develop analytical skills for complex financial decision-making, preparing them for leadership roles in accounting, finance, and corporate strategy.</p>
         `
     },
@@ -44,7 +44,7 @@ const sections = [
                     <li>Need-based financial aid</li>
                     <li>Scholarships for international students</li>
                 </ul>
-                <p class="mt-2 text-sm text-neutral-500">Detailed scholarship information and application procedures are available on the SYKLI College Scholarships page.</p>
+                <p class="mt-2 text-sm text-neutral-500">Detailed scholarship information and application procedures are available on the Kestora College Scholarships page.</p>
             </div>
         `
     },
@@ -142,7 +142,7 @@ const sections = [
         title: "Research Focus",
         id: "research",
         content: `
-            <p class="mb-2">SYKLI College Accounting & Finance Department focuses on:</p>
+            <p class="mb-2">Kestora College Accounting & Finance Department focuses on:</p>
             <ul class="list-disc pl-5 space-y-1">
                 <li>Advanced corporate finance and valuation</li>
                 <li>Management accounting and strategic decision-making</li>
@@ -182,10 +182,10 @@ const sections = [
         title: "Contact Information",
         id: "contact",
         content: `
-            <p><strong>SYKLI College School of Business – Accounting & Finance Department</strong></p>
-            <p>Email: <a href="mailto:accounting@syklicollege.edu" class="text-emerald-600 hover:underline">accounting@syklicollege.edu</a></p>
+            <p><strong>Kestora College School of Business – Accounting & Finance Department</strong></p>
+            <p>Email: <a href="mailto:accounting@kestora.edu" class="text-emerald-600 hover:underline">accounting@kestora.edu</a></p>
             <p>Phone: +358 20 123 4568</p>
-            <p>Address: SYKLI College, Otaniemi Campus, Finland</p>
+            <p>Address: Kestora College, Otaniemi Campus, Finland</p>
             <p>Office Hours: Monday–Friday, 9:00–17:00</p>
         `
     }

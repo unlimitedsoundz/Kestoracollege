@@ -1,6 +1,6 @@
 Add-Type -AssemblyName System.Drawing
-$logoPath = "c:\Users\eltig\OneDrive\Documents\syklicollege\public\logo.png"
-$icoPath = "c:\Users\eltig\OneDrive\Documents\syklicollege\src\app\favicon.ico"
+$logoPath = "c:\Users\eltig\OneDrive\Documents\kestora\public\logo.png"
+$icoPath = "c:\Users\eltig\OneDrive\Documents\kestora\src\app\favicon.ico"
 
 if (Test-Path $logoPath) {
     try {
@@ -18,7 +18,7 @@ if (Test-Path $logoPath) {
         $fileStream.Close()
         
         # Save 32x32 PNG
-        $bmpResized.Save("c:\Users\eltig\OneDrive\Documents\syklicollege\public\favicon-32x32.png", [System.Drawing.Imaging.ImageFormat]::Png)
+        $bmpResized.Save("c:\Users\eltig\OneDrive\Documents\kestora\public\favicon-32x32.png", [System.Drawing.Imaging.ImageFormat]::Png)
         
         # Save Apple Touch Icon (180x180)
         $bmpApple = [System.Drawing.Bitmap]::new(180, 180)
@@ -26,7 +26,7 @@ if (Test-Path $logoPath) {
         $gApple.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
         $gApple.DrawImage($bmpOriginal, 0, 0, 180, 180)
         $gApple.Dispose()
-        $bmpApple.Save("c:\Users\eltig\OneDrive\Documents\syklicollege\public\apple-touch-icon.png", [System.Drawing.Imaging.ImageFormat]::Png)
+        $bmpApple.Save("c:\Users\eltig\OneDrive\Documents\kestora\public\apple-touch-icon.png", [System.Drawing.Imaging.ImageFormat]::Png)
         
         $bmpApple.Dispose()
         $bmpResized.Dispose()

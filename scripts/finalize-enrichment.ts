@@ -18,7 +18,7 @@ const courseSections = {
             id: 'overview',
             title: 'Programme Overview',
             content: `
-                <p class="mb-4">The Bachelor of Entrepreneurship & Innovation at SYKLI College is designed for future disruptors and builders. We focus on the mindset and skillset required to launch new ventures and drive innovation within established organizations.</p>
+                <p class="mb-4">The Bachelor of Entrepreneurship & Innovation at Kestora College is designed for future disruptors and builders. We focus on the mindset and skillset required to launch new ventures and drive innovation within established organizations.</p>
                 <p>Our practical curriculum covers everything from lean startup methodology to venture finance, mentored by active entrepreneurs and industry experts.</p>
             `
         },

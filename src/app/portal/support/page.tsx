@@ -47,9 +47,9 @@ export default function SupportPage() {
         {
             icon: <Mail className="text-black" size={24} weight="bold" />,
             title: "Email Support",
-            value: "it.support@syklicollege.fi",
+            value: "it.support@kestora.fi",
             desc: "Primary channel for all technical inquiries.",
-            link: "mailto:it.support@syklicollege.fi"
+            link: "mailto:it.support@kestora.fi"
         },
         {
             icon: <Phone className="text-black" size={24} weight="bold" />,
@@ -154,7 +154,7 @@ export default function SupportPage() {
                                     Security Tip
                                 </h3>
                                 <p className="text-neutral-600 text-sm leading-relaxed">
-                                    SYKLI College IT department will never ask for your password via email or phone. Always use official login portals to access your accounts.
+                                    Kestora College IT department will never ask for your password via email or phone. Always use official login portals to access your accounts.
                                 </p>
                             </div>
                         </div>

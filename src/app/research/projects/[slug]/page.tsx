@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     if (!project) return { title: 'Project Not Found' };
 
     return {
-        title: `${project.title} | SYKLI Research`,
+        title: `${project.title} | Kestora Research`,
         description: project.description
     };
 }

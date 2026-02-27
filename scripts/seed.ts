@@ -99,7 +99,7 @@ async function main() {
                 name: 'Dr. Elena Virtanen',
                 role: 'Head of Renewable Energy',
                 bio: 'Leading expert in solar photovoltaic systems with 15 years of industry experience.',
-                email: 'elena.virtanen@sykli.fi',
+                email: 'elena.virtanen@kestora.fi',
                 schoolId: schoolEngineering.id,
                 departmentId: deptRenewable.id,
             },
@@ -107,7 +107,7 @@ async function main() {
                 name: 'Prof. Markus Korhonen',
                 role: 'Senior Lecturer',
                 bio: 'Specialist in circular economy economics.',
-                email: 'markus.korhonen@sykli.fi',
+                email: 'markus.korhonen@kestora.fi',
                 schoolId: schoolBusiness.id,
                 departmentId: deptManagement.id,
             }
@@ -206,8 +206,8 @@ async function main() {
 
         await supabase.from('News').insert([
             {
-                title: 'SYKLI College Partners with GreenTech Finland',
-                slug: 'sykli-partners-greentech',
+                title: 'Kestora College Partners with GreenTech Finland',
+                slug: 'kestora-partners-greentech',
                 content: 'We are thrilled to announce a new strategic partnership with GreenTech Finland...',
                 excerpt: 'New internship opportunities for engineering students.',
                 published: true,

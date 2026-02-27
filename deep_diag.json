@@ -39,7 +39,7 @@
         {
           "id": "description",
           "title": "Description",
-          "content": "\n            <p class=\"mb-4\">The Accounting & Finance BSc program at Sykli College provides a solid foundation in accounting, finance, and management. Students gain practical and theoretical knowledge in financial accounting, management accounting, corporate governance, auditing, performance management, and financial decision-making.</p>\n            <p>The program equips students with analytical skills and business understanding necessary for careers in accounting, finance, and corporate administration.</p>\n        "
+          "content": "\n            <p class=\"mb-4\">The Accounting & Finance BSc program at Kestora College provides a solid foundation in accounting, finance, and management. Students gain practical and theoretical knowledge in financial accounting, management accounting, corporate governance, auditing, performance management, and financial decision-making.</p>\n            <p>The program equips students with analytical skills and business understanding necessary for careers in accounting, finance, and corporate administration.</p>\n        "
         },
         {
           "id": "language",
@@ -49,7 +49,7 @@
         {
           "id": "tuition",
           "title": "Tuition Fees and Scholarships",
-          "content": "\n            <div class=\"mb-4\">\n                <strong>Tuition Fee:</strong> Included in degree tuition for full-time BSc students\n            </div>\n            <div>\n                <strong>Scholarships:</strong>\n                <ul class=\"list-disc pl-5 mt-2 space-y-1\">\n                    <li>Merit-based scholarships for high-achieving students</li>\n                    <li>Need-based financial aid</li>\n                    <li>Support for international students</li>\n                </ul>\n                <p class=\"mt-2 text-sm text-neutral-500\">Detailed scholarship information is available on the Sykli College Scholarships page.</p>\n            </div>\n        "
+          "content": "\n            <div class=\"mb-4\">\n                <strong>Tuition Fee:</strong> Included in degree tuition for full-time BSc students\n            </div>\n            <div>\n                <strong>Scholarships:</strong>\n                <ul class=\"list-disc pl-5 mt-2 space-y-1\">\n                    <li>Merit-based scholarships for high-achieving students</li>\n                    <li>Need-based financial aid</li>\n                    <li>Support for international students</li>\n                </ul>\n                <p class=\"mt-2 text-sm text-neutral-500\">Detailed scholarship information is available on the Kestora College Scholarships page.</p>\n            </div>\n        "
         },
         {
           "id": "structure",
@@ -94,7 +94,7 @@
         {
           "id": "contact",
           "title": "Contact Information",
-          "content": "\n            <p><strong>Sykli College School of Business – Accounting & Finance Department</strong></p>\n            <p>Email: <a href=\"mailto:accounting@syklicollege.com\" class=\"text-emerald-600 hover:underline\">accounting@syklicollege.com</a></p>\n            <p>Address: Sykli College, Otaniemi Campus, Finland</p>\n            <p>Office Hours: Monday–Friday, 9:00–17:00</p>\n        "
+          "content": "\n            <p><strong>Kestora College School of Business – Accounting & Finance Department</strong></p>\n            <p>Email: <a href=\"mailto:accounting@kestora.com\" class=\"text-emerald-600 hover:underline\">accounting@kestora.com</a></p>\n            <p>Address: Kestora College, Otaniemi Campus, Finland</p>\n            <p>Office Hours: Monday–Friday, 9:00–17:00</p>\n        "
         }
       ],
       "department": {
@@ -128,7 +128,7 @@
         {
           "id": "description",
           "title": "Description",
-          "content": "\n            <p class=\"mb-4\">The Accounting & Finance MSc program at Sykli College is designed for students seeking advanced knowledge in accounting, corporate finance, auditing, and financial management. The program emphasizes both theoretical understanding and practical application of accounting standards, corporate governance, strategic management accounting, performance management, risk management, and sustainability in accounting.</p>\n            <p>Students develop analytical skills for complex financial decision-making, preparing them for leadership roles in accounting, finance, and corporate strategy.</p>\n        "
+          "content": "\n            <p class=\"mb-4\">The Accounting & Finance MSc program at Kestora College is designed for students seeking advanced knowledge in accounting, corporate finance, auditing, and financial management. The program emphasizes both theoretical understanding and practical application of accounting standards, corporate governance, strategic management accounting, performance management, risk management, and sustainability in accounting.</p>\n            <p>Students develop analytical skills for complex financial decision-making, preparing them for leadership roles in accounting, finance, and corporate strategy.</p>\n        "
         },
         {
           "id": "language",
@@ -138,7 +138,7 @@
         {
           "id": "tuition",
           "title": "Tuition Fees and Scholarships",
-          "content": "\n            <div class=\"mb-4\">\n                <strong>Tuition Fee:</strong> Included in degree tuition for full-time MSc students\n            </div>\n            <div>\n                <strong>Scholarships:</strong>\n                <ul class=\"list-disc pl-5 mt-2 space-y-1\">\n                    <li>Merit-based scholarships for top-performing applicants</li>\n                    <li>Need-based financial aid</li>\n                    <li>Scholarships for international students</li>\n                </ul>\n                <p class=\"mt-2 text-sm text-neutral-500\">Detailed scholarship information and application procedures are available on the Sykli College Scholarships page.</p>\n            </div>\n        "
+          "content": "\n            <div class=\"mb-4\">\n                <strong>Tuition Fee:</strong> Included in degree tuition for full-time MSc students\n            </div>\n            <div>\n                <strong>Scholarships:</strong>\n                <ul class=\"list-disc pl-5 mt-2 space-y-1\">\n                    <li>Merit-based scholarships for top-performing applicants</li>\n                    <li>Need-based financial aid</li>\n                    <li>Scholarships for international students</li>\n                </ul>\n                <p class=\"mt-2 text-sm text-neutral-500\">Detailed scholarship information and application procedures are available on the Kestora College Scholarships page.</p>\n            </div>\n        "
         },
         {
           "id": "structure",
@@ -168,7 +168,7 @@
         {
           "id": "research",
           "title": "Research Focus",
-          "content": "\n            <p class=\"mb-2\">Sykli College Accounting & Finance Department focuses on:</p>\n            <ul class=\"list-disc pl-5 space-y-1\">\n                <li>Advanced corporate finance and valuation</li>\n                <li>Management accounting and strategic decision-making</li>\n                <li>Auditing and compliance research</li>\n                <li>Sustainability accounting and reporting</li>\n                <li>Big Data analytics in financial decision-making</li>\n            </ul>\n        "
+          "content": "\n            <p class=\"mb-2\">Kestora College Accounting & Finance Department focuses on:</p>\n            <ul class=\"list-disc pl-5 space-y-1\">\n                <li>Advanced corporate finance and valuation</li>\n                <li>Management accounting and strategic decision-making</li>\n                <li>Auditing and compliance research</li>\n                <li>Sustainability accounting and reporting</li>\n                <li>Big Data analytics in financial decision-making</li>\n            </ul>\n        "
         },
         {
           "id": "cooperation",
@@ -183,7 +183,7 @@
         {
           "id": "contact",
           "title": "Contact Information",
-          "content": "\n            <p><strong>Sykli College School of Business – Accounting & Finance Department</strong></p>\n            <p>Email: <a href=\"mailto:accounting@syklicollege.edu\" class=\"text-emerald-600 hover:underline\">accounting@syklicollege.edu</a></p>\n            <p>Phone: +358 20 123 4568</p>\n            <p>Address: Sykli College, Otaniemi Campus, Finland</p>\n            <p>Office Hours: Monday–Friday, 9:00–17:00</p>\n        "
+          "content": "\n            <p><strong>Kestora College School of Business – Accounting & Finance Department</strong></p>\n            <p>Email: <a href=\"mailto:accounting@kestora.edu\" class=\"text-emerald-600 hover:underline\">accounting@kestora.edu</a></p>\n            <p>Phone: +358 20 123 4568</p>\n            <p>Address: Kestora College, Otaniemi Campus, Finland</p>\n            <p>Office Hours: Monday–Friday, 9:00–17:00</p>\n        "
         }
       ],
       "department": {
@@ -217,7 +217,7 @@
         {
           "id": "description",
           "title": "Programme Description",
-          "content": "\n            <p class=\"mb-4\">The Finance BACHELOR programme at Sykli College offers a comprehensive curriculum designed to prepare students for leadership roles in the global economy. The programme integrates theoretical foundations with practical applications, focusing on sustainable practices and innovative thinking.</p>\n            <p>Students will engage in multi-disciplinary projects, case studies, and corporate collaborations to develop the skills necessary for a successful career in Finance.</p>\n        "
+          "content": "\n            <p class=\"mb-4\">The Finance BACHELOR programme at Kestora College offers a comprehensive curriculum designed to prepare students for leadership roles in the global economy. The programme integrates theoretical foundations with practical applications, focusing on sustainable practices and innovative thinking.</p>\n            <p>Students will engage in multi-disciplinary projects, case studies, and corporate collaborations to develop the skills necessary for a successful career in Finance.</p>\n        "
         },
         {
           "id": "structure",
@@ -266,7 +266,7 @@
         {
           "id": "description",
           "title": "Programme Description",
-          "content": "\n            <p class=\"mb-4\">The Finance MASTER programme at Sykli College offers a comprehensive curriculum designed to prepare students for leadership roles in the global economy. The programme integrates theoretical foundations with practical applications, focusing on sustainable practices and innovative thinking.</p>\n            <p>Students will engage in multi-disciplinary projects, case studies, and corporate collaborations to develop the skills necessary for a successful career in Finance.</p>\n        "
+          "content": "\n            <p class=\"mb-4\">The Finance MASTER programme at Kestora College offers a comprehensive curriculum designed to prepare students for leadership roles in the global economy. The programme integrates theoretical foundations with practical applications, focusing on sustainable practices and innovative thinking.</p>\n            <p>Students will engage in multi-disciplinary projects, case studies, and corporate collaborations to develop the skills necessary for a successful career in Finance.</p>\n        "
         },
         {
           "id": "structure",
@@ -315,7 +315,7 @@
         {
           "id": "description",
           "title": "Programme Description",
-          "content": "\n            <p class=\"mb-4\">The Strategic Management & Finance MASTER programme at Sykli College offers a comprehensive curriculum designed to prepare students for leadership roles in the global economy. The programme integrates theoretical foundations with practical applications, focusing on sustainable practices and innovative thinking.</p>\n            <p>Students will engage in multi-disciplinary projects, case studies, and corporate collaborations to develop the skills necessary for a successful career in Strategic Management & Finance.</p>\n        "
+          "content": "\n            <p class=\"mb-4\">The Strategic Management & Finance MASTER programme at Kestora College offers a comprehensive curriculum designed to prepare students for leadership roles in the global economy. The programme integrates theoretical foundations with practical applications, focusing on sustainable practices and innovative thinking.</p>\n            <p>Students will engage in multi-disciplinary projects, case studies, and corporate collaborations to develop the skills necessary for a successful career in Strategic Management & Finance.</p>\n        "
         },
         {
           "id": "structure",

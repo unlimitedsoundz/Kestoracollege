@@ -12,8 +12,8 @@ export function Logo({ className = "", onClick }: { className?: string, onClick?
         >
             <div className={`relative transition-all duration-300 ${isDarkBackground ? 'mix-blend-screen' : 'brightness-100 invert grayscale mix-blend-multiply'}`}>
                 <Image
-                    src="/logo.png"
-                    alt="SYKLI College"
+                    src="/logo-kestora.png"
+                    alt="Kestora College"
                     width={200}
                     height={200}
                     className={`object-contain w-auto ${className}`}

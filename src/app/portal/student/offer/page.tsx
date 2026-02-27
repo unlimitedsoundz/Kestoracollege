@@ -24,7 +24,7 @@ export default function StudentOfferPage() {
 
                 // 2. Secondary Auth Check (LocalStorage Fallback)
                 if (!sbUser) {
-                    const savedUser = localStorage.getItem('SYKLI_user');
+                    const savedUser = localStorage.getItem('Kestora_user');
                     if (savedUser) {
                         const localProfile = JSON.parse(savedUser);
                         currentUserEmail = localProfile.email;

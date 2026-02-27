@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata = {
-    title: 'Refund & Withdrawal Policy | SYKLI College',
-    description: 'Guidelines on financial obligations, withdrawals, and refunds for tuition, fees, and housing at SYKLI College.',
+    title: 'Refund & Withdrawal Policy | Kestora College',
+    description: 'Guidelines on financial obligations, withdrawals, and refunds for tuition, fees, and housing at Kestora College.',
 };
 
 export default function RefundWithdrawalPolicyPage() {
@@ -45,7 +45,7 @@ export default function RefundWithdrawalPolicyPage() {
                                     <li>Ensure fairness, transparency, and compliance with institutional regulations.</li>
                                 </ul>
                                 <p className="text-lg leading-relaxed mt-6">
-                                    This policy applies to all students enrolled at SYKLI College, including Bachelor’s, Master’s, full-time, and part-time students.
+                                    This policy applies to all students enrolled at Kestora College, including Bachelor’s, Master’s, full-time, and part-time students.
                                 </p>
                             </div>
                         </div>

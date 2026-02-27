@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata = {
-    title: 'Study at SYKLI College — Bachelor, Master & Lifelong Learning',
-    description: 'Find your study path at SYKLI College. Explore our Bachelor\'s and Master\'s degree programmes, professional continuing education, and open studies.',
+    title: 'Study at Kestora College — Bachelor, Master & Lifelong Learning',
+    description: 'Find your study path at Kestora College. Explore our Bachelor\'s and Master\'s degree programmes, professional continuing education, and open studies.',
 };
 
 import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
@@ -21,7 +21,7 @@ export default function StudiesPage() {
             <section className="bg-black text-white pt-32 pb-16 md:pt-48 md:pb-24 overflow-hidden relative">
                 <div className="container mx-auto px-4 relative z-10">
                     <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-                        Study at SYKLI College
+                        Study at Kestora College
                     </h1>
                     <p className="text-xl md:text-2xl text-neutral-300 max-w-2xl leading-relaxed mb-8">
                         From undergraduate degrees to executive education, we offer diverse paths for learners at every stage of their journey.

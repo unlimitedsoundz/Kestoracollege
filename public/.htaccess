@@ -3,14 +3,14 @@
 RewriteEngine On
 RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} !^www\. [NC]
-RewriteRule ^(.*)$ https://www.syklicollege.fi/$1 [L,R=301]
+RewriteRule ^(.*)$ https://www.kestora.fi/$1 [L,R=301]
 
 # Enforce Trailing Slash
 # But skip files that exist (e.g. .css, .js, .png)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !(.*)\/$
 RewriteCond %{REQUEST_URI} !(\.[a-zA-Z0-9]{1,5})$
-RewriteRule ^(.*)$ https://www.syklicollege.fi/$1/ [L,R=301]
+RewriteRule ^(.*)$ https://www.kestora.fi/$1/ [L,R=301]
 
 # Service Worker and other special files exclusion (optional)
 # RewriteCond %{REQUEST_URI} ^/sw.js$ [NC]

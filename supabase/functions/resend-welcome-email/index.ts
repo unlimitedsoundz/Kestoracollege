@@ -36,7 +36,7 @@ serve(async (req) => {
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Welcome to SYKLI College</title>
+  <title>Welcome to Kestora College</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #ffffff; color: #000000; margin: 0; padding: 0; }
     .container { max-width: 465px; margin: 40px auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 4px; }
@@ -55,10 +55,10 @@ serve(async (req) => {
 </head>
 <body>
   <div class="container">
-    <img src="https://syklicollege.fi/logo.png" alt="SYKLI College" class="logo">
-    <h1>Welcome to SYKLI College</h1>
+    <img src="https://kestora.fi/logo.png" alt="Kestora College" class="logo">
+    <h1>Welcome to Kestora College</h1>
     <p>Dear ${first_name || 'Student'},</p>
-    <p>Congratulations on creating your student account at SYKLI College! We are excited to have you join our academic community.</p>
+    <p>Congratulations on creating your student account at Kestora College! We are excited to have you join our academic community.</p>
     
     <div class="id-box">
       <div class="id-label">Your Unique Student ID</div>
@@ -69,13 +69,13 @@ serve(async (req) => {
     <p>You can now access your dashboard to complete your application, upload documents, and track your progress.</p>
 
     <div class="button-container">
-      <a href="https://syklicollege.fi/portal/account/login" class="button">Enter Student Portal</a>
+      <a href="https://kestora.fi/portal/account/login" class="button">Enter Student Portal</a>
     </div>
 
-    <p>If you have any questions or need assistance, please reach out to our Admissions Office at <a href="mailto:admissions@syklicollege.fi">admissions@syklicollege.fi</a>.</p>
+    <p>If you have any questions or need assistance, please reach out to our Admissions Office at <a href="mailto:admissions@kestora.fi">admissions@kestora.fi</a>.</p>
 
     <div class="footer">
-      This email was sent to confirm your account registration at SYKLI College.
+      This email was sent to confirm your account registration at Kestora College.
     </div>
   </div>
 </body>
@@ -83,9 +83,9 @@ serve(async (req) => {
     `;
 
         const { data, error } = await resend.emails.send({
-            from: "SYKLI College <admissions@syklicollege.fi>",
+            from: "Kestora College <admissions@kestora.fi>",
             to: [email],
-            subject: "Welcome to SYKLI College",
+            subject: "Welcome to Kestora College",
             html: html,
         });
 

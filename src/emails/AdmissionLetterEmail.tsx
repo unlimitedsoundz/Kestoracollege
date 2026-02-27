@@ -24,7 +24,7 @@ export default function AdmissionLetterEmail({
     firstName = 'Student',
     courseTitle = 'Applied Sciences',
 }: AdmissionLetterEmailProps) {
-    const previewText = `Welcome to SYKLI College! Your admission to ${courseTitle} is now finalized.`;
+    const previewText = `Welcome to Kestora College! Your admission to ${courseTitle} is now finalized.`;
 
     return (
         <Html>
@@ -35,10 +35,10 @@ export default function AdmissionLetterEmail({
                     <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
                         <Section className="mt-[32px]">
                             <Img
-                                src="https://syklicollege.fi/logo.png"
+                                src="https://kestora.fi/logo-kestora.png"
                                 width="40"
                                 height="40"
-                                alt="SYKLI College"
+                                alt="Kestora College"
                                 className="my-0 mx-auto"
                             />
                         </Section>
@@ -52,7 +52,7 @@ export default function AdmissionLetterEmail({
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">
-                            Congratulations! Your enrollment in the <strong>{courseTitle}</strong> programme at SYKLI College is now official.
+                            Congratulations! Your enrollment in the <strong>{courseTitle}</strong> programme at Kestora College is now official.
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">
@@ -62,7 +62,7 @@ export default function AdmissionLetterEmail({
                         <Section className="text-center mt-[32px] mb-[32px]">
                             <Link
                                 className="bg-[#000000] rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3"
-                                href="https://syklicollege.fi/portal/student"
+                                href="https://kestora.fi/portal/student"
                             >
                                 Enter student Portal
                             </Link>
@@ -74,7 +74,7 @@ export default function AdmissionLetterEmail({
                             We look forward to seeing you on campus!
                         </Text>
                         <Text className="text-[#666666] text-[12px] leading-[24px]">
-                            Office of Admissions, SYKLI College.
+                            Office of Admissions, Kestora College.
                         </Text>
                     </Container>
                 </Body>

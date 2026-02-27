@@ -48,7 +48,7 @@ export default async function EventDetailPage({ params }: Props) {
         eventStatus: 'https://schema.org/EventScheduled',
         location: {
             '@type': 'Place',
-            name: item.location || 'SYKLI College – Helsinki Campus',
+            name: item.location || 'Kestora College – Helsinki Campus',
             address: {
                 '@type': 'PostalAddress',
                 streetAddress: 'Pohjoisesplanadi 51',
@@ -59,11 +59,11 @@ export default async function EventDetailPage({ params }: Props) {
             }
         },
         image: item.imageUrl ? [item.imageUrl] : undefined,
-        description: item.content?.substring(0, 160) || `Join us for ${item.title} at SYKLI College.`,
+        description: item.content?.substring(0, 160) || `Join us for ${item.title} at Kestora College.`,
         organizer: {
             '@type': 'EducationalOrganization',
-            name: 'SYKLI College',
-            url: 'https://www.syklicollege.fi'
+            name: 'Kestora College',
+            url: 'https://www.kestora.fi'
         }
     };
 

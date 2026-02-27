@@ -10,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ['/admin/', '/portal/', '/debug/', '/api/'],
             },
         ],
-        sitemap: 'https://www.syklicollege.fi/sitemap.xml',
+        sitemap: 'https://www.kestora.fi/sitemap.xml',
     };
 }

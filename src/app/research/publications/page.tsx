@@ -2,8 +2,8 @@
 import PublicationList from './PublicationList';
 
 export const metadata = {
-    title: 'Research Publications — SYKLI College | Peer-Reviewed Journals & Papers',
-    description: 'Explore peer-reviewed publications by SYKLI College faculty and researchers. Sustainable construction, smart grids, urban planning, and circular economy research.',
+    title: 'Research Publications — Kestora College | Peer-Reviewed Journals & Papers',
+    description: 'Explore peer-reviewed publications by Kestora College faculty and researchers. Sustainable construction, smart grids, urban planning, and circular economy research.',
 };
 
 export default function PublicationsPage() {

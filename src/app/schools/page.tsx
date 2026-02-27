@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { School } from '@/types/database';
 
 export const metadata = {
-    title: 'Academic Schools — SYKLI College Finland | Arts, Business, Science, Technology',
-    description: 'SYKLI College is organized into four schools: Arts & Architecture, Business, Science, and Technology. Explore departments, research, and degree programmes.',
+    title: 'Academic Schools — Kestora College Finland | Arts, Business, Science, Technology',
+    description: 'Kestora College is organized into four schools: Arts & Architecture, Business, Science, and Technology. Explore departments, research, and degree programmes.',
 };
 
 import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
@@ -36,7 +36,7 @@ export default async function SchoolsPage() {
                 <div className="container mx-auto px-4 relative z-10">
                     <h1 className="text-4xl font-bold mb-6 tracking-tight pt-8">Our Schools</h1>
                     <p className="text-[21px] text-neutral-600 max-w-2xl leading-relaxed">
-                        SYKLI College is organized into specialized schools, each driving innovation in technology, business, science, and design through world-class research and English-taught Bachelor’s and Master’s programmes.
+                        Kestora College is organized into specialized schools, each driving innovation in technology, business, science, and design through world-class research and English-taught Bachelor’s and Master’s programmes.
                     </p>
                 </div>
             </section>

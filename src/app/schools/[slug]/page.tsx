@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: Props) {
     }
 
     return {
-        title: `${school.name} — SYKLI College | Research & Programmes`,
-        description: school.description || `Explore the ${school.name} at SYKLI College. Departments, research, and degree programmes.`,
+        title: `${school.name} — Kestora College | Research & Programmes`,
+        description: school.description || `Explore the ${school.name} at Kestora College. Departments, research, and degree programmes.`,
     };
 }
 
@@ -201,7 +201,7 @@ export default async function SchoolDetails({ params }: Props) {
                                             fallbackSrc={school.imageUrl || '/images/placeholders/design.png'}
                                             fill
                                             className="object-cover"
-                                            alt={`Study ${course.title} at SYKLI College`}
+                                            alt={`Study ${course.title} at Kestora College`}
                                             sizes="(max-width: 768px) 100vw, 25vw"
                                         />
                                         <span className="absolute top-2 right-2 bg-white/90 text-xs font-bold px-2 py-1 rounded text-neutral-800 z-10">
@@ -352,19 +352,19 @@ export default async function SchoolDetails({ params }: Props) {
                             <div className="space-y-8">
                                 <div className="flex gap-4 items-start">
                                     <div className="bg-neutral-100 p-10 border border-black">
-                                        <p className="font-bold text-lg">SYKLI College – Helsinki Campus</p>
+                                        <p className="font-bold text-lg">Kestora College – Helsinki Campus</p>
                                         <p className="font-medium text-neutral-800">Pohjoisesplanadi 51, 00150 Helsinki</p>
                                     </div>
                                 </div>
                                 <div className="space-y-4">
                                     <div className="flex gap-4 items-center">
-                                        <span className="font-medium">General: {school.slug}@syklicollege.fi</span>
+                                        <span className="font-medium">General: {school.slug}@kestora.fi</span>
                                     </div>
                                     <div className="flex gap-4 items-center">
-                                        <span className="font-medium">Admissions: {school.slug}.admissions@syklicollege.fi</span>
+                                        <span className="font-medium">Admissions: {school.slug}.admissions@kestora.fi</span>
                                     </div>
                                     <div className="flex gap-4 items-center">
-                                        <span className="font-medium">Partnerships: {school.slug}.partners@syklicollege.fi</span>
+                                        <span className="font-medium">Partnerships: {school.slug}.partners@kestora.fi</span>
                                     </div>
                                 </div>
                                 <Link href="/contact" className="inline-flex items-center gap-2 font-bold group">

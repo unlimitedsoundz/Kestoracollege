@@ -65,7 +65,7 @@ export default function TermsOfUsePage() {
                             Terms of Use and Conditions
                         </h1>
                         <p className="text-lg text-neutral-600 leading-relaxed">
-                            The terms governing the use of SYKLI College digital platforms and services.
+                            The terms governing the use of Kestora College digital platforms and services.
                         </p>
                     </div>
                 </div>
@@ -100,7 +100,7 @@ export default function TermsOfUsePage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">1. Acceptance of Terms</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        By accessing or using SYKLI College websites digital platforms and services users agree to comply with these Terms of Use and Conditions. If a user does not agree with these terms they should refrain from using the services.
+                                        By accessing or using Kestora College websites digital platforms and services users agree to comply with these Terms of Use and Conditions. If a user does not agree with these terms they should refrain from using the services.
                                     </p>
                                 </div>
                             </section>
@@ -110,7 +110,7 @@ export default function TermsOfUsePage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">2. Scope of Application</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        These Terms apply to all users of SYKLI College digital services including prospective students enrolled students staff partners and visitors.
+                                        These Terms apply to all users of Kestora College digital services including prospective students enrolled students staff partners and visitors.
                                     </p>
                                 </div>
                             </section>
@@ -120,7 +120,7 @@ export default function TermsOfUsePage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">3. Use of Digital Services</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        Users agree to use SYKLI College services lawfully respectfully and in a manner that does not disrupt or harm systems content or other users.
+                                        Users agree to use Kestora College services lawfully respectfully and in a manner that does not disrupt or harm systems content or other users.
                                     </p>
                                     <p>
                                         Prohibited activities include unauthorised access misuse of data interference with services and any activity that violates applicable laws or institutional policies.
@@ -133,7 +133,7 @@ export default function TermsOfUsePage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">4. Intellectual Property</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        All content on SYKLI College websites including text images graphics logos documents and digital materials is the intellectual property of SYKLI College or its licensors unless otherwise stated.
+                                        All content on Kestora College websites including text images graphics logos documents and digital materials is the intellectual property of Kestora College or its licensors unless otherwise stated.
                                     </p>
                                     <p>
                                         Content may not be copied reproduced modified distributed or used for commercial purposes without prior written permission.
@@ -149,7 +149,7 @@ export default function TermsOfUsePage() {
                                         Where users are permitted to submit content such as applications feedback or messages they are responsible for ensuring the accuracy legality and appropriateness of such content.
                                     </p>
                                     <p>
-                                        SYKLI College reserves the right to remove or restrict content that violates these Terms or applicable laws.
+                                        Kestora College reserves the right to remove or restrict content that violates these Terms or applicable laws.
                                     </p>
                                 </div>
                             </section>
@@ -159,7 +159,7 @@ export default function TermsOfUsePage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">6. Availability of Services</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        SYKLI College aims to ensure continuous availability of its digital services but does not guarantee uninterrupted access. Services may be temporarily unavailable due to maintenance technical issues or external factors.
+                                        Kestora College aims to ensure continuous availability of its digital services but does not guarantee uninterrupted access. Services may be temporarily unavailable due to maintenance technical issues or external factors.
                                     </p>
                                 </div>
                             </section>
@@ -169,7 +169,7 @@ export default function TermsOfUsePage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">7. Limitation of Liability</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        SYKLI College is not liable for direct or indirect damages arising from the use or inability to use its digital services except where liability cannot be excluded under applicable law.
+                                        Kestora College is not liable for direct or indirect damages arising from the use or inability to use its digital services except where liability cannot be excluded under applicable law.
                                     </p>
                                 </div>
                             </section>
@@ -179,7 +179,7 @@ export default function TermsOfUsePage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">8. Data Protection</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        The processing of personal data is governed by the SYKLI College Privacy Policy. Users are encouraged to review the Privacy Policy to understand how personal data is handled.
+                                        The processing of personal data is governed by the Kestora College Privacy Policy. Users are encouraged to review the Privacy Policy to understand how personal data is handled.
                                     </p>
                                 </div>
                             </section>
@@ -189,7 +189,7 @@ export default function TermsOfUsePage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">9. External Links</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        SYKLI College websites may contain links to external websites. SYKLI College is not responsible for the content or data protection practices of external sites.
+                                        Kestora College websites may contain links to external websites. Kestora College is not responsible for the content or data protection practices of external sites.
                                     </p>
                                 </div>
                             </section>
@@ -199,7 +199,7 @@ export default function TermsOfUsePage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">10. Changes to the Terms</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        SYKLI College may update these Terms of Use and Conditions at any time. Updated terms will be published on the official website and apply from the date of publication.
+                                        Kestora College may update these Terms of Use and Conditions at any time. Updated terms will be published on the official website and apply from the date of publication.
                                     </p>
                                 </div>
                             </section>
@@ -219,7 +219,7 @@ export default function TermsOfUsePage() {
                                 <h2 className="text-2xl font-bold mb-8 border-b border-black pb-10 pl-2">12. Contact Information</h2>
                                 <div className="space-y-6 text-neutral-700 leading-relaxed">
                                     <p>
-                                        For questions regarding these Terms of Use and Conditions please contact SYKLI College through the official communication channels listed on the website.
+                                        For questions regarding these Terms of Use and Conditions please contact Kestora College through the official communication channels listed on the website.
                                     </p>
                                 </div>
                             </section>

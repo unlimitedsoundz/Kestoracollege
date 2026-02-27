@@ -108,7 +108,7 @@ async function fixHalfEnrolledStudents() {
         }
 
         // 2. Create/Update Student Record
-        const institutionalEmail = `${student.first_name.toLowerCase()}.${student.last_name.toLowerCase()}@syklicollege.fi`;
+        const institutionalEmail = `${student.first_name.toLowerCase()}.${student.last_name.toLowerCase()}@kestora.fi`;
 
         const studentData = {
             user_id: student.user_id,

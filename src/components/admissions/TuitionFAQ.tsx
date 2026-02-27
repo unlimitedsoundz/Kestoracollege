@@ -10,7 +10,7 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
     {
-        question: "Who is required to pay tuition fees at SYKLI College?",
+        question: "Who is required to pay tuition fees at Kestora College?",
         answer: (
             <div className="space-y-4">
                 <p>
@@ -40,14 +40,14 @@ const faqs: FAQItem[] = [
         answer: (
             <div className="space-y-4">
                 <p>
-                    SYKLI College partners with <strong>Paygowire</strong> to process tuition payments securely and efficiently
+                    Kestora College partners with <strong>Paygowire</strong> to process tuition payments securely and efficiently
                     for international students.
                 </p>
                 <p>
                     <strong>Steps to complete your payment:</strong>
                 </p>
                 <ol className="list-decimal pl-5 space-y-2">
-                    <li>Log in to your <strong>SYKLI Applicant Portal</strong>.</li>
+                    <li>Log in to your <strong>Kestora Applicant Portal</strong>.</li>
                     <li>Navigate to the 'Payment' section of your accepted application.</li>
                     <li>Click 'Proceed to Payment' to be redirected to the secure <strong>Paygowire gateway</strong>.</li>
                     <li>Select your country and preferred payment method (Bank Transfer, Credit Card, etc.).</li>
@@ -73,7 +73,7 @@ const faqs: FAQItem[] = [
                 </p>
                 <ul className="list-disc pl-5 space-y-2">
                     <li>You must accept your study offer within <strong>14 days</strong> of receiving the admission letter.</li>
-                    <li>The full (discounted) payment must reach SYKLI College's account within <strong>21 days</strong> of the admission offer.</li>
+                    <li>The full (discounted) payment must reach Kestora College's account within <strong>21 days</strong> of the admission offer.</li>
                     <li>This discount applies ONLY to the first academic year and cannot be combined with other tuition fee waivers.</li>
                 </ul>
                 <p>
@@ -132,7 +132,7 @@ const faqs: FAQItem[] = [
         answer: (
             <div className="space-y-4">
                 <p>
-                    SYKLI College rewards academic dedication. Our continuing scholarships (available from the 2nd year onwards)
+                    Kestora College rewards academic dedication. Our continuing scholarships (available from the 2nd year onwards)
                     are based on your performance during the previous academic year.
                 </p>
                 <p>

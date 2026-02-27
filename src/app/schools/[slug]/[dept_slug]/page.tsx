@@ -12,10 +12,22 @@ export async function generateStaticParams() {
     const { data: depts } = await supabase
         .from('Department')
         .select('slug, school:School!inner(slug)');
-    return depts?.map((d: any) => ({
-        slug: (Array.isArray(d.school) ? d.school[0] : d.school)?.slug,
-        dept_slug: d.slug
-    })) || [];
+
+    if (!depts) return [];
+
+    const params: { slug: string, dept_slug: string }[] = [];
+
+    for (const d of depts as any[]) {
+        if (Array.isArray(d.school)) {
+            for (const s of d.school) {
+                params.push({ slug: s.slug, dept_slug: d.slug });
+            }
+        } else if (d.school) {
+            params.push({ slug: d.school.slug, dept_slug: d.slug });
+        }
+    }
+
+    return params;
 }
 
 interface Props {
@@ -37,8 +49,8 @@ export async function generateMetadata({ params }: Props) {
         .single();
 
     return {
-        title: dept ? `${dept.name} — ${(Array.isArray(dept.school) ? dept.school[0] : dept.school)?.name || 'School'} | SYKLI College` : 'Department | SYKLI College',
-        description: dept?.description?.substring(0, 160) || `Learn about the ${dept?.name} at SYKLI College. Research, faculty, and academic programs.`,
+        title: dept ? `${dept.name} — ${(Array.isArray(dept.school) ? dept.school[0] : dept.school)?.name || 'School'} | Kestora College` : 'Department | Kestora College',
+        description: dept?.description?.substring(0, 160) || `Learn about the ${dept?.name} at Kestora College. Research, faculty, and academic programs.`,
     };
 }
 

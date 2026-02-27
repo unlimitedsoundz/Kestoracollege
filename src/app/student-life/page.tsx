@@ -30,7 +30,7 @@ export default function StudentLifePage() {
                             <GraduationCap size={16} weight="bold" /> Campus Experience
                         </div>
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight pt-8">
-                            Student Life at SYKLI
+                            Student Life at Kestora
                         </h1>
                         <p className="text-[21px] text-neutral-800 max-w-xl leading-relaxed">
                             Experience a supportive and vibrant campus environment. From coastal landscapes to modern academic facilities, discover how our community thrives in the heart of Helsinki.
@@ -42,7 +42,7 @@ export default function StudentLifePage() {
                         <div className="relative w-[368px] h-[368px] lg:w-full lg:h-full bg-neutral-800 shadow-2xl">
                             <Image
                                 src="/images/student_life_hero.jpg"
-                                alt="Student Life at SYKLI"
+                                alt="Student Life at Kestora"
                                 fill
                                 priority
                                 className="object-cover"
@@ -70,7 +70,7 @@ export default function StudentLifePage() {
                                 {/* Left: Text Content */}
                                 <div className="space-y-6">
                                     <p className="text-lg text-neutral-700 leading-relaxed">
-                                        The SYKLI College campus is located in the Helsinki metropolitan area and forms a compact academic district where teaching facilities, student services, housing, and leisure areas are closely integrated. The campus is surrounded by coastal landscapes and protected green areas, offering a unique balance between urban infrastructure and natural surroundings.
+                                        The Kestora College campus is located in the Helsinki metropolitan area and forms a compact academic district where teaching facilities, student services, housing, and leisure areas are closely integrated. The campus is surrounded by coastal landscapes and protected green areas, offering a unique balance between urban infrastructure and natural surroundings.
                                     </p>
                                 </div>
 
@@ -79,7 +79,7 @@ export default function StudentLifePage() {
                                     <div className="relative aspect-square rounded-2xl overflow-hidden bg-neutral-100">
                                         <Image
                                             src="/images/news/helsinki_study_hero_1771086748710.png"
-                                            alt="SYKLI College campus location and setting"
+                                            alt="Kestora College campus location and setting"
                                             fill
                                             className="object-cover"
                                             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -98,7 +98,7 @@ export default function StudentLifePage() {
                                     <div className="relative aspect-square rounded-2xl overflow-hidden bg-neutral-100">
                                         <Image
                                             src="/images/student-life/accessibility.jpg"
-                                            alt="Public transport connections at SYKLI College"
+                                            alt="Public transport connections at Kestora College"
                                             fill
                                             className="object-cover"
                                             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -130,7 +130,7 @@ export default function StudentLifePage() {
                         <section id="facilities" className="scroll-mt-32">
                             <h2 className="text-3xl font-bold mb-6">Academic Facilities and Learning Spaces</h2>
                             <p className="text-lg text-neutral-700 leading-relaxed mb-8">
-                                Students at SYKLI College have access to a wide range of learning environments designed to support collaboration and innovation.
+                                Students at Kestora College have access to a wide range of learning environments designed to support collaboration and innovation.
                             </p>
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                                 {[
@@ -187,7 +187,7 @@ export default function StudentLifePage() {
                                     <div className="relative aspect-square rounded-2xl overflow-hidden bg-neutral-100">
                                         <Image
                                             src="/images/student-life/library.jpg"
-                                            alt="SYKLI College Learning Centre"
+                                            alt="Kestora College Learning Centre"
                                             fill
                                             className="object-cover"
                                             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -347,7 +347,7 @@ export default function StudentLifePage() {
                         <section id="future" className="scroll-mt-32">
                             <h2 className="text-3xl font-bold mb-6">Campus Development and Future Growth</h2>
                             <p className="text-lg text-neutral-700 leading-relaxed mb-6">
-                                SYKLI College continues to develop its campus infrastructure to support modern teaching methods, sustainability goals, and student wellbeing. New buildings and renovated facilities focus on energy efficiency, accessibility, and flexible learning environments.
+                                Kestora College continues to develop its campus infrastructure to support modern teaching methods, sustainability goals, and student wellbeing. New buildings and renovated facilities focus on energy efficiency, accessibility, and flexible learning environments.
                             </p>
                         </section>
 
@@ -356,7 +356,7 @@ export default function StudentLifePage() {
                         <section id="summary" className="scroll-mt-32 bg-neutral-100 p-12 border-l-4 border-yellow-500">
                             <h2 className="text-2xl font-bold mb-4">Campus Experience Summary</h2>
                             <p className="text-lg text-neutral-700 leading-relaxed">
-                                Studying at SYKLI College means being part of an integrated academic environment where teaching, research, student life, and daily living coexist within a single campus district. The combination of strong infrastructure, accessible services, active student community, and natural surroundings supports both academic success and personal wellbeing.
+                                Studying at Kestora College means being part of an integrated academic environment where teaching, research, student life, and daily living coexist within a single campus district. The combination of strong infrastructure, accessible services, active student community, and natural surroundings supports both academic success and personal wellbeing.
                             </p>
                         </section>
 

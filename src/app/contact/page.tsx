@@ -6,8 +6,8 @@ import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
 import { SchemaLD } from '@/components/seo/SchemaLD';
 
 export const metadata: Metadata = {
-    title: 'Contact Information | SYKLI College',
-    description: 'Contact details for SYKLI College including Registry, Admissions, Student Services, and general inquiries.',
+    title: 'Contact Information | Kestora College',
+    description: 'Contact details for Kestora College including Registry, Admissions, Student Services, and general inquiries.',
 };
 
 export default function ContactPage() {
@@ -21,12 +21,12 @@ export default function ContactPage() {
             <SchemaLD data={{
                 "@context": "https://schema.org",
                 "@type": "ContactPage",
-                "name": "Contact SYKLI College",
-                "url": "https://syklicollege.fi/contact",
+                "name": "Contact Kestora College",
+                "url": "https://kestora.fi/contact",
                 "mainEntity": {
                     "@type": "EducationalOrganization",
-                    "name": "SYKLI College",
-                    "email": "SYKLI@syklicollege.fi",
+                    "name": "Kestora College",
+                    "email": "Kestora@kestora.fi",
                     "address": {
                         "@type": "PostalAddress",
                         "streetAddress": "Pohjoisesplanadi 51",
@@ -41,7 +41,7 @@ export default function ContactPage() {
                 <div className="container mx-auto px-4">
                     <h1 className="text-4xl md:text-5xl font-bold mb-6 pt-8">Contact Information</h1>
                     <p className="text-xl text-white/80 max-w-2xl">
-                        SYKLI College provides contact information for administrative services including Registry, Admissions,
+                        Kestora College provides contact information for administrative services including Registry, Admissions,
                         Student Services and general inquiries to support students, applicants, staff and partners.
                     </p>
                 </div>
@@ -67,7 +67,7 @@ export default function ContactPage() {
                                 Postal Address
                             </h3>
                             <address className="not-italic text-neutral-600 leading-relaxed">
-                                SYKLI College – Helsinki Campus<br />
+                                Kestora College – Helsinki Campus<br />
                                 Pohjoisesplanadi 51,<br />
                                 00150 Helsinki, Uusimaa,<br />
                                 Finland
@@ -87,11 +87,11 @@ export default function ContactPage() {
                             <div className="space-y-3">
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Mail className="w-4 h-4" />
-                                    <a href="mailto:registry@syklicollege.fi" className="hover:text-neutral-900 hover:underline transition-colors">registry@syklicollege.fi</a>
+                                    <a href="mailto:registry@kestora.fi" className="hover:text-neutral-900 hover:underline transition-colors">registry@kestora.fi</a>
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <MapPin className="w-4 h-4" weight="regular" />
-                                    <span className="text-sm">SYKLI College – Helsinki Campus, Pohjoisesplanadi 51</span>
+                                    <span className="text-sm">Kestora College – Helsinki Campus, Pohjoisesplanadi 51</span>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@ export default function ContactPage() {
                             <div className="space-y-3">
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Mail className="w-4 h-4" />
-                                    <a href="mailto:admissions@syklicollege.fi" className="hover:text-neutral-900 hover:underline transition-colors">admissions@syklicollege.fi</a>
+                                    <a href="mailto:admissions@kestora.fi" className="hover:text-neutral-900 hover:underline transition-colors">admissions@kestora.fi</a>
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Phone className="w-4 h-4" />
@@ -127,7 +127,7 @@ export default function ContactPage() {
                             <div className="space-y-3">
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Mail className="w-4 h-4" />
-                                    <a href="mailto:studentservices@syklicollege.fi" className="hover:text-neutral-900 hover:underline transition-colors">studentservices@syklicollege.fi</a>
+                                    <a href="mailto:studentservices@kestora.fi" className="hover:text-neutral-900 hover:underline transition-colors">studentservices@kestora.fi</a>
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Phone className="w-4 h-4" />
@@ -146,7 +146,7 @@ export default function ContactPage() {
                             <div className="space-y-3">
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Mail className="w-4 h-4" />
-                                    <a href="mailto:archives@syklicollege.fi" className="hover:text-neutral-900 hover:underline transition-colors">archives@syklicollege.fi</a>
+                                    <a href="mailto:archives@kestora.fi" className="hover:text-neutral-900 hover:underline transition-colors">archives@kestora.fi</a>
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Phone className="w-4 h-4" />

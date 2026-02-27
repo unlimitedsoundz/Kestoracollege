@@ -32,7 +32,7 @@ export default function LoginPage() {
             if (result?.success) {
                 router.push('/portal/dashboard');
                 // Clean up any old simulated session
-                localStorage.removeItem('SYKLI_user');
+                localStorage.removeItem('Kestora_user');
             }
         } catch (error: any) {
             console.error('Login error:', error);

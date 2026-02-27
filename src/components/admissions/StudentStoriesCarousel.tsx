@@ -9,14 +9,14 @@ const stories = [
         id: 1,
         name: 'Uchida Ideguchi',
         programme: "Bachelor's in International Business",
-        quote: "SYKLI College provided me with a unique multidisciplinary environment where I could combine my interest in tech with business strategy. The practical projects were eye-opening.",
+        quote: "Kestora College provided me with a unique multidisciplinary environment where I could combine my interest in tech with business strategy. The practical projects were eye-opening.",
         image: '/images/admissions/student_stories_1.png'
     },
     {
         id: 2,
         name: 'Maria Petrova',
         programme: "Master's in Design Management",
-        quote: "Studying in Finland has been a life-changing experience. The focus on work-life balance and deep collaborative research at SYKLI is truly world-class.",
+        quote: "Studying in Finland has been a life-changing experience. The focus on work-life balance and deep collaborative research at Kestora is truly world-class.",
         image: '/images/admissions/student_stories_2.png'
     }
 ];

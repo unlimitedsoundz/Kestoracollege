@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export const metadata = {
-    title: 'Accessibility Statement | SYKLI College',
+    title: 'Accessibility Statement | Kestora College',
     description: 'Our commitment to ensuring digital accessibility for all users including students, staff and partners.',
 };
 
@@ -17,7 +17,7 @@ export default function AccessibilityPage() {
                             Accessibility Statement
                         </h1>
                         <p className="text-lg text-neutral-600 leading-relaxed">
-                            SYKLI College is committed to ensuring digital accessibility for all users, regardless of ability or technology used.
+                            Kestora College is committed to ensuring digital accessibility for all users, regardless of ability or technology used.
                         </p>
                     </div>
                 </div>
@@ -64,24 +64,24 @@ export default function AccessibilityPage() {
                             <section id="commitment" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">1. Commitment to Accessibility</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    SYKLI College is committed to ensuring digital accessibility for all users including students applicants staff partners and members of the public. We strive to provide an inclusive online environment that allows everyone to access information services and digital content equally regardless of ability or technology used.
+                                    Kestora College is committed to ensuring digital accessibility for all users including students applicants staff partners and members of the public. We strive to provide an inclusive online environment that allows everyone to access information services and digital content equally regardless of ability or technology used.
                                 </p>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    This Accessibility Statement describes how SYKLI College complies with applicable accessibility legislation and standards and how users can report accessibility issues.
+                                    This Accessibility Statement describes how Kestora College complies with applicable accessibility legislation and standards and how users can report accessibility issues.
                                 </p>
                             </section>
 
                             <section id="scope" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">2. Scope of This Statement</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    This Accessibility Statement applies to the official SYKLI College website and related digital services including online application platforms learning management systems and publicly available digital content provided by SYKLI College.
+                                    This Accessibility Statement applies to the official Kestora College website and related digital services including online application platforms learning management systems and publicly available digital content provided by Kestora College.
                                 </p>
                             </section>
 
                             <section id="standards" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">3. Accessibility Standards and Legislation</h2>
                                 <p className="text-neutral-700 leading-relaxed mb-6">
-                                    SYKLI College aims to comply with the following standards and legal requirements:
+                                    Kestora College aims to comply with the following standards and legal requirements:
                                 </p>
                                 <ul className="space-y-2 text-neutral-700 list-none p-0 text-sm">
                                     <li>• Web Content Accessibility Guidelines WCAG 2.1 level AA</li>
@@ -97,14 +97,14 @@ export default function AccessibilityPage() {
                             <section id="status" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">4. Accessibility Status</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    SYKLI College digital services are partially compliant with WCAG 2.1 level AA. Continuous efforts are being made to improve accessibility and to address any identified shortcomings.
+                                    Kestora College digital services are partially compliant with WCAG 2.1 level AA. Continuous efforts are being made to improve accessibility and to address any identified shortcomings.
                                 </p>
                             </section>
 
                             <section id="features" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">5. Accessible Content and Features</h2>
                                 <p className="text-neutral-700 leading-relaxed mb-6">
-                                    The following accessibility features are implemented across SYKLI College digital platforms where possible:
+                                    The following accessibility features are implemented across Kestora College digital platforms where possible:
                                 </p>
                                 <ul className="space-y-3 text-neutral-700 list-none p-0 text-sm">
                                     <li>• Clear and consistent navigation structures</li>
@@ -125,36 +125,36 @@ export default function AccessibilityPage() {
                                 </p>
                                 <ul className="space-y-2 text-neutral-700 list-none p-0 text-sm">
                                     <li>• Older documents such as PDF files that are not fully accessible</li>
-                                    <li>• Third party content or systems not fully controlled by SYKLI College</li>
+                                    <li>• Third party content or systems not fully controlled by Kestora College</li>
                                     <li>• Complex data visualisations that may require additional accessibility enhancements</li>
                                     <li>• Video or audio content that may lack captions or transcripts</li>
                                 </ul>
                                 <p className="text-neutral-700 leading-relaxed mt-4">
-                                    SYKLI College is actively working to address these issues and prioritises accessibility improvements based on user impact.
+                                    Kestora College is actively working to address these issues and prioritises accessibility improvements based on user impact.
                                 </p>
                             </section>
 
                             <section id="alternative" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">7. Alternative Access</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    If a user is unable to access specific content or services due to accessibility limitations SYKLI College will provide information in an alternative accessible format upon request whenever reasonably possible.
+                                    If a user is unable to access specific content or services due to accessibility limitations Kestora College will provide information in an alternative accessible format upon request whenever reasonably possible.
                                 </p>
                             </section>
 
                             <section id="feedback" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">8. Feedback and Contact Information</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    SYKLI College welcomes feedback on the accessibility of its digital services. Users who experience accessibility barriers or require assistance are encouraged to contact the institution.
+                                    Kestora College welcomes feedback on the accessibility of its digital services. Users who experience accessibility barriers or require assistance are encouraged to contact the institution.
                                 </p>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    Accessibility related feedback can be submitted through the official SYKLI College contact channels listed on the website. Requests will be handled promptly and in accordance with applicable regulations.
+                                    Accessibility related feedback can be submitted through the official Kestora College contact channels listed on the website. Requests will be handled promptly and in accordance with applicable regulations.
                                 </p>
                             </section>
 
                             <section id="enforcement" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">9. Enforcement Procedure</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    If a user is not satisfied with the response received from SYKLI College they may contact the supervisory authority responsible for monitoring digital accessibility in Finland.
+                                    If a user is not satisfied with the response received from Kestora College they may contact the supervisory authority responsible for monitoring digital accessibility in Finland.
                                 </p>
                                 <p className="text-neutral-700 leading-relaxed">
                                     Information about the supervisory authority and the enforcement procedure is available on the official Finnish government websites.
@@ -164,7 +164,7 @@ export default function AccessibilityPage() {
                             <section id="improvement" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">10. Continuous Improvement</h2>
                                 <p className="text-neutral-700 leading-relaxed mb-4">
-                                    SYKLI College regularly reviews and updates its digital services to improve accessibility. This includes:
+                                    Kestora College regularly reviews and updates its digital services to improve accessibility. This includes:
                                 </p>
                                 <ul className="space-y-2 text-neutral-700 list-none p-0 text-sm">
                                     <li>• Ongoing accessibility testing and audits</li>
@@ -177,7 +177,7 @@ export default function AccessibilityPage() {
                             <section id="preparation" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">11. Preparation of This Statement</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    This Accessibility Statement was prepared based on internal assessments and reviews of SYKLI College digital services.
+                                    This Accessibility Statement was prepared based on internal assessments and reviews of Kestora College digital services.
                                 </p>
                                 <p className="text-neutral-700 leading-relaxed">
                                     The statement is reviewed periodically and updated when significant changes are made to digital services or accessibility standards.
@@ -187,7 +187,7 @@ export default function AccessibilityPage() {
                             <section id="date" className="scroll-mt-32 space-y-4 pt-8">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">12. Date of Statement</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    This Accessibility Statement is effective upon publication and reflects the current accessibility status of SYKLI College digital services.
+                                    This Accessibility Statement is effective upon publication and reflects the current accessibility status of Kestora College digital services.
                                 </p>
                             </section>
 

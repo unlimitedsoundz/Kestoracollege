@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-    title: 'Privacy Policy | SYKLI College',
-    description: 'Learn how SYKLI College protects your personal data and respects your privacy in accordance with GDPR and Finnish laws.',
+    title: 'Privacy Policy | Kestora College',
+    description: 'Learn how Kestora College protects your personal data and respects your privacy in accordance with GDPR and Finnish laws.',
 };
 
 export default function PrivacyPolicyPage() {
@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
                             Privacy Policy
                         </h1>
                         <p className="text-lg text-neutral-600 leading-relaxed">
-                            How SYKLI College handles personal data in accordance with the GDPR and Finnish data protection legislation.
+                            How Kestora College handles personal data in accordance with the GDPR and Finnish data protection legislation.
                         </p>
                     </div>
                 </div>
@@ -66,32 +66,32 @@ export default function PrivacyPolicyPage() {
                             <section id="introduction" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">1. Introduction</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    SYKLI College is committed to protecting the privacy and personal data of its students, applicants, staff, partners, alumni, and website users. This Privacy Policy explains how SYKLI College collects, uses, stores, shares, and protects personal data in accordance with applicable data protection laws, including the General Data Protection Regulation (GDPR) and relevant Finnish data protection legislation.
+                                    Kestora College is committed to protecting the privacy and personal data of its students, applicants, staff, partners, alumni, and website users. This Privacy Policy explains how Kestora College collects, uses, stores, shares, and protects personal data in accordance with applicable data protection laws, including the General Data Protection Regulation (GDPR) and relevant Finnish data protection legislation.
                                 </p>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    By engaging with SYKLI College, including applying for admission, enrolling in programmes, using our services, or visiting our digital platforms, you acknowledge that your personal data may be processed as described in this policy.
+                                    By engaging with Kestora College, including applying for admission, enrolling in programmes, using our services, or visiting our digital platforms, you acknowledge that your personal data may be processed as described in this policy.
                                 </p>
                             </section>
 
                             <section id="data-controller" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">2. Data Controller</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    SYKLI College acts as the data controller for personal data processed in relation to its educational, administrative, and operational activities.
-                                    Contact details of the Data Protection Officer or responsible unit will be made available on the official SYKLI College website.
+                                    Kestora College acts as the data controller for personal data processed in relation to its educational, administrative, and operational activities.
+                                    Contact details of the Data Protection Officer or responsible unit will be made available on the official Kestora College website.
                                 </p>
                             </section>
 
                             <section id="scope" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">3. Scope of This Policy</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    This Privacy Policy applies to all personal data processed by SYKLI College, including data related to prospective students, enrolled students, graduates, staff, visiting lecturers, partners, research participants, and users of SYKLI College websites, systems, and services.
+                                    This Privacy Policy applies to all personal data processed by Kestora College, including data related to prospective students, enrolled students, graduates, staff, visiting lecturers, partners, research participants, and users of Kestora College websites, systems, and services.
                                 </p>
                             </section>
 
                             <section id="categories" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">4. Categories of Personal Data Collected</h2>
                                 <p className="text-neutral-700 leading-relaxed mb-6">
-                                    SYKLI College may collect and process the following categories of personal data where relevant and lawful:
+                                    Kestora College may collect and process the following categories of personal data where relevant and lawful:
                                 </p>
                                 <ul className="space-y-4 text-neutral-700 list-none p-0">
                                     <li><span className="font-bold">Identification data:</span> name, date of birth, nationality, and identification numbers where required by law</li>
@@ -104,7 +104,7 @@ export default function PrivacyPolicyPage() {
                                     <li><span className="font-bold">Communication data:</span> emails, messages, feedback, surveys, and support requests</li>
                                 </ul>
                                 <p className="text-sm text-neutral-500 italic mt-6">
-                                    SYKLI College does not intentionally collect sensitive personal data unless required by law or necessary to fulfil statutory obligations.
+                                    Kestora College does not intentionally collect sensitive personal data unless required by law or necessary to fulfil statutory obligations.
                                 </p>
                             </section>
 
@@ -124,7 +124,7 @@ export default function PrivacyPolicyPage() {
                             <section id="purposes" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">6. Purposes of Data Processing</h2>
                                 <p className="text-neutral-700 leading-relaxed mb-6">
-                                    SYKLI College processes personal data for the following purposes:
+                                    Kestora College processes personal data for the following purposes:
                                 </p>
                                 <ul className="space-y-2 text-neutral-700 list-none p-0 text-sm">
                                     <li>• Managing student admissions and academic administration</li>
@@ -151,14 +151,14 @@ export default function PrivacyPolicyPage() {
                             <section id="sharing" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">8. Data Sharing and Disclosure</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    SYKLI College may share personal data with third parties only where necessary and lawful, including government authorities, educational partners, service providers, and research partners. All third parties are required to process data in accordance with law and confidentiality obligations.
+                                    Kestora College may share personal data with third parties only where necessary and lawful, including government authorities, educational partners, service providers, and research partners. All third parties are required to process data in accordance with law and confidentiality obligations.
                                 </p>
                             </section>
 
                             <section id="transfers" className="scroll-mt-32 space-y-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">9. International Data Transfers</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    Where personal data is transferred outside the EEA, SYKLI College ensures appropriate safeguards are in place, such as adequacy decisions or standard contractual clauses.
+                                    Where personal data is transferred outside the EEA, Kestora College ensures appropriate safeguards are in place, such as adequacy decisions or standard contractual clauses.
                                 </p>
                             </section>
 
@@ -203,11 +203,11 @@ export default function PrivacyPolicyPage() {
                             <section id="contact" className="scroll-mt-32 space-y-4 pt-8 underline-offset-4">
                                 <h2 className="text-2xl font-bold text-black border-b border-black pb-10 pl-2">14. Contact Information</h2>
                                 <p className="text-neutral-700 leading-relaxed">
-                                    For questions or requests, please contact SYKLI College through the official channels listed on our website.
+                                    For questions or requests, please contact Kestora College through the official channels listed on our website.
                                 </p>
                                 <div className="pt-4">
                                     <p className="text-sm font-bold text-black">Data Protection Officer</p>
-                                    <p className="text-sm text-neutral-500">privacy@syklicollege.fi</p>
+                                    <p className="text-sm text-neutral-500">privacy@kestora.fi</p>
                                 </div>
                             </section>
 

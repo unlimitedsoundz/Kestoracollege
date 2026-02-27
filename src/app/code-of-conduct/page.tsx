@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Code of Conduct — SYKLI College',
-    description: 'The Code of Conduct establishes standards of behavior expected of all members of the SYKLI College community, ensuring a safe, respectful, and ethical environment.',
+    title: 'Code of Conduct — Kestora College',
+    description: 'The Code of Conduct establishes standards of behavior expected of all members of the Kestora College community, ensuring a safe, respectful, and ethical environment.',
 };
 
 export default function CodeOfConductPage() {
@@ -33,7 +33,7 @@ export default function CodeOfConductPage() {
                             </div>
                             <div className="pl-14">
                                 <p className="text-black leading-relaxed mb-4">
-                                    The Code of Conduct of SYKLI College establishes standards of behavior expected of all members of the College community. It aims to ensure a safe, respectful, ethical, and academically focused environment that supports learning and institutional integrity.
+                                    The Code of Conduct of Kestora College establishes standards of behavior expected of all members of the College community. It aims to ensure a safe, respectful, ethical, and academically focused environment that supports learning and institutional integrity.
                                 </p>
                                 <p className="text-black mb-2 font-bold">This Code applies to conduct occurring:</p>
                                 <ul className="space-y-2">
@@ -51,7 +51,7 @@ export default function CodeOfConductPage() {
                                     </li>
                                     <li className="flex items-start gap-3 text-black">
                                         <span className="w-1.5 h-1.5 bg-black rounded-full mt-2 shrink-0"></span>
-                                        In any context where a student represents SYKLI College
+                                        In any context where a student represents Kestora College
                                     </li>
                                 </ul>
                             </div>
@@ -94,7 +94,7 @@ export default function CodeOfConductPage() {
                                 <h2 className="text-2xl font-bold">Core Values</h2>
                             </div>
                             <div className="pl-14">
-                                <p className="text-black mb-4">Members of the SYKLI College community are expected to uphold the following values:</p>
+                                <p className="text-black mb-4">Members of the Kestora College community are expected to uphold the following values:</p>
                                 <ul className="space-y-2">
                                     <li className="flex items-start gap-3 text-black">
                                         <span className="w-1.5 h-1.5 bg-black rounded-full mt-2 shrink-0"></span>
@@ -253,7 +253,7 @@ export default function CodeOfConductPage() {
                                         </li>
                                         <li className="flex items-start gap-3 text-black">
                                             <span className="w-1.5 h-1.5 bg-black rounded-full mt-2 shrink-0"></span>
-                                            Misrepresentation of affiliation with SYKLI College
+                                            Misrepresentation of affiliation with Kestora College
                                         </li>
                                     </ul>
                                 </div>
@@ -533,7 +533,7 @@ export default function CodeOfConductPage() {
                                 <h2 className="text-2xl font-bold">Non-Retaliation</h2>
                             </div>
                             <div className="pl-14">
-                                <p className="text-black mb-2">SYKLI College prohibits retaliation against individuals who:</p>
+                                <p className="text-black mb-2">Kestora College prohibits retaliation against individuals who:</p>
                                 <ul className="space-y-2 mb-2">
                                     <li className="flex items-start gap-3 text-black">
                                         <span className="w-1.5 h-1.5 bg-black rounded-full mt-2 shrink-0"></span>
@@ -581,7 +581,7 @@ export default function CodeOfConductPage() {
                                 <h2 className="text-2xl font-bold">Amendments and Review</h2>
                             </div>
                             <div className="pl-14">
-                                <p className="text-black mb-2">SYKLI College reserves the right to:</p>
+                                <p className="text-black mb-2">Kestora College reserves the right to:</p>
                                 <ul className="space-y-2 mb-2">
                                     <li className="flex items-start gap-3 text-black">
                                         <span className="w-1.5 h-1.5 bg-black rounded-full mt-2 shrink-0"></span>

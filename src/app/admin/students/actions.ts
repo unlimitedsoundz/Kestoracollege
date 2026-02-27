@@ -35,7 +35,7 @@ export async function enrollStudent(applicationId: string) {
         }
 
         // 3. Generate Unique Institutional Email
-        let institutionalEmail = `${user.first_name.toLowerCase()}.${user.last_name.toLowerCase()}@syklicollege.fi`;
+        let institutionalEmail = `${user.first_name.toLowerCase()}.${user.last_name.toLowerCase()}@kestora.fi`;
 
         // Sanitize (remove spaces, etc.)
         institutionalEmail = institutionalEmail.replace(/\s+/g, '');
@@ -49,7 +49,7 @@ export async function enrollStudent(applicationId: string) {
 
         if (existingEmail) {
             // Append a random number if conflict
-            institutionalEmail = `${user.first_name.toLowerCase()}.${user.last_name.toLowerCase()}${Math.floor(Math.random() * 100)}@syklicollege.fi`.replace(/\s+/g, '');
+            institutionalEmail = `${user.first_name.toLowerCase()}.${user.last_name.toLowerCase()}${Math.floor(Math.random() * 100)}@kestora.fi`.replace(/\s+/g, '');
         }
 
         // 4. Create Student Record

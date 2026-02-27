@@ -1,7 +1,7 @@
 
 export const metadata = {
-    title: 'Collaboration & Partnerships — SYKLI College',
-    description: 'Partner with SYKLI College for research, innovation, and education. Join our network of industry leaders, government agencies, and non-profits driving systemic change.',
+    title: 'Collaboration & Partnerships — Kestora College',
+    description: 'Partner with Kestora College for research, innovation, and education. Join our network of industry leaders, government agencies, and non-profits driving systemic change.',
 };
 
 export default function CollaborationPage() {
@@ -9,7 +9,7 @@ export default function CollaborationPage() {
         <div className="min-h-screen bg-neutral-50">
             <div className="bg-blue-900 text-white py-20 text-center">
                 <div className="container mx-auto px-4">
-                    <h1 className="text-4xl font-bold mb-4 pt-8">Partner with SYKLI</h1>
+                    <h1 className="text-4xl font-bold mb-4 pt-8">Partner with Kestora</h1>
                     <p className="text-xl text-blue-100 max-w-2xl mx-auto">
                         Join our network of industry leaders, government agencies, and non-profits driving systemic change.
                     </p>

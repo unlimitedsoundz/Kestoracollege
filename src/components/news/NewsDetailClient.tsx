@@ -77,13 +77,13 @@ export default function NewsDetailClient({ initialNews }: NewsDetailClientProps)
                     <div className="relative aspect-[16/9] rounded-xl overflow-hidden">
                         <Image
                             src="/images/news/helsinki-study-hero.png"
-                            alt="International students at SYKLI College campus in Helsinki"
+                            alt="International students at Kestora College campus in Helsinki"
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 700px"
                         />
                     </div>
-                    <p className="text-xs text-neutral-500 mt-3">SYKLI College | Photo by Markus Aalborg</p>
+                    <p className="text-xs text-neutral-500 mt-3">Kestora College | Photo by Markus Aalborg</p>
                 </div>
 
                 {/* Related Links */}

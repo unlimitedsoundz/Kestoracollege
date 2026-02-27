@@ -5,14 +5,14 @@ import Image from 'next/image';
 import TableOfContents from '@/components/course/TableOfContents';
 
 export const metadata = {
-    title: 'Arrival Guide | SYKLI College',
-    description: 'Prepare for your journey to SYKLI College. Enrolment, visa, housing, and settling in instructions.',
+    title: 'Arrival Guide | Kestora College',
+    description: 'Prepare for your journey to Kestora College. Enrolment, visa, housing, and settling in instructions.',
 };
 
 const tocSections = [
     { id: 'before-you-arrive', title: 'Before You Arrive', content: '' },
     { id: 'arriving', title: 'Arriving in the Country', content: '' },
-    { id: 'starting', title: 'Starting at SYKLI', content: '' },
+    { id: 'starting', title: 'Starting at Kestora', content: '' },
     { id: 'living', title: 'Living & Studying', content: '' },
     { id: 'welcome', title: 'Welcome Message', content: '' },
 ];
@@ -24,7 +24,7 @@ export default function ArrivalGuidePage() {
             <div className="w-full h-[60vh] relative bg-neutral-900 overflow-hidden">
                 <Image
                     src="/images/arrival-hero-v2.jpg"
-                    alt="SYKLI College Students Arriving"
+                    alt="Kestora College Students Arriving"
                     fill
                     priority
                     className="object-cover"
@@ -38,10 +38,10 @@ export default function ArrivalGuidePage() {
                             <span className="text-xs font-bold uppercase tracking-[0.3em]">Student Arrival Guide</span>
                         </div>
                         <h1 className="text-4xl md:text-7xl font-bold text-white mb-6 uppercase tracking-tighter pt-8">
-                            Welcome to SYKLI College
+                            Welcome to Kestora College
                         </h1>
                         <p className="text-lg md:text-xl text-neutral-300 max-w-2xl leading-relaxed font-medium">
-                            Starting your studies at SYKLI College is an exciting step. This guide helps you prepare, settle in, and feel confident.
+                            Starting your studies at Kestora College is an exciting step. This guide helps you prepare, settle in, and feel confident.
                         </p>
                     </div>
                 </div>
@@ -147,10 +147,10 @@ export default function ArrivalGuidePage() {
                             </div>
                         </section>
 
-                        {/* Starting at SYKLI College */}
+                        {/* Starting at Kestora College */}
                         <section id="starting" className="scroll-mt-32">
                             <div className="bg-black text-white p-12 rounded-sm space-y-8">
-                                <h2 className="text-3xl font-black uppercase tracking-tight">Starting at SYKLI</h2>
+                                <h2 className="text-3xl font-black uppercase tracking-tight">Starting at Kestora</h2>
 
                                 <div className="grid md:grid-cols-2 gap-12">
                                     <div>
@@ -205,7 +205,7 @@ export default function ArrivalGuidePage() {
                                             </p>
                                             <div className="bg-neutral-50 p-6 rounded-sm italic">
                                                 <p className="text-neutral-700 text-xs leading-relaxed uppercase tracking-tight font-medium">
-                                                    For enrolled exchange, visiting and international degree students, SYKLI College offers free Finnish language courses. They are a fun way to learn the language and network with other students across the fields, and you get to know the culture as well.
+                                                    For enrolled exchange, visiting and international degree students, Kestora College offers free Finnish language courses. They are a fun way to learn the language and network with other students across the fields, and you get to know the culture as well.
                                                 </p>
                                             </div>
                                             <p className="text-neutral-600 text-xs leading-relaxed uppercase tracking-tight font-medium">
@@ -224,7 +224,7 @@ export default function ArrivalGuidePage() {
                                     <div className="pb-8">
                                         <h4 className="text-sm font-bold uppercase tracking-widest mb-3">Stay Connected</h4>
                                         <p className="text-neutral-600 text-sm leading-relaxed uppercase tracking-tight font-medium">
-                                            Check your SYKLI email and student portal regularly for updates, schedules, and important announcements.
+                                            Check your Kestora email and student portal regularly for updates, schedules, and important announcements.
                                         </p>
                                     </div>
                                 </div>
@@ -237,7 +237,7 @@ export default function ArrivalGuidePage() {
                                 <Heart className="text-primary mb-6" size={32} weight="fill" />
                                 <h2 className="text-4xl font-black mb-6 uppercase tracking-tight">We Are Glad You Are Here</h2>
                                 <p className="text-lg text-neutral-700 leading-relaxed uppercase tracking-tight font-medium opacity-80 mb-8 italic">
-                                    &quot;Arriving in a new place can feel overwhelming, but SYKLI College is here to support you from arrival through graduation. With preparation and curiosity, your experience will be both rewarding and memorable.&quot;
+                                    &quot;Arriving in a new place can feel overwhelming, but Kestora College is here to support you from arrival through graduation. With preparation and curiosity, your experience will be both rewarding and memorable.&quot;
                                 </p>
                                 <div className="flex gap-4">
                                     <Link

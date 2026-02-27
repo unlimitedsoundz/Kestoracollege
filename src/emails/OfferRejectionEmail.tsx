@@ -37,10 +37,10 @@ export default function OfferRejectionEmail({
                     <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
                         <Section className="mt-[32px]">
                             <Img
-                                src="https://syklicollege.fi/logo.png" // Replace with actual logo URL
+                                src="https://kestora.fi/logo-kestora.png" // Replace with actual logo URL
                                 width="40"
                                 height="40"
-                                alt="SYKLI College"
+                                alt="Kestora College"
                                 className="my-0 mx-auto"
                             />
                         </Section>
@@ -54,7 +54,7 @@ export default function OfferRejectionEmail({
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">
-                            We have received your decision to decline the offer of admission to the <strong>{courseName}</strong> program at SYKLI College.
+                            We have received your decision to decline the offer of admission to the <strong>{courseName}</strong> program at Kestora College.
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">
@@ -62,7 +62,7 @@ export default function OfferRejectionEmail({
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">
-                            If you declined this offer by mistake, please contact our Admissions Office immediately at <Link href="mailto:admissions@syklicollege.fi" className="text-blue-600 no-underline">admissions@syklicollege.fi</Link>.
+                            If you declined this offer by mistake, please contact our Admissions Office immediately at <Link href="mailto:admissions@kestora.fi" className="text-blue-600 no-underline">admissions@kestora.fi</Link>.
                         </Text>
 
                         <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />

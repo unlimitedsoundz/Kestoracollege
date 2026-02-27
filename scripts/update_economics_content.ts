@@ -17,7 +17,7 @@ const sections = [
         title: "Description",
         id: "description",
         content: `
-            <p class="mb-4">The Economics program at SYKLI College provides a comprehensive understanding of economic theory, quantitative methods, and applied policy analysis. Students learn to analyze micro- and macroeconomic systems, market structures, and economic policy challenges. The program combines rigorous theoretical knowledge with practical applications in finance, labor economics, environmental economics, urban economics, and econometrics.</p>
+            <p class="mb-4">The Economics program at Kestora College provides a comprehensive understanding of economic theory, quantitative methods, and applied policy analysis. Students learn to analyze micro- and macroeconomic systems, market structures, and economic policy challenges. The program combines rigorous theoretical knowledge with practical applications in finance, labor economics, environmental economics, urban economics, and econometrics.</p>
             <p>The program is suitable for students aiming to pursue careers in economic research, policy-making, consultancy, or international organizations.</p>
         `
     },
@@ -43,7 +43,7 @@ const sections = [
                     <li>Need-based financial aid for eligible students</li>
                     <li>International scholarships for MSc candidates</li>
                 </ul>
-                <p class="mt-2 text-sm text-neutral-500">Detailed scholarship information and application procedures are available on the SYKLI College Scholarships page.</p>
+                <p class="mt-2 text-sm text-neutral-500">Detailed scholarship information and application procedures are available on the Kestora College Scholarships page.</p>
             </div>
         `
     },
@@ -126,7 +126,7 @@ const sections = [
         title: "Research Focus",
         id: "research",
         content: `
-            <p class="mb-2">SYKLI College Economics Department focuses on:</p>
+            <p class="mb-2">Kestora College Economics Department focuses on:</p>
             <ul class="list-disc pl-5 space-y-1">
                 <li>Applied econometrics and microeconomic policy</li>
                 <li>Environmental and energy market economics</li>
@@ -166,9 +166,9 @@ const sections = [
         title: "Contact Information",
         id: "contact",
         content: `
-            <p><strong>SYKLI College School of Business – Economics Department</strong></p>
-            <p>Email: <a href="mailto:economics@syklicollege.com" class="text-emerald-600 hover:underline">economics@syklicollege.com</a></p>
-            <p>Address: SYKLI College, Otaniemi Campus, Finland</p>
+            <p><strong>Kestora College School of Business – Economics Department</strong></p>
+            <p>Email: <a href="mailto:economics@kestora.com" class="text-emerald-600 hover:underline">economics@kestora.com</a></p>
+            <p>Address: Kestora College, Otaniemi Campus, Finland</p>
             <p>Office Hours: Monday–Friday, 9:00–17:00</p>
         `
     }

@@ -70,7 +70,7 @@ export async function initiatePayment(
 
         // Mock PayGoWire Interaction
         const pgwTxId = `PGW-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-        const mockPaymentUrl = `https://syklicollege.fi/portal/application/payment/verify?ref=${pgwTxId}`;
+        const mockPaymentUrl = `https://kestora.fi/portal/application/payment/verify?ref=${pgwTxId}`;
 
         // Create Payment Record
         const { error: paymentError } = await supabase

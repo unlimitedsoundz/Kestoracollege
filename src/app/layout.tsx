@@ -25,9 +25,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://www.syklicollege.fi'),
-    title: "SYKLI College Helsinki | English-Taught Degrees in Finland",
-    description: "SYKLI College Helsinki is an independent higher education institution in Finland offering English-taught degree programs for international students. Not affiliated with Suomen ympäristöopisto SYKLI.",
+    metadataBase: new URL('https://www.kestora.fi'),
+    title: "Kestora College Helsinki | English-Taught Degrees in Finland",
+    description: "Kestora College Helsinki is an independent higher education institution in Finland offering English-taught degree programs for international students.",
     alternates: {
         canonical: '/',
     },
@@ -47,14 +47,14 @@ export default function RootLayout({
                         __html: JSON.stringify({
                             "@context": "https://schema.org",
                             "@type": "CollegeOrUniversity",
-                            "name": "SYKLI College",
-                            "description": "SYKLI College is an independent higher education institution in Helsinki, Finland offering English-taught degree programs for international students. SYKLI College is not affiliated with Suomen ympäristöopisto SYKLI.",
-                            "alternateName": "SYKLI College Helsinki",
-                            "url": "https://www.syklicollege.fi",
-                            "logo": "https://www.syklicollege.fi/logo.png",
+                            "name": "Kestora College",
+                            "description": "Kestora College is an independent higher education institution in Helsinki, Finland offering English-taught degree programs for international students.",
+                            "alternateName": "Kestora College Helsinki",
+                            "url": "https://www.kestora.fi",
+                            "logo": "https://www.kestora.fi/logo-kestora.png",
                             "address": {
                                 "@type": "PostalAddress",
-                                "streetAddress": "SYKLI College – Helsinki Campus, Pohjoisesplanadi 51",
+                                "streetAddress": "Kestora College – Helsinki Campus, Pohjoisesplanadi 51",
                                 "addressLocality": "Helsinki",
                                 "postalCode": "00150",
                                 "addressRegion": "Uusimaa",
@@ -65,13 +65,13 @@ export default function RootLayout({
                                 "name": "Helsinki, Finland"
                             },
                             "sameAs": [
-                                "https://www.linkedin.com/company/sykli-college"
+                                "https://www.linkedin.com/company/kestora-college"
                             ],
                             "contactPoint": {
                                 "@type": "ContactPoint",
                                 "telephone": "+358-20-4721-739",
                                 "contactType": "admissions",
-                                "email": "admissions@syklicollege.fi"
+                                "email": "admissions@kestora.fi"
                             }
                         })
                     }}

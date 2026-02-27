@@ -5,7 +5,7 @@ import Image from 'next/image';
 import TableOfContents from '@/components/course/TableOfContents';
 
 export const metadata = {
-    title: 'International Students Guide | SYKLI College',
+    title: 'International Students Guide | Kestora College',
     description: 'Practical guide for international students: permits, housing, moving to Finland, and settling in.',
 };
 
@@ -67,7 +67,7 @@ export default function InternationalGuidePage() {
                             International Students
                         </h1>
                         <p className="text-xl text-neutral-300 max-w-2xl leading-relaxed">
-                            Practical guidance for your journey to Finland and SYKLI College.
+                            Practical guidance for your journey to Finland and Kestora College.
                         </p>
                     </div>
                 </div>
@@ -112,7 +112,7 @@ export default function InternationalGuidePage() {
                                             Nature is also an integral part of life in the capital city, Helsinki. The city is safe, compact, and located by the sea, combining vibrant urban culture with easy access to green spaces. With over 70,000 university students, Helsinki provides a dynamic student environment with diverse leisure opportunities and comprehensive student services.
                                         </p>
                                         <p className="font-bold text-black border-l-2 border-black pl-5 py-1">
-                                            SYKLI College operates across four campuses within the city, along with 15 additional locations across Finland and internationally, offering a broad and flexible academic environment.
+                                            Kestora College operates across four campuses within the city, along with 15 additional locations across Finland and internationally, offering a broad and flexible academic environment.
                                         </p>
 
                                         <div className="pt-6 space-y-4">
@@ -304,7 +304,7 @@ export default function InternationalGuidePage() {
                         <section id="graduation" className="scroll-mt-32 bg-neutral-900 text-white p-10 rounded-3xl">
                             <h2 className="text-3xl font-bold mb-6">After Graduation</h2>
                             <p className="text-neutral-300 leading-relaxed max-w-2xl mb-8">
-                                SYKLI College supports your transition to working life. We offer resources for job seeking, career guidance, and alumni networking both in Finland and internationally.
+                                Kestora College supports your transition to working life. We offer resources for job seeking, career guidance, and alumni networking both in Finland and internationally.
                             </p>
                             <Link href="#" className="inline-flex items-center gap-2 font-bold hover:underline">
                                 Explore Career Services <ArrowRight size={18} weight="bold" />

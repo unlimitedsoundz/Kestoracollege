@@ -119,7 +119,7 @@ serve(async (req) => {
 
         // Configuration
         const adminEmail = Deno.env.get("ADMIN_NOTIFICATION_EMAIL") || "unlymitedsoundz@gmail.com";
-        const sender = "SYKLI College <admissions@syklicollege.fi>";
+        const sender = "Kestora College <admissions@kestora.fi>";
 
         // Fetch User Info if missing
         let userEmail = applicationData?.email;
@@ -145,11 +145,11 @@ serve(async (req) => {
         let adminSubject = "";
         let adminHtml = "";
 
-        const portalUrl = "https://syklicollege.fi/portal";
+        const portalUrl = "https://kestora.fi/portal";
 
         switch (notificationType) {
             case 'APPLICATION_SUBMITTED':
-                studentSubject = "Application Received - SYKLI College";
+                studentSubject = "Application Received - Kestora College";
                 studentHtml = `
                     <h1>Form Received</h1>
                     <p>Hello ${firstName},</p>
@@ -163,15 +163,15 @@ serve(async (req) => {
                     <p><strong>Student:</strong> ${fullName}</p>
                     <p><strong>Email:</strong> ${userEmail}</p>
                     <p><strong>Program:</strong> ${applicationData?.course_title || 'N/A'}</p>
-                    <a href="https://syklicollege.fi/admin/admissions" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Process in Admin Panel</a>
+                    <a href="https://kestora.fi/admin/admissions" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Process in Admin Panel</a>
                 `;
                 break;
 
             case 'OFFER_LETTER_READY':
-                studentSubject = "Congratulations! Admission Offer from SYKLI College";
+                studentSubject = "Congratulations! Admission Offer from Kestora College";
                 studentHtml = `
                     <h1 style="color: #034737;">Congratulations ${firstName}!</h1>
-                    <p>You have been offered admission to SYKLI College. This is a significant milestone in your creative journey.</p>
+                    <p>You have been offered admission to Kestora College. This is a significant milestone in your creative journey.</p>
                     <p>Please log in to the student portal to review your offer letter and acceptance terms.</p>
                     <a href="${portalUrl}/student/offer" style="display:inline-block;background:#034737;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold;">View Offer Letter</a>
                 `;
@@ -190,10 +190,10 @@ serve(async (req) => {
                 break;
 
             case 'ADMISSION_LETTER_READY':
-                studentSubject = "Official Admission Letter - SYKLI College";
+                studentSubject = "Official Admission Letter - Kestora College";
                 const docLink = documentUrl || `${portalUrl}/student/offer`;
                 studentHtml = `
-                    <h1>Welcome to SYKLI!</h1>
+                    <h1>Welcome to Kestora!</h1>
                     <p>Dear ${firstName}, your official admission letter and enrollment confirmation are now available.</p>
                     <p>You can download your document directly using the link below:</p>
                     <a href="${docLink}" style="display:inline-block;background:#034737;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold;">Download Admission Letter</a>
@@ -216,7 +216,7 @@ serve(async (req) => {
                     <p><strong>Amount:</strong> ${additionalData?.amount} ${additionalData?.currency || 'EUR'}</p>
                     <p><strong>Ref:</strong> ${additionalData?.reference || 'N/A'}</p>
                     <p><strong>Type:</strong> ${additionalData?.paymentType || 'TUITION'}</p>
-                    <a href="https://syklicollege.fi/admin/registrar" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Verify in Registrar Panel</a>
+                    <a href="https://kestora.fi/admin/registrar" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Verify in Registrar Panel</a>
                 `;
                 break;
 
@@ -241,7 +241,7 @@ serve(async (req) => {
                 break;
 
             case 'HOUSING_SUBMITTED':
-                studentSubject = "Housing Application Received - SYKLI College";
+                studentSubject = "Housing Application Received - Kestora College";
                 studentHtml = `
                     <h1>Housing Request Received</h1>
                     <p>Hello ${firstName}, thank you for applying for student housing.</p>
@@ -254,20 +254,20 @@ serve(async (req) => {
                     <p><strong>Semester:</strong> ${additionalData?.semesterName || 'N/A'}</p>
                     <p><strong>Building Pref:</strong> ${additionalData?.preferredBuilding || 'N/A'}</p>
                     <p><strong>Move-in:</strong> ${additionalData?.moveInDate || 'N/A'}</p>
-                    <a href="https://syklicollege.fi/admin/housing" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Manage Housing</a>
+                    <a href="https://kestora.fi/admin/housing" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Manage Housing</a>
                 `;
                 break;
 
             case 'APPLICATION_REJECTED':
-                studentSubject = "Application Update - SYKLI College";
+                studentSubject = "Application Update - Kestora College";
                 studentHtml = `
                     <p>Dear ${firstName},</p>
-                    <p>Thank you for your interest in SYKLI College. After careful review of your application, we regret to inform you that we cannot offer you admission at this time.</p>
+                    <p>Thank you for your interest in Kestora College. After careful review of your application, we regret to inform you that we cannot offer you admission at this time.</p>
                     <p>We wish you the best in your future creative endeavors.</p>
                 `;
                 break;
             case 'DOCS_REQUIRED':
-                studentSubject = "Action Required: Documents Requested - SYKLI College";
+                studentSubject = "Action Required: Documents Requested - Kestora College";
                 const docsList = (additionalData?.requestedDocuments as string[]) ||
                     (applicationData?.requested_documents as string[]) || [];
                 const note = additionalData?.note || applicationData?.document_request_note || "";
@@ -303,15 +303,15 @@ serve(async (req) => {
         const wrapHtml = (content: string) => `
             <div style="font-family: 'Inter', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, sans-serif; max-width: 600px; margin: 40px auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 16px; background: #ffffff;">
                 <div style="text-align: center; margin-bottom: 30px;">
-                    <img src="https://syklicollege.fi/logo.png" alt="SYKLI" style="width: 60px; height: auto;">
+                    <img src="https://kestora.fi/logo.png" alt="Kestora" style="width: 60px; height: auto;">
                 </div>
                 <div style="color: #1a1a1a; line-height: 1.6; font-size: 16px;">
                     ${content}
                 </div>
                 <hr style="border: 0; border-top: 1px solid #f0f0f0; margin: 40px 0;">
                 <div style="text-align: center; color: #888; font-size: 12px;">
-                    <p>&copy; ${new Date().getFullYear()} SYKLI College</p>
-                    <p>Helsinki, Finland | info@syklicollege.fi</p>
+                    <p>&copy; ${new Date().getFullYear()} Kestora College</p>
+                    <p>Helsinki, Finland | info@kestora.fi</p>
                 </div>
             </div>
         `;
@@ -331,7 +331,7 @@ serve(async (req) => {
             await resend.emails.send({
                 from: sender,
                 to: [adminEmail],
-                subject: `[SYKLI ADMIN] ${adminSubject}`,
+                subject: `[Kestora ADMIN] ${adminSubject}`,
                 html: wrapHtml(adminHtml),
             });
         }

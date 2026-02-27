@@ -25,7 +25,7 @@ async function updateFaculty() {
         name: 'Anna Saaristo',
         role: 'Head of Film',
         bio: 'Award-winning director and educator specializing in sustainable production methods.',
-        email: 'anna.saaristo@syklicollege.com',
+        email: 'anna.saaristo@kestora.com',
         departmentId: dept.id,
     }, { onConflict: 'email' }).select(); // Assuming email might be unique, or we might need to query by name if no unique constraint on email.
 
@@ -45,7 +45,7 @@ async function updateFaculty() {
                 name: 'Anna Saaristo',
                 role: 'Head of Film',
                 bio: 'Award-winning director and educator specializing in sustainable production methods.',
-                email: 'anna.saaristo@sykli.ac.fi',
+                email: 'anna.saaristo@kestora.ac.fi',
                 departmentId: dept.id,
                 imageUrl: '/images/faculty/anna-saaristo.png'
             });

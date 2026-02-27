@@ -9,7 +9,7 @@ export default function AdmissionsCTA() {
                 <div className="max-w-2xl">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
                     <p className="text-lg text-neutral-300 leading-relaxed">
-                        Join the next generation of global leaders at SYKLI College. Create your portal account to begin your official application.
+                        Join the next generation of global leaders at Kestora College. Create your portal account to begin your official application.
                     </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">

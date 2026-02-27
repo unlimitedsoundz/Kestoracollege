@@ -51,12 +51,12 @@ export const searchablePages: SearchablePage[] = [
     { title: "Student Life", href: "/student-life", category: "Student Life & Guides" },
     { title: "Campus Information", href: "/student-guide", category: "Student Life & Guides" },
 
-    // About SYKLI
-    { title: "Our Story", href: "/about-sykli-college", category: "About SYKLI" },
-    { title: "Contact Information", href: "/contact", category: "About SYKLI" },
-    { title: "News & Events", href: "/news", category: "About SYKLI" },
-    { title: "Collaboration", href: "/collaboration", category: "About SYKLI" },
-    { title: "Innovation", href: "/innovation", category: "About SYKLI" },
+    // About Kestora
+    { title: "Our Story", href: "/about-kestora-college", category: "About Kestora" },
+    { title: "Contact Information", href: "/contact", category: "About Kestora" },
+    { title: "News & Events", href: "/news", category: "About Kestora" },
+    { title: "Collaboration", href: "/collaboration", category: "About Kestora" },
+    { title: "Innovation", href: "/innovation", category: "About Kestora" },
 
     // Legal & Privacy
     { title: "Privacy Policy", href: "/privacy", category: "Legal & Privacy" },

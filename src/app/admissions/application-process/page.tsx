@@ -4,8 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const metadata = {
-    title: 'How to Apply | SYKLI College',
-    description: 'Step-by-step guide to applying to SYKLI College. Deadlines, requirements, and admission procedures.',
+    title: 'How to Apply | Kestora College',
+    description: 'Step-by-step guide to applying to Kestora College. Deadlines, requirements, and admission procedures.',
 };
 
 export default function ApplicationProcessPage() {
@@ -27,10 +27,10 @@ export default function ApplicationProcessPage() {
                     <div className="container mx-auto">
                         <h1 className="text-5xl font-bold mb-6">How to Apply</h1>
                         <p className="text-xl max-w-2xl text-neutral-300 leading-relaxed">
-                            Follow our step-by-step guide to ensure a smooth application process for your studies at SYKLI College.
+                            Follow our step-by-step guide to ensure a smooth application process for your studies at Kestora College.
                         </p>
                         <p className="mt-4 text-lg max-w-2xl text-neutral-400 leading-relaxed">
-                            Learn more about <Link href="/" className="underline text-white font-medium hover:text-neutral-300 hover:no-underline transition-colors">SYKLI College Helsinki</Link>, our independent higher education institution in Finland.
+                            Learn more about <Link href="/" className="underline text-white font-medium hover:text-neutral-300 hover:no-underline transition-colors">Kestora College Helsinki</Link>, our independent higher education institution in Finland.
                         </p>
                     </div>
                 </div>
@@ -186,7 +186,7 @@ export default function ApplicationProcessPage() {
                         <div>
                             <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Start Your Journey?</h2>
                             <p className="text-sm md:text-base text-neutral-400 max-w-xl mx-auto">
-                                Join the next generation of global leaders at SYKLI College. Create your portal account to begin your official application.
+                                Join the next generation of global leaders at Kestora College. Create your portal account to begin your official application.
                             </p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">

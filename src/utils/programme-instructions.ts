@@ -5,7 +5,7 @@ export interface ProgrammeInstruction {
 
 export const PROGRAMME_INSTRUCTIONS: Record<string, ProgrammeInstruction> = {
     'default': {
-        welcomeMessage: 'Welcome to the SYKLI College Online Application.',
+        welcomeMessage: 'Welcome to the Kestora College Online Application.',
         instructions: [
             'Ensure you have scanned copies of your academic transcripts.',
             'Prepare a digital copy of your passport or national ID.',

@@ -7,8 +7,8 @@ import { BreadcrumbSchema } from '@/components/seo/BreadcrumbSchema';
 import { SchemaLD } from '@/components/seo/SchemaLD';
 
 export const metadata = {
-    title: 'Paying the Tuition Fee | SYKLI College',
-    description: 'Structure of tuition fees, payment methods (Bank Transfer), and refund policies for international students at SYKLI College.',
+    title: 'Paying the Tuition Fee | Kestora College',
+    description: 'Structure of tuition fees, payment methods (Bank Transfer), and refund policies for international students at Kestora College.',
 };
 
 const tocSections = [
@@ -31,7 +31,7 @@ export default function TuitionPaymentPage() {
         "mainEntity": [
             {
                 "@type": "Question",
-                "name": "Who is required to pay tuition fees at SYKLI College?",
+                "name": "Who is required to pay tuition fees at Kestora College?",
                 "acceptedAnswer": {
                     "@type": "Answer",
                     "text": "Tuition fees are mandatory for students who are not citizens of the European Union (EU), European Economic Area (EEA), or Switzerland, and who are enrolled in English-taught Bachelor's or Master's degree programmes. Exemptions apply for holders of permanent Finnish residence permits, EU Blue Cards, and EU Family Member's Residence Cards."
@@ -42,7 +42,7 @@ export default function TuitionPaymentPage() {
                 "name": "How do I pay my tuition fees?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "SYKLI College partners with Paygowire for secure international tuition payments. To pay: 1) Log in to your SYKLI Applicant Portal. 2) Negotiate to the 'Payment' section. 3) You will be redirected to the secure Paygowire gateway. 4) Select your country and preferred payment method to complete the transfer."
+                    "text": "Kestora College partners with Paygowire for secure international tuition payments. To pay: 1) Log in to your Kestora Applicant Portal. 2) Negotiate to the 'Payment' section. 3) You will be redirected to the secure Paygowire gateway. 4) Select your country and preferred payment method to complete the transfer."
                 }
             },
             {
@@ -50,7 +50,7 @@ export default function TuitionPaymentPage() {
                 "name": "What are the specific requirements for the Early Payment Discount?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "We offer a 25% reduction on the first year's tuition fee if you accept your study offer within 14 days of receiving the admission letter AND the full payment reaches SYKLI College's account within 21 days of the admission offer."
+                    "text": "We offer a 25% reduction on the first year's tuition fee if you accept your study offer within 14 days of receiving the admission letter AND the full payment reaches Kestora College's account within 21 days of the admission offer."
                 }
             },
             {
@@ -91,9 +91,9 @@ export default function TuitionPaymentPage() {
             <SchemaLD data={{
                 "@context": "https://schema.org",
                 "@type": "WebPage",
-                "name": "Paying the Tuition Fee | SYKLI College",
-                "description": "Details about tuition fees, scholarships, and payment procedures at SYKLI College Helsinki, Finland.",
-                "url": "https://www.syklicollege.fi/admissions/tuition"
+                "name": "Paying the Tuition Fee | Kestora College",
+                "description": "Details about tuition fees, scholarships, and payment procedures at Kestora College Helsinki, Finland.",
+                "url": "https://www.kestora.fi/admissions/tuition"
             }} />
             <SchemaLD data={faqSchema} />
 
@@ -142,7 +142,7 @@ export default function TuitionPaymentPage() {
                                 How Much is the Tuition Fee?
                             </h2>
                             <p className="text-lg text-black leading-relaxed mb-6">
-                                Tuition fees at SYKLI College depend on your degree level, your field of study, and the start date of your study right.
+                                Tuition fees at Kestora College depend on your degree level, your field of study, and the start date of your study right.
                                 The exact amount for your programme is always listed in your personal admission letter.
                             </p>
                             <div className="bg-neutral-50 p-6 md:p-12 pl-6 md:pl-16 rounded-xl">
@@ -382,7 +382,7 @@ export default function TuitionPaymentPage() {
                                         <div>
                                             <h3 className="text-2xl font-black mb-4 uppercase tracking-tight">Continuing Merit Scholarship</h3>
                                             <p className="text-lg text-black mb-6 leading-relaxed">
-                                                SYKLI College rewards academic excellence. After the first year of study, international students can apply for a merit scholarship that covers <strong>50% of the tuition fee</strong> for the next academic year.
+                                                Kestora College rewards academic excellence. After the first year of study, international students can apply for a merit scholarship that covers <strong>50% of the tuition fee</strong> for the next academic year.
                                             </p>
 
                                             <div className="grid md:grid-cols-2 gap-8">
@@ -421,7 +421,7 @@ export default function TuitionPaymentPage() {
                                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12">
                                         <div className="max-w-xl">
                                             <p className="text-lg text-black leading-relaxed mb-4">
-                                                SYKLI College partners with <strong>Paygowire</strong> to provide students with a secure, convenient, and transparent way to pay tuition and related academic fees using local and international payment options.
+                                                Kestora College partners with <strong>Paygowire</strong> to provide students with a secure, convenient, and transparent way to pay tuition and related academic fees using local and international payment options.
                                             </p>
                                             <p className="text-black leading-relaxed">
                                                 All tuition payments are processed through Paygowire to ensure accurate tracking, faster confirmation, and proper allocation to the student’s account.
@@ -446,7 +446,7 @@ export default function TuitionPaymentPage() {
                                                 <div className="flex-shrink-0 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold text-sm">1</div>
                                                 <div>
                                                     <h4 className="font-bold text-black mb-1">Accept Your Offer</h4>
-                                                    <p className="text-sm text-neutral-600">Once you accept your offer of admission through the SYKLI College portal, you will be automatically redirected to the Paygowire payment page.</p>
+                                                    <p className="text-sm text-neutral-600">Once you accept your offer of admission through the Kestora College portal, you will be automatically redirected to the Paygowire payment page.</p>
                                                 </div>
                                             </div>
 
@@ -534,7 +534,7 @@ export default function TuitionPaymentPage() {
                                         <p className="text-white/80 leading-relaxed mb-8 text-sm">
                                             If you experience any difficulty during the payment process or have questions regarding your tuition payment, please contact the Admissions Office through your student portal or via email.
                                         </p>
-                                        <a href="mailto:admissions@syklicollege.fi" className="inline-block bg-white text-black px-6 py-3 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-200 transition-colors">
+                                        <a href="mailto:admissions@kestora.fi" className="inline-block bg-white text-black px-6 py-3 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-200 transition-colors">
                                             Email Admissions
                                         </a>
                                     </div>
@@ -596,7 +596,7 @@ export default function TuitionPaymentPage() {
                                 </div>
                             </div>
                             <p className="mt-8 text-black italic text-center">
-                                For further details on enrolment and payment procedures, students are advised to consult the official <strong>SYKLI College enrolment guidelines</strong>.
+                                For further details on enrolment and payment procedures, students are advised to consult the official <strong>Kestora College enrolment guidelines</strong>.
                             </p>
                         </section>
 
@@ -614,7 +614,7 @@ export default function TuitionPaymentPage() {
                                     </p>
                                     <div className="p-8 pl-14 md:pl-20 bg-neutral-50 rounded-2xl border-l-4 border-l-black">
                                         <p className="font-bold text-black italic">
-                                            SYKLI College has a housing quota especially for tuition fee-liable international degree students moving to Finland.
+                                            Kestora College has a housing quota especially for tuition fee-liable international degree students moving to Finland.
                                         </p>
                                     </div>
                                 </div>
@@ -744,7 +744,7 @@ export default function TuitionPaymentPage() {
                             <p className="text-white mb-6">
                                 If you have questions about payment processes, deadlines, or refunds, please contact the Tuition Fee Office.
                             </p>
-                            <a href="mailto:tuition@syklicollege.fi" className="inline-block bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-neutral-200 transition-colors">
+                            <a href="mailto:tuition@kestora.fi" className="inline-block bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-neutral-200 transition-colors">
                                 Contact Tuition Office
                             </a>
                         </section>

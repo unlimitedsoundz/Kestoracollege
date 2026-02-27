@@ -89,7 +89,7 @@ export default function StudentGuidePage() {
             <div className="relative bg-neutral-900 text-white pt-32 pb-16 md:pt-48 overflow-hidden">
                 <div className="absolute inset-0">
                     <Image
-                        src="/images/guide/masters_graduation.png"
+                        src="/images/student-guide-hero.png"
                         alt="Background"
                         fill
                         priority
@@ -104,7 +104,7 @@ export default function StudentGuidePage() {
                             Student Guide
                         </h1>
                         <p className="text-xl text-neutral-300 leading-relaxed max-w-2xl">
-                            Your comprehensive resource for navigating studies, academic structure, support services, and daily life at SYKLI College.
+                            Your comprehensive resource for navigating studies, academic structure, support services, and daily life at Kestora College.
                         </p>
                     </div>
                 </div>
@@ -130,10 +130,10 @@ export default function StudentGuidePage() {
                         {/* Degree Programmes */}
                         <section id="programmes" className="scroll-mt-32">
                             <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-                                Degree Programmes at SYKLI College
+                                Degree Programmes at Kestora College
                             </h2>
                             <p className="text-lg text-neutral-700 mb-8">
-                                SYKLI College offers Bachelor’s, Master’s, and Doctoral degree programmes taught in English across business, economics, management, finance, information systems, entrepreneurship, and interdisciplinary fields.
+                                Kestora College offers Bachelor’s, Master’s, and Doctoral degree programmes taught in English across business, economics, management, finance, information systems, entrepreneurship, and interdisciplinary fields.
                             </p>
 
                             <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -188,7 +188,7 @@ export default function StudentGuidePage() {
                                     <h3 className="text-xl font-bold mb-3">Choosing a Minor</h3>
                                     <ul className="space-y-2 mb-6 text-neutral-700">
                                         <li className="flex gap-2"><ArrowRight size={18} weight="bold" className="mt-1 flex-shrink-0 text-neutral-400" /> Within their own school</li>
-                                        <li className="flex gap-2"><ArrowRight size={18} weight="bold" className="mt-1 flex-shrink-0 text-neutral-400" /> From other schools at SYKLI College</li>
+                                        <li className="flex gap-2"><ArrowRight size={18} weight="bold" className="mt-1 flex-shrink-0 text-neutral-400" /> From other schools at Kestora College</li>
                                         <li className="flex gap-2"><ArrowRight size={18} weight="bold" className="mt-1 flex-shrink-0 text-neutral-400" /> From interdisciplinary or entrepreneurship offerings</li>
                                     </ul>
                                 </div>

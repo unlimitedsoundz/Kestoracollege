@@ -29,7 +29,7 @@ export async function sendEmail({ to, subject, react, attachments }: SendEmailPa
     try {
         const resend = new Resend(apiKey);
         const { data, error } = await resend.emails.send({
-            from: 'SYKLI College <admissions@syklicollege.fi>',
+            from: 'Kestora College <admissions@kestora.fi>',
             to: [to],
             subject: subject,
             react: react,

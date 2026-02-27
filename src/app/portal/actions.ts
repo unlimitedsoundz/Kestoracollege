@@ -528,7 +528,7 @@ export async function rejectOffer(applicationId: string) {
 
         await sendEmail({
             to: userProfile?.email || user.email || '',
-            subject: 'Admission Offer Declined - SYKLI College',
+            subject: 'Admission Offer Declined - Kestora College',
             react: OfferRejectionEmail({
                 firstName: userProfile?.first_name || 'Applicant',
                 applicationId: app.id,

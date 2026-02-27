@@ -196,11 +196,11 @@ export const OfferLetterPDF = ({ data }: OfferLetterProps) => (
                     {data.logo_path && <Image src={data.logo_path} style={styles.logo} />}
                 </View>
                 <View style={styles.contactInfo}>
-                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 10, marginBottom: 4 }}>SYKLI College</Text>
+                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 10, marginBottom: 4 }}>Kestora College</Text>
                     <Text>Pohjoisesplanadi 51</Text>
                     <Text>00150 Helsinki, Finland</Text>
-                    <Text>Website: https://syklicollege.fi</Text>
-                    <Text>Email: admissions@syklicollege.fi</Text>
+                    <Text>Website: https://kestora.fi</Text>
+                    <Text>Email: admissions@kestora.fi</Text>
                 </View>
             </View>
 
@@ -249,7 +249,7 @@ export const OfferLetterPDF = ({ data }: OfferLetterProps) => (
             {/* Formal Offer Statement (LOCKED WORDING) */}
             <View style={styles.highlightBox}>
                 <Text style={styles.highlightText}>
-                    “We are pleased to inform you that you have been offered a place in the above-named programme at SYKLI College, subject to the conditions outlined in this letter.”
+                    “We are pleased to inform you that you have been offered a place in the above-named programme at Kestora College, subject to the conditions outlined in this letter.”
                 </Text>
             </View>
 
@@ -308,7 +308,7 @@ export const OfferLetterPDF = ({ data }: OfferLetterProps) => (
                 <View style={styles.signatureBlock}>
                     {data.signature_path && <Image src={data.signature_path} style={styles.signatureImage} />}
                     <Text style={styles.signatoryName}>Admissions Office</Text>
-                    <Text style={styles.signatoryTitle}>SYKLI College | Finland</Text>
+                    <Text style={styles.signatoryTitle}>Kestora College | Finland</Text>
                 </View>
                 <View style={{ width: '40%', textAlign: 'right' }}>
                     <Text style={{ fontSize: 7, color: '#999' }}>Verified Document ID</Text>

@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Student Handbook 2026–2027 — SYKLI College',
-    description: 'The official SYKLI College Student Handbook covering academic policies, student responsibilities, services, and institutional regulations for the 2026–2027 academic year.',
+    title: 'Student Handbook 2026–2027 — Kestora College',
+    description: 'The official Kestora College Student Handbook covering academic policies, student responsibilities, services, and institutional regulations for the 2026–2027 academic year.',
 };
 
 /* ── tiny helper ── */
@@ -35,17 +35,17 @@ export default function StudentHandbookPage() {
                     <div>
                         <div className="flex items-baseline gap-4 mb-4"><Num n={1} /><h2 className="text-2xl font-bold">Welcome Message</h2></div>
                         <div className="pl-14 space-y-4 text-black leading-relaxed">
-                            <p>Welcome to SYKLI College.</p>
-                            <p>This Student Handbook is the official guide to academic life, institutional policies, student responsibilities, and available services at SYKLI College. All students are required to read, understand, and comply with the regulations outlined in this handbook.</p>
-                            <p>This handbook forms part of the regulatory framework of SYKLI College and applies to all enrolled Bachelor&apos;s and Master&apos;s students.</p>
+                            <p>Welcome to Kestora College.</p>
+                            <p>This Student Handbook is the official guide to academic life, institutional policies, student responsibilities, and available services at Kestora College. All students are required to read, understand, and comply with the regulations outlined in this handbook.</p>
+                            <p>This handbook forms part of the regulatory framework of Kestora College and applies to all enrolled Bachelor&apos;s and Master&apos;s students.</p>
                         </div>
                     </div>
 
                     {/* 2 */}
                     <div>
-                        <div className="flex items-baseline gap-4 mb-4"><Num n={2} /><h2 className="text-2xl font-bold">About SYKLI College</h2></div>
+                        <div className="flex items-baseline gap-4 mb-4"><Num n={2} /><h2 className="text-2xl font-bold">About Kestora College</h2></div>
                         <div className="pl-14 space-y-4">
-                            <p className="text-black leading-relaxed">SYKLI College is a higher education institution offering internationally oriented Bachelor&apos;s and Master&apos;s programmes. The College is committed to:</p>
+                            <p className="text-black leading-relaxed">Kestora College is a higher education institution offering internationally oriented Bachelor&apos;s and Master&apos;s programmes. The College is committed to:</p>
                             <ul className="space-y-2">
                                 <Li>Academic excellence</Li>
                                 <Li>Ethical conduct</Li>
@@ -53,7 +53,7 @@ export default function StudentHandbookPage() {
                                 <Li>Student-centred learning</Li>
                                 <Li>International accessibility</Li>
                             </ul>
-                            <p className="text-black">SYKLI College operates in accordance with recognized academic standards and institutional best practices.</p>
+                            <p className="text-black">Kestora College operates in accordance with recognized academic standards and institutional best practices.</p>
                         </div>
                     </div>
 
@@ -120,7 +120,7 @@ export default function StudentHandbookPage() {
                         <div className="pl-14 space-y-8">
                             <div>
                                 <h3 className="font-bold text-lg mb-3">4.1 Programmes & Degrees</h3>
-                                <p className="text-black mb-3">SYKLI College offers Bachelor&apos;s and Master&apos;s degrees. Each programme defines:</p>
+                                <p className="text-black mb-3">Kestora College offers Bachelor&apos;s and Master&apos;s degrees. Each programme defines:</p>
                                 <ul className="space-y-2">
                                     <Li>Learning outcomes</Li>
                                     <Li>Credit requirements</Li>
@@ -285,7 +285,7 @@ export default function StudentHandbookPage() {
                     <div>
                         <div className="flex items-baseline gap-4 mb-4"><Num n={11} /><h2 className="text-2xl font-bold">Housing & Campus Services</h2></div>
                         <div className="pl-14">
-                            <p className="text-black mb-3">Where applicable, SYKLI College may offer:</p>
+                            <p className="text-black mb-3">Where applicable, Kestora College may offer:</p>
                             <ul className="space-y-2">
                                 <Li>Housing assistance or placements</Li>
                                 <Li>IT services</Li>
@@ -381,7 +381,7 @@ export default function StudentHandbookPage() {
                     <div>
                         <div className="flex items-baseline gap-4 mb-4"><Num n={17} /><h2 className="text-2xl font-bold">Amendments & Governance</h2></div>
                         <div className="pl-14">
-                            <p className="text-black mb-3">SYKLI College reserves the right to:</p>
+                            <p className="text-black mb-3">Kestora College reserves the right to:</p>
                             <ul className="space-y-2">
                                 <Li>Update this handbook</Li>
                                 <Li>Amend regulations</Li>

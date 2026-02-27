@@ -186,102 +186,102 @@ function AdmissionLetterContent() {
             </div>
 
             {/* Document Container - A4 Size */}
-            <div className="w-full max-w-[210mm] mx-auto bg-white print:shadow-none p-[15mm] md:p-[20mm] border border-neutral-200 print:border-0 relative overflow-hidden min-h-[297mm] flex flex-col justify-between">
+            <div className="w-full max-w-[210mm] mx-auto bg-white print:shadow-none p-[15mm] md:p-[20mm] border border-neutral-200 print:border-0 relative overflow-hidden min-h-[297mm] flex flex-col justify-between" style={{ fontFamily: '"Open Sans", sans-serif' }}>
 
                 {/* Content Wrapper */}
                 <div>
                     {/* 1. Header */}
-                    <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-12 border-b-2 border-black pb-8">
+                    <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-6 border-b-2 border-black pb-4">
                         <div className="space-y-6">
                             <div className="relative w-48 h-12">
                                 <Image
-                                    src="/images/sykli-logo-official.png"
-                                    alt="SYKLI College"
+                                    src="/logo-kestora.png"
+                                    alt="Kestora College"
                                     fill
                                     style={{ objectFit: 'contain', objectPosition: 'left center' }}
                                 />
                             </div>
                             {/* To: Section */}
                             <div className="text-[11px] leading-relaxed text-black font-medium">
-                                <span className="text-[9px] font-bold text-neutral-500 uppercase tracking-widest block mb-1">To:</span>
+                                <span className="text-[9px] font-bold text-black uppercase tracking-widest block mb-1">To:</span>
                                 <strong className="text-sm block mb-1">{studentName}</strong>
-                                <span className="text-neutral-600 block">{studentAddress}</span>
+                                <span className="text-black block">{studentAddress}</span>
                                 <span className="block mt-2 font-mono text-xs">Student ID: {displayStudentId}</span>
                             </div>
                         </div>
-                        <div className="text-left md:text-right text-[10px] font-medium text-neutral-600 leading-relaxed uppercase tracking-wide">
-                            <strong className="text-black block mb-2 text-xs">SYKLI College – Helsinki Campus</strong>
+                        <div className="text-left md:text-right text-[10px] font-medium text-black leading-relaxed uppercase tracking-wide">
+                            <strong className="text-black block mb-2 text-xs">Kestora College – Helsinki Campus</strong>
                             Pohjoisesplanadi 51<br />
                             00150 Helsinki, Finland<br />
-                            <div className="mt-2 space-y-0.5 text-[9px] text-neutral-500">
-                                <div>syklicollege.fi</div>
-                                <div>admissions@syklicollege.fi</div>
+                            <div className="mt-2 space-y-0.5 text-[9px] text-black">
+                                <div>kestora.fi</div>
+                                <div>admissions@kestora.fi</div>
                             </div>
                         </div>
                     </div>
 
                     {/* Title */}
-                    <div className="text-center mb-8">
+                    <div className="text-center mb-4">
                         <h1 className="text-2xl font-black uppercase tracking-[0.1em] text-black">Official Admission Letter</h1>
                     </div>
 
                     {/* 2. Meta Data */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-neutral-50 p-4 mb-8 border border-neutral-100">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 mb-4">
                         <div>
-                            <span className="block text-[8px] font-black text-neutral-400 uppercase tracking-widest mb-1">Enrollment Date</span>
+                            <span className="block text-[8px] font-black text-black uppercase tracking-widest mb-1">Enrollment Date</span>
                             <span className="font-bold text-xs">{issueDate}</span>
                         </div>
                         <div>
-                            <span className="block text-[8px] font-black text-neutral-400 uppercase tracking-widest mb-1">Admission Reference</span>
+                            <span className="block text-[8px] font-black text-black uppercase tracking-widest mb-1">Admission Reference</span>
                             <span className="font-bold text-xs font-mono">{admission?.admission_reference || application.application_number || 'PENDING'}</span>
                         </div>
                         <div>
-                            <span className="block text-[8px] font-black text-neutral-400 uppercase tracking-widest mb-1">Official Student ID</span>
+                            <span className="block text-[8px] font-black text-black uppercase tracking-widest mb-1">Official Student ID</span>
                             <span className="font-bold text-xs font-mono">{displayStudentId}</span>
                         </div>
                     </div>
 
-                    <div className="border-l-4 border-black pl-6 py-4 mb-8 bg-neutral-50/50">
-                        <p className="text-sm font-medium text-neutral-900 leading-relaxed text-justify">
-                            This letter serves as official notification that <strong className="text-black uppercase">{studentName}</strong> (Passport: <strong className="text-black">{passportNumber}</strong>, DOB: <strong className="text-black">{dob}</strong>) has been formally admitted and fully enrolled as a degree student at SYKLI College for the <strong className="text-black">{academicYear}</strong> academic year. Having satisfied all academic entrance criteria and fulfilled the mandated tuition fee obligations, the student is officially registered for the <strong className="text-black underline">{application.course?.title}</strong> ({application.course?.programType || 'Full-time'}). This program is a {application.course?.programType?.toLowerCase() || 'full-time'} course of study conducted in the English language at our Helsinki campus location (Pohjoisesplanadi 51, 00150 Helsinki, Finland).
+                    <div className="border-l-4 border-black pl-6 py-3 mb-4">
+                        <p className="text-sm font-medium text-black leading-relaxed text-justify">
+                            This letter serves as official notification that <strong className="text-black uppercase">{studentName}</strong> (Passport: <strong className="text-black">{passportNumber}</strong>, DOB: <strong className="text-black">{dob}</strong>) has been formally admitted and fully enrolled as a degree student at Kestora College for the <strong className="text-black">{academicYear}</strong> academic year. Having satisfied all academic entrance criteria and fulfilled the mandated tuition fee obligations, the student is officially registered for the <strong className="text-black underline">{application.course?.title}</strong> ({application.course?.programType || 'Full-time'}). This program is a {application.course?.programType?.toLowerCase() || 'full-time'} course of study conducted in the English language at our Helsinki campus location (Pohjoisesplanadi 51, 00150 Helsinki, Finland).
                         </p>
                     </div>
 
                     <div>
                         <div className="text-[10px] font-bold text-black uppercase tracking-widest mb-1">Date of Admission</div>
-                        <div className="text-sm font-bold text-neutral-900 border-b border-black pb-1">
+                        <div className="text-sm font-bold text-black border-b border-black pb-1">
                             {issueDate}
                         </div>
                     </div>
 
                     <div>
                         <div className="text-[10px] font-bold text-black uppercase tracking-widest mb-1">Academic Year</div>
-                        <div className="text-sm font-bold text-neutral-900 border-b border-black pb-1">
+                        <div className="text-sm font-bold text-black border-b border-black pb-1">
                             {academicYear}
                         </div>
                     </div>
                     <div>
                         <div className="text-[10px] font-bold text-black uppercase tracking-widest mb-1">Intake</div>
-                        <div className="text-sm font-bold text-neutral-900 border-b border-black pb-1">
+                        <div className="text-sm font-bold text-black border-b border-black pb-1">
                             {intake}
                         </div>
                     </div>
 
                     <div className="col-span-2">
                         <div className="text-[10px] font-bold text-black uppercase tracking-widest mb-1">Programme of Study</div>
-                        <div className="text-sm font-bold text-neutral-900 border-b border-black pb-1">
+                        <div className="text-sm font-bold text-black border-b border-black pb-1">
                             {application.course?.title} ({application.course?.programType || 'Full-time'})
                         </div>
                     </div>
                 </div>
 
                 {/* Rights & Access */}
-                <div className="mb-8">
+                <div className="mb-4">
                     <h4 className="text-[11px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Student Rights & Access</h4>
-                    <p className="text-[11px] leading-relaxed text-neutral-900 mb-2">
+                    <p className="text-[11px] leading-relaxed text-black mb-2">
                         As an enrolled student, you are granted full access to:
                     </p>
-                    <ul className="list-disc list-inside text-[11px] leading-relaxed text-neutral-900 ml-2 space-y-0.5">
+                    <ul className="list-disc list-inside text-[11px] leading-relaxed text-black ml-2 space-y-0.5">
                         <li>Campus facilities (Library, Labs, Study Areas)</li>
                         <li>Digital learning resources and student portal</li>
                         <li>Academic advising and student support services</li>
@@ -291,7 +291,7 @@ function AdmissionLetterContent() {
                 {/* 7. Official Use Statement */}
                 <div className="mb-6">
                     <h4 className="text-[12px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Immigration / Official Use</h4>
-                    <p className="text-[11px] leading-relaxed text-neutral-900">
+                    <p className="text-[11px] leading-relaxed text-black">
                         This document is an official certificate of admission and may be used for visa applications, residence permit processing (Migri), and other official purposes requiring proof of student status in Finland.
                     </p>
                 </div>
@@ -299,7 +299,7 @@ function AdmissionLetterContent() {
                 {/* 8. Next Steps */}
                 <div className="mb-6">
                     <h4 className="text-[12px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Next Steps</h4>
-                    <ul className="text-[11px] leading-relaxed text-neutral-900 list-disc ml-4 space-y-1">
+                    <ul className="text-[11px] leading-relaxed text-black list-disc ml-4 space-y-1">
                         <li>Activate your student email and IT account (credentials sent separately).</li>
                         <li>Register for the orientation week sessions via the student portal.</li>
                         <li>Submit your housing application if you have not done so.</li>
@@ -308,17 +308,17 @@ function AdmissionLetterContent() {
                 </div>
 
                 {/* 9. Refund Policy */}
-                <div className="mb-8">
+                <div className="mb-4">
                     <h4 className="text-[11px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Refund Policy</h4>
-                    <p className="text-[11px] leading-relaxed text-neutral-900">
-                        Tuition fees are subject to the college’s refund policy. Full details can be found at <a href="https://syklicollege.fi/refund-withdrawal-policy/" className="underline text-black">https://syklicollege.fi/refund-withdrawal-policy/</a>.
+                    <p className="text-[11px] leading-relaxed text-black">
+                        Tuition fees are subject to the college’s refund policy. Full details can be found at <a href="https://kestora.fi/refund-withdrawal-policy/" className="underline text-black">https://kestora.fi/refund-withdrawal-policy/</a>.
                     </p>
                 </div>
 
                 {/* Footer Content */}
                 <div>
                     {/* 10. Authorization */}
-                    <div className="mt-8 pt-6 border-t border-black flex flex-row justify-between items-end">
+                    <div className="mt-4 pt-4 border-t border-black flex flex-row justify-between items-end">
                         <div>
                             <div className="w-40 h-16 mb-2 relative">
                                 <Image
@@ -329,8 +329,8 @@ function AdmissionLetterContent() {
                                 />
                             </div>
                             <div className="text-[11px] font-black text-black uppercase">Office of the Registrar</div>
-                            <div className="text-[11px] font-bold text-neutral-900 mt-0.5">Dosentti (Docent) Anna Virtanen, FT (Doctor of Philosophy)</div>
-                            <div className="text-[10px] font-bold text-black uppercase tracking-widest">SYKLI College | Finland</div>
+                            <div className="text-[11px] font-bold text-black mt-0.5">Dosentti (Docent) Anna Virtanen, FT (Doctor of Philosophy)</div>
+                            <div className="text-[10px] font-bold text-black uppercase tracking-widest">Kestora College | Finland</div>
                         </div>
                         <div className="text-right">
                             {/* Authentication Code or QR could go here in future */}
@@ -338,9 +338,9 @@ function AdmissionLetterContent() {
                     </div>
 
                     {/* Footer Legal */}
-                    <div className="mt-8 text-center border-t border-neutral-100 pt-4">
-                        <p className="text-[10px] text-neutral-900 uppercase tracking-widest">
-                            Generated electronically via SYKLI SIS. Valid without physical signature if verified online.
+                    <div className="mt-4 text-center pt-2">
+                        <p className="text-[10px] text-black uppercase tracking-widest">
+                            Generated electronically via Kestora SIS. Valid without physical signature if verified online.
                         </p>
                     </div>
                 </div>
@@ -349,19 +349,24 @@ function AdmissionLetterContent() {
             {/* Print Styles */}
             <style dangerouslySetInnerHTML={{
                 __html: `
-                    @media print {
-                        @page { margin: 0; size: A4; }
-                        body { background: white; padding: 0; }
-                        .min-h-screen { min-height: 0; background: white; padding: 0; }
-                        .max-w-[210mm] { max-width: 100%; margin: 0; padding: 0; }
-                        .shadow-xl, .shadow-sm { box-shadow: none !important; }
-                        .print\\:hidden { display: none !important; }
-                        .print\\:border-0 { border: none !important; }
-                        .print\\:shadow-none { box-shadow: none !important; }
-                        /* Force background graphics for logos */
-                        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-                    }
-                ` }} />
+                @media print {
+                    @page { margin: 15mm; size: A4; }
+                    body { background: white !important; padding: 0 !important; margin: 0 !important; }
+                    header, nav, footer,
+                    [data-theme="portal"] > header,
+                    [data-theme="portal"] > footer,
+                    .print\\:hidden { display: none !important; }
+                    [data-theme="portal"] { min-height: 0 !important; }
+                    [data-theme="portal"] > main { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+                    .min-h-screen { min-height: 0 !important; background: white !important; padding: 0 !important; }
+                    .min-h-\\[297mm\\] { min-height: 0 !important; }
+                    .max-w-\\[210mm\\] { max-width: 100% !important; margin: 0 !important; padding: 15mm 0 !important; }
+                    .shadow-xl, .shadow-sm, .print\\:shadow-none { box-shadow: none !important; }
+                    .print\\:border-0 { border: none !important; }
+                    * { color: black !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                    a { text-decoration: none !important; }
+                }
+            ` }} />
         </div >
     );
 }

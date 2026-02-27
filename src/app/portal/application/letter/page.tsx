@@ -175,121 +175,121 @@ function AdmissionLetterContent() {
             </div>
 
             {/* Letter Container */}
-            <div className="w-full max-w-[210mm] mx-auto bg-white shadow-xl print:shadow-none min-h-[297mm] p-6 md:p-[25mm] relative overflow-hidden text-neutral-900 border border-neutral-100 print:border-0">
+            <div className="w-full max-w-[210mm] mx-auto bg-white shadow-xl print:shadow-none min-h-[297mm] p-6 md:p-[25mm] relative overflow-hidden text-black border border-neutral-100 print:border-0" style={{ fontFamily: '"Open Sans", sans-serif' }}>
                 {/* ... existing letter content ... */}
                 {/* 1. Header: Logo & Address */}
-                <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-0 mb-12 md:mb-16 border-b-2 border-neutral-900 pb-8">
+                <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-0 mb-6 md:mb-8 border-b-2 border-neutral-900 pb-4">
                     <div>
                         <div className="mb-4 relative w-48 h-12">
                             <Image
-                                src="/images/sykli-logo-official.png"
-                                alt="SYKLI College Official Logo"
+                                src="/logo-kestora.png"
+                                alt="Kestora College Official Logo"
                                 fill
                                 style={{ objectFit: 'contain', objectPosition: 'left center' }}
                                 priority
                             />
                         </div>
                     </div>
-                    <div className="text-left md:text-right text-[10px] font-medium text-neutral-600 leading-relaxed uppercase tracking-wide">
-                        <strong className="text-black">SYKLI College – Helsinki Campus</strong><br />
+                    <div className="text-left md:text-right text-[10px] font-medium text-black leading-relaxed uppercase tracking-wide">
+                        <strong className="text-black">Kestora College – Helsinki Campus</strong><br />
                         Pohjoisesplanadi 51<br />
                         00150 Helsinki, Finland<br />
-                        Website: <a href="https://syklicollege.fi" className="underline">https://syklicollege.fi</a><br />
-                        Email: admissions@syklicollege.fi
+                        Website: <a href="https://kestora.fi" className="underline">https://kestora.fi</a><br />
+                        Email: admissions@kestora.fi
                     </div>
                 </div>
 
-                <div className="text-center mb-12">
+                <div className="text-center mb-6">
                     <h1 className="text-2xl font-bold uppercase tracking-[0.2em] text-black">Official Letter of Offer</h1>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 bg-neutral-50 p-6 mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 p-4 mb-6">
                     <div>
-                        <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Date Issued</span>
+                        <span className="block text-[9px] font-bold text-black uppercase tracking-widest mb-1">Date Issued</span>
                         <span className="font-bold text-xs">{formatToDDMMYYYY(today.toISOString())}</span>
                     </div>
                     <div>
-                        <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Offer Reference</span>
+                        <span className="block text-[9px] font-bold text-black uppercase tracking-widest mb-1">Offer Reference</span>
                         <span className="font-bold text-xs font-mono">{application.admission_details?.offer_reference || 'PENDING'}</span>
                     </div>
                     <div>
-                        <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Application ID</span>
+                        <span className="block text-[9px] font-bold text-black uppercase tracking-widest mb-1">Application ID</span>
                         <span className="font-bold text-xs font-mono">{application.id.slice(0, 8).toUpperCase()}</span>
                     </div>
                 </div>
 
                 {/* 2. Applicant Info */}
-                <div className="mb-10">
-                    <h4 className="text-[10px] font-bold text-neutral-900 uppercase tracking-widest mb-4 border-b border-neutral-200 pb-1">Applicant & Programme Details</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
+                <div className="mb-6">
+                    <h4 className="text-[10px] font-bold text-black uppercase tracking-widest mb-3 pb-1">Applicant & Programme Details</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-12">
                         <div>
-                            <div className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Full Name (Passport Match)</div>
-                            <div className="text-sm font-bold text-neutral-900">{application.personal_info?.firstName} {application.personal_info?.lastName}</div>
+                            <div className="text-[9px] font-bold text-black uppercase tracking-widest mb-1">Full Name (Passport Match)</div>
+                            <div className="text-sm font-bold text-black">{application.personal_info?.firstName} {application.personal_info?.lastName}</div>
                         </div>
                         <div>
-                            <div className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Intake & Year</div>
-                            <div className="text-sm font-bold text-neutral-900">Autumn Semester 2026</div>
+                            <div className="text-[9px] font-bold text-black uppercase tracking-widest mb-1">Intake & Year</div>
+                            <div className="text-sm font-bold text-black">Autumn Semester 2026</div>
                         </div>
                         <div>
-                            <div className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Intended Programme</div>
-                            <div className="text-sm font-bold text-neutral-900">{application.course?.title}</div>
+                            <div className="text-[9px] font-bold text-black uppercase tracking-widest mb-1">Intended Programme</div>
+                            <div className="text-sm font-bold text-black">{application.course?.title}</div>
                         </div>
                         <div>
-                            <div className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Degree Level</div>
-                            <div className="text-sm font-bold text-neutral-900">{application.course?.degreeLevel === 'MASTER' ? "Master's Degree" : "Bachelor's Degree"}</div>
+                            <div className="text-[9px] font-bold text-black uppercase tracking-widest mb-1">Degree Level</div>
+                            <div className="text-sm font-bold text-black">{application.course?.degreeLevel === 'MASTER' ? "Master's Degree" : "Bachelor's Degree"}</div>
                         </div>
                         <div>
-                            <div className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Study Mode</div>
-                            <div className="text-sm font-bold text-neutral-900">{application.course?.programType || 'Full-time'}</div>
+                            <div className="text-[9px] font-bold text-black uppercase tracking-widest mb-1">Study Mode</div>
+                            <div className="text-sm font-bold text-black">{application.course?.programType || 'Full-time'}</div>
                         </div>
                     </div>
                 </div>
 
                 {/* 3. Offer Statement */}
-                <div className="bg-neutral-50 border border-neutral-200 p-6 md:p-8 mb-10 rounded-sm">
+                <div className="p-4 md:p-6 mb-6">
                     <p className="text-sm font-bold text-neutral-900 mb-3">
                         Dear {application.personal_info?.firstName},
                     </p>
-                    <p className="text-sm leading-relaxed text-neutral-700 mb-3">
-                        We are pleased to inform you that, following a thorough review of your application, the Admissions Committee of SYKLI College has decided to offer you a place in the <strong>{application.course?.title}</strong> ({application.course?.programType || 'Full-time'}) programme for the <strong>Autumn 2026</strong> intake.
+                    <p className="text-sm leading-relaxed text-black mb-3">
+                        We are pleased to inform you that, following a thorough review of your application, the Admissions Committee of Kestora College has decided to offer you a place in the <strong>{application.course?.title}</strong> ({application.course?.programType || 'Full-time'}) programme for the <strong>Autumn 2026</strong> intake.
                     </p>
-                    <p className="text-sm leading-relaxed text-neutral-600">
+                    <p className="text-sm leading-relaxed text-black">
                         This offer is subject to the conditions outlined below, including acceptance of the offer via the student portal and confirmation of tuition payment by the specified deadline. Upon fulfillment of these conditions, an official Letter of Admission will be issued confirming your enrollment.
                     </p>
                 </div>
 
                 {/* 4. Conditions */}
-                <div className="mb-10 text-sm leading-relaxed text-neutral-800">
-                    <h4 className="text-[10px] font-bold text-neutral-900 uppercase tracking-widest mb-3 border-b border-neutral-200 pb-1">Conditions of Offer</h4>
+                <div className="mb-6 text-sm leading-relaxed text-black">
+                    <h4 className="text-[10px] font-bold text-black uppercase tracking-widest mb-3 pb-1">Conditions of Offer</h4>
                     <p className="mb-3">This offer is conditional upon acceptance and fulfillment of all stated requirements:</p>
                     <ul className="list-disc ml-5 space-y-1 mb-4">
                         <li>Formal acceptance of this offer via the student portal.</li>
                         <li>Payment of required tuition fees by the specified deadline.</li>
                         <li>Submission of any outstanding original documents (if applicable).</li>
                     </ul>
-                    <p className="text-xs italic text-neutral-500 font-medium">
+                    <p className="text-xs italic text-black font-medium">
                         “This offer is conditional upon acceptance and fulfillment of all stated requirements.”
                     </p>
                 </div>
 
                 {/* 5. Tuition & Financial Information */}
-                <div className="mb-10">
-                    <h4 className="text-[10px] font-bold text-neutral-900 uppercase tracking-widest mb-4 border-b border-neutral-200 pb-1">Tuition & Financial Information</h4>
-                    <p className="text-xs text-neutral-500 mb-4">The following tuition information is provided for your reference based on the programme and degree level.</p>
-                    <div className="border border-neutral-100 rounded-sm overflow-hidden">
+                <div className="mb-6">
+                    <h4 className="text-[10px] font-bold text-black uppercase tracking-widest mb-3 pb-1">Tuition & Financial Information</h4>
+                    <p className="text-xs text-black mb-2">The following tuition information is provided for your reference based on the programme and degree level.</p>
+                    <div className="overflow-hidden">
                         <table className="w-full text-sm text-left">
-                            <tbody className="text-neutral-900">
-                                <tr className="border-b border-neutral-50">
-                                    <td className="py-3 px-4 text-neutral-600">Standard Annual Tuition Fee</td>
+                            <tbody className="text-black">
+                                <tr>
+                                    <td className="py-3 px-4 text-black">Standard Annual Tuition Fee</td>
                                     <td className="py-3 px-4 text-right font-bold">€{((tuitionFee || 0) + (discountAmount || 0)).toLocaleString()} EUR</td>
                                 </tr>
                                 {discountAmount > 0 && (
-                                    <tr className="border-b border-neutral-50 text-emerald-600 bg-emerald-50/30">
+                                    <tr>
                                         <td className="py-3 px-4">Early Payment Discount (25%)</td>
                                         <td className="py-3 px-4 text-right font-bold">- €{discountAmount.toLocaleString()} EUR</td>
                                     </tr>
                                 )}
-                                <tr className="bg-neutral-50 font-bold">
+                                <tr className="font-bold">
                                     <td className="py-4 px-4">Amount Due to Secure Admission</td>
                                     <td className="py-4 px-4 text-right text-lg">€{tuitionFee?.toLocaleString() || '0'} EUR</td>
                                 </tr>
@@ -299,24 +299,24 @@ function AdmissionLetterContent() {
                 </div>
 
                 {/* 6. Next Steps & Validity */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-6">
                     <div>
-                        <h4 className="text-[10px] font-bold text-neutral-900 uppercase tracking-widest mb-3 border-b border-neutral-200 pb-1">Next Steps</h4>
-                        <ol className="list-decimal ml-5 text-sm text-neutral-700 space-y-1">
+                        <h4 className="text-[10px] font-bold text-black uppercase tracking-widest mb-3 pb-1">Next Steps</h4>
+                        <ol className="list-decimal ml-5 text-sm text-black space-y-1">
                             <li>Accept offer via the student portal.</li>
                             <li>Proceed to tuition payment.</li>
                             <li>Admission letter issued after payment confirmation.</li>
                         </ol>
                     </div>
                     <div>
-                        <h4 className="text-[10px] font-bold text-neutral-900 uppercase tracking-widest mb-3 border-b border-neutral-200 pb-1">Offer Validity</h4>
+                        <h4 className="text-[10px] font-bold text-black uppercase tracking-widest mb-3 pb-1">Offer Validity</h4>
                         <div className="text-sm font-bold mb-1">{displayOffer.payment_deadline ? formatToDDMMYYYY(displayOffer.payment_deadline) : '14 Days from Issue'}</div>
-                        <p className="text-[10px] text-neutral-500">This offer will lapse automatically if not accepted by the specified date.</p>
+                        <p className="text-[10px] text-black">This offer will lapse automatically if not accepted by the specified date.</p>
                     </div>
                 </div>
 
                 {/* 7. Signature & Closing */}
-                <div className="mt-auto pt-12 border-t border-neutral-100 flex flex-col md:flex-row justify-between items-start md:items-end gap-8 md:gap-0">
+                <div className="mt-auto pt-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-0">
                     <div>
                         <div className="w-48 h-16 mb-2 relative">
                             <Image
@@ -326,22 +326,22 @@ function AdmissionLetterContent() {
                                 style={{ objectFit: 'contain', objectPosition: 'left bottom' }}
                             />
                         </div>
-                        <div className="text-sm font-bold text-neutral-900 uppercase">
+                        <div className="text-sm font-bold text-black uppercase">
                             Admissions Office
                         </div>
-                        <div className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest leading-none mt-1">
-                            SYKLI College | Finland
+                        <div className="text-[9px] font-bold text-black uppercase tracking-widest leading-none mt-1">
+                            Kestora College | Finland
                         </div>
                     </div>
                     <div className="text-left md:text-right">
-                        <p className="text-[10px] text-neutral-400 mb-1 font-mono">Verified Document ID</p>
+                        <p className="text-[10px] text-black mb-1 font-mono">Verified Document ID</p>
                         <p className="text-[10px] text-black font-mono font-bold">{application.admission_details?.offer_reference || 'OFFR-PENDING'}</p>
                     </div>
                 </div>
 
                 {/* Mandatory Disclaimer */}
-                <div className="mt-12 pt-8 border-t border-neutral-100">
-                    <p className="text-[10px] text-neutral-400 leading-relaxed italic text-center max-w-2xl mx-auto">
+                <div className="mt-6 pt-4">
+                    <p className="text-[10px] text-black leading-relaxed italic text-center max-w-2xl mx-auto">
                         LEGAL DISCLAIMER: “This Offer Letter does not constitute confirmation of enrollment. Official admission is granted only after acceptance of the offer and confirmation of required tuition payment.”
                     </p>
                 </div>
@@ -350,14 +350,29 @@ function AdmissionLetterContent() {
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @media print {
-                    @page { margin: 0; }
-                    body { background: white; padding: 0; }
-                    .min-h-screen { min-height: 0; background: white; padding: 0; }
-                    .max-w-[210mm] { max-width: 100%; margin: 0; padding: 0; }
-                    .shadow-xl { box-shadow: none !important; }
+                    @page { margin: 15mm; size: A4; }
+                    body { background: white !important; padding: 0 !important; margin: 0 !important; }
+                    
+                    /* Hide nav header, footer, and control bar */
+                    header, nav, footer,
+                    [data-theme="portal"] > header,
+                    [data-theme="portal"] > footer,
                     .print\\:hidden { display: none !important; }
+                    
+                    /* Reset layout containers */
+                    [data-theme="portal"] { min-height: 0 !important; }
+                    [data-theme="portal"] > main { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+                    .min-h-screen { min-height: 0 !important; background: white !important; padding: 0 !important; }
+                    .min-h-\\[297mm\\] { min-height: 0 !important; }
+                    
+                    /* Letter container reset */
+                    .max-w-\\[210mm\\] { max-width: 100% !important; margin: 0 !important; padding: 15mm 0 !important; }
+                    .shadow-xl, .print\\:shadow-none { box-shadow: none !important; }
                     .print\\:border-0 { border: none !important; }
-                    .print\\:shadow-none { box-shadow: none !important; }
+                    
+                    /* Ensure black text */
+                    * { color: black !important; }
+                    a { text-decoration: none !important; }
                 }
             ` }} />
         </div>

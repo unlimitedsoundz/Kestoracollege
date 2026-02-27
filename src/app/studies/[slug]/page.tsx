@@ -36,8 +36,8 @@ export async function generateMetadata({ params }: Props) {
     }
 
     return {
-        title: `${course.name} — ${course.degreeType} | SYKLI College`,
-        description: course.description?.substring(0, 160) || `Study ${course.name} (${course.degreeType}, ${course.ects} ECTS) at SYKLI College.`,
+        title: `${course.name} — ${course.degreeType} | Kestora College`,
+        description: course.description?.substring(0, 160) || `Study ${course.name} (${course.degreeType}, ${course.ects} ECTS) at Kestora College.`,
     };
 }
 
@@ -99,8 +99,8 @@ export default async function CourseDetailPage({ params }: Props) {
         description: course.description,
         provider: {
             '@type': 'EducationalOrganization',
-            name: 'SYKLI College',
-            sameAs: 'https://www.syklicollege.fi'
+            name: 'Kestora College',
+            sameAs: 'https://www.kestora.fi'
         },
         educationalCredentialAwarded: course.degreeType,
         hasCourseInstance: {

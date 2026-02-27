@@ -18,7 +18,7 @@ const positions = [
         title: 'Admissions Coordinator',
         type: 'Part-time',
         location: 'Remote / Helsinki',
-        description: 'Supporting international students through their application journey at SYKLI College.'
+        description: 'Supporting international students through their application journey at Kestora College.'
     },
     {
         title: 'IT Support Specialist',
@@ -39,9 +39,9 @@ export default function CareersPage() {
             <SchemaLD data={{
                 "@context": "https://schema.org",
                 "@type": "WebPage",
-                "name": "Careers at SYKLI College",
-                "description": "Explore job opportunities at SYKLI College in Helsinki.",
-                "url": "https://www.syklicollege.fi/careers"
+                "name": "Careers at Kestora College",
+                "description": "Explore job opportunities at Kestora College in Helsinki.",
+                "url": "https://www.kestora.fi/careers"
             }} />
 
             {positions.map((pos, index) => (
@@ -55,9 +55,9 @@ export default function CareersPage() {
                     "employmentType": pos.type === "Full-time" ? "FULL_TIME" : "PART_TIME",
                     "hiringOrganization": {
                         "@type": "CollegeOrUniversity",
-                        "name": "SYKLI College",
-                        "sameAs": "https://www.syklicollege.fi",
-                        "logo": "https://www.syklicollege.fi/logo.png"
+                        "name": "Kestora College",
+                        "sameAs": "https://www.kestora.fi",
+                        "logo": "https://www.kestora.fi/logo-kestora.png"
                     },
                     "jobLocation": {
                         "@type": "Place",
@@ -76,13 +76,13 @@ export default function CareersPage() {
             <section className="bg-white pt-32 pb-16 border-b border-neutral-100">
                 <div className="container mx-auto px-4 text-center">
                     <h1 className="text-5xl md:text-8xl font-bold text-black tracking-tighter mb-12 uppercase">
-                        Work at <br className="hidden md:block" /> SYKLI College
+                        Work at <br className="hidden md:block" /> Kestora College
                     </h1>
 
                     <div className="relative h-[400px] md:h-[500px] w-full mb-12 overflow-hidden bg-neutral-100">
                         <Image
                             src="/images/admissions/campus_welcome.jpg"
-                            alt="SYKLI College Campus"
+                            alt="Kestora College Campus"
                             fill
                             className="object-cover"
                             priority
@@ -102,7 +102,7 @@ export default function CareersPage() {
                     <div>
                         <h2 className="text-4xl font-bold mb-8 tracking-tight">Institutional Culture</h2>
                         <p className="text-lg text-neutral-600 leading-relaxed mb-6">
-                            SYKLI College is an independent higher education institution in Helsinki, Finland, offering English-taught Bachelor’s and Master’s degree programmes focused on engineering, technology, business, science, and the arts.
+                            Kestora College is an independent higher education institution in Helsinki, Finland, offering English-taught Bachelor’s and Master’s degree programmes focused on engineering, technology, business, science, and the arts.
                         </p>
                         <div className="space-y-6">
                             <div className="flex gap-4 items-start">
@@ -143,7 +143,7 @@ export default function CareersPage() {
                     <div className="flex justify-between items-end mb-16">
                         <div>
                             <h2 className="text-4xl font-bold tracking-tight">Open Positions</h2>
-                            <p className="text-neutral-500 mt-2">Find your next role at SYKLI College.</p>
+                            <p className="text-neutral-500 mt-2">Find your next role at Kestora College.</p>
                         </div>
                     </div>
 
@@ -182,13 +182,13 @@ export default function CareersPage() {
                     </p>
                     <div className="flex flex-col md:flex-row justify-center items-center gap-6">
                         <a
-                            href="mailto:careers@syklicollege.fi"
+                            href="mailto:careers@kestora.fi"
                             className="px-10 py-5 bg-white text-black font-bold text-lg hover:bg-neutral-200 transition-colors flex items-center gap-3"
                         >
                             Send your CV <ArrowRight size={20} weight="bold" />
                         </a>
                         <p className="text-neutral-500 font-mono text-sm">
-                            careers@syklicollege.fi
+                            careers@kestora.fi
                         </p>
                     </div>
                 </div>

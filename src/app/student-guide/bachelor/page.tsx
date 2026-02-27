@@ -55,7 +55,7 @@ export default function BachelorsGuidePage() {
                         {/* Intro Box */}
                         <div className="bg-neutral-50 border border-neutral-200 p-8 rounded-2xl">
                             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                                Welcome to SYKLI College!
+                                Welcome to Kestora College!
                             </h2>
                             <p className="text-neutral-700 mb-4">
                                 This guide covers the critical steps from accepting your offer to arriving on campus.
@@ -183,7 +183,7 @@ export default function BachelorsGuidePage() {
                                 <h2 className="text-3xl font-bold pt-1">Activate IT Account</h2>
                             </div>
                             <p className="text-neutral-700 mb-4">
-                                After enrolling, you will receive an email to activate your SYKLI College IT account.
+                                After enrolling, you will receive an email to activate your Kestora College IT account.
                                 This gives you access to email, learning platforms, and registration systems.
                             </p>
                         </section>
@@ -250,7 +250,7 @@ export default function BachelorsGuidePage() {
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div>
                                     <h3 className="font-bold mb-2">Housing</h3>
-                                    <p className="text-sm text-neutral-600">Apply immediately. SYKLI College does not own housing; arrange through private providers.</p>
+                                    <p className="text-sm text-neutral-600">Apply immediately. Kestora College does not own housing; arrange through private providers.</p>
                                 </div>
                                 <div>
                                     <h3 className="font-bold mb-2">Financial Aid</h3>

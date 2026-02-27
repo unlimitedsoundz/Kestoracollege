@@ -44,13 +44,26 @@ function ReceiptContent() {
                     .eq('user_id', user.id)
                     .single();
 
-                const application = applicationRaw;
-                const offer = Array.isArray(application.offer) ? application.offer[0] : application.offer;
-
-                if (error || !applicationRaw || !offer) {
+                if (error || !applicationRaw) {
                     setData(null);
                     setLoading(false);
                     return;
+                }
+
+                const application = applicationRaw;
+                const offer = Array.isArray(application.offer) ? application.offer[0] : application.offer;
+
+                // Fallback: if the join didn't return payments, fetch them directly
+                if (offer && (!offer.payments || offer.payments.length === 0)) {
+                    const { data: paymentsData } = await supabase
+                        .from('tuition_payments')
+                        .select('*')
+                        .eq('offer_id', offer.id)
+                        .order('created_at', { ascending: false });
+
+                    if (paymentsData && paymentsData.length > 0) {
+                        offer.payments = paymentsData;
+                    }
                 }
 
                 setData(applicationRaw);
@@ -75,19 +88,6 @@ function ReceiptContent() {
         fetchData();
     }, [id, router]);
 
-    // Redirect if not eligible - Moved ABOVE early returns to satisfy Rules of Hooks
-    useEffect(() => {
-        if (!loading && data) {
-            const application = data;
-            const offer = Array.isArray(application.offer) ? application.offer[0] : application.offer;
-            const payment = offer?.payments?.[0];
-
-            if (!payment || (application.status !== 'ENROLLED' && application.status !== 'PAYMENT_SUBMITTED')) {
-                router.push(`/portal/application/payment?id=${id}`);
-            }
-        }
-    }, [loading, data, id, router]);
-
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
@@ -111,7 +111,16 @@ function ReceiptContent() {
     const payment = offer?.payments?.[0];
 
     if (!payment || (application.status !== 'ENROLLED' && application.status !== 'PAYMENT_SUBMITTED')) {
-        return null;
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+                <p className="text-xl font-bold text-neutral-900 uppercase tracking-tight">Receipt Not Available</p>
+                <p className="text-sm text-neutral-500 max-w-md text-center">Your payment receipt is not available yet. This may be because the payment is still being processed.</p>
+                <div className="flex gap-4">
+                    <button onClick={() => window.location.reload()} className="px-6 py-2 bg-black text-white text-[10px] font-bold uppercase tracking-widest rounded-sm">Retry</button>
+                    <Link href="/portal/dashboard" className="px-6 py-2 border border-neutral-200 text-[10px] font-bold uppercase tracking-widest rounded-sm">Dashboard</Link>
+                </div>
+            </div>
+        );
     }
 
 
@@ -151,7 +160,7 @@ function ReceiptContent() {
             <div className="max-w-[210mm] mx-auto mb-8 flex items-center justify-between print:hidden">
                 <Link
                     href="/portal/dashboard"
-                    className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors"
+                    className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-black hover:text-black transition-colors"
                 >
                     <ChevronLeft size={14} weight="bold" />
                     Back to Dashboard
@@ -160,7 +169,7 @@ function ReceiptContent() {
             </div>
 
             {/* Document Container */}
-            <div className="w-full max-w-[210mm] mx-auto bg-white print:shadow-none p-6 md:p-8 border border-neutral-200 print:border-0 relative overflow-hidden">
+            <div className="w-full max-w-[210mm] mx-auto bg-white print:shadow-none p-6 md:p-8 print:border-0 relative overflow-hidden">
 
                 {isPending && (
                     <div className="absolute top-12 right-12 opacity-10 pointer-events-none z-0 border-[8px] border-black p-4 rotate-[-15deg]">
@@ -173,24 +182,24 @@ function ReceiptContent() {
                     <div className="space-y-4">
                         <div className="relative w-40 h-10">
                             <Image
-                                src="/images/sykli-logo-official.png"
-                                alt="SYKLI College"
+                                src="/logo-kestora.png"
+                                alt="Kestora College"
                                 fill
                                 style={{ objectFit: 'contain', objectPosition: 'left center' }}
                             />
                         </div>
                         <div className="space-y-0.5">
-                            <div className="text-[12px] font-black uppercase tracking-[0.05em] text-black">SYKLI College</div>
-                            <div className="text-[9px] text-neutral-500 font-medium leading-relaxed max-w-[200px]">
-                                SYKLI College – Helsinki Campus, Pohjoisesplanadi 51, 00150 Helsinki, Finland<br />
-                                financial.services@syklicollege.fi
+                            <div className="text-[12px] font-black uppercase tracking-[0.05em] text-black">Kestora College</div>
+                            <div className="text-[9px] text-black font-medium leading-relaxed max-w-[200px]">
+                                Kestora College – Helsinki Campus, Pohjoisesplanadi 51, 00150 Helsinki, Finland<br />
+                                financial.services@kestora.fi
                             </div>
                         </div>
                     </div>
                     <div className="text-right flex flex-col items-end">
                         <div className="text-2xl font-black text-black uppercase tracking-tighter leading-none mb-1">Receipt</div>
                         <div className="flex flex-col items-end gap-0.5">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Transaction ID</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-black">Transaction ID</span>
                             <span className="text-xs font-mono font-bold text-black border-r-4 border-black pr-3">{payment?.transaction_reference || 'N/A'}</span>
                         </div>
                     </div>
@@ -199,12 +208,12 @@ function ReceiptContent() {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-8 relative z-10">
                     <div className="md:col-span-7 space-y-6">
                         <div>
-                            <div className="text-[9px] font-black text-neutral-400 uppercase tracking-widest mb-2 border-b border-neutral-100 pb-0.5">Received From (Payer)</div>
+                            <div className="text-[9px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-0.5">Received From (Payer)</div>
                             <div className="space-y-0.5">
                                 <div className="text-lg font-black text-black uppercase tracking-tight">
                                     {application.personal_info?.firstName} {application.personal_info?.lastName}
                                 </div>
-                                <div className="text-sm text-neutral-600 font-medium">
+                                <div className="text-sm text-black font-medium">
                                     {application.contact_details?.addressLine1 || application.contact_details?.address}<br />
                                     {application.contact_details?.city}, {application.contact_details?.country}
                                 </div>
@@ -215,14 +224,14 @@ function ReceiptContent() {
                         </div>
 
                         <div>
-                            <div className="text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-3 border-b border-neutral-100 pb-1">Payment Method & Status</div>
+                            <div className="text-[10px] font-black text-black uppercase tracking-widest mb-3 border-b border-black pb-1">Payment Method & Status</div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <div className="text-[9px] font-bold text-neutral-400 uppercase mb-0.5">Method</div>
+                                    <div className="text-[9px] font-bold text-black uppercase mb-0.5">Method</div>
                                     <div className="text-xs font-bold text-black uppercase">{payment.payment_method?.replace(/_/g, ' ')}</div>
                                 </div>
                                 <div>
-                                    <div className="text-[9px] font-bold text-neutral-400 uppercase mb-0.5">Status</div>
+                                    <div className="text-[9px] font-bold text-black uppercase mb-0.5">Status</div>
                                     {isPending ? (
                                         <div className="inline-flex items-center gap-1.5 text-xs font-black text-amber-600 uppercase">
                                             <div className="w-1.5 h-1.5 bg-amber-600 rounded-full animate-pulse" />
@@ -240,18 +249,18 @@ function ReceiptContent() {
                     </div>
 
                     <div className="md:col-span-5">
-                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-sm space-y-4">
+                        <div className="bg-white p-4 space-y-4">
                             <div className="flex flex-col gap-0.5 pr-4">
-                                <span className="text-[8px] font-bold text-neutral-400 uppercase">Amount Paid (EUR)</span>
+                                <span className="text-[8px] font-bold text-black uppercase">Amount Paid (EUR)</span>
                                 <span className="text-2xl font-black text-black leading-none">€ {payment?.amount?.toLocaleString() || '0'}</span>
                             </div>
-                            <div className="space-y-2 pt-4 border-t border-neutral-200">
+                            <div className="space-y-2 pt-4 border-t border-black">
                                 <div className="flex justify-between items-center text-[9px] font-bold">
-                                    <span className="text-neutral-500 uppercase tracking-wider">Date Received</span>
+                                    <span className="text-black uppercase tracking-wider">Date Received</span>
                                     <span className="text-black">{formatToDDMMYYYY(payment?.created_at)}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-[9px] font-bold">
-                                    <span className="text-neutral-500 uppercase tracking-wider">Currency</span>
+                                    <span className="text-black uppercase tracking-wider">Currency</span>
                                     <span className="text-black">{offer.currency || 'EUR'}</span>
                                 </div>
                             </div>
@@ -261,7 +270,7 @@ function ReceiptContent() {
 
                 {/* Body Table */}
                 <div className="relative z-10 mb-8">
-                    <div className="text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-3 border-b border-neutral-100 pb-1">Payment Breakdown</div>
+                    <div className="text-[10px] font-black text-black uppercase tracking-widest mb-3 border-b border-black pb-1">Payment Breakdown</div>
                     <table className="w-full text-sm border-collapse">
                         <thead>
                             <tr className="text-[9px] font-black uppercase tracking-widest text-black border-b-2 border-black">
@@ -270,11 +279,11 @@ function ReceiptContent() {
                                 <th className="text-right py-2 px-2">Amount</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-neutral-100">
+                        <tbody className="divide-y divide-black">
                             <tr>
                                 <td className="py-4 px-2">
                                     <div className="font-bold text-black uppercase tracking-tight">Tuition Fees - {application.course?.title}</div>
-                                    <div className="text-[10px] text-neutral-500 mt-0.5">
+                                    <div className="text-[10px] text-black mt-0.5">
                                         Intake: {intake} | Academic Year {academicYear}
                                     </div>
                                 </td>
@@ -297,7 +306,7 @@ function ReceiptContent() {
 
                 <div className="relative z-10 mt-auto pt-8">
                     <p className="text-[8px] text-black uppercase tracking-widest leading-relaxed text-center font-medium">
-                        This document serves as an official proof of payment for the specified student and program. It is electronically generated and verified through the SYKLI SIS Gateway.
+                        This document serves as an official proof of payment for the specified student and program. It is electronically generated and verified through the Kestora SIS Gateway.
                     </p>
                 </div>
 
@@ -306,14 +315,21 @@ function ReceiptContent() {
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @media print {
-                    @page { margin: 0; }
-                    body { background: white; padding: 0; }
-                    .min-h-screen { min-height: 0; background: white; padding: 0; }
-                    .max-w-[210mm] { max-width: 100%; margin: 0; padding: 0; }
-                    .shadow-xl { box-shadow: none !important; }
+                    @page { margin: 15mm; size: A4; }
+                    body { background: white !important; padding: 0 !important; margin: 0 !important; }
+                    header, nav, footer,
+                    [data-theme="portal"] > header,
+                    [data-theme="portal"] > footer,
                     .print\\:hidden { display: none !important; }
+                    [data-theme="portal"] { min-height: 0 !important; }
+                    [data-theme="portal"] > main { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+                    .min-h-screen { min-height: 0 !important; background: white !important; padding: 0 !important; }
+                    .min-h-\\[297mm\\] { min-height: 0 !important; }
+                    .max-w-\\[210mm\\] { max-width: 100% !important; margin: 0 !important; padding: 15mm 0 !important; }
+                    .shadow-xl, .shadow-sm, .print\\:shadow-none { box-shadow: none !important; }
                     .print\\:border-0 { border: none !important; }
-                    .print\\:shadow-none { box-shadow: none !important; }
+                    * { color: black !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                    a { text-decoration: none !important; }
                 }
             ` }} />
         </div>

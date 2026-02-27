@@ -20,10 +20,10 @@ export default async function Home() {
           {/* Left Content */}
           <div className="lg:w-1/2 space-y-2 relative z-10 flex flex-col justify-center h-full pt-0 lg:pt-0">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight pt-8 lg:pt-24">
-              SYKLI College – English-Taught Bachelor’s & Master’s Degrees in Finland
+              Kestora College – English-Taught Bachelor’s & Master’s Degrees in Finland
             </h1>
             <p className="text-[21px] text-white max-w-xl leading-relaxed my-4">
-              SYKLI College is an independent higher education institution based in Helsinki, Finland, offering internationally focused Bachelor’s and Master’s degree programmes taught in English for students from around the world.
+              Kestora College is an independent higher education institution based in Helsinki, Finland, offering internationally focused Bachelor’s and Master’s degree programmes taught in English for students from around the world.
             </p>
             <div className="space-y-3 pt-2">
               <Link href="/admissions" className="flex items-center gap-2 text-[18px] font-bold underline hover:opacity-70 group">
@@ -39,8 +39,8 @@ export default async function Home() {
             <div className="h-full">
               <div className="relative w-[368px] h-[368px] lg:w-full lg:h-full bg-neutral-800 shadow-2xl overflow-hidden">
                 <Image
-                  src="/images/1770711055925-019c4693-3f9b-731f-a2a2-97b2e8a70069.png"
-                  alt="Student studying at SYKLI College campus in Finland"
+                  src="/images/home-hero-new.png"
+                  alt="Student studying at Kestora College campus in Finland"
                   fill
                   priority
                   className="object-cover opacity-90"
@@ -63,7 +63,7 @@ export default async function Home() {
               <p className="hidden md:block text-sm text-neutral-600">Fusing creative excellence with modern design and professional practice.</p>
             </div>
             <div className="w-1/3 relative">
-              <Image src="/images/admissions/school_arts.jpg" alt="Arts" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+              <Image src="/images/school-arts.png" alt="Arts" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
             </div>
           </Link>
 
@@ -74,7 +74,7 @@ export default async function Home() {
               <p className="hidden md:block text-sm text-neutral-600">Developing innovative leaders for global markets and digital entrepreneurship.</p>
             </div>
             <div className="w-1/3 relative">
-              <Image src="/images/admissions/school_business.jpg" alt="Business" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+              <Image src="/images/school-business.png" alt="Business" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
             </div>
           </Link>
 
@@ -85,7 +85,7 @@ export default async function Home() {
               <p className="hidden md:block text-sm text-neutral-600">Pioneering advanced engineering and smart-city technical solutions.</p>
             </div>
             <div className="w-1/3 relative">
-              <Image src="/images/admissions/school_technology.jpg" alt="Technology" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+              <Image src="/images/school-technology.png" alt="Technology" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
             </div>
           </Link>
 
@@ -96,7 +96,7 @@ export default async function Home() {
               <p className="hidden md:block text-sm text-neutral-600">Advancing applied research and innovation for a changing global landscape.</p>
             </div>
             <div className="w-1/3 relative">
-              <Image src="/images/admissions/school_science.jpg" alt="Science" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+              <Image src="/images/school-science.png" alt="Science" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
             </div>
           </Link>
         </div>
@@ -114,7 +114,7 @@ export default async function Home() {
               href="/news"
               className="inline-flex items-center gap-2 px-6 py-3 border border-black text-sm font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-all duration-300 group"
             >
-              See all SYKLI College news
+              See all Kestora College news
               <ArrowRight size={18} weight="bold" className="transform group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -130,7 +130,7 @@ export default async function Home() {
             href="/news"
             className="inline-flex items-center gap-2 px-6 py-3 border border-black text-sm font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-all duration-300 group w-full justify-center text-center"
           >
-            See all SYKLI College news
+            See all Kestora College news
             <ArrowRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -142,8 +142,8 @@ export default async function Home() {
           <div className="w-full lg:w-1/2">
             <div className="relative h-[300px] md:h-[500px] overflow-hidden rounded-2xl">
               <Image
-                src="/images/admissions/campus_welcome.jpg"
-                alt="SYKLI campus"
+                src="/images/campus-welcome.png"
+                alt="Kestora campus"
                 fill
                 className="object-cover"
               />
@@ -152,10 +152,10 @@ export default async function Home() {
           <div className="lg:w-1/2 space-y-6">
             <h2 className="text-[28px] font-bold">Welcome to our campus!</h2>
             <p className="text-lg text-neutral-600">
-              Are you hosting a group or organizing a visit? Contact our admissions team to arrange a tour or discover how to maximize your time on the SYKLI campus.
+              Are you hosting a group or organizing a visit? Contact our admissions team to arrange a tour or discover how to maximize your time on the Kestora campus.
             </p>
             <p className="text-lg text-neutral-600">
-              SYKLI College welcomes prospective Bachelor’s and Master’s degree students to learn more about studying in Finland through guided visits and virtual consultations.
+              Kestora College welcomes prospective Bachelor’s and Master’s degree students to learn more about studying in Finland through guided visits and virtual consultations.
             </p>
           </div>
         </div>
@@ -169,16 +169,16 @@ export default async function Home() {
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
           <div className="max-w-2xl">
             <h2 className="text-2xl md:text-3xl font-bold leading-tight">
-              SYKLI College is an independent higher education institution in Helsinki, Finland, offering English-taught Bachelor’s and Master’s degree programmes focused on engineering, technology, business, science, and the arts.
+              Study at Kestora College in Helsinki, Finland
             </h2>
-            <p className="text-white/50 text-xs mt-4">
-              SYKLI College is not affiliated with Suomen ympäristöopisto SYKLI or any other institution with a similar name.
+            <p className="text-white/50 text-sm mt-4">
+              An independent higher education institution offering English-taught Bachelor's and Master's degree programmes focused on engineering, technology, business, science, and the arts.
             </p>
           </div>
 
           <div className="space-y-4 md:space-y-2 w-full md:w-auto">
             {[
-              { label: "Study at SYKLI", href: "/studies" },
+              { label: "Study at Kestora", href: "/studies" },
               { label: "Open positions", href: "/careers" },
               { label: "Contact us", href: "/contact" }
             ].map((link) => (

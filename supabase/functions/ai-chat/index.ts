@@ -5,8 +5,8 @@ const corsHeaders = {
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const SYKLI_CONTEXT = `
-Sykli College is a higher education institution in Helsinki, Finland, dedicated to sustainability, innovation, and practical excellence.
+const Kestora_CONTEXT = `
+Kestora College is a higher education institution in Helsinki, Finland, dedicated to sustainability, innovation, and practical excellence.
 
 Key Information:
 - Location: Helsinki Campus, Malmin kauppatie 8, 00700 Helsinki, Finland.
@@ -14,13 +14,13 @@ Key Information:
 - Core Schools: School of Arts & Design, School of Business, School of Technology, School of Science.
 - Mission: To empower the next generation of leaders with the skills to build a regenerative future.
 - Admissions: Open for Autumn 2026. Process is transparent and supportive.
-- Tuition Fees: Sykli College accepts tuition payments exclusively via direct bank transfer to Kuda Bank.
-- Kuda Bank Details: Bank: Kuda Bank, Account Number: 3003469520, Account Name: SYKLI EDUCATIONAL SERVICES.
+- Tuition Fees: Kestora College accepts tuition payments exclusively via direct bank transfer to Kuda Bank.
+- Kuda Bank Details: Bank: Kuda Bank, Account Number: 3003469520, Account Name: Kestora EDUCATIONAL SERVICES.
 - Early Payment: There is an Early Payment Credit (discount) available for those who pay before the deadline.
 - Partnerships: strategic partnerships with over 200 global companies and research institutions.
 - Employment: 92% of graduates find relevant employment within 6 months.
 
-Contact: admissions@syklicollege.fi | +358-20-4721-739
+Contact: admissions@kestora.fi | +358-20-4721-739
 `;
 
 serve(async (req) => {
@@ -33,14 +33,14 @@ serve(async (req) => {
         if (!openaiApiKey) {
             console.error("Missing OPENAI_API_KEY");
             return new Response(JSON.stringify({
-                reply: "I'm currently in 'offline' mode because my AI brains are being configured. However, I can still tell you that Sykli College is a leader in sustainability! Please ask your administrator to configure the OPENAI_API_KEY secret."
+                reply: "I'm currently in 'offline' mode because my AI brains are being configured. However, I can still tell you that Kestora College is a leader in sustainability! Please ask your administrator to configure the OPENAI_API_KEY secret."
             }), {
                 headers: { ...corsHeaders, "Content-Type": "application/json" },
             });
         }
 
         const messages = [
-            { role: "system", content: `You are a helpful assistant for Sykli College. Use the following context to answer student questions. If you don't know the answer, politely refer them to admissions@syklicollege.fi.\n\nContext:\n${SYKLI_CONTEXT}` },
+            { role: "system", content: `You are a helpful assistant for Kestora College. Use the following context to answer student questions. If you don't know the answer, politely refer them to admissions@kestora.fi.\n\nContext:\n${Kestora_CONTEXT}` },
             ...history.map((h: any) => ({ role: h.role === 'assistant' ? 'assistant' : 'user', content: h.content })),
             { role: "user", content: message }
         ];

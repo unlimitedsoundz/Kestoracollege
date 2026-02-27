@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { ForkKnife as Utensils, Clock, MapPin, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata = {
-    title: 'Opiskelija Café — SYKLI College Student Restaurant | Menu & Hours',
-    description: 'Visit the Opiskelija Café at SYKLI College Helsinki. Affordable student meals, coffee, and pastries. View the menu, opening hours, and location.',
+    title: 'Opiskelija Café — Kestora College Student Restaurant | Menu & Hours',
+    description: 'Visit the Opiskelija Café at Kestora College Helsinki. Affordable student meals, coffee, and pastries. View the menu, opening hours, and location.',
 };
 
 export default function CafePage() {

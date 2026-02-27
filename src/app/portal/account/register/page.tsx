@@ -62,7 +62,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-1">
-                    <h1 className="text-2xl font-black uppercase tracking-tight">Welcome to SYKLI</h1>
+                    <h1 className="text-2xl font-black uppercase tracking-tight">Welcome to Kestora</h1>
                     <p className="text-xs font-medium">Your account has been successfully created.</p>
                 </div>
 
@@ -99,7 +99,7 @@ export default function RegisterPage() {
     return (
         <div className="max-w-md mx-auto mt-12 bg-white p-8 border border-neutral-100 text-[#2d2d2d]">
             <h1 className="text-2xl font-bold mb-2">Create Account</h1>
-            <p className="mb-8">Start your application to SYKLI College</p>
+            <p className="mb-8">Start your application to Kestora College</p>
 
             {message && (
                 <div className={`p-4 mb-6 text-xs font-bold uppercase tracking-widest border ${message.type === 'success' ? 'bg-neutral-50 border-neutral-100' : 'bg-red-50 text-red-700 border-red-100'}`} style={message.type === 'success' ? { color: '#2d2d2d' } : {}}>

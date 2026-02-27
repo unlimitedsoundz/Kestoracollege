@@ -2,8 +2,8 @@
 import { RocketLaunch as Rocket, Lightbulb } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata = {
-    title: 'Innovation Hub — SYKLI College | Startups, Incubation & Entrepreneurship',
-    description: 'SYKLI College Innovation Hub connects students, researchers, and industry to turn ideas into impact. Startup incubation, workshops, and entrepreneurship support.',
+    title: 'Innovation Hub — Kestora College | Startups, Incubation & Entrepreneurship',
+    description: 'Kestora College Innovation Hub connects students, researchers, and industry to turn ideas into impact. Startup incubation, workshops, and entrepreneurship support.',
 };
 
 export default function InnovationPage() {

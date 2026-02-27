@@ -161,7 +161,7 @@ export function OfferClient({ admission }: OfferClientProps) {
                             <div className="flex flex-col items-center">
                                 <div className="space-y-6 max-w-2xl w-full">
                                     <div className="text-center space-y-2 border-b border-neutral-200 pb-6">
-                                        <h2 className="text-2xl font-bold text-neutral-900">Welcome to SYKLI College!</h2>
+                                        <h2 className="text-2xl font-bold text-neutral-900">Welcome to Kestora College!</h2>
                                         <p className="text-sm text-neutral-600">
                                             Your Journey Starts Here
                                         </p>
@@ -184,7 +184,7 @@ export function OfferClient({ admission }: OfferClientProps) {
                                                     <h4 className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Next Steps for Enrollment:</h4>
                                                     <div className="grid gap-4">
                                                         <WelcomeStep number="01" title="Tuition Clearance" description="Proceed to the finance section to settle your initial tuition fees." />
-                                                        <WelcomeStep number="02" title="IT Credentials" description="You will receive your SYKLI credentials once the payment is confirmed." />
+                                                        <WelcomeStep number="02" title="IT Credentials" description="You will receive your Kestora credentials once the payment is confirmed." />
                                                         <WelcomeStep number="03" title="Orientation" description="Check your portal for the upcoming orientation schedule." />
                                                     </div>
                                                 </div>

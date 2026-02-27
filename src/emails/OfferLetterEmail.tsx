@@ -24,7 +24,7 @@ export default function OfferLetterEmail({
     firstName = 'Student',
     courseTitle = 'Applied Sciences',
 }: OfferLetterEmailProps) {
-    const previewText = `Congratulations! You have been offered admission to ${courseTitle} at SYKLI College.`;
+    const previewText = `Congratulations! You have been offered admission to ${courseTitle} at Kestora College.`;
 
     return (
         <Html>
@@ -35,10 +35,10 @@ export default function OfferLetterEmail({
                     <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
                         <Section className="mt-[32px]">
                             <Img
-                                src="https://syklicollege.fi/logo.png"
+                                src="https://kestora.fi/logo-kestora.png"
                                 width="40"
                                 height="40"
-                                alt="SYKLI College"
+                                alt="Kestora College"
                                 className="my-0 mx-auto"
                             />
                         </Section>
@@ -52,7 +52,7 @@ export default function OfferLetterEmail({
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">
-                            We are delighted to inform you that you have been offered admission to the <strong>{courseTitle}</strong> programme at SYKLI College.
+                            We are delighted to inform you that you have been offered admission to the <strong>{courseTitle}</strong> programme at Kestora College.
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">
@@ -62,7 +62,7 @@ export default function OfferLetterEmail({
                         <Section className="text-center mt-[32px] mb-[32px]">
                             <Link
                                 className="bg-[#000000] rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3"
-                                href="https://syklicollege.fi/portal/application/letter"
+                                href="https://kestora.fi/portal/application/letter"
                             >
                                 View & Accept Offer
                             </Link>
@@ -75,7 +75,7 @@ export default function OfferLetterEmail({
                         <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
 
                         <Text className="text-[#666666] text-[12px] leading-[24px]">
-                            Office of Admissions, SYKLI College.
+                            Office of Admissions, Kestora College.
                         </Text>
                     </Container>
                 </Body>
