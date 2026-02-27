@@ -211,7 +211,7 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
                                 <span className="text-black font-normal uppercase tracking-wider">{paymentType === 'deposit' ? 'Tuition Deposit' : 'First Year Tuition'}</span>
                                 <span className="font-medium text-black text-right">€ {finalAmount.toLocaleString()}</span>
                             </div>
-                            {isEarly && (
+                            {isEarly && paymentType === 'first_year' && (
                                 <div className="flex justify-between items-center text-sm text-black font-normal py-1">
                                     <span className="uppercase tracking-wider">Early Bird Discount ({EARLY_PAYMENT_DISCOUNT_PERCENT}%)</span>
                                     <span className="font-medium whitespace-nowrap">- € {discount.toLocaleString()}</span>
