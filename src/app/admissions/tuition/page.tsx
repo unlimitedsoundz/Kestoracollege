@@ -19,6 +19,7 @@ const tocSections = [
     { id: 'payment-methods', title: 'Payment Methods', content: '' },
     { id: 'timing', title: 'Payment Schedule', content: '' },
     { id: 'additional-fees', title: 'Additional Fees & Benefits', content: '' },
+    { id: 'health-insurance', title: 'Health Insurance', content: '' },
     { id: 'refunds', title: 'Refund Policy', content: '' },
     { id: 'faq', title: 'General FAQ', content: '' },
     { id: 'contact', title: 'Contact Support', content: '' },
@@ -683,6 +684,45 @@ export default function TuitionPaymentPage() {
                                                 <p className="text-sm text-neutral-600 leading-relaxed">
                                                     Yes, family members can apply for residence permits based on family ties. However, the student permit applicant must demonstrate sufficient financial resources for the entire family's stay.
                                                 </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* SwissCare Health Insurance */}
+                                <div id="health-insurance" className="scroll-mt-32 pt-16">
+                                    <h3 className="text-2xl font-bold mb-6">Health Insurance for International Students</h3>
+                                    <div className="bg-white border-2 border-neutral-100 rounded-2xl p-6 md:p-12 shadow-sm">
+                                        <div className="flex flex-col md:flex-row items-start gap-6">
+                                            <div className="relative w-16 h-16 md:w-20 md:h-20 shrink-0 bg-white rounded-xl overflow-hidden border border-neutral-100 shadow-sm">
+                                                <Image
+                                                    src="/images/swisscare-logo.png"
+                                                    alt="SwissCare"
+                                                    fill
+                                                    className="object-contain p-1"
+                                                />
+                                            </div>
+                                            <div>
+                                                <h4 className="text-xl font-bold mb-3">SwissCare — Recommended Insurance Partner</h4>
+                                                <p className="text-neutral-600 leading-relaxed mb-4">
+                                                    Non-EU/EEA students are required to have valid private health insurance to obtain a Finnish residence permit.
+                                                    Kestora College recommends <strong>SwissCare</strong> as a trusted health insurance provider for international students.
+                                                    SwissCare offers comprehensive plans specifically designed for students studying abroad, covering:
+                                                </p>
+                                                <ul className="space-y-2 mb-6 text-sm text-black">
+                                                    <li className="flex gap-3 items-start"><div className="min-w-[6px] h-[6px] rounded-full bg-black mt-1.5"></div> Medical consultations and hospitalization</li>
+                                                    <li className="flex gap-3 items-start"><div className="min-w-[6px] h-[6px] rounded-full bg-black mt-1.5"></div> Emergency repatriation and evacuation</li>
+                                                    <li className="flex gap-3 items-start"><div className="min-w-[6px] h-[6px] rounded-full bg-black mt-1.5"></div> Dental emergencies and mental health support</li>
+                                                    <li className="flex gap-3 items-start"><div className="min-w-[6px] h-[6px] rounded-full bg-black mt-1.5"></div> Coverage accepted for residence permit applications</li>
+                                                </ul>
+                                                <a
+                                                    href="https://www.swisscare.com"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-block bg-black text-white px-6 py-3 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-800 transition-colors"
+                                                >
+                                                    Visit SwissCare →
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

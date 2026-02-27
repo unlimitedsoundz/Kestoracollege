@@ -6,7 +6,7 @@ import { Check, FileText } from "@phosphor-icons/react/dist/ssr";
 import { createClient } from '@/utils/supabase/client';
 import { invokeEdgeFunction } from '@/utils/supabase/invoke';
 import PayGoWireCheckout from './PayGoWireCheckout';
-import { calculateDiscountedFee, EARLY_PAYMENT_DISCOUNT_PERCENT, getProgramYears } from '@/utils/tuition';
+import { calculateDiscountedFee, EARLY_PAYMENT_DISCOUNT_PERCENT, getProgramYears, isWithinEarlyPaymentWindow } from '@/utils/tuition';
 import Image from 'next/image';
 
 export default function TuitionPaymentPage({ admissionOffer, application }: {
@@ -19,7 +19,7 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
     const [error, setError] = useState<string | null>(null);
     const [selectedYears, setSelectedYears] = useState(1);
 
-    const isEarly = new Date() <= new Date(admissionOffer.payment_deadline);
+    const isEarly = isWithinEarlyPaymentWindow(admissionOffer.created_at);
     const baseFee = admissionOffer.tuition_fee; // Already the discounted fee from the offer
     const storedDiscount = admissionOffer.discount_amount || 0; // Discount already applied by admin
     const maxYears = getProgramYears(application.course?.duration || '2 years');
@@ -28,7 +28,9 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
     // storedDiscount is for display only (showing how much was saved)
     const displayOriginalFee = baseFee + storedDiscount; // Reconstruct original for display
     const discount = isEarly ? storedDiscount : 0;
-    const finalAmount = baseFee * selectedYears;
+    // If early window expired, charge the original fee (before discount); otherwise use the discounted baseFee
+    const perYearFee = isEarly ? baseFee : displayOriginalFee;
+    const finalAmount = perYearFee * selectedYears;
 
     const handlePaymentComplete = async (details: {
         method: string;

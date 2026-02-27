@@ -17,7 +17,7 @@ import {
     Lightning as Zap,
     DownloadSimple as Download
 } from "@phosphor-icons/react/dist/ssr";
-import { calculateDiscountedFee, EARLY_PAYMENT_DISCOUNT_PERCENT } from '@/utils/tuition';
+import { calculateDiscountedFee, EARLY_PAYMENT_DISCOUNT_PERCENT, EARLY_PAYMENT_WINDOW_DAYS, isWithinEarlyPaymentWindow } from '@/utils/tuition';
 import { formatToDDMMYYYY } from '@/utils/date';
 
 function OfferContent() {
@@ -137,7 +137,7 @@ function OfferContent() {
     if (!data || !id) return null;
 
     const { application, offer } = data;
-    const isEarly = new Date() <= new Date(offer.payment_deadline);
+    const isEarly = isWithinEarlyPaymentWindow(offer.created_at);
     const baseFee = offer.tuition_fee;
     const finalFee = isEarly ? calculateDiscountedFee(baseFee) : baseFee;
 
@@ -233,7 +233,7 @@ function OfferContent() {
                                 <div className="relative z-10 space-y-3">
                                     <h4 className="text-sm font-bold uppercase tracking-widest leading-none">Incentive Plan</h4>
                                     <p className="text-black text-sm font-medium leading-relaxed uppercase tracking-tight">
-                                        Confirm and settle payment by <span className="font-bold text-primary">{formatToDDMMYYYY(offer.payment_deadline)}</span> to receive a {EARLY_PAYMENT_DISCOUNT_PERCENT}% early enrollment credit.
+                                        Complete payment within {EARLY_PAYMENT_WINDOW_DAYS} days of accepting your offer to receive a {EARLY_PAYMENT_DISCOUNT_PERCENT}% early enrollment credit.
                                     </p>
                                     <div className="pt-2 flex items-baseline gap-2">
                                         <span className="text-3xl font-bold text-primary">€{calculateDiscountedFee(offer.tuition_fee)}</span>
