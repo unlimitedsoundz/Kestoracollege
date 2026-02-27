@@ -133,7 +133,7 @@ export default function StudentGuidePage() {
                                 Degree Programmes at Kestora College
                             </h2>
                             <p className="text-lg text-neutral-700 mb-8">
-                                Kestora College offers Bachelor’s, Master’s, and Doctoral degree programmes taught in English across business, economics, management, finance, information systems, entrepreneurship, and interdisciplinary fields.
+                                Kestora College offers Bachelor’s and Master’s degree programmes taught in English across business, economics, management, finance, information systems, entrepreneurship, and interdisciplinary fields.
                             </p>
 
                             <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -154,7 +154,11 @@ export default function StudentGuidePage() {
                                             <h3 className="font-bold text-xl mb-2 flex items-center gap-2">
                                                 {item.title}
                                             </h3>
-                                            <p className="text-sm text-neutral-600">Structured curriculum focused on core knowledge and skills.</p>
+                                            <p className="text-sm text-neutral-600">
+                                                {item.title.includes("Bachelor")
+                                                    ? "Structured curriculum focused on core knowledge and skills."
+                                                    : "Advanced studies focusing on specialized expertise and research-oriented development."}
+                                            </p>
                                         </div>
                                     </Link>
                                 ))}
