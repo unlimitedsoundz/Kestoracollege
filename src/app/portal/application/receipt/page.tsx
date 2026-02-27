@@ -150,6 +150,7 @@ function ReceiptContent() {
 
     // Calculate years paid
     const yearsPaid = Math.max(1, Math.round((payment?.amount || 0) / (offer?.tuition_fee || 1)));
+    const isDeposit = (payment?.amount || 0) < (offer?.tuition_fee || 1);
     const intake = admission?.intake || 'Autumn 2026';
     const academicYear = admission?.academic_year || '2026/2027';
     const isPending = application.status === 'PAYMENT_SUBMITTED';
@@ -300,13 +301,17 @@ function ReceiptContent() {
                         <tbody className="divide-y divide-black">
                             <tr>
                                 <td className="py-4 px-2">
-                                    <div className="font-bold text-black uppercase tracking-tight">Tuition Fees - {application.course?.title}</div>
+                                    <div className="font-bold text-black uppercase tracking-tight">
+                                        {isDeposit ? 'Tuition Deposit' : 'Tuition Fees'} - {application.course?.title}
+                                    </div>
                                     <div className="text-[10px] text-black mt-0.5">
                                         Intake: {intake} | Academic Year {academicYear}
                                     </div>
                                 </td>
                                 <td className="py-4 px-2 text-center align-top">
-                                    <div className="text-xs font-bold text-black">{yearsPaid} {yearsPaid === 1 ? 'Year' : 'Years'}</div>
+                                    <div className="text-xs font-bold text-black">
+                                        {isDeposit ? 'Deposit (1st Year)' : `${yearsPaid} ${yearsPaid === 1 ? 'Year' : 'Years'}`}
+                                    </div>
                                 </td>
                                 <td className="py-4 px-2 text-right align-top whitespace-nowrap">
                                     <div className="font-bold text-black text-sm md:text-base">€ {payment.amount.toLocaleString()}</div>
