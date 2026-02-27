@@ -61,7 +61,7 @@ export function getProgramYears(duration: string): number {
 export function mapSchoolToTuitionField(schoolSlug: string): TuitionField {
     const slug = schoolSlug.toLowerCase();
     if (slug.includes('business')) return 'BUSINESS';
-    if (slug.includes('arts') || slug.includes('design')) return 'ARTS';
+    if (slug.includes('arts') || slug.includes('design') || slug.includes('architecture')) return 'ARTS';
     if (slug.includes('technology') || slug.includes('engineering')) return 'TECHNOLOGY';
     if (slug.includes('science')) return 'SCIENCE';
     return 'TECHNOLOGY'; // Default fallback
