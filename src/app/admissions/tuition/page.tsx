@@ -178,7 +178,7 @@ export default function TuitionPaymentPage() {
                                                 <span className="text-black">{row.year}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-xs font-bold uppercase tracking-wider text-neutral-500">Fee / Term</span>
+                                                <span className="text-xs font-bold uppercase tracking-wider text-neutral-500">Tuition Deposit</span>
                                                 <span className="text-black">{row.term}</span>
                                             </div>
                                         </div>
@@ -191,7 +191,7 @@ export default function TuitionPaymentPage() {
                                         <tr>
                                             <th className="p-4 font-bold">Field of Study</th>
                                             <th className="p-4 font-bold">Tuition Fee / Year</th>
-                                            <th className="p-4 font-bold">Fee / Term (Autumn/Spring)</th>
+                                            <th className="p-4 font-bold">Tuition Deposit</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-neutral-200 text-black">
@@ -286,7 +286,7 @@ export default function TuitionPaymentPage() {
                                                 <span className="text-black">{row.year}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-xs font-bold uppercase tracking-wider text-neutral-500">Fee / Term</span>
+                                                <span className="text-xs font-bold uppercase tracking-wider text-neutral-500">Tuition Deposit</span>
                                                 <span className="text-black">{row.term}</span>
                                             </div>
                                         </div>
@@ -299,7 +299,7 @@ export default function TuitionPaymentPage() {
                                         <tr>
                                             <th className="p-4 font-bold">Field of Study</th>
                                             <th className="p-4 font-bold">Tuition Fee / Year</th>
-                                            <th className="p-4 font-bold">Fee / Term</th>
+                                            <th className="p-4 font-bold">Tuition Deposit</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-neutral-200 text-black">

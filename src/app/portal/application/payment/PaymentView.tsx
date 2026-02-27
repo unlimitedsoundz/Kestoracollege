@@ -17,7 +17,7 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
     const router = useRouter();
     const [isProcessing, setIsProcessing] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [selectedYears, setSelectedYears] = useState(1);
+    const selectedYears = 1;
 
     const isEarly = isWithinEarlyPaymentWindow(admissionOffer.created_at);
     const baseFee = admissionOffer.tuition_fee; // Already the discounted fee from the offer
@@ -153,24 +153,11 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
                 </div>
             </div>
 
-            {/* Selection UI */}
+            {/* Tuition Deposit */}
             <div className="mb-12 px-2 md:px-0">
-                <h2 className="text-sm font-bold mb-4 uppercase tracking-widest text-black">Choose Payment Duration</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                    <button
-                        onClick={() => setSelectedYears(1)}
-                        className={`p-5 md:p-6 border-2 text-left transition-all rounded-sm ${selectedYears === 1 ? 'border-black bg-neutral-50' : 'border-neutral-100 hover:border-neutral-200'}`}
-                    >
-                        <div className="font-bold text-base md:text-lg mb-1 uppercase tracking-tight">Pay for 1st Year Only</div>
-                        <p className="text-[11px] md:text-sm text-black leading-relaxed">Standard single-year payment plan for immediate requirement.</p>
-                    </button>
-                    <button
-                        onClick={() => setSelectedYears(maxYears)}
-                        className={`p-5 md:p-6 border-2 text-left transition-all rounded-sm ${selectedYears === maxYears ? 'border-black bg-neutral-50' : 'border-neutral-100 hover:border-neutral-200'}`}
-                    >
-                        <div className="font-bold text-base md:text-lg mb-1 uppercase tracking-tight">Pay for Full Program ({maxYears} Years)</div>
-                        <p className="text-[11px] md:text-sm text-black leading-relaxed">Secure your entire education upfront and simplify your residence permit process.</p>
-                    </button>
+                <div className="p-5 md:p-6 border-2 border-black bg-neutral-50 rounded-sm">
+                    <div className="font-bold text-base md:text-lg mb-1 uppercase tracking-tight">Tuition Deposit</div>
+                    <p className="text-[11px] md:text-sm text-black leading-relaxed">Pay your tuition deposit to secure your place and complete enrollment via PayGoWire.</p>
                 </div>
             </div>
 
@@ -203,7 +190,7 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
 
                         <div className="space-y-4 mb-8">
                             <div className="flex justify-between text-sm">
-                                <span className="text-black font-normal uppercase tracking-wider">Tuition ({selectedYears} {selectedYears === 1 ? 'Year' : 'Years'})</span>
+                                <span className="text-black font-normal uppercase tracking-wider">Tuition Deposit</span>
                                 <span className="font-medium text-black text-right">€ {(displayOriginalFee * selectedYears).toLocaleString()}</span>
                             </div>
                             {isEarly && (

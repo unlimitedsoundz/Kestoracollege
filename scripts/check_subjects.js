@@ -1,34 +1,96 @@
 require('dotenv').config({ path: '.env' });
 const { createClient } = require('@supabase/supabase-js');
-const c = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+// Use schema: 'public' explicitly to help with schema cache
+const c = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    db: { schema: 'public' }
+});
 
 (async () => {
-    // First check what semester values look like
-    const { data: samples } = await c.from('Subject').select('code,semester,creditUnits').limit(3);
-    for (const s of samples) console.log(s.code + ' semester=' + JSON.stringify(s.semester) + ' type=' + typeof s.semester);
+    // 1. Get all students
+    const { data: students } = await c.from('students').select('id,program_id,user_id');
+    console.log('Students: ' + students?.length);
 
-    const { data: student } = await c.from('students').select('id,program_id').limit(1).single();
-    const courseId = student.program_id;
-    const sem = samples[0].semester; // Use same semester value as existing subjects
+    // 2. Get active registration window
+    const { data: regWindow } = await c.from('registration_windows')
+        .select('id,semester_id')
+        .eq('status', 'OPEN')
+        .order('open_at', { ascending: false })
+        .limit(1)
+        .single();
 
-    const newSubjects = [
-        { code: 'ARC-410', name: 'Sustainable Architecture & Green Building', creditUnits: 5, courseId, area: 'Architecture', language: 'English', semester: sem },
-        { code: 'ARC-411', name: 'Architectural History & Theory', creditUnits: 5, courseId, area: 'Architecture', language: 'English', semester: sem },
-        { code: 'ARC-412', name: 'Urban Planning & Design Studio', creditUnits: 5, courseId, area: 'Architecture', language: 'English', semester: sem },
-        { code: 'ARC-413', name: 'Building Information Modeling (BIM)', creditUnits: 5, courseId, area: 'Architecture', language: 'English', semester: sem },
-        { code: 'ARC-414', name: 'Structural Systems & Materials', creditUnits: 5, courseId, area: 'Architecture', language: 'English', semester: sem },
-        { code: 'ARC-415', name: 'Design Thesis Seminar', creditUnits: 5, courseId, area: 'Architecture', language: 'English', semester: sem },
-    ];
+    if (!regWindow) {
+        console.log('No open registration window!');
+        return;
+    }
+    console.log('Semester: ' + regWindow.semester_id);
 
-    const { data: inserted, error } = await c.from('Subject').insert(newSubjects).select('code,name');
-    if (error) {
-        console.log('ERROR: ' + error.message + ' | details: ' + error.details);
-    } else {
-        console.log('SUCCESS: Inserted ' + inserted.length + ' subjects');
+    let totalEnrolled = 0;
+
+    for (const student of students || []) {
+        // 3. Get current enrollments
+        const { data: enrollments } = await c.from('module_enrollments')
+            .select('subject_id')
+            .eq('student_id', student.id)
+            .eq('semester_id', regWindow.semester_id)
+            .eq('status', 'REGISTERED');
+
+        const enrolledIds = new Set((enrollments || []).map(e => e.subject_id));
+
+        // Get enrolled credits
+        let currentECTS = 0;
+        if (enrolledIds.size > 0) {
+            const { data: enrolledSubs } = await c.from('Subject')
+                .select('creditUnits')
+                .in('id', Array.from(enrolledIds));
+            currentECTS = (enrolledSubs || []).reduce((s, x) => s + (x.creditUnits || 0), 0);
+        }
+
+        if (currentECTS >= 35) {
+            console.log('OK: ' + student.id.slice(0, 8) + ' = ' + currentECTS + ' ECTS');
+            continue;
+        }
+
+        // 4. Get available subjects
+        const { data: available } = await c.from('Subject')
+            .select('id,code,creditUnits')
+            .eq('courseId', student.program_id)
+            .order('code');
+
+        const unenrolled = (available || []).filter(s => !enrolledIds.has(s.id));
+
+        // 5. Enroll until 35+ ECTS
+        let addedECTS = 0;
+        let addedCount = 0;
+
+        for (const sub of unenrolled) {
+            if (currentECTS + addedECTS >= 35) break;
+
+            const { error } = await c.from('module_enrollments').upsert({
+                student_id: student.id,
+                subject_id: sub.id,
+                semester_id: regWindow.semester_id,
+                status: 'REGISTERED',
+                updated_at: new Date().toISOString()
+            }, {
+                onConflict: 'student_id, subject_id, semester_id'
+            });
+
+            if (error) {
+                console.log('ERR: ' + student.id.slice(0, 8) + ' sub=' + sub.code + ' - ' + error.message);
+            } else {
+                addedECTS += sub.creditUnits || 0;
+                addedCount++;
+            }
+        }
+
+        if (addedCount > 0) {
+            totalEnrolled += addedCount;
+            console.log('ENROLLED: ' + student.id.slice(0, 8) + ' +' + addedCount + ' courses (+' + addedECTS + ' ECTS, was ' + currentECTS + ', now ' + (currentECTS + addedECTS) + ')');
+        } else {
+            console.log('SKIP: ' + student.id.slice(0, 8) + ' no subjects available (' + currentECTS + ' ECTS)');
+        }
     }
 
-    // Verify
-    const { data: allSubs } = await c.from('Subject').select('creditUnits').eq('courseId', courseId);
-    const total = (allSubs || []).reduce((s, x) => s + (x.creditUnits || 0), 0);
-    console.log('Total subjects: ' + allSubs?.length + ' | Total ECTS: ' + total);
+    console.log('\nDone! Total new enrollments: ' + totalEnrolled);
 })();
