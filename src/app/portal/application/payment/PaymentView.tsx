@@ -17,7 +17,8 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
     const router = useRouter();
     const [isProcessing, setIsProcessing] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const selectedYears = 1;
+    const [paymentType, setPaymentType] = useState<'deposit' | 'first_year'>('deposit');
+    const DEPOSIT_PERCENT = 50;
 
     const isEarly = isWithinEarlyPaymentWindow(admissionOffer.created_at);
     const baseFee = admissionOffer.tuition_fee; // Already the discounted fee from the offer
@@ -30,7 +31,11 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
     const discount = isEarly ? storedDiscount : 0;
     // If early window expired, charge the original fee (before discount); otherwise use the discounted baseFee
     const perYearFee = isEarly ? baseFee : displayOriginalFee;
-    const finalAmount = perYearFee * selectedYears;
+
+    // The tuition deposit is strictly 50% of the ORIGINAL tuition fee, regardless of any early payment discount.
+    // The early payment discount only reduces the remaining balance/total first-year fee.
+    const depositAmount = Math.round(displayOriginalFee * DEPOSIT_PERCENT / 100);
+    const finalAmount = paymentType === 'deposit' ? depositAmount : perYearFee;
 
     const handlePaymentComplete = async (details: {
         method: string;
@@ -153,11 +158,24 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
                 </div>
             </div>
 
-            {/* Tuition Deposit */}
+            {/* Payment Options */}
             <div className="mb-12 px-2 md:px-0">
-                <div className="p-5 md:p-6 border-2 border-black bg-neutral-50 rounded-sm">
-                    <div className="font-bold text-base md:text-lg mb-1 uppercase tracking-tight">Tuition Deposit</div>
-                    <p className="text-[11px] md:text-sm text-black leading-relaxed">Pay your tuition deposit to secure your place and complete enrollment via PayGoWire.</p>
+                <h2 className="text-sm font-bold mb-4 uppercase tracking-widest text-black">Select Payment Option</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                    <button
+                        onClick={() => setPaymentType('deposit')}
+                        className={`p-5 md:p-6 border-2 text-left transition-all rounded-sm ${paymentType === 'deposit' ? 'border-black bg-neutral-50' : 'border-neutral-100 hover:border-neutral-200'}`}
+                    >
+                        <div className="font-bold text-base md:text-lg mb-1 uppercase tracking-tight">Tuition Deposit</div>
+                        <p className="text-[11px] md:text-sm text-black leading-relaxed">Pay the tuition deposit to secure your place and begin enrollment.</p>
+                    </button>
+                    <button
+                        onClick={() => setPaymentType('first_year')}
+                        className={`p-5 md:p-6 border-2 text-left transition-all rounded-sm ${paymentType === 'first_year' ? 'border-black bg-neutral-50' : 'border-neutral-100 hover:border-neutral-200'}`}
+                    >
+                        <div className="font-bold text-base md:text-lg mb-1 uppercase tracking-tight">Pay First Year</div>
+                        <p className="text-[11px] md:text-sm text-black leading-relaxed">Pay the full first year tuition fee via PayGoWire.</p>
+                    </button>
                 </div>
             </div>
 
@@ -190,8 +208,8 @@ export default function TuitionPaymentPage({ admissionOffer, application }: {
 
                         <div className="space-y-4 mb-8">
                             <div className="flex justify-between text-sm">
-                                <span className="text-black font-normal uppercase tracking-wider">Tuition Deposit</span>
-                                <span className="font-medium text-black text-right">€ {(displayOriginalFee * selectedYears).toLocaleString()}</span>
+                                <span className="text-black font-normal uppercase tracking-wider">{paymentType === 'deposit' ? 'Tuition Deposit' : 'First Year Tuition'}</span>
+                                <span className="font-medium text-black text-right">€ {finalAmount.toLocaleString()}</span>
                             </div>
                             {isEarly && (
                                 <div className="flex justify-between items-center text-sm text-black font-normal py-1">
