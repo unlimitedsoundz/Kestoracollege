@@ -154,6 +154,24 @@ function ReceiptContent() {
     const academicYear = admission?.academic_year || '2026/2027';
     const isPending = application.status === 'PAYMENT_SUBMITTED';
 
+    const formatPaymentMethod = (methodId: string | undefined) => {
+        if (!methodId) return 'N/A';
+        const methods: Record<string, string> = {
+            'upi': 'UPI',
+            'in_bank': 'Net Banking',
+            'sepa': 'SEPA Transfer',
+            'nordea': 'Nordea Online',
+            'ng_bank': 'Bank Transfer',
+            'flutterwave_uae': 'Flutterwave',
+            'ach': 'ACH Direct Debit',
+            'wire': 'International Wire',
+            'credit_card': 'Credit / Debit Card',
+            'paygowire': 'Paygowire' // fallback
+        };
+        const name = methods[methodId.toLowerCase()] || methodId.replace(/_/g, ' ');
+        return `Paygowire - ${name}`;
+    };
+
     return (
         <div className="min-h-screen bg-neutral-100/50 py-6 md:py-12 px-4 sm:px-6 font-rubik">
             {/* Control Bar (Hidden on Print) */}
@@ -178,7 +196,7 @@ function ReceiptContent() {
                 )}
 
                 {/* Header Header */}
-                <div className="flex flex-col md:flex-row justify-between items-start mb-8 gap-6 relative z-10 border-b-2 border-black pb-6">
+                <div className="flex flex-col sm:flex-row print-header-row justify-between items-start mb-8 gap-4 relative z-10 border-b-2 border-black pb-6 p-1">
                     <div className="space-y-4">
                         <div className="relative w-40 h-10">
                             <Image
@@ -196,7 +214,7 @@ function ReceiptContent() {
                             </div>
                         </div>
                     </div>
-                    <div className="text-right flex flex-col items-end">
+                    <div className="text-right flex flex-col items-end print-right mt-4 sm:mt-0">
                         <div className="text-2xl font-black text-black uppercase tracking-tighter leading-none mb-1">Receipt</div>
                         <div className="flex flex-col items-end gap-0.5">
                             <span className="text-[10px] font-black uppercase tracking-widest text-black">Transaction ID</span>
@@ -228,7 +246,7 @@ function ReceiptContent() {
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <div className="text-[9px] font-bold text-black uppercase mb-0.5">Method</div>
-                                    <div className="text-xs font-bold text-black uppercase">{payment.payment_method?.replace(/_/g, ' ')}</div>
+                                    <div className="text-xs font-bold text-black uppercase">{formatPaymentMethod(payment.payment_method)}</div>
                                 </div>
                                 <div>
                                     <div className="text-[9px] font-bold text-black uppercase mb-0.5">Status</div>
@@ -290,15 +308,15 @@ function ReceiptContent() {
                                 <td className="py-4 px-2 text-center align-top">
                                     <div className="text-xs font-bold text-black">{yearsPaid} {yearsPaid === 1 ? 'Year' : 'Years'}</div>
                                 </td>
-                                <td className="py-4 px-2 text-right align-top">
-                                    <div className="font-bold text-black">€ {payment.amount.toLocaleString()}</div>
+                                <td className="py-4 px-2 text-right align-top whitespace-nowrap">
+                                    <div className="font-bold text-black text-sm md:text-base">€ {payment.amount.toLocaleString()}</div>
                                 </td>
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr className="border-t-2 border-black">
-                                <td colSpan={2} className="py-4 px-2 text-[9px] font-black uppercase tracking-widest text-right">Total Net Paid</td>
-                                <td className="py-4 px-2 text-right text-lg font-black text-black">€ {payment?.amount?.toLocaleString() || '0'}</td>
+                                <td colSpan={2} className="py-4 px-2 text-[10px] md:text-[11px] font-black uppercase tracking-widest text-right">Total Net Paid</td>
+                                <td className="py-4 px-2 text-right text-base md:text-xl font-black text-black whitespace-nowrap">€ {payment?.amount?.toLocaleString() || '0'}</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -328,6 +346,8 @@ function ReceiptContent() {
                     .max-w-\\[210mm\\] { max-width: 100% !important; margin: 0 !important; padding: 15mm 0 !important; }
                     .shadow-xl, .shadow-sm, .print\\:shadow-none { box-shadow: none !important; }
                     .print\\:border-0 { border: none !important; }
+                    .print-header-row { display: flex !important; flex-direction: row !important; justify-content: space-between !important; }
+                    .print-right { text-align: right !important; align-items: flex-end !important; }
                     * { color: black !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
                     a { text-decoration: none !important; }
                 }
