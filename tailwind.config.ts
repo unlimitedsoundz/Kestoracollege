@@ -38,6 +38,7 @@ const config: Config = {
                 sans: ["var(--font-sans)"],
                 serif: ["var(--font-serif)"],
                 "open-sans": ["var(--font-open-sans)", "sans-serif"],
+                mono: ["var(--font-open-sans)", "sans-serif"],
             },
             borderRadius: {
                 lg: "var(--radius-lg)",
