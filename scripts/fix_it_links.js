@@ -19,7 +19,7 @@ async function main() {
         return;
     }
 
-    console.log(`Found ${assets.length} assets. Updating content to use kestora.fi...`);
+    console.log(`Found ${assets.length} assets. Updating content to use kestora.online...`);
 
     let totalUpdates = 0;
 
@@ -30,19 +30,19 @@ async function main() {
 
         // Check and replace in URL
         if (newUrl.includes('sykli')) {
-            newUrl = newUrl.replace(/syklicollege\.edu/gi, 'kestora.fi')
+            newUrl = newUrl.replace(/syklicollege\.edu/gi, 'kestora.online')
                 .replace(/syklicollege/gi, 'kestora')
-                .replace(/sykli\.fi/gi, 'kestora.fi')
-                .replace(/sykli\.edu/gi, 'kestora.fi');
+                .replace(/sykli\.fi/gi, 'kestora.online')
+                .replace(/sykli\.edu/gi, 'kestora.online');
             changed = true;
         }
 
         // Check and replace in description
         if (newDesc.includes('sykli')) {
-            newDesc = newDesc.replace(/syklicollege\.edu/gi, 'kestora.fi')
+            newDesc = newDesc.replace(/syklicollege\.edu/gi, 'kestora.online')
                 .replace(/syklicollege/gi, 'kestora')
-                .replace(/sykli\.fi/gi, 'kestora.fi')
-                .replace(/sykli\.edu/gi, 'kestora.fi');
+                .replace(/sykli\.fi/gi, 'kestora.online')
+                .replace(/sykli\.edu/gi, 'kestora.online');
             changed = true;
         }
 

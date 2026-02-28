@@ -30,11 +30,11 @@ async function main() {
         let credsStr = JSON.stringify(log.credentials);
 
         if (credsStr.includes('sykli')) {
-            credsStr = credsStr.replace(/syklicollege\.edu/gi, 'kestora.fi')
-                .replace(/syklicollege\.fi/gi, 'kestora.fi')
+            credsStr = credsStr.replace(/syklicollege\.edu/gi, 'kestora.online')
+                .replace(/syklicollege\.fi/gi, 'kestora.online')
                 .replace(/syklicollege/gi, 'kestora')
-                .replace(/sykli\.fi/gi, 'kestora.fi')
-                .replace(/sykli\.edu/gi, 'kestora.fi');
+                .replace(/sykli\.fi/gi, 'kestora.online')
+                .replace(/sykli\.edu/gi, 'kestora.online');
             changed = true;
         }
 

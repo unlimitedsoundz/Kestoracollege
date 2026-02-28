@@ -99,7 +99,7 @@ async function main() {
                 name: 'Dr. Elena Virtanen',
                 role: 'Head of Renewable Energy',
                 bio: 'Leading expert in solar photovoltaic systems with 15 years of industry experience.',
-                email: 'elena.virtanen@kestora.fi',
+                email: 'elena.virtanen@kestora.online',
                 schoolId: schoolEngineering.id,
                 departmentId: deptRenewable.id,
             },
@@ -107,7 +107,7 @@ async function main() {
                 name: 'Prof. Markus Korhonen',
                 role: 'Senior Lecturer',
                 bio: 'Specialist in circular economy economics.',
-                email: 'markus.korhonen@kestora.fi',
+                email: 'markus.korhonen@kestora.online',
                 schoolId: schoolBusiness.id,
                 departmentId: deptManagement.id,
             }

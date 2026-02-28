@@ -70,7 +70,7 @@ async function main() {
         const name = newHeads[i];
         const names = name.split(' ');
         const lastName = names[names.length - 1].toLowerCase();
-        const email = `${names[0].replace('.', '').toLowerCase()}.${lastName}@kestora.fi`; // Construct simple email
+        const email = `${names[0].replace('.', '').toLowerCase()}.${lastName}@kestora.online`; // Construct simple email
 
         // Determine role and department
         // If we have more names than departments, the extras will just be "Professor" with no dept assigned for now (or assigned to first dept as faculty)
