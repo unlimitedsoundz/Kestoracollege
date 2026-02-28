@@ -63,7 +63,7 @@ export default async function EventDetailPage({ params }: Props) {
         organizer: {
             '@type': 'EducationalOrganization',
             name: 'Kestora College',
-            url: 'https://www.kestora.online'
+            url: 'https://kestora.online'
         }
     };
 

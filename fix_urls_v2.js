@@ -22,7 +22,7 @@ function fixInFile(filePath) {
         });
 
         // 4. Fix metadata base and schema urls specifically if not caught
-        content = content.replace(/https:\/\/www\.Kestoracollege\.fi/g, 'https://www.kestora.online');
+        content = content.replace(/https:\/\/www\.Kestoracollege\.fi/g, 'https://kestora.online');
         content = content.replace(/https:\/\/Kestoracollege\.fi/g, 'https://kestora.online');
 
         // 5. Fix email addresses in mailto: or as text if they have Kestora domain capitalized

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 
 export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://www.kestora.online';
+    const baseUrl = 'https://kestora.online';
 
     // Core pages with highest priority
     const corePages = [

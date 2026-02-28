@@ -100,7 +100,7 @@ export default async function CourseDetailPage({ params }: Props) {
         provider: {
             '@type': 'EducationalOrganization',
             name: 'Kestora College',
-            sameAs: 'https://www.kestora.online'
+            sameAs: 'https://kestora.online'
         },
         educationalCredentialAwarded: course.degreeType,
         hasCourseInstance: {

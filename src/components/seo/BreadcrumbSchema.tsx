@@ -18,7 +18,7 @@ export function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
             "@type": "ListItem",
             "position": index + 1,
             "name": crumb.name,
-            "item": crumb.item.startsWith('http') ? crumb.item : `https://www.kestora.online${crumb.item}`
+            "item": crumb.item.startsWith('http') ? crumb.item : `https://kestora.online${crumb.item}`
         }))
     };
 

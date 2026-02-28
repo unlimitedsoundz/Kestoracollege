@@ -11,10 +11,10 @@ export const metadata = {
     title: 'Bachelor\'s Admissions | Kestora College',
     description: 'Apply to Bachelor\'s Programmes in English at Kestora College. Information on benefits, progression, scholarships, and admissions.',
     alternates: {
-        canonical: 'https://www.kestora.online/admissions/bachelor',
+        canonical: 'https://kestora.online/admissions/bachelor',
         languages: {
-            'en': 'https://www.kestora.online/admissions/bachelor',
-            'fi': 'https://www.kestora.online/admissions/bachelor-fi',
+            'en': 'https://kestora.online/admissions/bachelor',
+            'fi': 'https://kestora.online/admissions/bachelor-fi',
         },
     },
 };
@@ -45,7 +45,7 @@ export default function BachelorAdmissionsPage() {
                 "provider": {
                     "@type": "CollegeOrUniversity",
                     "name": "Kestora College",
-                    "url": "https://www.kestora.online"
+                    "url": "https://kestora.online"
                 },
                 "educationalLevel": "Bachelor",
                 "offers": {

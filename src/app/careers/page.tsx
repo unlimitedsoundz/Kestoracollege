@@ -41,7 +41,7 @@ export default function CareersPage() {
                 "@type": "WebPage",
                 "name": "Careers at Kestora College",
                 "description": "Explore job opportunities at Kestora College in Helsinki.",
-                "url": "https://www.kestora.online/careers"
+                "url": "https://kestora.online/careers"
             }} />
 
             {positions.map((pos, index) => (
@@ -56,8 +56,8 @@ export default function CareersPage() {
                     "hiringOrganization": {
                         "@type": "CollegeOrUniversity",
                         "name": "Kestora College",
-                        "sameAs": "https://www.kestora.online",
-                        "logo": "https://www.kestora.online/logo-kestora.png"
+                        "sameAs": "https://kestora.online",
+                        "logo": "https://kestora.online/logo-kestora.png"
                     },
                     "jobLocation": {
                         "@type": "Place",

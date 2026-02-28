@@ -10,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ['/admin/', '/portal/', '/debug/', '/api/'],
             },
         ],
-        sitemap: 'https://www.kestora.online/sitemap.xml',
+        sitemap: 'https://kestora.online/sitemap.xml',
     };
 }

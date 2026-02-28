@@ -94,7 +94,7 @@ export default function TuitionPaymentPage() {
                 "@type": "WebPage",
                 "name": "Paying the Tuition Fee | Kestora College",
                 "description": "Details about tuition fees, scholarships, and payment procedures at Kestora College Helsinki, Finland.",
-                "url": "https://www.kestora.online/admissions/tuition"
+                "url": "https://kestora.online/admissions/tuition"
             }} />
             <SchemaLD data={faqSchema} />
 
