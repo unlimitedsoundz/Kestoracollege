@@ -39,7 +39,7 @@ export default async function Home() {
             <div className="h-full">
               <div className="relative w-[368px] h-[368px] lg:w-full lg:h-full bg-neutral-800 shadow-2xl overflow-hidden">
                 <Image
-                  src="/images/home-hero-new.png"
+                  src="/images/kestora hero.png"
                   alt="Student studying at Kestora College campus in Finland"
                   fill
                   priority
