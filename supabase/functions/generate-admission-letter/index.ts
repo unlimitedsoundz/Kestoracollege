@@ -142,7 +142,7 @@ serve(async (req) => {
         page.drawText('College of Art and Design', { x: margin, y, size: 9, font: regularFont, color: grey });
 
         // Right-aligned address
-        const addr = ['Pohjoisesplanadi 51', '00150 Helsinki, Finland', 'https://kestora.fi', 'admissions@kestora.fi'];
+        const addr = ['Pohjoisesplanadi 51', '00150 Helsinki, Finland', 'https://kestora.online', 'admissions@kestora.online'];
         let ay = height - margin;
         for (const line of addr) {
             const lw = regularFont.widthOfTextAtSize(line, 8);
@@ -406,7 +406,7 @@ serve(async (req) => {
 
             // SECTION 9: REFUND POLICY
             y = drawSectionHeading(page, 'REFUND POLICY', margin, y, cw, boldFont, black);
-            y = drawParagraph(page, 'For details regarding tuition refund terms, please visit: https://kestora.fi/refund-policy', margin, y, regularFont, 9, cw, darkGrey);
+            y = drawParagraph(page, 'For details regarding tuition refund terms, please visit: https://kestora.online/refund-policy', margin, y, regularFont, 9, cw, darkGrey);
             y -= 12;
 
             // SECTION 10: AUTHORIZATION / SIGNATURE

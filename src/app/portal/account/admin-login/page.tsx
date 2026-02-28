@@ -116,7 +116,7 @@ export default function AdminLoginPage() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full pl-12 pr-4 py-3 bg-neutral-50 border border-neutral-100 rounded-xl focus:ring-2 focus:ring-black focus:bg-white outline-none transition-all font-bold text-sm"
-                            placeholder="name@kestora.fi"
+                            placeholder="name@kestora.online"
                         />
                     </div>
                 </div>

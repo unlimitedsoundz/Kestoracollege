@@ -35,7 +35,7 @@ export default function WelcomeEmail({
                     <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
                         <Section className="mt-[32px]">
                             <Img
-                                src="https://kestora.fi/logo-kestora.png" // Replace with actual logo URL
+                                src="https://kestora.online/logo-kestora.png" // Replace with actual logo URL
                                 width="40"
                                 height="40"
                                 alt="Kestora College"
@@ -74,14 +74,14 @@ export default function WelcomeEmail({
                         <Section className="text-center mt-[32px] mb-[32px]">
                             <Link
                                 className="bg-[#000000] rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3"
-                                href="https://kestora.fi/portal/account/login"
+                                href="https://kestora.online/portal/account/login"
                             >
                                 Enter Student Portal
                             </Link>
                         </Section>
 
                         <Text className="text-black text-[14px] leading-[24px]">
-                            If you have any questions or need assistance, please feel free to reach out to our Admissions Office at <Link href="mailto:admissions@kestora.fi" className="text-blue-600 no-underline font-bold">admissions@kestora.fi</Link>.
+                            If you have any questions or need assistance, please feel free to reach out to our Admissions Office at <Link href="mailto:admissions@kestora.online" className="text-blue-600 no-underline font-bold">admissions@kestora.online</Link>.
                         </Text>
 
                         <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />

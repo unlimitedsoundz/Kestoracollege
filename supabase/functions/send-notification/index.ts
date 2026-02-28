@@ -119,7 +119,7 @@ serve(async (req) => {
 
         // Configuration
         const adminEmail = Deno.env.get("ADMIN_NOTIFICATION_EMAIL") || "unlymitedsoundz@gmail.com";
-        const sender = "Kestora College <admissions@kestora.fi>";
+        const sender = "Kestora College <admissions@kestora.online>";
 
         // Fetch User Info if missing
         let userEmail = applicationData?.email;
@@ -145,7 +145,7 @@ serve(async (req) => {
         let adminSubject = "";
         let adminHtml = "";
 
-        const portalUrl = "https://kestora.fi/portal";
+        const portalUrl = "https://kestora.online/portal";
 
         switch (notificationType) {
             case 'APPLICATION_SUBMITTED':
@@ -163,7 +163,7 @@ serve(async (req) => {
                     <p><strong>Student:</strong> ${fullName}</p>
                     <p><strong>Email:</strong> ${userEmail}</p>
                     <p><strong>Program:</strong> ${applicationData?.course_title || 'N/A'}</p>
-                    <a href="https://kestora.fi/admin/admissions" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Process in Admin Panel</a>
+                    <a href="https://kestora.online/admin/admissions" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Process in Admin Panel</a>
                 `;
                 break;
 
@@ -216,7 +216,7 @@ serve(async (req) => {
                     <p><strong>Amount:</strong> ${additionalData?.amount} ${additionalData?.currency || 'EUR'}</p>
                     <p><strong>Ref:</strong> ${additionalData?.reference || 'N/A'}</p>
                     <p><strong>Type:</strong> ${additionalData?.paymentType || 'TUITION'}</p>
-                    <a href="https://kestora.fi/admin/registrar" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Verify in Registrar Panel</a>
+                    <a href="https://kestora.online/admin/registrar" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Verify in Registrar Panel</a>
                 `;
                 break;
 
@@ -254,7 +254,7 @@ serve(async (req) => {
                     <p><strong>Semester:</strong> ${additionalData?.semesterName || 'N/A'}</p>
                     <p><strong>Building Pref:</strong> ${additionalData?.preferredBuilding || 'N/A'}</p>
                     <p><strong>Move-in:</strong> ${additionalData?.moveInDate || 'N/A'}</p>
-                    <a href="https://kestora.fi/admin/housing" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Manage Housing</a>
+                    <a href="https://kestora.online/admin/housing" style="display:inline-block;background:#000;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;">Manage Housing</a>
                 `;
                 break;
 
@@ -303,7 +303,7 @@ serve(async (req) => {
         const wrapHtml = (content: string) => `
             <div style="font-family: 'Inter', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, sans-serif; max-width: 600px; margin: 40px auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 16px; background: #ffffff;">
                 <div style="text-align: center; margin-bottom: 30px;">
-                    <img src="https://kestora.fi/logo.png" alt="Kestora" style="width: 60px; height: auto;">
+                    <img src="https://kestora.online/logo.png" alt="Kestora" style="width: 60px; height: auto;">
                 </div>
                 <div style="color: #1a1a1a; line-height: 1.6; font-size: 16px;">
                     ${content}
@@ -311,7 +311,7 @@ serve(async (req) => {
                 <hr style="border: 0; border-top: 1px solid #f0f0f0; margin: 40px 0;">
                 <div style="text-align: center; color: #888; font-size: 12px;">
                     <p>&copy; ${new Date().getFullYear()} Kestora College</p>
-                    <p>Helsinki, Finland | info@kestora.fi</p>
+                    <p>Helsinki, Finland | info@kestora.online</p>
                 </div>
             </div>
         `;

@@ -57,9 +57,9 @@ END $$;
 
 -- 4. Insert IT Assets (LMS, Email, VPN, Library, Virtual Lab)
 INSERT INTO it_assets (asset_type, name, description, access_url, auto_provision, license_limit) VALUES
-('LMS', 'Canvas Learning Management System', 'Access course materials, assignments, and grades', 'https://canvas.kestora.fi', true, 10000),
-('EMAIL', 'Student Email Account', 'Official institutional email (@kestora.fi)', 'https://mail.kestora.fi', true, 10000),
-('VPN', 'Campus VPN Access', 'Secure remote access to campus resources', 'https://vpn.kestora.fi', true, 10000),
-('LIBRARY', 'Digital Library Portal', 'Access to academic journals and e-books', 'https://library.kestora.fi', true, 10000),
-('VIRTUAL_LAB', 'Virtual Computing Labs', 'Remote access to specialized software', 'https://labs.kestora.fi', true, 5000)
+('LMS', 'Canvas Learning Management System', 'Access course materials, assignments, and grades', 'https://canvas.kestora.online', true, 10000),
+('EMAIL', 'Student Email Account', 'Official institutional email (@kestora.online)', 'https://mail.kestora.online', true, 10000),
+('VPN', 'Campus VPN Access', 'Secure remote access to campus resources', 'https://vpn.kestora.online', true, 10000),
+('LIBRARY', 'Digital Library Portal', 'Access to academic journals and e-books', 'https://library.kestora.online', true, 10000),
+('VIRTUAL_LAB', 'Virtual Computing Labs', 'Remote access to specialized software', 'https://labs.kestora.online', true, 5000)
 ON CONFLICT DO NOTHING;

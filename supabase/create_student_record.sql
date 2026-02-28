@@ -23,7 +23,7 @@ INSERT INTO students (
     gen_random_uuid(),                       -- Generate application ID
     'e15ef57b-2f95-42a6-b766-aeef883af9d2',  -- Bachelor's in Accounting & Finance
     'ACTIVE',
-    'dencia.adeleke@kestora.fi',             -- Institutional email
+    'dencia.adeleke@kestora.online',             -- Institutional email
     'opheliaadeleke@gmail.com',             -- Personal email
     NOW(),
     NOW() + INTERVAL '4 years'

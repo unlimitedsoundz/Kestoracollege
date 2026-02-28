@@ -194,8 +194,8 @@ function AdmissionLetterContent() {
                         <strong className="text-black">Kestora College – Helsinki Campus</strong><br />
                         Pohjoisesplanadi 51<br />
                         00150 Helsinki, Finland<br />
-                        Website: <a href="https://kestora.fi" className="underline">https://kestora.fi</a><br />
-                        Email: admissions@kestora.fi
+                        Website: <a href="https://kestora.online" className="underline">https://kestora.online</a><br />
+                        Email: admissions@kestora.online
                     </div>
                 </div>
 

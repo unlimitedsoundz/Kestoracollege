@@ -80,7 +80,7 @@ export async function confirmEnrollment(applicationId: string) {
 
         const firstName = studentUser.first_name || 'Student';
         const lastName = studentUser.last_name || 'Kestora';
-        let institutionalEmail = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@kestora.fi`.replace(/\s/g, '');
+        let institutionalEmail = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@kestora.online`.replace(/\s/g, '');
         let emailCounter = 0;
 
         while (true) {
@@ -93,7 +93,7 @@ export async function confirmEnrollment(applicationId: string) {
             if (!emailConflict) break;
 
             emailCounter++;
-            institutionalEmail = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${emailCounter}@kestora.fi`.replace(/\s/g, '');
+            institutionalEmail = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${emailCounter}@kestora.online`.replace(/\s/g, '');
         }
 
         // 4. Create Student Record (SIS Handover)

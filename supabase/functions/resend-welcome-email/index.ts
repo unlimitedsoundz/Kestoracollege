@@ -55,7 +55,7 @@ serve(async (req) => {
 </head>
 <body>
   <div class="container">
-    <img src="https://kestora.fi/logo.png" alt="Kestora College" class="logo">
+    <img src="https://kestora.online/logo.png" alt="Kestora College" class="logo">
     <h1>Welcome to Kestora College</h1>
     <p>Dear ${first_name || 'Student'},</p>
     <p>Congratulations on creating your student account at Kestora College! We are excited to have you join our academic community.</p>
@@ -69,10 +69,10 @@ serve(async (req) => {
     <p>You can now access your dashboard to complete your application, upload documents, and track your progress.</p>
 
     <div class="button-container">
-      <a href="https://kestora.fi/portal/account/login" class="button">Enter Student Portal</a>
+      <a href="https://kestora.online/portal/account/login" class="button">Enter Student Portal</a>
     </div>
 
-    <p>If you have any questions or need assistance, please reach out to our Admissions Office at <a href="mailto:admissions@kestora.fi">admissions@kestora.fi</a>.</p>
+    <p>If you have any questions or need assistance, please reach out to our Admissions Office at <a href="mailto:admissions@kestora.online">admissions@kestora.online</a>.</p>
 
     <div class="footer">
       This email was sent to confirm your account registration at Kestora College.
@@ -83,7 +83,7 @@ serve(async (req) => {
     `;
 
         const { data, error } = await resend.emails.send({
-            from: "Kestora College <admissions@kestora.fi>",
+            from: "Kestora College <admissions@kestora.online>",
             to: [email],
             subject: "Welcome to Kestora College",
             html: html,

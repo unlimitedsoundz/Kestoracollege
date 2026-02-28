@@ -114,7 +114,7 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
                 <div className="container mx-auto px-4 text-center text-[10px] font-medium uppercase tracking-widest text-white/60">
                     &copy; {new Date().getFullYear()} Kestora College Portal. Secure Admissions Environment.
                     <span className="mx-2 text-white/40">|</span>
-                    <a href="https://kestora.fi/refund-withdrawal-policy/" className="hover:text-white transition-colors">Refund Policy</a>
+                    <a href="https://kestora.online/refund-withdrawal-policy/" className="hover:text-white transition-colors">Refund Policy</a>
                 </div>
             </footer>
         </div>

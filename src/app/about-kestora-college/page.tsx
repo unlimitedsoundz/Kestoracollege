@@ -27,12 +27,12 @@ export default async function AboutPage() {
                 "@context": "https://schema.org",
                 "@type": "AboutPage",
                 "name": "About Kestora College",
-                "url": "https://kestora.fi/about-kestora-college",
+                "url": "https://kestora.online/about-kestora-college",
                 "mainEntity": {
                     "@type": "EducationalOrganization",
                     "name": "Kestora College Helsinki",
                     "description": "Kestora College is an independent higher education institution in Helsinki, Finland, offering English-taught Bachelor's and Master's degree programmes.",
-                    "url": "https://kestora.fi"
+                    "url": "https://kestora.online"
                 }
             }} />
 

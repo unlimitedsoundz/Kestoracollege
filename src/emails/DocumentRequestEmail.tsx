@@ -39,7 +39,7 @@ export default function DocumentRequestEmail({
                     <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
                         <Section className="mt-[32px]">
                             <Img
-                                src="https://kestora.fi/logo-kestora.png"
+                                src="https://kestora.online/logo-kestora.png"
                                 width="40"
                                 height="40"
                                 alt="Kestora College"
@@ -88,7 +88,7 @@ export default function DocumentRequestEmail({
                         <Section className="text-center mt-[32px] mb-[32px]">
                             <Link
                                 className="bg-[#9333ea] rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3"
-                                href="https://kestora.fi/portal/dashboard"
+                                href="https://kestora.online/portal/dashboard"
                             >
                                 Upload Documents
                             </Link>

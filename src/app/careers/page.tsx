@@ -41,7 +41,7 @@ export default function CareersPage() {
                 "@type": "WebPage",
                 "name": "Careers at Kestora College",
                 "description": "Explore job opportunities at Kestora College in Helsinki.",
-                "url": "https://www.kestora.fi/careers"
+                "url": "https://www.kestora.online/careers"
             }} />
 
             {positions.map((pos, index) => (
@@ -56,8 +56,8 @@ export default function CareersPage() {
                     "hiringOrganization": {
                         "@type": "CollegeOrUniversity",
                         "name": "Kestora College",
-                        "sameAs": "https://www.kestora.fi",
-                        "logo": "https://www.kestora.fi/logo-kestora.png"
+                        "sameAs": "https://www.kestora.online",
+                        "logo": "https://www.kestora.online/logo-kestora.png"
                     },
                     "jobLocation": {
                         "@type": "Place",
@@ -182,13 +182,13 @@ export default function CareersPage() {
                     </p>
                     <div className="flex flex-col md:flex-row justify-center items-center gap-6">
                         <a
-                            href="mailto:careers@kestora.fi"
+                            href="mailto:careers@kestora.online"
                             className="px-10 py-5 bg-white text-black font-bold text-lg hover:bg-neutral-200 transition-colors flex items-center gap-3"
                         >
                             Send your CV <ArrowRight size={20} weight="bold" />
                         </a>
                         <p className="text-neutral-500 font-mono text-sm">
-                            careers@kestora.fi
+                            careers@kestora.online
                         </p>
                     </div>
                 </div>

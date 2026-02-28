@@ -3,7 +3,7 @@ import { createClient } from '@/utils/supabase/client';
 export async function generateAndStoreOfferLetter(applicationId: string) {
     const supabase = createClient();
     try {
-        const offerLetterUrl = `https://kestora.fi/portal/application/offer?id=${applicationId}`;
+        const offerLetterUrl = `https://kestora.online/portal/application/offer?id=${applicationId}`;
 
         // Find the offer ID first
         const { data: offer } = await supabase
@@ -33,7 +33,7 @@ export async function generateAndStoreAdmissionLetter(applicationId: string) {
     const supabase = createClient();
     try {
         // UPDATE: Switch to Dynamic HTML Page (No PDF Storage)
-        const admissionLetterUrl = `https://kestora.fi/portal/application/admission-letter?id=${applicationId}`;
+        const admissionLetterUrl = `https://kestora.online/portal/application/admission-letter?id=${applicationId}`;
 
         // Find the offer ID first
         const { data: offer } = await supabase
@@ -63,7 +63,7 @@ export async function generateAndStoreAdmissionLetter(applicationId: string) {
 export async function generateAndStoreReceipt(applicationId: string) {
     const supabase = createClient();
     try {
-        const receiptUrl = `https://kestora.fi/portal/application/receipt?id=${applicationId}`;
+        const receiptUrl = `https://kestora.online/portal/application/receipt?id=${applicationId}`;
 
         const { error } = await supabase
             .from('applications')

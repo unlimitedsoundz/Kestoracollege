@@ -9,12 +9,12 @@ const replacements = [
     { search: /SYKLI College/g, replace: 'Kestora College' },
     { search: /Sykli College/g, replace: 'Kestora College' },
     { search: /SKYLl College/g, replace: 'Kestora College' },
-    { search: /syklicollege\.fi/g, replace: 'kestora.fi' },
+    { search: /syklicollege\.fi/g, replace: 'kestora.online' },
     { search: /syklicollege/g, replace: 'kestora' },
     { search: /SYKLI/g, replace: 'Kestora' },
     { search: /Sykli/g, replace: 'Kestora' },
     { search: /SKYLl/g, replace: 'Kestora' },
-    { search: /sykli\.fi/g, replace: 'kestora.fi' },
+    { search: /sykli\.fi/g, replace: 'kestora.online' },
     { search: /sykli/g, replace: 'kestora' },
 ];
 

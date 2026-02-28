@@ -20,7 +20,7 @@ Key Information:
 - Partnerships: strategic partnerships with over 200 global companies and research institutions.
 - Employment: 92% of graduates find relevant employment within 6 months.
 
-Contact: admissions@kestora.fi | +358-20-4721-739
+Contact: admissions@kestora.online | +358-20-4721-739
 `;
 
 serve(async (req) => {
@@ -40,7 +40,7 @@ serve(async (req) => {
         }
 
         const messages = [
-            { role: "system", content: `You are a helpful assistant for Kestora College. Use the following context to answer student questions. If you don't know the answer, politely refer them to admissions@kestora.fi.\n\nContext:\n${Kestora_CONTEXT}` },
+            { role: "system", content: `You are a helpful assistant for Kestora College. Use the following context to answer student questions. If you don't know the answer, politely refer them to admissions@kestora.online.\n\nContext:\n${Kestora_CONTEXT}` },
             ...history.map((h: any) => ({ role: h.role === 'assistant' ? 'assistant' : 'user', content: h.content })),
             { role: "user", content: message }
         ];

@@ -39,7 +39,7 @@ export default function AdminOfferAcceptedEmail({
                     <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
                         <Section className="mt-[32px]">
                             <Img
-                                src="https://kestora.fi/logo-kestora.png"
+                                src="https://kestora.online/logo-kestora.png"
                                 width="40"
                                 height="40"
                                 alt="Kestora College"
@@ -69,7 +69,7 @@ export default function AdminOfferAcceptedEmail({
                         <Section className="text-center mt-[32px] mb-[32px]">
                             <Link
                                 className="bg-[#000000] rounded text-white text-[12px] font-bold no-underline text-center px-6 py-3 uppercase tracking-widest"
-                                href={`https://kestora.fi/admin/students/${studentId}`}
+                                href={`https://kestora.online/admin/students/${studentId}`}
                             >
                                 View Student Record
                             </Link>

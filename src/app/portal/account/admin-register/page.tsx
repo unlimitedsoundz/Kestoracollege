@@ -127,7 +127,7 @@ export default function AdminRegisterPage() {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full bg-neutral-50 border border-neutral-100 rounded-xl px-4 py-2.5 text-sm font-bold shadow-sm outline-none focus:border-black transition-all"
-                        placeholder="admin@kestora.fi"
+                        placeholder="admin@kestora.online"
                     />
                 </div>
 

@@ -244,7 +244,7 @@ export default function ExchangeStudentsPage() {
                             <div className="mt-8 pt-8 border-t border-neutral-200">
                                 <div className="flex items-center gap-4 text-sm text-neutral-500">
                                     <HelpCircle size={20} weight="regular" />
-                                    <p>Questions? Contact <span className="underline cursor-pointer">exchange@kestora.fi</span></p>
+                                    <p>Questions? Contact <span className="underline cursor-pointer">exchange@kestora.online</span></p>
                                 </div>
                             </div>
                         </section>

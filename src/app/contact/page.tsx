@@ -22,11 +22,11 @@ export default function ContactPage() {
                 "@context": "https://schema.org",
                 "@type": "ContactPage",
                 "name": "Contact Kestora College",
-                "url": "https://kestora.fi/contact",
+                "url": "https://kestora.online/contact",
                 "mainEntity": {
                     "@type": "EducationalOrganization",
                     "name": "Kestora College",
-                    "email": "Kestora@kestora.fi",
+                    "email": "Kestora@kestora.online",
                     "address": {
                         "@type": "PostalAddress",
                         "streetAddress": "Pohjoisesplanadi 51",
@@ -87,7 +87,7 @@ export default function ContactPage() {
                             <div className="space-y-3">
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Mail className="w-4 h-4" />
-                                    <a href="mailto:registry@kestora.fi" className="hover:text-neutral-900 hover:underline transition-colors">registry@kestora.fi</a>
+                                    <a href="mailto:registry@kestora.online" className="hover:text-neutral-900 hover:underline transition-colors">registry@kestora.online</a>
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <MapPin className="w-4 h-4" weight="regular" />
@@ -105,7 +105,7 @@ export default function ContactPage() {
                             <div className="space-y-3">
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Mail className="w-4 h-4" />
-                                    <a href="mailto:admissions@kestora.fi" className="hover:text-neutral-900 hover:underline transition-colors">admissions@kestora.fi</a>
+                                    <a href="mailto:admissions@kestora.online" className="hover:text-neutral-900 hover:underline transition-colors">admissions@kestora.online</a>
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Phone className="w-4 h-4" />
@@ -127,7 +127,7 @@ export default function ContactPage() {
                             <div className="space-y-3">
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Mail className="w-4 h-4" />
-                                    <a href="mailto:studentservices@kestora.fi" className="hover:text-neutral-900 hover:underline transition-colors">studentservices@kestora.fi</a>
+                                    <a href="mailto:studentservices@kestora.online" className="hover:text-neutral-900 hover:underline transition-colors">studentservices@kestora.online</a>
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Phone className="w-4 h-4" />
@@ -146,7 +146,7 @@ export default function ContactPage() {
                             <div className="space-y-3">
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Mail className="w-4 h-4" />
-                                    <a href="mailto:archives@kestora.fi" className="hover:text-neutral-900 hover:underline transition-colors">archives@kestora.fi</a>
+                                    <a href="mailto:archives@kestora.online" className="hover:text-neutral-900 hover:underline transition-colors">archives@kestora.online</a>
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Phone className="w-4 h-4" />

@@ -43,7 +43,7 @@ export default function AdmissionsPage() {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
                 "name": "Admissions to Kestora College",
-                "url": "https://kestora.fi/admissions",
+                "url": "https://kestora.online/admissions",
                 "description": "Admissions information for Bachelor’s and Master’s level programmes at Kestora College in Helsinki, Finland.",
                 "mainEntity": {
                     "@type": "EducationalOccupationalProgram",
@@ -55,7 +55,7 @@ export default function AdmissionsPage() {
                     "provider": {
                         "@type": "EducationalOrganization",
                         "name": "Kestora College",
-                        "url": "https://kestora.fi"
+                        "url": "https://kestora.online"
                     },
                     "inLanguage": "en",
                     "availableChannel": {

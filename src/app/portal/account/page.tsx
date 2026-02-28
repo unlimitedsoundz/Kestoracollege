@@ -200,7 +200,7 @@ export default function ProfilePage() {
                             Your account is protected by Kestora College biometric-ready authentication.
                         </p>
                         <a
-                            href="mailto:kestora@kestora.fi?subject=Data Update Request"
+                            href="mailto:kestora@kestora.online?subject=Data Update Request"
                             className="inline-block text-[9px] font-black uppercase tracking-widest bg-white/10 hover:bg-white/20 px-4 py-2 rounded transition-all"
                         >
                             Request Data Update

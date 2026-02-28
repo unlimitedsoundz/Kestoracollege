@@ -358,13 +358,13 @@ export default async function SchoolDetails({ params }: Props) {
                                 </div>
                                 <div className="space-y-4">
                                     <div className="flex gap-4 items-center">
-                                        <span className="font-medium">General: {school.slug}@kestora.fi</span>
+                                        <span className="font-medium">General: {school.slug}@kestora.online</span>
                                     </div>
                                     <div className="flex gap-4 items-center">
-                                        <span className="font-medium">Admissions: {school.slug}.admissions@kestora.fi</span>
+                                        <span className="font-medium">Admissions: {school.slug}.admissions@kestora.online</span>
                                     </div>
                                     <div className="flex gap-4 items-center">
-                                        <span className="font-medium">Partnerships: {school.slug}.partners@kestora.fi</span>
+                                        <span className="font-medium">Partnerships: {school.slug}.partners@kestora.online</span>
                                     </div>
                                 </div>
                                 <Link href="/contact" className="inline-flex items-center gap-2 font-bold group">

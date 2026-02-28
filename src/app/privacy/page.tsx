@@ -207,7 +207,7 @@ export default function PrivacyPolicyPage() {
                                 </p>
                                 <div className="pt-4">
                                     <p className="text-sm font-bold text-black">Data Protection Officer</p>
-                                    <p className="text-sm text-neutral-500">privacy@kestora.fi</p>
+                                    <p className="text-sm text-neutral-500">privacy@kestora.online</p>
                                 </div>
                             </section>
 

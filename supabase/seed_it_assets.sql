@@ -17,11 +17,11 @@ END $$;
 -- 2. Seed IT Assets
 INSERT INTO it_assets (asset_type, name, description, auto_provision, access_url)
 VALUES 
-    ('LMS', 'Canvas LMS', 'Primary Learning Management System', true, 'https://canvas.kestora.fi'),
+    ('LMS', 'Canvas LMS', 'Primary Learning Management System', true, 'https://canvas.kestora.online'),
     ('EMAIL', 'Student Email', 'Official College Email (Outlook)', true, 'https://outlook.office.com'),
-    ('VPN', 'College VPN', 'Secure Access to Campus Network', true, 'https://vpn.kestora.fi'),
-    ('LIBRARY', 'Digital Library', 'Access to JSTOR, EBSCO, and Research DBs', true, 'https://library.kestora.fi'),
-    ('VIRTUAL_LAB', 'Cloud Computer Lab', 'Virtual Desktop Infrastructure (VDI)', false, 'https://vdi.kestora.fi')
+    ('VPN', 'College VPN', 'Secure Access to Campus Network', true, 'https://vpn.kestora.online'),
+    ('LIBRARY', 'Digital Library', 'Access to JSTOR, EBSCO, and Research DBs', true, 'https://library.kestora.online'),
+    ('VIRTUAL_LAB', 'Cloud Computer Lab', 'Virtual Desktop Infrastructure (VDI)', false, 'https://vdi.kestora.online')
 ON CONFLICT DO NOTHING;
 
 -- 3. Provision Access for YOUR Specific User
@@ -60,7 +60,7 @@ BEGIN
                     jsonb_build_object(
                         'username', 'student_' || substr(v_student_id, 1, 6),
                         'password', 'Welcome2026!',
-                        'email', 'student@kestora.fi'
+                        'email', 'student@kestora.online'
                     ),
                     NOW(),
                     NOW() + INTERVAL '1 year'

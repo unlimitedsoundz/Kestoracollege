@@ -199,8 +199,8 @@ export const OfferLetterPDF = ({ data }: OfferLetterProps) => (
                     <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 10, marginBottom: 4 }}>Kestora College</Text>
                     <Text>Pohjoisesplanadi 51</Text>
                     <Text>00150 Helsinki, Finland</Text>
-                    <Text>Website: https://kestora.fi</Text>
-                    <Text>Email: admissions@kestora.fi</Text>
+                    <Text>Website: https://kestora.online</Text>
+                    <Text>Email: admissions@kestora.online</Text>
                 </View>
             </View>
 

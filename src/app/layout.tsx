@@ -25,7 +25,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://www.kestora.fi'),
+    metadataBase: new URL('https://www.kestora.online'),
     title: "Kestora College Helsinki | English-Taught Degrees in Finland",
     description: "Kestora College Helsinki is an independent higher education institution in Finland offering English-taught degree programs for international students.",
     alternates: {
@@ -50,8 +50,8 @@ export default function RootLayout({
                             "name": "Kestora College",
                             "description": "Kestora College is an independent higher education institution in Helsinki, Finland offering English-taught degree programs for international students.",
                             "alternateName": "Kestora College Helsinki",
-                            "url": "https://www.kestora.fi",
-                            "logo": "https://www.kestora.fi/logo-kestora.png",
+                            "url": "https://www.kestora.online",
+                            "logo": "https://www.kestora.online/logo-kestora.png",
                             "address": {
                                 "@type": "PostalAddress",
                                 "streetAddress": "Kestora College – Helsinki Campus, Pohjoisesplanadi 51",
@@ -71,7 +71,7 @@ export default function RootLayout({
                                 "@type": "ContactPoint",
                                 "telephone": "+358-20-4721-739",
                                 "contactType": "admissions",
-                                "email": "admissions@kestora.fi"
+                                "email": "admissions@kestora.online"
                             }
                         })
                     }}

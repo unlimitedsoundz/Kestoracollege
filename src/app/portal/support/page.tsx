@@ -47,9 +47,9 @@ export default function SupportPage() {
         {
             icon: <Mail className="text-black" size={24} weight="bold" />,
             title: "Email Support",
-            value: "it.support@kestora.fi",
+            value: "it.support@kestora.online",
             desc: "Primary channel for all technical inquiries.",
-            link: "mailto:it.support@kestora.fi"
+            link: "mailto:it.support@kestora.online"
         },
         {
             icon: <Phone className="text-black" size={24} weight="bold" />,

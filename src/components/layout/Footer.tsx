@@ -88,7 +88,7 @@ export function Footer() {
                             </li>
                             <li className="flex items-center gap-3 text-neutral-400 text-sm">
                                 <EnvelopeSimple size={16} className="shrink-0 text-neutral-500" />
-                                <a href="mailto:info@kestora.fi" className="hover:text-white transition-colors">info@kestora.fi</a>
+                                <a href="mailto:info@kestora.online" className="hover:text-white transition-colors">info@kestora.online</a>
                             </li>
                         </ul>
                     </div>

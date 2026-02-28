@@ -94,7 +94,7 @@ export default function TuitionPaymentPage() {
                 "@type": "WebPage",
                 "name": "Paying the Tuition Fee | Kestora College",
                 "description": "Details about tuition fees, scholarships, and payment procedures at Kestora College Helsinki, Finland.",
-                "url": "https://www.kestora.fi/admissions/tuition"
+                "url": "https://www.kestora.online/admissions/tuition"
             }} />
             <SchemaLD data={faqSchema} />
 
@@ -559,7 +559,7 @@ export default function TuitionPaymentPage() {
                                         <p className="text-white/80 leading-relaxed mb-8 text-sm">
                                             If you experience any difficulty during the payment process or have questions regarding your tuition payment, please contact the Admissions Office through your student portal or via email.
                                         </p>
-                                        <a href="mailto:admissions@kestora.fi" className="inline-block bg-white text-black px-6 py-3 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-200 transition-colors">
+                                        <a href="mailto:admissions@kestora.online" className="inline-block bg-white text-black px-6 py-3 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-neutral-200 transition-colors">
                                             Email Admissions
                                         </a>
                                     </div>
@@ -808,7 +808,7 @@ export default function TuitionPaymentPage() {
                             <p className="text-white mb-6">
                                 If you have questions about payment processes, deadlines, or refunds, please contact the Tuition Fee Office.
                             </p>
-                            <a href="mailto:tuition@kestora.fi" className="inline-block bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-neutral-200 transition-colors">
+                            <a href="mailto:tuition@kestora.online" className="inline-block bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-neutral-200 transition-colors">
                                 Contact Tuition Office
                             </a>
                         </section>

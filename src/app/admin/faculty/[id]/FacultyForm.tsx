@@ -154,7 +154,7 @@ export default function FacultyForm({ id, isNew, facultyMember, schools, departm
                                             defaultValue={facultyMember?.email || ''}
                                             required
                                             className="w-full p-4 pl-12 bg-neutral-50 border border-neutral-200 rounded-2xl focus:ring-2 focus:ring-black outline-none transition-all"
-                                            placeholder="jane.doe@kestora.fi"
+                                            placeholder="jane.doe@kestora.online"
                                         />
                                     </div>
                                 </div>

@@ -214,8 +214,8 @@ function AdmissionLetterContent() {
                             Pohjoisesplanadi 51<br />
                             00150 Helsinki, Finland<br />
                             <div className="mt-2 space-y-0.5 text-[9px] text-black">
-                                <div>kestora.fi</div>
-                                <div>admissions@kestora.fi</div>
+                                <div>kestora.online</div>
+                                <div>admissions@kestora.online</div>
                             </div>
                         </div>
                     </div>
@@ -311,7 +311,7 @@ function AdmissionLetterContent() {
                 <div className="mb-4">
                     <h4 className="text-[11px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Refund Policy</h4>
                     <p className="text-[11px] leading-relaxed text-black">
-                        Tuition fees are subject to the college’s refund policy. Full details can be found at <a href="https://kestora.fi/refund-withdrawal-policy/" className="underline text-black">https://kestora.fi/refund-withdrawal-policy/</a>.
+                        Tuition fees are subject to the college’s refund policy. Full details can be found at <a href="https://kestora.online/refund-withdrawal-policy/" className="underline text-black">https://kestora.online/refund-withdrawal-policy/</a>.
                     </p>
                 </div>
 

@@ -8,10 +8,10 @@ export const metadata = {
     title: 'Kandidaattiohjelmat (Suomi ja Ruotsi) | Kestora College',
     description: 'Hae Kestora Collegen suomen- ja ruotsinkielisiin kandidaattiohjelmiin. Tietoa hyödyistä, opintopoluista, apurahoista ja valinnoista.',
     alternates: {
-        canonical: 'https://www.kestora.fi/admissions/bachelor-fi',
+        canonical: 'https://www.kestora.online/admissions/bachelor-fi',
         languages: {
-            'en': 'https://www.kestora.fi/admissions/bachelor',
-            'fi': 'https://www.kestora.fi/admissions/bachelor-fi',
+            'en': 'https://www.kestora.online/admissions/bachelor',
+            'fi': 'https://www.kestora.online/admissions/bachelor-fi',
         },
     },
 };

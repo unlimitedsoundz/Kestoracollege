@@ -211,7 +211,7 @@ function ReceiptContent() {
                             <div className="text-[12px] font-black uppercase tracking-[0.05em] text-black">Kestora College</div>
                             <div className="text-[9px] text-black font-medium leading-relaxed max-w-[200px]">
                                 Kestora College – Helsinki Campus, Pohjoisesplanadi 51, 00150 Helsinki, Finland<br />
-                                financial.services@kestora.fi
+                                financial.services@kestora.online
                             </div>
                         </div>
                     </div>
