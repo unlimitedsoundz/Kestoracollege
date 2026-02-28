@@ -1,0 +1,8 @@
+User-Agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /debug/
+Disallow: /api/
+
+Sitemap: https://kestora.online/sitemap.xml

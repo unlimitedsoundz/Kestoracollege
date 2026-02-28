@@ -1,0 +1,53 @@
+1:"$Sreact.fragment"
+2:I[58720,["/_next/static/chunks/ba42fc4af36b5e91.js","/_next/static/chunks/404782af79f98b35.js","/_next/static/chunks/a2ba40039376548a.js","/_next/static/chunks/b2d9954d4f223957.js"],"default"]
+6:I[97367,["/_next/static/chunks/0f5c37c241e827ee.js","/_next/static/chunks/c1f78a2964025fc7.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1fbf,Employment rates following graduation have developed differently for foreigners and Finns in recent years. In 2018, the employment rate of foreigners in Finland was 42%, whereas in 2023, 53% had found jobs in this country. The employment rate of Finnish graduates remained fairly stable at 87% to 88% in 2018–2023, with the exception of a small drop in 2020 (85%).
+
+While the general job market situation affects foreigners' employment, there are also other background factors.
+
+– Higher education institutions have focused on foreign students' employment and services that support it. Foreign graduates' employment has also been talked about a lot recently, says Irma Garam, Senior Specialist at the Foresight and Analysis unit of the Finnish National Agency for Education.
+
+– The role contacts made during higher education studies and networks that support employment play in finding a job are often emphasised in public discussion. The higher education institutions' experience is that foreign students face more challenges than Finnish students in finding places for internships included in their studies, says Maija Airas, Counsellor of Education, Head of the International Higher Education Cooperation unit of the Finnish National Agency for Education.
+
+– Recent comparative data indicate that foreign students are also less likely to work during their studies than their Finnish peers. These factors may partly explain the differences in employment after graduation, Airas continues.
+
+Foreigners are less likely to find expert jobs than Finns
+While a larger share of foreign graduates find jobs in Finland, the quality of their employment has not improved significantly. In 2023, 63% of foreigner employed in Finland worked in expert positions, whereas this figure for Finns was 77%. The higher the graduates' level of education, the larger share of them have expert jobs: 83% of foreign nationals with a doctorate and 74% of graduates from Master's level programmes are placed in expert positions.
+
+A larger share of foreigners than Finns have jobs in the cleaning industry or work in assisting tasks in the restaurant sector (9% of foreign nationals in 2020 and 6% in 2023, 1% of Finns in both years). In 2023, 14% of foreigners and 8% of Finns were placed in the category 'unknown' in Statistics Finland's classification. This means that there is no information on their employment situation, or their tasks cannot be placed in existing classifications.
+
+Citizens of European Union (EU) and European Economic Area (EEA) countries leave Finland more often than other foreign citizens after graduating. However, those EU and EEA citizens who stay in Finland are more likely to find employment in expert positions than other nationalities. 
+
+Regardless of the higher education institution in which the degree was completed, foreign students move to Uusimaa after graduation: 67% of the foreigners with jobs in Finland who graduated in 2020 worked in Uusimaa three years after graduation. Only 38% of them had completed their degrees in Uusimaa. 
+
+This information is based on Statistics Finland's dataset, in which statistics on higher education graduates and employment situation are combined. The dataset focuses on the situation of foreign citizens who have completed a higher education degree in Finland three years after graduation. The most recent data are from 2023. In this dataset, a foreign student refers to persons who do not have Finnish citizenship. This group may also include foreign citizens who have lived in Finland for a longer while.
+
+Finland does reasonably well in international comparisons
+A report produced by Studyportals, an international expert organisation of student recruitment, for the Finnish National Agency for Education complements statistical data on foreign students' employment. The report builds a picture of Finland’s attractiveness as a country of employment after graduation by international comparison. The dataset comprises the data of approx. 1,700 students obtained from the Studyportals database and social media.
+
+The report compares the placement of international degree students in the Finnish labour market one year after their graduation. The data indicate that around one half of foreign degree students stay in Finland, and almost all of them are employed one year after graduation.
+
+According to Studyportals, the fields with best employment opportunities are education, industrial manufacturing and the IT sector.  In the case of the education sector, this may be explained by the fact that students pursue postgraduate studies. The jobs in industrial manufacturing and the software sector support statistical data suggesting that students in the fields of technology and IT are likely to be employed. 
+
+– In other words, the employment situation in the technology and IT sector is good. This is excellent, as a majority of foreign-language degree students study in these fields, says Harri Lähdekorpi, Expert of International Marketing at the Internationalisation Services of the Finnish National Agency for Education.
+
+Of different nationalities, citizens of India are the most likely to stay in Finland after graduation. German and Spanish students, for example, who do not stay in Finland after graduation are a good reflection of European mobility: in the EU territory, capital, goods, services and persons move freely. International experts tend to head for Germany and the United States, in particular. The latter is also a popular destination for others who have completed a degree in Finland, not only  those who originally arrived from the United States.
+
+In a comparison of more than 100 countries, Finland is close to the average. More foreign students stay on in Finland than in Sweden, for example.
+
+The number of foreign students at Finnish higher education institutions is increasing
+In 2024, around 13,000 new foreigners started their degree studies, whereas 6,500 foreign nationals who had completed their entire degrees in Finland graduated from Finnish higher education institutions in that year.
+
+Over five years, the number of new students has more than doubled. The greatest increase in the number of foreign higher education students has been seen in Bachelor’s degree programmes at universities of applied sciences. The number of non-EU and EEA nationals among these students has clearly increased.
+
+– International experts are vital for a country like Finland that invests in innovation and where the export industry plays a major role in the economy. A diverse international student body and personnel lay the foundation for high-quality research and higher education in Finland. Education-based immigration can help support the availability of experts and growth, internationalisation and innovation in Finland, says Minna Koutaniemi, Director of the Finnish National Agency for Education’s International Affairs main function.
+
+Finland engages in consistent cross-administrative cooperation to improve its retention power among international experts. The goals of the Talent Boost programme for work and education-based immigration for 2023–2027 include a controlled increase in the number of higher education students and improving their preconditions for finding jobs in Finland. Promoting education-based immigration falls within the Finnish National Agency for Education's remit.
+
+The Finnish National Agency for Education regularly compiles statistics on foreign degree students and those who have completed a higher education degree in Finland.
+
+The Finnish National Agency for Education also supports the Finnish higher education institutions' SIMHE activities (Supporting Immigrants in Higher Education) and their efforts to promote the employment of higher education students with an immigrant background. The SIMHE activities are about developing and strengthening models that provide faster and more efficient education and employment paths for persons with an immigrant or foreign background as well as promote the identification of their prior competence.0:{"buildId":"QAZuweCmqYNNaej60HiNH","rsc":["$","$1","c",{"children":[["$","$L2",null,{"initialNews":{"id":"b5b3312a-2705-4624-aac4-e172fce764eb","title":"An increasing share of foreign students find employment in Finland.","slug":"students-employment","content":"$3","excerpt":"Employment rates following graduation have developed differently for foreigners and Finns in recent years. In 2018, the employment rate of foreigners in Finland...","imageUrl":"https://mrqzlmkdhzwvbpljikjz.supabase.co/storage/v1/object/public/content/3vl2m51fph1.jpg","publishDate":"2025-08-26T00:00:00","published":true,"createdAt":"2026-02-08T07:17:12.303","updatedAt":"2026-02-08T07:17:12.303"}}],["$L4"],"$L5"]}],"loading":null,"isPartial":false}
+4:["$","script","script-0",{"src":"/_next/static/chunks/b2d9954d4f223957.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

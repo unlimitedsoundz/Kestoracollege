@@ -1,0 +1,233 @@
+1:"$Sreact.fragment"
+2:I[2594,["/_next/static/chunks/ba42fc4af36b5e91.js","/_next/static/chunks/404782af79f98b35.js","/_next/static/chunks/a2ba40039376548a.js"],"AuthProvider"]
+3:I[3374,["/_next/static/chunks/ba42fc4af36b5e91.js","/_next/static/chunks/404782af79f98b35.js","/_next/static/chunks/a2ba40039376548a.js"],"Header"]
+4:I[39756,["/_next/static/chunks/0f5c37c241e827ee.js","/_next/static/chunks/c1f78a2964025fc7.js"],"default"]
+5:I[37457,["/_next/static/chunks/0f5c37c241e827ee.js","/_next/static/chunks/c1f78a2964025fc7.js"],"default"]
+6:I[22016,["/_next/static/chunks/ba42fc4af36b5e91.js","/_next/static/chunks/404782af79f98b35.js","/_next/static/chunks/a2ba40039376548a.js"],""]
+f:I[68027,[],"default"]
+:HL["/_next/static/chunks/28ce564dcf530124.css","style"]
+:HL["/_next/static/media/2a65768255d6b625-s.p.d19752fb.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/cf514f5d0007dafa-s.p.417aa1a2.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"P":null,"b":"QAZuweCmqYNNaej60HiNH","c":["","research","projects","carbon-neutral-construction-2030",""],"q":"","i":false,"f":[[["",{"children":["research",{"children":["projects",{"children":[["slug","carbon-neutral-construction-2030","d"],{"children":["__PAGE__",{}]}]}]}]},"$undefined","$undefined",true],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/28ce564dcf530124.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/ba42fc4af36b5e91.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/404782af79f98b35.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/a2ba40039376548a.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","className":"inter_c15e96cb-module__0bjUvq__variable open_sans_88d8a21e-module__OYwqmW__variable playfair_display_fed1534a-module__F9WnGq__variable","children":[["$","head",null,{"children":["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"CollegeOrUniversity\",\"name\":\"Kestora College\",\"description\":\"Kestora College is an independent higher education institution in Helsinki, Finland offering English-taught degree programs for international students.\",\"alternateName\":\"Kestora College Helsinki\",\"url\":\"https://www.kestora.online\",\"logo\":\"https://www.kestora.online/logo-kestora.png\",\"address\":{\"@type\":\"PostalAddress\",\"streetAddress\":\"Kestora College – Helsinki Campus, Pohjoisesplanadi 51\",\"addressLocality\":\"Helsinki\",\"postalCode\":\"00150\",\"addressRegion\":\"Uusimaa\",\"addressCountry\":\"FI\"},\"location\":{\"@type\":\"Place\",\"name\":\"Helsinki, Finland\"},\"sameAs\":[\"https://www.linkedin.com/company/kestora-college\"],\"contactPoint\":{\"@type\":\"ContactPoint\",\"telephone\":\"+358-20-4721-739\",\"contactType\":\"admissions\",\"email\":\"admissions@kestora.online\"}}"}}]}],["$","body",null,{"className":"font-sans antialiased","children":["$","$L2",null,{"children":[["$","$L3",null,{}],["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","main",null,{"className":"min-h-screen bg-white flex flex-col items-center justify-center p-8 text-center","children":["$","div",null,{"className":"max-w-md space-y-8","children":[["$","h1",null,{"className":"text-[120px] font-black leading-none tracking-tighter text-neutral-100 select-none","children":"404"}],["$","div",null,{"className":"space-y-4","children":[["$","h2",null,{"className":"text-2xl font-black uppercase tracking-tight","children":"Page Not Found"}],["$","p",null,{"className":"text-neutral-500 text-sm leading-relaxed","children":"The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."}]]}],["$","div",null,{"className":"pt-8","children":["$","$L6",null,{"href":"/","className":"inline-flex items-center gap-2 bg-black text-white px-8 py-4 rounded-sm text-xs font-black uppercase tracking-widest hover:bg-neutral-800 transition-all shadow-lg active:scale-95","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":16,"height":16,"fill":"currentColor","viewBox":"0 0 256 256","transform":"$undefined","children":[false,"$undefined",["$","path",null,{"d":"M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z"}]]}],"Back to Home"]}]}],["$","div",null,{"className":"pt-16 grid grid-cols-2 gap-4 text-left","children":[["$","div",null,{"children":[["$","p",null,{"className":"text-[10px] uppercase font-bold tracking-widest text-neutral-400 mb-2","children":"Popular Links"}],["$","ul",null,{"className":"space-y-1 text-xs font-bold uppercase tracking-tight","children":[["$","li",null,{"children":["$","$L6",null,{"href":"/admissions/","className":"hover:underline","children":"Admissions"}]}],["$","li",null,{"children":["$","$L6",null,{"href":"/schools/","className":"hover:underline","children":"Schools"}]}],["$","li",null,{"children":["$","$L6",null,{"href":"/news/","className":"hover:underline","children":"News"}]}]]}]]}],"$L7"]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],"$L8","$L9"]}]}]]}]]}],{"children":["$La",{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,false]},null,false,false]},null,false,false]},null,false,false]},null,false,false],"$Le",false]],"m":"$undefined","G":["$f",[]],"S":true}
+10:I[58234,["/_next/static/chunks/ba42fc4af36b5e91.js","/_next/static/chunks/404782af79f98b35.js","/_next/static/chunks/a2ba40039376548a.js"],"Footer"]
+11:I[3681,["/_next/static/chunks/ba42fc4af36b5e91.js","/_next/static/chunks/404782af79f98b35.js","/_next/static/chunks/a2ba40039376548a.js"],"CookieConsent"]
+13:I[97367,["/_next/static/chunks/0f5c37c241e827ee.js","/_next/static/chunks/c1f78a2964025fc7.js"],"OutletBoundary"]
+14:"$Sreact.suspense"
+16:I[97367,["/_next/static/chunks/0f5c37c241e827ee.js","/_next/static/chunks/c1f78a2964025fc7.js"],"ViewportBoundary"]
+18:I[97367,["/_next/static/chunks/0f5c37c241e827ee.js","/_next/static/chunks/c1f78a2964025fc7.js"],"MetadataBoundary"]
+7:["$","div",null,{"children":[["$","p",null,{"className":"text-[10px] uppercase font-bold tracking-widest text-neutral-400 mb-2","children":"Support"}],["$","ul",null,{"className":"space-y-1 text-xs font-bold uppercase tracking-tight","children":[["$","li",null,{"children":["$","$L6",null,{"href":"/contact/","className":"hover:underline","children":"Contact Us"}]}],["$","li",null,{"children":["$","$L6",null,{"href":"/student-guide/","className":"hover:underline","children":"Student Guide"}]}]]}]]}]
+8:["$","$L10",null,{}]
+9:["$","$L11",null,{}]
+a:["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}]
+b:["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}]
+c:["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}]
+d:["$","$1","c",{"children":["$L12",null,["$","$L13",null,{"children":["$","$14",null,{"name":"Next.MetadataOutlet","children":"$@15"}]}]]}]
+e:["$","$1","h",{"children":[null,["$","$L16",null,{"children":"$L17"}],["$","div",null,{"hidden":true,"children":["$","$L18",null,{"children":["$","$14",null,{"name":"Next.Metadata","children":"$L19"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+17:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+:HL["https://mrqzlmkdhzwvbpljikjz.supabase.co/storage/v1/object/public/content/cue2l8xubj.jpg","image"]
+1a:T1a4f,1. Introduction
+
+Large-scale construction significantly contributes to global carbon emissions due to energy-intensive materials (like concrete and steel), transportation, and operational energy use. Achieving net-zero carbon means that the total greenhouse gas emissions associated with a project are reduced as far as possible and any remaining emissions are balanced by carbon removal or offsets. This goal is critical for limiting global warming and aligning with international climate targets.
+
+This research explores innovative materials and construction methods that reduce carbon footprints in major building and infrastructure projects.
+
+2. Why Construction Matters for Carbon Reduction
+
+Construction and the built environment contribute roughly 30–40% of global energy-related carbon dioxide emissions when operational energy use and building materials are included. This includes:
+
+Production of building materials (especially cement and steel)
+
+On-site construction activities
+
+Transportation of materials
+
+Building operations (heating, cooling, lighting)
+
+Reducing these emissions is essential because the construction sector is one of the fastest-growing consumers of energy and resources worldwide.
+
+3. Key Sources of Carbon in Construction
+3.1 Materials Production
+
+Cement and concrete: Cement production alone contributes ~7–8% of global CO₂ emissions due to high-temperature processes and chemical reactions in kilns.
+
+Steel: Steel production requires fossil fuels and emits CO₂ during smelting.
+
+3.2 Transportation
+
+Transporting heavy materials over long distances adds additional emissions from diesel trucks, ships, and other vehicles.
+
+3.3 On-Site Activities
+
+On-site machinery (cranes, bulldozers) often run on diesel, contributing to emissions.
+
+3.4 Building Operations
+
+Energy for heating, cooling, electricity, and water use over the life of a building accounts for significant greenhouse gas contributions.
+
+4. New Low-Carbon Materials
+4.1 Low-Carbon Concrete
+
+Traditional concrete can be replaced or supplemented with:
+
+Blended cements that use industrial by-products like fly ash, blast furnace slag, or silica fume to reduce clinker content.
+
+Carbon-capture concrete that absorbs CO₂ during curing.
+
+These alternatives can reduce embodied emissions significantly while maintaining strength and durability.
+
+4.2 Bio-Based Materials
+
+Cross-laminated timber (CLT) and engineered wood products store carbon absorbed during tree growth.
+
+Bamboo composites and other plant-based materials offer fast-renewing alternatives for some structural elements.
+
+4.3 Recycled and Reclaimed Materials
+
+Using recycled steel, reclaimed bricks, and repurposed aggregates reduces the need for new material production and lowers energy inputs.
+
+4.4 Green Insulation Materials
+
+Natural insulation (sheep wool, cellulose) and advanced aerogels can improve thermal performance, cutting operational energy needs.
+
+5. Innovative Construction Methods
+5.1 Modular and Prefabricated Construction
+
+Offsite fabrication:
+
+Reduces waste during construction
+
+Improves quality control
+
+Lowers transportation and labor emissions
+
+Modules can be assembled quickly on site, often resulting in higher overall efficiency.
+
+5.2 3D Printing and Additive Manufacturing
+
+Using 3D printing with low-carbon concrete mixes or recycled plastics can:
+
+Reduce formwork waste
+
+Optimize structures for material efficiency
+
+Enable complex designs with less material
+
+5.3 Digital Planning & Simulation
+
+Building Information Modeling (BIM) helps optimize designs for energy efficiency and resource use.
+
+Energy simulations identify ways to reduce operational carbon before construction begins.
+
+5.4 On-Site Renewable Energy
+
+Installing solar panels, small wind turbines, or battery systems during construction:
+
+Reduces grid electricity use
+
+Powers equipment with clean energy
+
+6. Renewable Energy Integration
+
+Achieving net-zero requires buildings to operate on renewable energy:
+
+Solar photovoltaics (PV) on roofs and facades
+
+Geothermal systems for heating and cooling
+
+Battery storage to use energy efficiently
+
+Smart grids and energy-management systems
+
+This shifts energy demand away from fossil fuels throughout a building’s lifetime.
+
+7. Carbon Accounting and Lifecycle Assessment
+
+To measure progress, projects use:
+
+Life Cycle Assessment (LCA): Quantifies emissions from material extraction to demolition.
+
+Carbon Footprint Tools: Software calculates embodied and operational carbon.
+
+Regular tracking enables improvements and accountability.
+
+8. Policy, Standards & Incentives
+
+Government regulation and industry standards accelerate adoption:
+
+Green building certifications (like LEED, BREEAM)
+
+Net-zero building codes
+
+Carbon pricing or tax incentives
+
+Subsidies for renewable energy installations
+
+Policies encourage developers to adopt low-carbon solutions by reducing financial risk.
+
+9. Challenges to Implementation
+
+Despite its potential, net-zero construction faces barriers:
+
+Higher upfront costs for low-carbon materials
+
+Limited supply chains for new materials
+
+Skills gaps in new construction techniques
+
+Uncertain long-term performance data
+
+Addressing these requires collaboration between industry, governments, and researchers.
+
+10. Case Studies (Examples of Net-Zero Projects)
+10.1 Net-Zero Office Buildings
+
+Several new office complexes around the world use:
+
+CLT structural elements
+
+Solar panels
+
+High-efficiency HVAC
+This combination results in zero net energy use over a year.
+
+10.2 Large Infrastructure
+
+Some bridge and stadium constructions now feature recycled concrete mixes and on-site renewable power to cut emissions.
+
+While specific projects aren’t listed here, many cities report measurable reductions when these strategies are applied.
+
+11. Future Directions
+
+Emerging innovations include:
+
+Carbon-negative materials (materials that permanently store more carbon than they emit)
+
+Widespread adoption of circular economy practices
+
+Advanced robotics for low-waste construction
+
+Smart cities linked to renewable microgrids
+
+These developments could further reduce the carbon footprint of entire urban ecosystems.
+
+12. Conclusion
+
+Achieving net-zero carbon in large-scale construction requires:
+
+Adoption of low-carbon materials
+
+Innovative construction methods
+
+Integration of renewable energy
+
+Effective carbon accounting
+
+Supportive policy frameworks
+
+As technology advances and costs decline, net-zero construction is increasingly feasible, making it an essential strategy in combating climate change.
+
+12:["$","article",null,{"className":"min-h-screen bg-white","children":[["$","div",null,{"className":"bg-neutral-900 text-white py-20 relative overflow-hidden","children":[["$","div",null,{"className":"container mx-auto px-4 relative z-10","children":[["$","div",null,{"className":"mb-4","children":["$","span",null,{"className":"bg-neutral-800 border border-neutral-700 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1","children":"EU Horizon"}]}],["$","h1",null,{"className":"text-3xl md:text-5xl font-bold mb-6 max-w-4xl leading-tight pt-8","children":"Carbon Neutral Construction 2030"}],["$","div",null,{"className":"flex flex-wrap items-center gap-6 text-neutral-300","children":[["$","div",null,{"className":"flex items-center gap-2","children":[["$","span",null,{"className":"font-semibold text-white","children":"Lead:"}]," ","Dr. Mikko Hämäläinen"]}],["$","div",null,{"className":"flex items-center gap-2","children":["$","span",null,{"children":["Published: ","2/2/2026"]}]}]]}]]}],["$","div",null,{"className":"absolute inset-0 z-0 select-none","children":[["$","img",null,{"src":"https://mrqzlmkdhzwvbpljikjz.supabase.co/storage/v1/object/public/content/cue2l8xubj.jpg","alt":"","className":"w-full h-full object-cover opacity-40"}],["$","div",null,{"className":"absolute inset-0 bg-neutral-900/60 mix-blend-multiply"}]]}],["$","div",null,{"className":"absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-neutral-800 to-transparent opacity-30 pointer-events-none z-0"}]]}],["$","div",null,{"className":"container mx-auto px-4 py-6","children":["$","$L6",null,{"href":"/research/projects","className":"inline-flex items-center gap-2 text-neutral-500 hover:text-black font-bold uppercase tracking-widest text-xs transition-colors","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":16,"height":16,"fill":"currentColor","viewBox":"0 0 256 256","transform":"$undefined","children":[false,"$undefined","$0:f:0:1:0:props:children:1:props:children:1:props:children:props:children:1:props:notFound:0:props:children:props:children:2:props:children:props:children:0:props:children:2"]}]," Back to Projects"]}]}],["$","div",null,{"className":"container mx-auto px-4 py-8 md:py-16","children":["$","div",null,{"className":"max-w-4xl mx-auto","children":["$","div",null,{"className":"prose prose-lg max-w-none text-neutral-800","children":["$","div",null,{"className":"whitespace-pre-wrap leading-relaxed","children":"$1a"}]}]}]}]]}]
+1b:I[27201,["/_next/static/chunks/0f5c37c241e827ee.js","/_next/static/chunks/c1f78a2964025fc7.js"],"IconMark"]
+15:null
+19:[["$","title","0",{"children":"Carbon Neutral Construction 2030 | Kestora Research"}],["$","meta","1",{"name":"description","content":"Investigating new materials and methods to achieve net-zero carbon footprints in large-scale construction projects."}],["$","link","2",{"rel":"canonical","href":"https://www.kestora.online/"}],["$","link","3",{"rel":"icon","href":"/favicon.ico?favicon.9057711c.ico","sizes":"957x360","type":"image/x-icon"}],["$","$L1b","4",{}]]
