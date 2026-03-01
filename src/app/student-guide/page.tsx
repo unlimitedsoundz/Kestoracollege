@@ -409,7 +409,7 @@ export default function StudentGuidePage() {
                                         title: "Exchange Students",
                                         href: "/student-guide/exchange",
                                         desc: "Orientation, course selection, and cultural adaptation for short-term studies.",
-                                        image: "/images/guide/exchange_winter.jpg"
+                                        image: "/images/1772303673036-019ca586-9fe2-7f1c-8ac6-b2e61a8c6451.png"
                                     }
                                 ].map((item) => (
                                     <Link key={item.title} href={item.href} className="block rounded-2xl overflow-hidden group">

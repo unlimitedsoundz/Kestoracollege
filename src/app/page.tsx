@@ -13,6 +13,19 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white text-black">
+      {/* 0. HOME PAGE SCHEMA */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Kestora College",
+            "alternateName": "Kestora College Helsinki",
+            "url": "https://kestora.online"
+          })
+        }}
+      />
 
       {/* 1. HERO SECTION (Dark Grey Split) */}
       <section className="bg-[#1a1a1a] text-white">
