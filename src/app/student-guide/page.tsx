@@ -138,7 +138,7 @@ export default function StudentGuidePage() {
 
                             <div className="grid md:grid-cols-2 gap-6 mb-8">
                                 {[
-                                    { title: "Bachelor’s Degree", href: "/admissions/bachelor", image: "/images/1772347933107-019ca82a-97ab-7f5f-8189-a00c3e10b2a6.png" },
+                                    { title: "Bachelor’s Degree", href: "/admissions/bachelor", image: "/images/bachelors-group-v2.png" },
                                     { title: "Master’s Degree", href: "/admissions/master", image: "/images/student-guide-hero.png" }
                                 ].map((item) => (
                                     <Link key={item.title} href={item.href} className="group bg-neutral-100 rounded-2xl overflow-hidden block">
@@ -409,7 +409,7 @@ export default function StudentGuidePage() {
                                         title: "Exchange Students",
                                         href: "/student-guide/exchange",
                                         desc: "Orientation, course selection, and cultural adaptation for short-term studies.",
-                                        image: "/images/1772303673036-019ca586-9fe2-7f1c-8ac6-b2e61a8c6451.png"
+                                        image: "/images/international-students.png"
                                     }
                                 ].map((item) => (
                                     <Link key={item.title} href={item.href} className="block rounded-2xl overflow-hidden group">
