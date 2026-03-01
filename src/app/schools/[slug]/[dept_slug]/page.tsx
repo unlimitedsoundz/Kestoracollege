@@ -205,15 +205,32 @@ export default async function DepartmentDetailPage({ params }: Props) {
                                     <div className="flex justify-between items-start">
                                         <div>
                                             <h3 className="text-xl font-bold text-neutral-900 mb-1">{course.title}</h3>
-                                            <p className="text-neutral-500 text-sm line-clamp-2">{course.description}</p>
+                                            <p className="text-neutral-500 text-sm line-clamp-2 mb-4">{course.description}</p>
+
+                                            {/* Program Details Grid */}
+                                            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm mt-4 pt-4 border-t border-neutral-100">
+                                                <div>
+                                                    <p className="text-neutral-400 uppercase tracking-wider text-[10px] font-bold mb-1">Code</p>
+                                                    <p className="font-semibold text-neutral-900">{parseInt(course.id.substring(0, 5), 16).toString().substring(0, 5).padStart(5, '0')}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-neutral-400 uppercase tracking-wider text-[10px] font-bold mb-1">Start</p>
+                                                    <p className="font-semibold text-neutral-900">August</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-neutral-400 uppercase tracking-wider text-[10px] font-bold mb-1">Campus</p>
+                                                    <p className="font-semibold text-neutral-900">Helsinki</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-neutral-400 uppercase tracking-wider text-[10px] font-bold mb-1">Length</p>
+                                                    <p className="font-semibold text-neutral-900">{course.duration}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-neutral-400 uppercase tracking-wider text-[10px] font-bold mb-1">Credential</p>
+                                                    <p className="font-semibold text-neutral-900 text-xs">{course.degreeLevel === 'BACHELOR' ? "Bachelor's Degree" : "Master's Degree"}</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <span className={`px-3 py-1 rounded text-xs font-bold uppercase ${course.degreeLevel === 'MASTER' ? 'bg-neutral-900 text-white' : 'bg-neutral-100 text-neutral-800 border border-neutral-200'}`}>
-                                            {course.degreeLevel}
-                                        </span>
-                                    </div>
-                                    <div className="flex gap-6 text-sm text-neutral-500 pl-1">
-                                        <span>{course.duration}</span>
-                                        <span>{course.language}</span>
                                     </div>
                                 </Link>
                             ))}
