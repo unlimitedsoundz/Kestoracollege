@@ -215,7 +215,7 @@ export default async function DepartmentDetailPage({ params }: Props) {
                                                 </div>
                                                 <div>
                                                     <p className="text-neutral-400 uppercase tracking-wider text-[10px] font-bold mb-1">Start</p>
-                                                    <p className="font-semibold text-neutral-900">August</p>
+                                                    <p className="font-semibold text-neutral-900">August 2026</p>
                                                 </div>
                                                 <div>
                                                     <p className="text-neutral-400 uppercase tracking-wider text-[10px] font-bold mb-1">Campus</p>
