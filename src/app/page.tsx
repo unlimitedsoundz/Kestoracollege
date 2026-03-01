@@ -155,7 +155,7 @@ export default async function Home() {
           <div className="w-full lg:w-1/2">
             <div className="relative h-[300px] md:h-[500px] overflow-hidden rounded-2xl">
               <Image
-                src="/images/campus-welcome.png"
+                src="/images/1772347547490-019ca824-d3fd-7c29-8211-9a5af0f4aa34.png"
                 alt="Kestora campus"
                 fill
                 className="object-cover"
