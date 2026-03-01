@@ -452,7 +452,7 @@ export default function TuitionPaymentPage() {
                                                 All tuition payments are processed through Paygowire to ensure accurate tracking, faster confirmation, and proper allocation to the student’s account.
                                             </p>
                                         </div>
-                                        <div className="relative w-48 h-12 md:w-64 md:h-16 shrink-0 bg-white p-4 rounded-xl shadow-sm border border-neutral-100">
+                                        <div className="relative w-48 h-12 md:w-64 md:h-16 shrink-0 bg-white p-4 rounded-xl shadow-sm">
                                             <Image
                                                 src="/images/paygowire-logo-v2.png"
                                                 alt="Paygowire"
@@ -521,15 +521,15 @@ export default function TuitionPaymentPage() {
                                                     <p className="text-sm text-neutral-600 mb-4">Once payment is successfully received and confirmed:</p>
                                                     <ul className="space-y-3">
                                                         <li className="flex items-center gap-3 text-xs font-bold text-black uppercase tracking-tight">
-                                                            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                                                            <div className="w-1 h-1 bg-black rounded-full"></div>
                                                             Your payment status will be updated automatically
                                                         </li>
                                                         <li className="flex items-center gap-3 text-xs font-bold text-black uppercase tracking-tight">
-                                                            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                                                            <div className="w-1 h-1 bg-black rounded-full"></div>
                                                             An official receipt will be issued
                                                         </li>
                                                         <li className="flex items-center gap-3 text-xs font-bold text-black uppercase tracking-tight">
-                                                            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                                                            <div className="w-1 h-1 bg-black rounded-full"></div>
                                                             Your Admission Letter will be automatically generated and made available in your student portal
                                                         </li>
                                                     </ul>
@@ -716,9 +716,9 @@ export default function TuitionPaymentPage() {
                                 {/* SwissCare Health Insurance */}
                                 <div id="health-insurance" className="scroll-mt-32 pt-16">
                                     <h3 className="text-2xl font-bold mb-6">Health Insurance for International Students</h3>
-                                    <div className="bg-white border-2 border-neutral-100 rounded-2xl p-6 md:p-12 shadow-sm">
+                                    <div className="bg-white rounded-2xl p-6 md:p-12 shadow-sm">
                                         <div className="flex flex-col md:flex-row items-start gap-6">
-                                            <div className="relative w-16 h-16 md:w-20 md:h-20 shrink-0 bg-white rounded-xl overflow-hidden border border-neutral-100 shadow-sm">
+                                            <div className="relative w-16 h-16 md:w-20 md:h-20 shrink-0 bg-white rounded-xl overflow-hidden shadow-sm">
                                                 <Image
                                                     src="/images/swisscare-logo.png"
                                                     alt="SwissCare"
