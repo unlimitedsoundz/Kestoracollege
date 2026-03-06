@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Core pages with highest priority
     const corePages = [
-        { url: `${baseUrl}/`, changeFrequency: 'weekly' as const, priority: 1.0 },
+        { url: `${baseUrl}/`, lastModified: '2026-03-06', changeFrequency: 'weekly' as const, priority: 1.0 },
         { url: `${baseUrl}/admissions`, changeFrequency: 'weekly' as const, priority: 0.9 },
         { url: `${baseUrl}/admissions/bachelor`, changeFrequency: 'monthly' as const, priority: 0.9 },
         { url: `${baseUrl}/admissions/master`, changeFrequency: 'monthly' as const, priority: 0.9 },
