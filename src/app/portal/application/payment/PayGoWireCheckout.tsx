@@ -137,7 +137,7 @@ export default function PayGoWireCheckout({
             methods.push({ id: 'sepa', name: 'SEPA Transfer', description: 'Direct Euro bank transfer', type: 'BANK', icon: BankIcon, processingTime: '1 business day' });
             if (country === 'Finland') methods.push({ id: 'nordea', name: 'Nordea Online', description: 'Local Finnish bank login', type: 'BANK', icon: BankIcon, processingTime: 'Instant' });
         } else if (country === 'Nigeria') {
-            methods.unshift({ id: 'ng_bank', name: 'Online Bank Transfer in Nigerian Naira (NGN)', description: 'Pay via local NGN routing (Kuda Bank)', type: 'BANK', icon: BankIcon, processingTime: '2-4 hours' });
+            methods.unshift({ id: 'ng_bank', name: 'Online Bank Transfer in Nigerian Naira (NGN)', description: 'Pay via Local NGN Bank', type: 'BANK', icon: BankIcon, processingTime: '1-2 hours' });
         } else if (country === 'United Arab Emirates') {
             methods.unshift({
                 id: 'flutterwave_uae',
@@ -163,8 +163,8 @@ export default function PayGoWireCheckout({
         }
 
         methods.push({ id: 'eur_wire', name: 'Bank Transfer in Euros (EUR)', description: 'Pay in EUR via Nordea', type: 'BANK', icon: BankIcon, processingTime: '7-14 days' });
-        methods.push({ id: 'gbp_wire', name: 'International Bank Transfer in British Pounds (GBP)', description: 'Pay in GBP via Barclays Bank', type: 'BANK', icon: BankIcon, processingTime: '10-15 days' });
-        methods.push({ id: 'usd_wire', name: 'International Bank Transfer in US Dollars (USD)', description: 'Pay in USD via Bank of America', type: 'BANK', icon: BankIcon, processingTime: '10-15 business days' });
+        methods.push({ id: 'gbp_wire', name: 'International Bank Transfer in British Pounds (GBP)', description: 'Pay in GBP via World First UK Bank', type: 'BANK', icon: BankIcon, processingTime: '10-15 Business days' });
+        methods.push({ id: 'usd_wire', name: 'International Bank Transfer in US Dollars (USD)', description: 'Pay in USD via JP MORGAN CHASE BANK', type: 'BANK', icon: BankIcon, processingTime: '10-15 business days' });
 
         return methods;
     };
@@ -550,27 +550,34 @@ export default function PayGoWireCheckout({
                                     <>
                                         <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
                                             <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Bank</span>
-                                            <span className="text-xs md:text-sm text-black font-normal text-right">BANK OF AMERICA</span>
+                                            <span className="text-xs md:text-sm text-black font-normal text-right">JP MORGAN CHASE BANK, N.A.</span>
                                         </div>
                                         <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
-                                            <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Routing Number</span>
+                                            <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">ACH Routing</span>
                                             <div className="flex items-center gap-3">
-                                                <CopyButton text="026042178" label="Routing Number" />
-                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">026042178</span>
+                                                <CopyButton text="028000024" label="ACH Routing" />
+                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">028000024</span>
                                             </div>
                                         </div>
                                         <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
                                             <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Account Number</span>
                                             <div className="flex items-center gap-3">
-                                                <CopyButton text="71366156442596" label="Account Number" />
-                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">71366156442596</span>
+                                                <CopyButton text="30000001050066" label="Account Number" />
+                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">30000001050066</span>
                                             </div>
                                         </div>
                                         <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
                                             <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Wire Routing</span>
                                             <div className="flex items-center gap-3">
-                                                <CopyButton text="026534741" label="Wire Routing" />
-                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">026534741</span>
+                                                <CopyButton text="021000021" label="Wire Routing" />
+                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">021000021</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
+                                            <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">SWIFT/BIC</span>
+                                            <div className="flex items-center gap-3">
+                                                <CopyButton text="CHASUS33" label="SWIFT/BIC" />
+                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">CHASUS33</span>
                                             </div>
                                         </div>
                                         <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
@@ -634,21 +641,35 @@ export default function PayGoWireCheckout({
                                 ) : selectedMethod?.id === 'gbp_wire' ? (
                                     <>
                                         <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
-                                            <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Bank Namne</span>
-                                            <span className="text-xs md:text-sm text-black font-normal text-right">BARCLAYS BANK</span>
+                                            <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Bank Name</span>
+                                            <span className="text-xs md:text-sm text-black font-normal text-right">WORLD FIRST UK LTD</span>
+                                        </div>
+                                        <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
+                                            <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Sort Code</span>
+                                            <div className="flex items-center gap-3">
+                                                <CopyButton text="236824" label="Sort Code" />
+                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">236824</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
+                                            <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Account Number</span>
+                                            <div className="flex items-center gap-3">
+                                                <CopyButton text="30103996" label="Account Number" />
+                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">30103996</span>
+                                            </div>
                                         </div>
                                         <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
                                             <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">IBAN</span>
                                             <div className="flex items-center gap-3">
-                                                <CopyButton text="GB22BARC20037841813253" label="IBAN" />
-                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">GB22BARC20037841813253</span>
+                                                <CopyButton text="GB81WFST23682430103996" label="IBAN" />
+                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">GB81WFST23682430103996</span>
                                             </div>
                                         </div>
                                         <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
                                             <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">SWIFT/BIC</span>
                                             <div className="flex items-center gap-3">
-                                                <CopyButton text="BARCGB22" label="SWIFT/BIC" />
-                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">BARCGB22</span>
+                                                <CopyButton text="WFSTGB2L" label="SWIFT/BIC" />
+                                                <span className="text-lg md:text-xl text-black font-normal tracking-wider">WFSTGB2L</span>
                                             </div>
                                         </div>
                                         <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
@@ -661,7 +682,7 @@ export default function PayGoWireCheckout({
                                         </div>
                                         <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
                                             <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Processing Time</span>
-                                            <span className="text-xs md:text-sm text-black font-normal text-right">10-15 Days</span>
+                                            <span className="text-xs md:text-sm text-black font-normal text-right">10-15 Business days</span>
                                         </div>
                                         <div className="flex justify-between items-center">
                                             <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Currency</span>
@@ -688,6 +709,10 @@ export default function PayGoWireCheckout({
                                         <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
                                             <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Reference</span>
                                             <span className="text-xs md:text-sm text-black font-normal">{paymentReference || '1774261321084'}</span>
+                                        </div>
+                                        <div className="flex justify-between items-center border-b border-neutral-200 pb-3 md:pb-4">
+                                            <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Processing Time</span>
+                                            <span className="text-xs md:text-sm text-black font-normal text-right">1-2 hours</span>
                                         </div>
                                         <div className="flex justify-between items-center">
                                             <span className="text-[10px] md:text-sm text-neutral-500 uppercase tracking-widest">Expiration Date</span>
