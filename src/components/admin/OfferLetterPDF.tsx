@@ -196,11 +196,13 @@ export const OfferLetterPDF = ({ data }: OfferLetterProps) => (
                     {data.logo_path && <Image src={data.logo_path} style={styles.logo} />}
                 </View>
                 <View style={styles.contactInfo}>
-                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 10, marginBottom: 4 }}>Kestora College</Text>
+                    <Text style={{ color: '#000', fontWeight: 'heavy', fontSize: 11, marginBottom: 2 }}>KESTORA COLLEGE</Text>
+                    <Text style={{ color: '#444', fontSize: 8, marginBottom: 4 }}>– HELSINKI CAMPUS</Text>
                     <Text>Pohjoisesplanadi 51</Text>
                     <Text>00150 Helsinki, Finland</Text>
-                    <Text>Website: https://kestora.online</Text>
-                    <Text>Email: admissions@kestora.online</Text>
+                    <Text>Phone: +358 09 42721884</Text>
+                    <Text>kestora.online</Text>
+                    <Text>admissions@kestora.online</Text>
                 </View>
             </View>
 
@@ -259,7 +261,7 @@ export const OfferLetterPDF = ({ data }: OfferLetterProps) => (
                 <Text style={{ fontSize: 9, marginBottom: 5 }}>This offer is conditional upon acceptance and fulfillment of all stated requirements:</Text>
                 <View style={{ marginLeft: 10 }}>
                     <Text style={{ fontSize: 8 }}>• Formal acceptance of this offer via the student portal.</Text>
-                    <Text style={{ fontSize: 8 }}>• Payment of required tuition fees by the specified deadline.</Text>
+                    <Text style={{ fontSize: 8 }}>• Payment of required tuition deposit by the specified deadline.</Text>
                     <Text style={{ fontSize: 8 }}>• Submission of any outstanding original documents (if applicable).</Text>
                 </View>
                 <Text style={{ fontSize: 8, fontStyle: 'italic', marginTop: 8 }}>
@@ -270,22 +272,14 @@ export const OfferLetterPDF = ({ data }: OfferLetterProps) => (
             {/* Tuition Information (INFORMATIONAL ONLY) */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Tuition & Financial Information (Informational Only)</Text>
-                <View style={styles.table}>
-                    <View style={styles.tableRow}>
-                        <Text style={styles.tableCellLabel}>Standard Annual Tuition Fee</Text>
-                        <Text style={styles.tableCellValue}>€{((data.tuition_fee || 0) + (data.discount_amount || 0)).toLocaleString()} EUR</Text>
-                    </View>
-                    {data.discount_amount ? (
-                        <View style={styles.tableRow}>
-                            <Text style={styles.tableCellLabel}>Early-bird Discount (First Academic Year only)</Text>
-                            <Text style={[styles.tableCellValue, { color: '#059669' }]}>- €{data.discount_amount.toLocaleString()} EUR</Text>
-                        </View>
-                    ) : null}
                     <View style={[styles.tableRow, { backgroundColor: '#fdfdfd' }]}>
-                        <Text style={[styles.tableCellLabel, { fontWeight: 'bold' }]}>Amount Due to Secure Admission</Text>
-                        <Text style={[styles.tableCellValue, { fontSize: 11 }]}>€{data.tuition_fee?.toLocaleString()} EUR</Text>
+                        <Text style={[styles.tableCellLabel, { fontWeight: 'bold' }]}>Tuition Deposit (50% to Secure Place)</Text>
+                        <Text style={[styles.tableCellValue, { fontSize: 11 }]}>€{(Math.round(((data.tuition_fee || 0) + (data.discount_amount || 0)) * 0.5)).toLocaleString()} EUR</Text>
                     </View>
-                </View>
+                    <View style={styles.tableRow}>
+                        <Text style={styles.tableCellLabel}>Remaining Balance (Due before commencement)</Text>
+                        <Text style={styles.tableCellValue}>€{(Math.round(((data.tuition_fee || 0) + (data.discount_amount || 0)) * 0.5)).toLocaleString()} EUR</Text>
+                    </View>
             </View>
 
             {/* Next Steps & Validity */}

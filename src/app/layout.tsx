@@ -25,12 +25,43 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://www.kestora.online'),
-    title: "Kestora College Helsinki | English-Taught Degrees in Finland",
+    metadataBase: new URL('https://kestora.online'),
+    title: {
+        default: "Kestora College Helsinki | English-Taught Degrees in Finland",
+        template: "%s | Kestora College"
+    },
     description: "Kestora College Helsinki is an independent higher education institution in Finland offering English-taught degree programs for international students.",
+    applicationName: "Kestora College",
+    appleWebApp: {
+        title: "Kestora College",
+        statusBarStyle: "default",
+        capable: true,
+    },
     alternates: {
         canonical: '/',
     },
+    openGraph: {
+        type: 'website',
+        locale: 'en_US',
+        url: 'https://kestora.online',
+        siteName: 'Kestora College',
+        title: 'Kestora College Helsinki | English-Taught Degrees in Finland',
+        description: 'Kestora College Helsinki is an independent higher education institution in Finland offering English-taught degree programs for international students.',
+        images: [
+            {
+                url: '/logo-kestora.png',
+                width: 800,
+                height: 600,
+                alt: 'Kestora College Logo',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Kestora College Helsinki | English-Taught Degrees in Finland',
+        description: 'Kestora College Helsinki is an independent higher education institution in Finland offering English-taught degree programs for international students.',
+        images: ['/logo-kestora.png'],
+    }
 };
 
 export default function RootLayout({

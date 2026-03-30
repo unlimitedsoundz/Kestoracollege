@@ -54,9 +54,9 @@ export default function SupportPage() {
         {
             icon: <Phone className="text-black" size={24} weight="bold" />,
             title: "IT Helpdesk",
-            value: "+358 20 4721 739",
+            value: "+358 09 42721884",
             desc: "Available for urgent access issues.",
-            link: "tel:+358204721739"
+            link: "tel:+3580942721884"
         },
         {
             icon: <MessageSquare className="text-black" size={24} weight="bold" />,

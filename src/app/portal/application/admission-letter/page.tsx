@@ -148,7 +148,7 @@ function AdmissionLetterContent() {
         : format(today, "MMMM d, yyyy");
 
     const academicYear = "2026 - 2027";
-    const intake = "Autumn 2026";
+    const intake = "August / Autumn 2026";
 
     // Dynamic Student ID (if available, otherwise fallback)
     const displayStudentId = student?.student_id || admission?.student_id || profile?.student_id || application.user?.student_id || "Generating...";
@@ -186,12 +186,12 @@ function AdmissionLetterContent() {
             </div>
 
             {/* Document Container - A4 Size */}
-            <div className="w-full max-w-[210mm] mx-auto bg-white print:shadow-none p-[15mm] md:p-[20mm] border border-neutral-200 print:border-0 relative overflow-hidden min-h-[297mm] flex flex-col justify-between" style={{ fontFamily: '"Open Sans", sans-serif' }}>
+            <div className="w-full max-w-[210mm] mx-auto bg-white print:shadow-none p-[15mm] md:p-[20mm] border border-neutral-200 print:border-0 relative overflow-hidden min-h-[297mm] flex flex-col justify-between text-black">
 
                 {/* Content Wrapper */}
-                <div>
-                    {/* 1. Header */}
-                    <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-6 border-b-2 border-black pb-4">
+                <div className="space-y-6">
+                    {/* 1. Header (Logo & Contact + To Block) */}
+                    <div className="flex flex-col md:flex-row justify-between items-start gap-6 border-b-2 border-black pb-4">
                         <div className="space-y-6">
                             <div className="relative w-48 h-12">
                                 <Image
@@ -204,122 +204,109 @@ function AdmissionLetterContent() {
                             {/* To: Section */}
                             <div className="text-[11px] leading-relaxed text-black font-medium">
                                 <span className="text-[9px] font-bold text-black uppercase tracking-widest block mb-1">To:</span>
-                                <strong className="text-sm block mb-1">{studentName}</strong>
+                                <strong className="text-sm block mb-1 text-black">{studentName}</strong>
                                 <span className="text-black block">{studentAddress}</span>
-                                <span className="block mt-2 font-mono text-xs">Student ID: {displayStudentId}</span>
+                                <span className="block mt-2 font-mono text-xs text-black">Student ID: {displayStudentId}</span>
                             </div>
                         </div>
                         <div className="text-left md:text-right text-[10px] font-medium text-black leading-relaxed uppercase tracking-wide">
                             <strong className="text-black block mb-2 text-xs">Kestora College – Helsinki Campus</strong>
                             Pohjoisesplanadi 51<br />
                             00150 Helsinki, Finland<br />
-                            <div className="mt-2 space-y-0.5 text-[9px] text-black">
-                                <div>kestora.online</div>
-                                <div>admissions@kestora.online</div>
+                            Phone: +358 09 42721884<br />
+                            <div className="mt-2 text-[9px]">
+                                kestora.online<br />
+                                admissions@kestora.online
                             </div>
                         </div>
                     </div>
 
-                    {/* Title */}
-                    <div className="text-center mb-4">
-                        <h1 className="text-2xl font-black uppercase tracking-[0.1em] text-black">Official Admission Letter</h1>
+                    <div className="text-center mb-10 pt-4">
+                        <h1 className="text-3xl font-bold uppercase tracking-[0.1em] text-black">
+                            Official Admission Letter
+                        </h1>
                     </div>
 
-                    {/* 2. Meta Data */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 mb-4">
-                        <div>
-                            <span className="block text-[8px] font-black text-black uppercase tracking-widest mb-1">Enrollment Date</span>
-                            <span className="font-bold text-xs">{issueDate}</span>
+                    {/* Admission Details Grid */}
+                    <div className="grid grid-cols-3 gap-6 p-4 mb-8 border-y border-black">
+                        <div className="text-center">
+                            <span className="block text-[8px] font-bold text-black uppercase tracking-widest mb-1">Enrollment Date</span>
+                            <span className="block font-bold text-xs text-black">{issueDate}</span>
                         </div>
-                        <div>
-                            <span className="block text-[8px] font-black text-black uppercase tracking-widest mb-1">Admission Reference</span>
-                            <span className="font-bold text-xs font-mono">{admission?.admission_reference || application.application_number || 'PENDING'}</span>
+                        <div className="text-center">
+                            <span className="block text-[8px] font-bold text-black uppercase tracking-widest mb-1">Admission Reference</span>
+                            <span className="block font-bold text-xs text-black font-mono">{admission?.admission_reference || application.application_number || application.id.slice(0, 8).toUpperCase()}</span>
                         </div>
-                        <div>
-                            <span className="block text-[8px] font-black text-black uppercase tracking-widest mb-1">Official Student ID</span>
-                            <span className="font-bold text-xs font-mono">{displayStudentId}</span>
+                        <div className="text-center">
+                            <span className="block text-[8px] font-bold text-black uppercase tracking-widest mb-1">Official Student ID</span>
+                            <span className="block font-bold text-xs text-black font-mono">{displayStudentId}</span>
                         </div>
                     </div>
 
-                    <div className="border-l-4 border-black pl-6 py-3 mb-4">
-                        <p className="text-sm font-medium text-black leading-relaxed text-justify">
-                            This letter serves as official notification that <strong className="text-black uppercase">{studentName}</strong> (Passport: <strong className="text-black">{passportNumber}</strong>, DOB: <strong className="text-black">{dob}</strong>) has been formally admitted and fully enrolled as a degree student at Kestora College for the <strong className="text-black">{academicYear}</strong> academic year. Having satisfied all academic entrance criteria and fulfilled the mandated tuition fee obligations, the student is officially registered for the <strong className="text-black underline">{application.course?.title}</strong> ({application.course?.programType || 'Full-time'}). This program is a {application.course?.programType?.toLowerCase() || 'full-time'} course of study conducted in the English language at our Helsinki campus location (Pohjoisesplanadi 51, 00150 Helsinki, Finland).
+                    {/* Official Statement */}
+                    <div className="text-sm leading-relaxed text-black mb-8">
+                        <p className="mb-4 text-black">
+                            This letter serves as official notification that {studentName} (Passport: {passportNumber}, DOB: {dob}) has been formally admitted and fully enrolled as a degree student at Kestora College for the 2026 - 2027 academic year.
+                        </p>
+                        <p className="text-black">
+                            Having satisfied all academic entrance criteria and fulfilled the mandated tuition fee obligations, the student is officially registered for the <strong className="text-black">{application.course?.title} ({application.course?.programType || 'Full-time'})</strong>. This program is a full-time course of study conducted in the English language at our Helsinki campus location (Pohjoisesplanadi 51, 00150 Helsinki, Finland).
                         </p>
                     </div>
 
-                    <div>
-                        <div className="text-[10px] font-bold text-black uppercase tracking-widest mb-1">Date of Admission</div>
-                        <div className="text-sm font-bold text-black border-b border-black pb-1">
-                            {issueDate}
-                        </div>
+                    {/* Details Table */}
+                    <div className="space-y-1 mb-10">
+                        {[
+                            { label: 'Date of Admission', value: issueDate },
+                            { label: 'Academic Year', value: academicYear },
+                            { label: 'Intake', value: intake },
+                            { label: 'Programme of Study', value: `${application.course?.title} (${application.course?.programType || 'Full-time'})` }
+                        ].map((row, idx) => (
+                            <div key={idx} className="flex justify-between py-2 border-b border-black">
+                                <span className="text-xs font-bold uppercase text-black">{row.label}</span>
+                                <span className="text-xs font-medium text-black">{row.value}</span>
+                            </div>
+                        ))}
                     </div>
 
-                    <div>
-                        <div className="text-[10px] font-bold text-black uppercase tracking-widest mb-1">Academic Year</div>
-                        <div className="text-sm font-bold text-black border-b border-black pb-1">
-                            {academicYear}
-                        </div>
-                    </div>
-                    <div>
-                        <div className="text-[10px] font-bold text-black uppercase tracking-widest mb-1">Intake</div>
-                        <div className="text-sm font-bold text-black border-b border-black pb-1">
-                            {intake}
-                        </div>
-                    </div>
-
-                    <div className="col-span-2">
-                        <div className="text-[10px] font-bold text-black uppercase tracking-widest mb-1">Programme of Study</div>
-                        <div className="text-sm font-bold text-black border-b border-black pb-1">
-                            {application.course?.title} ({application.course?.programType || 'Full-time'})
-                        </div>
-                    </div>
-                </div>
-
-                {/* Rights & Access */}
-                <div className="mb-4">
-                    <h4 className="text-[11px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Student Rights & Access</h4>
-                    <p className="text-[11px] leading-relaxed text-black mb-2">
-                        As an enrolled student, you are granted full access to:
-                    </p>
-                    <ul className="list-disc list-inside text-[11px] leading-relaxed text-black ml-2 space-y-0.5">
-                        <li>Campus facilities (Library, Labs, Study Areas)</li>
-                        <li>Digital learning resources and student portal</li>
-                        <li>Academic advising and student support services</li>
-                    </ul>
-                </div>
-
-                {/* 7. Official Use Statement */}
-                <div className="mb-6">
-                    <h4 className="text-[12px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Immigration / Official Use</h4>
-                    <p className="text-[11px] leading-relaxed text-black">
-                        This document is an official certificate of admission and may be used for visa applications, residence permit processing (Migri), and other official purposes requiring proof of student status in Finland.
-                    </p>
-                </div>
-
-                {/* 8. Next Steps */}
-                <div className="mb-6">
-                    <h4 className="text-[12px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Next Steps</h4>
-                    <ul className="text-[11px] leading-relaxed text-black list-disc ml-4 space-y-1">
-                        <li>Activate your student email and IT account (credentials sent separately).</li>
-                        <li>Register for the orientation week sessions via the student portal.</li>
-                        <li>Submit your housing application if you have not done so.</li>
-                        <li>Arrival instructions will be communicated to your student email.</li>
-                    </ul>
-                </div>
-
-                {/* 9. Refund Policy */}
-                <div className="mb-4">
-                    <h4 className="text-[11px] font-black text-black uppercase tracking-widest mb-2 border-b border-black pb-1">Refund Policy</h4>
-                    <p className="text-[11px] leading-relaxed text-black">
-                        Tuition fees are subject to the college’s refund policy. Full details can be found at <a href="https://kestora.online/refund-withdrawal-policy/" className="underline text-black">https://kestora.online/refund-withdrawal-policy/</a>.
-                    </p>
-                </div>
-
-                {/* Footer Content */}
-                <div>
-                    {/* 10. Authorization */}
-                    <div className="mt-4 pt-4 border-t border-black flex flex-row justify-between items-end">
+                    {/* Rights & Access, Official Use, Next Steps, Refund Policy */}
+                    <div className="grid grid-cols-2 gap-x-12 gap-y-8">
                         <div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-widest mb-2 border-b border-black pb-1 text-center text-black">Student Rights & Access</h4>
+                            <p className="text-[10px] text-black leading-relaxed">
+                                As an enrolled student, you are granted full access to:
+                            </p>
+                            <ul className="list-disc ml-4 text-[10px] text-black space-y-1 mt-1">
+                                <li>Campus facilities (Library, Labs, Study Areas)</li>
+                                <li>Digital learning resources and student portal</li>
+                                <li>Academic advising and student support services</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="text-[10px] font-bold text-black uppercase tracking-widest mb-2 border-b border-black pb-1 text-center">Immigration / Official Use</h4>
+                            <p className="text-[10px] text-black leading-relaxed italic">
+                                This document is an official certificate of admission and may be used for visa applications, residence permit processing (Migri), and other official purposes requiring proof of student status in Finland.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 className="text-[10px] font-bold text-black uppercase tracking-widest mb-2 border-b border-black pb-1 text-center">Next Steps</h4>
+                            <ul className="list-decimal ml-4 text-[10px] text-black space-y-1">
+                                <li>Activate your student email and IT account (credentials sent separately).</li>
+                                <li>Register for the orientation week sessions via the student portal.</li>
+                                <li>Submit your housing application if you have not done so.</li>
+                                <li>Arrival instructions will be communicated to your student email.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="text-[10px] font-bold text-black uppercase tracking-widest mb-2 border-b border-black pb-1 text-center">Refund Policy</h4>
+                            <p className="text-[10px] text-black leading-relaxed">
+                                Tuition fees are subject to the college’s refund policy. Full details can be found at <a href="https://kestora.online/refund-withdrawal-policy/" className="underline text-black">kestora.online/refund-withdrawal-policy/</a>.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Signature Block */}
+                    <div className="mt-8 pt-4 border-t border-black flex flex-row justify-between items-end">
+                        <div className="w-1/2">
                             <div className="w-40 h-16 mb-2 relative">
                                 <Image
                                     src="/images/anna-virtanen-signature.jpg"
@@ -332,14 +319,10 @@ function AdmissionLetterContent() {
                             <div className="text-[11px] font-bold text-black mt-0.5">Dosentti (Docent) Anna Virtanen, FT (Doctor of Philosophy)</div>
                             <div className="text-[10px] font-bold text-black uppercase tracking-widest">Kestora College | Finland</div>
                         </div>
-                        <div className="text-right">
-                            {/* Authentication Code or QR could go here in future */}
-                        </div>
                     </div>
 
-                    {/* Footer Legal */}
-                    <div className="mt-4 text-center pt-2">
-                        <p className="text-[10px] text-black uppercase tracking-widest">
+                    <div className="mt-6 text-center">
+                        <p className="text-[10px] text-black italic">
                             Generated electronically via Kestora SIS. Valid without physical signature if verified online.
                         </p>
                     </div>

@@ -303,7 +303,7 @@ serve(async (req) => {
         const wrapHtml = (content: string) => `
             <div style="font-family: 'Inter', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, sans-serif; max-width: 600px; margin: 40px auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 16px; background: #ffffff;">
                 <div style="text-align: center; margin-bottom: 30px;">
-                    <img src="https://kestora.online/logo.png" alt="Kestora" style="width: 60px; height: auto;">
+                    <img src="https://kestora.online/logo.png" alt="Kestora" style="width: 32px; height: 32px;" width="32" height="32">
                 </div>
                 <div style="color: #1a1a1a; line-height: 1.6; font-size: 16px;">
                     ${content}
@@ -311,7 +311,7 @@ serve(async (req) => {
                 <hr style="border: 0; border-top: 1px solid #f0f0f0; margin: 40px 0;">
                 <div style="text-align: center; color: #888; font-size: 12px;">
                     <p>&copy; ${new Date().getFullYear()} Kestora College</p>
-                    <p>Helsinki, Finland | info@kestora.online</p>
+                    <p>Helsinki, Finland | +358 09 42721884 | info@kestora.online</p>
                 </div>
             </div>
         `;

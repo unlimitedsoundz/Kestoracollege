@@ -137,12 +137,12 @@ serve(async (req) => {
         // =====================================================
         // SECTION 1: HEADER — Institution + Address
         // =====================================================
-        page.drawText('Kestora COLLEGE', { x: margin, y, size: 14, font: boldFont, color: black });
+        page.drawText('KESTORA COLLEGE', { x: margin, y, size: 14, font: boldFont, color: black });
         y -= 16;
-        page.drawText('College of Art and Design', { x: margin, y, size: 9, font: regularFont, color: grey });
+        page.drawText('\u2013 Helsinki Campus', { x: margin, y, size: 9, font: regularFont, color: darkGrey });
 
         // Right-aligned address
-        const addr = ['Pohjoisesplanadi 51', '00150 Helsinki, Finland', 'https://kestora.online', 'admissions@kestora.online'];
+        const addr = ['Pohjoisesplanadi 51', '00150 Helsinki, Finland', 'Phone: +358 09 42721884', 'kestora.online', 'admissions@kestora.online'];
         let ay = height - margin;
         for (const line of addr) {
             const lw = regularFont.widthOfTextAtSize(line, 8);
@@ -245,28 +245,29 @@ serve(async (req) => {
 
             // Tuition info — computed from programme data
             y = drawSectionHeading(page, 'TUITION & FINANCIAL INFORMATION', margin, y, cw, boldFont, black);
+            const computedDeposit = Math.round(computedBaseFee * 0.5);
             y = drawParagraph(page, 'The following tuition information is provided for your reference based on the programme and degree level.', margin, y, regularFont, 8, cw, grey);
             y -= 8;
 
-            page.drawText('Standard Annual Tuition Fee', { x: margin + 10, y, size: 9, font: regularFont, color: grey });
-            const ft = `\u20AC${computedBaseFee.toLocaleString()} EUR`;
-            const fw = boldFont.widthOfTextAtSize(ft, 9);
-            page.drawText(ft, { x: width - margin - 10 - fw, y, size: 9, font: boldFont, color: black });
-            y -= 5; drawLine(page, margin, y, cw, 0.3); y -= 16;
+            page.drawRectangle({ x: margin, y: y - 5, width: cw, height: 40, color: rgb(0.97, 0.97, 0.97) });
+            
+            // Deposit Row
+            page.drawText('Tuition Deposit (50% to Secure Place)', { x: margin + 10, y, size: 10, font: boldFont, color: black });
+            const duet = `\u20AC${computedDeposit.toLocaleString()} EUR`;
+            const duew = boldFont.widthOfTextAtSize(duet, 10);
+            page.drawText(duet, { x: width - margin - 10 - duew, y, size: 10, font: boldFont, color: black });
+            
+            y -= 18;
+            drawLine(page, margin + 10, y, cw - 20, 0.3);
+            y -= 12;
 
-            // Early payment discount
-            page.drawText(`Early Payment Discount (${EARLY_DISCOUNT_PERCENT}%)`, { x: margin + 10, y, size: 9, font: regularFont, color: rgb(0.13, 0.55, 0.13) });
-            const dt = `- \u20AC${computedDiscount.toLocaleString()} EUR`;
-            const ddw = boldFont.widthOfTextAtSize(dt, 9);
-            page.drawText(dt, { x: width - margin - 10 - ddw, y, size: 9, font: boldFont, color: rgb(0.13, 0.55, 0.13) });
-            y -= 5; drawLine(page, margin, y, cw, 0.3); y -= 16;
-
-            page.drawRectangle({ x: margin, y: y - 5, width: cw, height: 25, color: rgb(0.97, 0.97, 0.97) });
-            page.drawText('Amount Due to Secure Admission', { x: margin + 10, y, size: 10, font: boldFont, color: black });
-            const duet = `\u20AC${computedNetFee.toLocaleString()} EUR`;
-            const duew = boldFont.widthOfTextAtSize(duet, 12);
-            page.drawText(duet, { x: width - margin - 10 - duew, y: y - 1, size: 12, font: boldFont, color: black });
-            y -= 35;
+            // Balance Row
+            page.drawText('Remaining Balance (Due before commencement)', { x: margin + 10, y, size: 9, font: regularFont, color: grey });
+            const balt = `\u20AC${computedDeposit.toLocaleString()} EUR`;
+            const balw = boldFont.widthOfTextAtSize(balt, 9);
+            page.drawText(balt, { x: width - margin - 10 - balw, y, size: 9, font: boldFont, color: grey });
+            
+            y -= 25;
 
             // Next steps & Validity
             const hw = cw / 2 - 10;
@@ -311,127 +312,119 @@ serve(async (req) => {
             // ADMISSION LETTER — Official Post-Payment Enrollment
             // ==========================================================
 
-            // SECTION 2: STUDENT INFORMATION
-            y = drawSectionHeading(page, 'STUDENT INFORMATION', margin, y, cw, boldFont, black);
+            // 1. Recipient Address Block
+            const contact = app.contact_details || {};
+            const personal = app.personal_info || {};
+            const street = personal.streetAddress || contact.streetAddress || 'N/A';
+            const city = personal.city || contact.city || '';
+            const country = personal.country || contact.country || '';
+            const addressLine2 = city && country ? `${city}, ${country}` : (city || country || '');
 
-            const infoLeft = [
-                { label: 'FULL NAME (PASSPORT MATCH)', value: fullName },
-                { label: 'PROGRAMME', value: programTitle },
-                { label: 'ACADEMIC YEAR', value: '2026 / 2027' },
-            ];
-            const infoRight = [
-                { label: 'STUDENT ID', value: studentId },
-                { label: 'DEGREE LEVEL', value: degreeLevel },
-                { label: 'INTAKE', value: 'Autumn 2026' },
-            ];
-            for (let i = 0; i < infoLeft.length; i++) {
-                page.drawText(infoLeft[i].label, { x: margin, y, size: 7, font: boldFont, color: lightGrey });
-                page.drawText(infoLeft[i].value, { x: margin, y: y - 13, size: 10, font: boldFont, color: black });
-                page.drawText(infoRight[i].label, { x: margin + cw / 2, y, size: 7, font: boldFont, color: lightGrey });
-                page.drawText(infoRight[i].value, { x: margin + cw / 2, y: y - 13, size: 10, font: boldFont, color: black });
-                y -= 32;
-            }
-            y -= 5;
-
-            // SECTION 3: ADMISSION CONFIRMATION (LOCKED WORDING — black bar)
-            const confirmH = 55;
-            page.drawRectangle({ x: margin, y: y - confirmH + 15, width: cw, height: confirmH, color: black });
-            const confirmText = '\u201CWe are pleased to confirm that you have been officially admitted and enrolled as a student of Kestora College for the above-named programme and academic year.\u201D';
-            const cl = wrapText(confirmText, italicFont, 9, cw - 40);
-            let cy = y - 2;
-            for (const line of cl) {
-                const lw = italicFont.widthOfTextAtSize(line, 9);
-                page.drawText(line, { x: (width - lw) / 2, y: cy, size: 9, font: italicFont, color: rgb(1, 1, 1) });
-                cy -= 14;
-            }
-            y -= confirmH + 10;
-
-            // SECTION 4: TUITION CONFIRMATION
-            y = drawSectionHeading(page, 'TUITION CONFIRMATION', margin, y, cw, boldFont, black);
-            y = drawParagraph(page, 'The required tuition fees for the first academic year have been received and confirmed.', margin, y, regularFont, 9, cw, darkGrey);
-            y -= 8;
-
-            // Payment details grid
-            page.drawRectangle({ x: margin, y: y - 5, width: cw, height: 55, color: rgb(0.97, 0.97, 0.97) });
-
-            page.drawText('STANDARD FEE', { x: margin + 15, y: y + 25, size: 7, font: boldFont, color: lightGrey });
-            page.drawText(`\u20AC${computedBaseFee.toLocaleString()} EUR`, { x: margin + 15, y: y + 12, size: 9, font: regularFont, color: grey });
-
-            page.drawText('DISCOUNT APPLIED', { x: margin + 15, y: y - 2, size: 7, font: boldFont, color: lightGrey });
-            page.drawText(`- \u20AC${computedDiscount.toLocaleString()} EUR (${EARLY_DISCOUNT_PERCENT}%)`, { x: margin + 15, y: y - 14, size: 9, font: regularFont, color: rgb(0.13, 0.55, 0.13) });
-
-            page.drawText('AMOUNT PAID', { x: margin + cw / 3, y: y + 25, size: 7, font: boldFont, color: lightGrey });
-            const paidAmt = `\u20AC${computedNetFee.toLocaleString()} EUR`;
-            page.drawText(paidAmt, { x: margin + cw / 3, y: y + 12, size: 10, font: boldFont, color: black });
-
-            page.drawText('ACADEMIC YEAR', { x: margin + (cw * 2) / 3, y: y + 25, size: 7, font: boldFont, color: lightGrey });
-            page.drawText('2026 / 2027', { x: margin + (cw * 2) / 3, y: y + 12, size: 10, font: boldFont, color: black });
-
-            page.drawText('RECEIPT REFERENCE', { x: margin + (cw * 2) / 3, y: y - 2, size: 7, font: boldFont, color: lightGrey });
-            page.drawText(paymentRef || 'See Portal', { x: margin + (cw * 2) / 3, y: y - 14, size: 10, font: boldFont, color: black });
-            y -= 65;
-
-            // SECTION 5: ENROLLMENT STATUS
-            y = drawSectionHeading(page, 'ENROLLMENT STATUS', margin, y, cw, boldFont, black);
-            page.drawText('Status:', { x: margin, y, size: 9, font: regularFont, color: grey });
-            page.drawText('ACTIVE', { x: margin + 45, y, size: 9, font: boldFont, color: rgb(0.13, 0.55, 0.13) });
-            y -= 16;
-            page.drawText('Programme commences:', { x: margin, y, size: 9, font: regularFont, color: grey });
-            page.drawText('Autumn Semester 2026', { x: margin + 130, y, size: 9, font: boldFont, color: black });
-            y -= 22;
-
-            // SECTION 6: RIGHTS & ACCESS
-            y = drawSectionHeading(page, 'RIGHTS & ACCESS', margin, y, cw, boldFont, black);
-            y = drawParagraph(page, 'As an enrolled student, you are entitled to access academic systems, student services, and institutional resources in accordance with college regulations.', margin, y, regularFont, 9, cw, darkGrey);
-            y -= 10;
-
-            // SECTION 7: IMMIGRATION / OFFICIAL USE STATEMENT
-            y = drawSectionHeading(page, 'OFFICIAL USE STATEMENT', margin, y, cw, boldFont, black);
-            y = drawParagraph(page, 'This letter serves as official confirmation of admission and enrollment for institutional, banking, and immigration purposes.', margin, y, italicFont, 9, cw, darkGrey);
-            y -= 10;
-
-            // SECTION 8: NEXT STEPS
-            y = drawSectionHeading(page, 'NEXT STEPS', margin, y, cw, boldFont, black);
-            const nextSteps = [
-                '1.  Activate your student email via the Student Portal.',
-                '2.  Access the LMS (Learning Management System) for course materials.',
-                '3.  Complete course registration for the upcoming semester.',
-                '4.  Attend the orientation programme (details on Student Portal).'
-            ];
-            for (const step of nextSteps) {
-                page.drawText(step, { x: margin, y, size: 9, font: regularFont, color: darkGrey });
-                y -= 15;
-            }
-            y -= 5;
-
-            // SECTION 9: REFUND POLICY
-            y = drawSectionHeading(page, 'REFUND POLICY', margin, y, cw, boldFont, black);
-            y = drawParagraph(page, 'For details regarding tuition refund terms, please visit: https://kestora.online/refund-policy', margin, y, regularFont, 9, cw, darkGrey);
+            y = height - 120;
+            page.drawText('To:', { x: margin, y, size: 9, font: boldFont, color: black });
+            y -= 14;
+            page.drawText(fullName, { x: margin, y, size: 10, font: boldFont, color: black });
             y -= 12;
+            page.drawText(street, { x: margin, y, size: 9, font: regularFont, color: darkGrey });
+            if (addressLine2) {
+                y -= 12;
+                page.drawText(addressLine2, { x: margin, y, size: 9, font: regularFont, color: darkGrey });
+            }
+            y -= 12;
+            page.drawText(`Student ID: ${studentId}`, { x: margin, y, size: 9, font: boldFont, color: black });
+            y -= 40;
 
-            // SECTION 10: AUTHORIZATION / SIGNATURE
-            drawLine(page, margin, y, cw, 0.5);
-            y -= 30;
+            // 2. Admission Letter Title
+            const admitTitle = 'Official Admission Letter';
+            const atw = boldFont.widthOfTextAtSize(admitTitle, 16);
+            page.drawText(admitTitle, { x: (width - atw) / 2, y, size: 16, font: boldFont, color: black });
+            y -= 35;
+
+            // 3. Header Data Grid
+            page.drawRectangle({ x: margin, y: y - 5, width: cw, height: 45, color: rgb(0.98, 0.98, 0.98) });
+            const c1 = margin + 15, c2 = margin + cw / 3 + 15, c3 = margin + (cw * 2) / 3 + 15;
+            const gy = y + 20, gv = y + 5;
+
+            page.drawText('Enrollment Date', { x: c1, y: gy, size: 7, font: boldFont, color: lightGrey });
+            page.drawText('Admission Reference', { x: c2, y: gy, size: 7, font: boldFont, color: lightGrey });
+            page.drawText('Official Student ID', { x: c3, y: gy, size: 7, font: boldFont, color: lightGrey });
+            page.drawText(dateStr, { x: c1, y: gv, size: 10, font: boldFont, color: black });
+            page.drawText(refId, { x: c2, y: gv, size: 10, font: boldFont, color: black });
+            page.drawText(studentId, { x: c3, y: gv, size: 10, font: boldFont, color: black });
+            y -= 60;
+
+            // 4. Official Statement
+            const passport = personal.passportNumber || personal.passport_number || 'N/A';
+            const dobRaw = app.user?.date_of_birth || personal.dateOfBirth || personal.dob;
+            const dobDisplay = dobRaw ? new Date(dobRaw).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : 'N/A';
+            
+            const officialStatement = `This letter serves as official notification that ${fullName} (Passport: ${passport}, DOB: ${dobDisplay}) has been formally admitted and fully enrolled as a degree student at Kestora College for the 2026 - 2027 academic year. Having satisfied all academic entrance criteria and fulfilled the mandated tuition fee obligations, the student is officially registered for the ${programTitle} (${app.course?.programType || 'Full-time'}). This program is a full-time course of study conducted in the English language at our Helsinki campus location (Pohjoisesplanadi 51, 00150 Helsinki, Finland).`;
+            
+            y = drawParagraph(page, officialStatement, margin, y, regularFont, 10, cw, black, 16);
+            y -= 25;
+
+            // 5. Details Table
+            const details = [
+                { label: 'Date of Admission', value: dateStr },
+                { label: 'Academic Year', value: '2026 - 2027' },
+                { label: 'Intake', value: 'Autumn 2026' },
+                { label: 'Programme of Study', value: `${programTitle} (${app.course?.programType || 'Full-time'})` },
+            ];
+
+            for (const d of details) {
+                page.drawText(d.label, { x: margin, y, size: 9, font: boldFont, color: black });
+                page.drawText(d.value, { x: margin + 180, y, size: 9, font: regularFont, color: darkGrey });
+                y -= 18;
+            }
+            y -= 15;
+
+            // 6. Sectioned Content
+            const sections = [
+                {
+                    title: 'Student Rights & Access',
+                    content: 'As an enrolled student, you are granted full access to:\n\u2022 Campus facilities (Library, Labs, Study Areas)\n\u2022 Digital learning resources and student portal\n\u2022 Academic advising and student support services'
+                },
+                {
+                    title: 'Immigration / Official Use',
+                    content: 'This document is an official certificate of admission and may be used for visa applications, residence permit processing (Migri), and other official purposes requiring proof of student status in Finland.'
+                },
+                {
+                    title: 'Next Steps',
+                    content: '1. Activate your student email and IT account (credentials sent separately).\n2. Register for the orientation week sessions via the student portal.\n3. Submit your housing application if you have not done so.\n4. Arrival instructions will be communicated to your student email.'
+                },
+                {
+                    title: 'Refund Policy',
+                    content: 'Tuition fees are subject to the college\u2019s refund policy. Full details can be found at https://kestora.online/refund-withdrawal-policy/.'
+                }
+            ];
+
+            for (const s of sections) {
+                page.drawText(s.title, { x: margin, y, size: 10, font: boldFont, color: black });
+                y -= 14;
+                const lines = s.content.split('\n');
+                for (const line of lines) {
+                    y = drawParagraph(page, line, margin, y, regularFont, 9, cw, darkGrey, 14);
+                }
+                y -= 12;
+            }
+
+            // 7. Signature area
+            y = 130;
+            drawLine(page, margin, y, cw, 0.5, black);
+            y -= 25;
+            page.drawText('Official Signature', { x: margin, y, size: 8, font: boldFont, color: black });
+            y -= 15;
             page.drawText('Office of the Registrar', { x: margin, y, size: 10, font: boldFont, color: black });
             y -= 13;
-            page.drawText('Kestora College | Helsinki, Finland', { x: margin, y, size: 8, font: regularFont, color: lightGrey });
+            page.drawText('Dosentti (Docent) Anna Virtanen, FT (Doctor of Philosophy)', { x: margin, y, size: 9, font: regularFont, color: black });
+            y -= 12;
+            page.drawText('Kestora College | Finland', { x: margin, y, size: 8, font: regularFont, color: lightGrey });
 
-            // Right-aligned doc ID
-            const did1 = 'Verified Document ID';
-            const dw1 = regularFont.widthOfTextAtSize(did1, 8);
-            page.drawText(did1, { x: width - margin - dw1, y: y + 13, size: 8, font: regularFont, color: lightGrey });
-            const dw2 = boldFont.widthOfTextAtSize(refId, 8);
-            page.drawText(refId, { x: width - margin - dw2, y, size: 8, font: boldFont, color: black });
-
-            // Legal notice
-            y -= 30; drawLine(page, margin, y, cw, 0.3); y -= 15;
-            const notice = 'LEGAL NOTICE: This document serves as official confirmation of admission and enrollment. The student is expected to comply with all academic regulations and code of conduct of Kestora College.';
-            const nl = wrapText(notice, italicFont, 7, cw - 20);
-            for (const line of nl) {
-                const lw = italicFont.widthOfTextAtSize(line, 7);
-                page.drawText(line, { x: (width - lw) / 2, y, size: 7, font: italicFont, color: lightGrey });
-                y -= 11;
-            }
+            // Footer
+            y = 40;
+            const footerText = 'Generated electronically via Kestora SIS. Valid without physical signature if verified online.';
+            const fw = regularFont.widthOfTextAtSize(footerText, 8);
+            page.drawText(footerText, { x: (width - fw) / 2, y, size: 8, font: italicFont, color: grey });
         }
 
         const pdfBytes = await pdfDoc.save();

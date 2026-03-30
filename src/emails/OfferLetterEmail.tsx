@@ -75,7 +75,8 @@ export default function OfferLetterEmail({
                         <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
 
                         <Text className="text-[#666666] text-[12px] leading-[24px]">
-                            Office of Admissions, Kestora College.
+                            Office of Admissions, Kestora College.<br />
+                            Phone: +358 09 42721884
                         </Text>
                     </Container>
                 </Body>

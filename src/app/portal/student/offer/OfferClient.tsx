@@ -123,15 +123,15 @@ export function OfferClient({ admission }: OfferClientProps) {
                         <div className="space-y-5 relative z-10">
                             <div className="flex justify-between items-end">
                                 <div>
-                                    <p className="text-[9px] font-black uppercase text-neutral-400 mb-1">Required Amount</p>
+                                    <p className="text-[9px] font-black uppercase text-neutral-400 mb-1">Tuition Deposit (50%)</p>
                                     <p className="text-3xl font-black tracking-tight leading-none text-emerald-400">
-                                        €{admission.tuition_fee?.toLocaleString()}
+                                        €{(Math.round(((admission.tuition_fee || 0) + (admission.discount_amount || 0)) * 0.5)).toLocaleString()}
                                     </p>
                                 </div>
                                 <div className="text-right">
-                                    <p className="text-[9px] font-black uppercase text-neutral-400 mb-1">Due Date</p>
+                                    <p className="text-[9px] font-black uppercase text-neutral-400 mb-1">Remaining Balance</p>
                                     <p className="text-sm font-black text-white">
-                                        {admission.payment_deadline ? format(new Date(admission.payment_deadline), 'dd MMM yyyy') : 'PENDING'}
+                                        €{(Math.round(((admission.tuition_fee || 0) + (admission.discount_amount || 0)) * 0.5)).toLocaleString()}
                                     </p>
                                 </div>
                             </div>
@@ -139,9 +139,9 @@ export function OfferClient({ admission }: OfferClientProps) {
                             <div className="pt-4 border-t border-white/10 flex justify-between items-center">
                                 <div>
                                     <p className="text-[11px] font-black uppercase tracking-tight">
-                                        {(admission.offer_type === 'FULL_PROGRAM' || admission.offer_type === 'FULL_TUITION') ? 'Full Programme Degree (All Years)' : 'Initial Year Tuition Plan'}
+                                        {admission.payment_deadline ? `Due by ${format(new Date(admission.payment_deadline), 'dd MMM yyyy')}` : 'Payment Pending'}
                                     </p>
-                                    <p className="text-[9px] text-neutral-500 font-bold uppercase mt-0.5">Payment Plan</p>
+                                    <p className="text-[9px] text-neutral-500 font-bold uppercase mt-0.5">Deposit to Secure Place</p>
                                 </div>
                                 {admission.discount_amount > 0 && (
                                     <div className="bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-xl border border-emerald-500/30 flex items-center gap-2">

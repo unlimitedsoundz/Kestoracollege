@@ -3,7 +3,7 @@ import { createClient } from '@/utils/supabase/client';
 export async function generateAndStoreOfferLetter(applicationId: string) {
     const supabase = createClient();
     try {
-        const offerLetterUrl = `https://kestora.online/portal/application/offer?id=${applicationId}`;
+        const offerLetterUrl = `https://kestora.online/portal/application/letter?id=${applicationId}`;
 
         // Find the offer ID first
         const { data: offer } = await supabase

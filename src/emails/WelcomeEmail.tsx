@@ -36,8 +36,8 @@ export default function WelcomeEmail({
                         <Section className="mt-[32px]">
                             <Img
                                 src="https://kestora.online/logo-kestora.png" // Replace with actual logo URL
-                                width="40"
-                                height="40"
+                                width="32"
+                                height="32"
                                 alt="Kestora College"
                                 className="my-0 mx-auto"
                             />
@@ -62,8 +62,8 @@ export default function WelcomeEmail({
                             <Text className="text-white text-[32px] font-bold tracking-tighter my-0">
                                 {studentId}
                             </Text>
-                            <Text className="text-white text-[10px] font-medium mt-4 opacity-80 leading-relaxed uppercase">
-                                This is your official student ID.
+                                <Text className="text-white text-[10px] font-medium mt-4 opacity-80 leading-relaxed uppercase">
+                                Use Email and Password to access the student portal.
                             </Text>
                         </Section>
 

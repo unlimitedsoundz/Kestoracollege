@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Logo } from "@/components/ui/Logo"
-import { LinkedinLogo as Linkedin, TiktokLogo as TikTok, EnvelopeSimple, MapPin } from "@phosphor-icons/react"
+import { LinkedinLogo as Linkedin, TiktokLogo as TikTok, SnapchatLogo as Snapchat, EnvelopeSimple, MapPin } from "@phosphor-icons/react"
 
 
 export function Footer() {
@@ -29,6 +29,12 @@ export function Footer() {
                         <div className="flex gap-3">
                             <a href="https://www.linkedin.com/company/kestora-college" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors text-white" aria-label="LinkedIn">
                                 <Linkedin size={18} weight="fill" />
+                            </a>
+                            <a href="https://www.tiktok.com/@kestoracollege" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors text-white" aria-label="TikTok">
+                                <TikTok size={18} weight="fill" />
+                            </a>
+                            <a href="https://snapchat.com/add/kestoracollege" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors text-white" aria-label="Snapchat">
+                                <Snapchat size={18} weight="fill" />
                             </a>
                         </div>
                     </div>

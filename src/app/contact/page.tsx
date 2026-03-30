@@ -58,7 +58,7 @@ export default function ContactPage() {
                             Main Switchboard
                         </h2>
                         <div className="space-y-4">
-                            <p className="text-lg font-medium text-neutral-900">+358 20 4721 739</p>
+                            <p className="text-lg font-medium text-neutral-900">+358 09 42721884</p>
                             <p className="text-neutral-600">(General enquiries and guidance to appropriate services)</p>
                         </div>
                         <div className="mt-8 pt-8">
@@ -109,7 +109,7 @@ export default function ContactPage() {
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Phone className="w-4 h-4" />
-                                    <span>+358 20 4721 739</span>
+                                    <span>+358 09 42721884</span>
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-500 text-sm mt-2">
                                     <Clock className="w-4 h-4" weight="regular" />
@@ -131,7 +131,7 @@ export default function ContactPage() {
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Phone className="w-4 h-4" />
-                                    <span>+358 20 4721 739</span>
+                                    <span>+358 09 42721884</span>
                                 </div>
                                 <p className="text-xs text-neutral-500 mt-2">Operates appointment & walk-in hours.</p>
                             </div>
@@ -150,7 +150,7 @@ export default function ContactPage() {
                                 </div>
                                 <div className="flex items-center gap-3 text-neutral-700">
                                     <Phone className="w-4 h-4" />
-                                    <span>+358 20 4721 739</span>
+                                    <span>+358 09 42721884</span>
                                 </div>
                             </div>
                         </div>
