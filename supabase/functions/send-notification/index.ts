@@ -152,6 +152,7 @@ serve(async (req) => {
             case 'APPLICATION_SUBMITTED':
                 studentSubject = "Application Received - Kestora University";
                 studentHtml = `
+                    <img src="https://kestora.online/images/scholarships.png" alt="Kestora University" style="width: 100%; height: 150px; object-fit: cover; margin-bottom: 20px;" />
                     <h1>Form Received</h1>
                     <p>Hello ${firstName},</p>
                     <p>Thank you for submitting your application for <strong>${applicationData?.course_title || 'your chosen program'}</strong>. Our admissions team will review your documents and provide an update soon.</p>
@@ -171,6 +172,7 @@ serve(async (req) => {
             case 'OFFER_LETTER_READY':
                 studentSubject = "Conditional Admission Offer - Kestora University Next Steps";
                 studentHtml = `
+                    <img src="https://kestora.online/images/scholarships.png" alt="Kestora University" style="width: 100%; height: 150px; object-fit: cover; margin-bottom: 20px;" />
                     <h1 style="text-align: center; font-size: 24px; margin: 30px 0;">Kestora University Admission</h1>
                     <h2 style="text-align: center; font-size: 18px; margin-bottom: 20px;">Congratulations on Your Offer!</h2>
                     <p>Dear ${firstName},</p>
@@ -224,6 +226,7 @@ serve(async (req) => {
                 }
                 studentSubject = "Congratulations on Your Admission to Kestora University – Next Steps";
                 studentHtml = `
+                    <img src="https://kestora.online/images/scholarships.png" alt="Kestora University" style="width: 100%; height: 150px; object-fit: cover; margin-bottom: 20px;" />
                     <h1 style="text-align: center; font-size: 24px; margin: 30px 0;">Kestora University Admission</h1>
                     <h2 style="text-align: center; font-size: 18px; margin-bottom: 20px;">Congratulations!</h2>
                     <p>Dear ${firstName},</p>
@@ -299,6 +302,7 @@ serve(async (req) => {
                 studentSubject = "Payment Received - Pending Verification";
                 const isHousingRec = additionalData?.paymentType === 'HOUSING';
                 studentHtml = `
+                    <img src="https://kestora.online/images/scholarships.png" alt="Kestora University" style="width: 100%; height: 150px; object-fit: cover; margin-bottom: 20px;" />
                     <h1>Payment Received</h1>
                     <p>Hello ${firstName}, we have received your payment of <strong>${additionalData?.amount} ${additionalData?.currency || 'EUR'}</strong>.</p>
                     <p><strong>Reference:</strong> ${additionalData?.reference || 'N/A'}</p>
@@ -318,6 +322,7 @@ serve(async (req) => {
             case 'TUITION_PAYMENT_VERIFIED':
                 studentSubject = "Payment Verified - Enrollment Confirmed!";
                 studentHtml = `
+                    <img src="https://kestora.online/images/scholarships.png" alt="Kestora University" style="width: 100%; height: 150px; object-fit: cover; margin-bottom: 20px;" />
                     <h1 style="color: #034737;">Payment Verified!</h1>
                     <p>Hello ${firstName},</p>
                     <p>Great news! Your tuition payment has been officially verified by our registrar's office.</p>
@@ -398,7 +403,7 @@ serve(async (req) => {
         const wrapHtml = (content: string) => `
             <div style="font-family: 'Inter', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, sans-serif; max-width: 600px; margin: 40px auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 16px; background: #ffffff;">
                 <div style="text-align: center; margin-bottom: 30px;">
-                    <img src="https://kestora.online/logo-kestora.png" alt="Kestora" style="width: 32px; height: 32px;" width="32" height="32">
+                    <img src="https://kestora.online/logo-kestora.png" alt="Kestora University" style="width: 100%; height: auto;" />
                 </div>
                 <div style="color: #1a1a1a; line-height: 1.6; font-size: 16px;">
                     ${content}
