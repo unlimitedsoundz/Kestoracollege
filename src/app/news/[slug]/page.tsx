@@ -14,7 +14,7 @@ export async function generateStaticParams() {
     return news?.map(({ slug }) => ({ slug })) || [];
 }
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 
 interface Props {
     params: {

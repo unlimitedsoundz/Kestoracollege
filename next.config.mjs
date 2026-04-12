@@ -21,7 +21,7 @@ const nextConfig = {
             },
         ],
     },
-    // output: 'export', // Removed to allow dynamic params
+    output: 'export',
     trailingSlash: true,
 
     typescript: {
