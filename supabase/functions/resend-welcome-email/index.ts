@@ -64,9 +64,12 @@ serve(async (req) => {
   <meta charset="utf-8">
   <title>Welcome to Kestora University</title>
   <style>
+    @media (prefers-color-scheme: dark) {
+        .logo { filter: invert(1); }
+    }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #ffffff; color: #000000; margin: 0; padding: 0; }
     .container { max-width: 465px; margin: 40px auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 4px; }
-    .logo { display: block; margin: 32px auto; width: 32px; height: 32px; }
+    .logo { display: block; margin: 32px auto; width: 100%; height: auto; max-width: 200px; }
     h1 { font-size: 24px; font-weight: 400; text-align: center; margin: 30px 0; }
     p { font-size: 14px; line-height: 24px; color: #000000; }
     .id-box { background-color: #171717; border-radius: 8px; padding: 24px; margin: 32px 0; text-align: center; }
@@ -81,7 +84,8 @@ serve(async (req) => {
 </head>
 <body>
   <div class="container">
-    <img src="https://kestora.online/logo-kestora.png" alt="Kestora University" class="logo" width="32" height="32">
+    <img src="https://kestora.online/images/scholarships.png" alt="Kestora University" style="width: 100%; height: 150px; object-fit: cover; margin-bottom: 20px;" />
+    <img src="https://kestora.online/logo-kestora.png" alt="Kestora University" class="logo">
     <h1>Welcome to Kestora University</h1>
     <p>Dear ${first_name || 'Student'},</p>
     <p>Congratulations on creating your student account at Kestora University! We are excited to have you join our academic community.</p>

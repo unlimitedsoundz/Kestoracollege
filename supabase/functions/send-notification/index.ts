@@ -196,7 +196,7 @@ serve(async (req) => {
                             <li>Fulfill Your Conditions: Fulfill the conditions outlined in your offer letter (such as paying your tuition fee deposit). Once the conditions are met, your offer will become unconditional, and your Official Admission Letter will be issued.</li>
                         </ul>
                     </div>
-                    <p>Log In and View Offer</p>
+                    <div style="text-align: center;"><a href="https://kestora.online/portal" style="display: inline-block; background: #034737; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">Log In and View Offer</a></div>
                     <p>Important Request: Please act promptly to accept your offer and fulfill the conditions, as places are limited and allocated on a first-come, first-served basis once conditions are met.</p>
                     <p>We are very impressed by your application and look forward to welcoming you to our creative community in Finland.</p>
                     <p>Warm regards,</p>
@@ -290,6 +290,7 @@ serve(async (req) => {
                     <p>Important Note: As a confirmed student for the August 2026 intake, it is essential that you proceed with your study permit application immediately, as timelines are strict and processing times must be carefully considered.</p>
                     <p>We are excited to have you join Kestora University and look forward to supporting you every step of the way.</p>
                     <p>Welcome to your next chapter.</p>
+                    <div style="text-align: center;"><a href="https://kestora.online/portal/student" style="display: inline-block; background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">Enter student Portal</a></div>
                     <p>Warm regards,</p>
                     <p>Admissions Office</p>
                     <p>Kestora University</p>
@@ -401,9 +402,14 @@ serve(async (req) => {
 
         // Email Wrapper Helper
         const wrapHtml = (content: string) => `
+            <style>
+                @media (prefers-color-scheme: dark) {
+                    .logo { filter: invert(1); }
+                }
+            </style>
             <div style="font-family: 'Inter', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, sans-serif; max-width: 600px; margin: 40px auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 16px; background: #ffffff;">
                 <div style="text-align: center; margin-bottom: 30px;">
-                    <img src="https://kestora.online/logo-kestora.png" alt="Kestora University" style="width: 100%; height: auto;" />
+                    <img src="https://kestora.online/logo-kestora.png" class="logo" style="width: 100%; height: auto; max-width: 200px;" />
                 </div>
                 <div style="color: #1a1a1a; line-height: 1.6; font-size: 16px;">
                     ${content}
