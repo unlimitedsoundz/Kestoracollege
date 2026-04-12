@@ -1,0 +1,87 @@
+const fs = require('fs');
+const path = require('path');
+
+const dir = 'c:\\Users\\eltig\\OneDrive\\Documents\\kestoracollege';
+
+const replacements = [
+    { search: /Suomen ympäristöopisto SYKLI/g, replace: 'Kestora University' },
+    { search: /Environmental College/g, replace: 'Independent higher education institution' },
+    { search: /SYKLI College/g, replace: 'Kestora University' },
+    { search: /Sykli College/g, replace: 'Kestora University' },
+    { search: /SKYLl College/g, replace: 'Kestora University' },
+    { search: /syklicollege\.fi/g, replace: 'kestora.online' },
+    { search: /syklicollege/g, replace: 'kestora' },
+    { search: /SYKLI/g, replace: 'Kestora' },
+    { search: /Sykli/g, replace: 'Kestora' },
+    { search: /SKYLl/g, replace: 'Kestora' },
+    { search: /sykli\.fi/g, replace: 'kestora.online' },
+    { search: /sykli/g, replace: 'kestora' },
+    { search: /College/g, replace: 'University' },
+    { search: /college/g, replace: 'university' },
+];
+
+function processDirectory(directory) {
+    let files;
+    try {
+        files = fs.readdirSync(directory);
+    } catch (e) {
+        return;
+    }
+
+    for (const file of files) {
+        // Exclude git, node_modules, build outputs, media files, etc.
+        if (
+            file === 'node_modules' ||
+            file === '.next' ||
+            file === '.git' ||
+            file === 'rebrand.js' ||
+            file.endsWith('.png') ||
+            file.endsWith('.jpg') ||
+            file.endsWith('.jpeg') ||
+            file.endsWith('.webp') ||
+            file.endsWith('.mp4') ||
+            file.endsWith('.pdf') ||
+            file.endsWith('.svg') ||
+            file.endsWith('.ico') ||
+            file.endsWith('.ttf') ||
+            file.endsWith('.woff') ||
+            file.endsWith('.woff2') ||
+            file.endsWith('.eot') ||
+            file.startsWith('build_') ||
+            file.endsWith('.log') ||
+            file === 'package-lock.json'
+        ) continue;
+
+        const fullPath = path.join(directory, file);
+        let stat;
+        try {
+            stat = fs.statSync(fullPath);
+        } catch (e) {
+            continue;
+        }
+
+        if (stat.isDirectory()) {
+            processDirectory(fullPath);
+        } else {
+            try {
+                let content = fs.readFileSync(fullPath, 'utf8');
+                let newContent = content;
+
+                for (const { search, replace } of replacements) {
+                    newContent = newContent.replace(search, replace);
+                }
+
+                if (content !== newContent) {
+                    fs.writeFileSync(fullPath, newContent, 'utf8');
+                    console.log(`Updated: ${fullPath}`);
+                }
+            } catch (e) {
+                // file might be binary or unreadable
+            }
+        }
+    }
+}
+
+console.log('Starting global replacement...');
+processDirectory(dir);
+console.log('Finished global replacement.');
