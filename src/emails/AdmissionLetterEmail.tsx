@@ -24,7 +24,7 @@ export default function AdmissionLetterEmail({
     firstName = 'Student',
     courseTitle = 'Applied Sciences',
 }: AdmissionLetterEmailProps) {
-    const previewText = `Conditional Admission Offer - Kestora University Next Steps`;
+    const previewText = `Congratulations on Your Admission to Kestora University – Next Steps`;
 
     return (
         <Html>
@@ -57,7 +57,7 @@ export default function AdmissionLetterEmail({
                         </Heading>
 
                         <Heading className="text-black text-[18px] font-normal text-center p-0 mb-[20px] mx-0">
-                            Congratulations on Your Offer!
+                            Congratulations!
                         </Heading>
 
                         <Text className="text-black text-[14px] leading-[24px]">
@@ -65,41 +65,93 @@ export default function AdmissionLetterEmail({
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">
-                            We are delighted to inform you that you have been offered a conditional place to study at Kestora University.
+                            We are delighted to officially confirm your admission to Kestora University following the successful confirmation of your tuition payment.
+                        </Text>
+
+                        <Text className="text-black text-[14px] leading-[24px]">
+                            You have been admitted to study:
                         </Text>
 
                         <Section className="my-[20px]">
-                            <Text className="text-black text-[14px] font-semibold leading-[24px]">Your Offer Details:</Text>
                             <Text className="text-black text-[14px] leading-[24px]">Programme: {courseTitle}</Text>
-                            <Text className="text-black text-[14px] leading-[24px]">Intake: August 2026 (Autumn Semester)</Text>
-                            <Text className="text-black text-[14px] leading-[24px]">Status: Conditional Offer</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">Intake: {intake}</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">Student ID: {studentId}</Text>
+                        </Section>
+
+                        <Text className="text-black text-[14px] leading-[24px]">
+                            This marks a significant milestone, and we are confident that you will thrive academically and personally as part of the Kestora community.
+                        </Text>
+
+                        <Section className="my-[20px]">
+                            <Text className="text-black text-[14px] font-semibold leading-[24px]">What Happens Next</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">
+                                Now that your admission has been secured, you will begin the next critical phase of your journey – your Study Permit (Residence Permit) application.
+                            </Text>
+                            <Text className="text-black text-[14px] leading-[24px]">
+                                You will receive the following in your student dashboard shortly:
+                            </Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Your Official Admission Letter</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Your Tuition Payment Receipt</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Visa/Study Permit Guidance Documents</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Instructions for your Residence Permit (RP) application</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Accommodation details and options</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Pre-arrival and onboarding information</Text>
                         </Section>
 
                         <Section className="my-[20px]">
-                            <Text className="text-black text-[14px] font-semibold leading-[24px]">What Does a Conditional Offer Mean?</Text>
+                            <Text className="text-black text-[14px] font-semibold leading-[24px]">Your Immediate Next Steps</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">To ensure a smooth process, please follow these steps carefully:</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Download Your Documents: Log in to your application dashboard and download all issued documents.</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Begin Your Study Permit Application: Apply for your Finnish residence permit for studies via the official immigration portal.</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Book Your VFS Appointment: Schedule and attend your biometric appointment at the nearest VFS center.</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Prepare Required Documents: Ensure you have: valid international passport, proof of funds, health insurance, and academic documents.</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Follow All Guidance Provided: Our team will support you throughout this process to ensure accuracy and success.</Text>
+                        </Section>
+
+                        <Text className="text-black text-[14px] leading-[24px]">
+                            Log In to Your Dashboard
+                        </Text>
+
+                        <Section className="my-[20px]">
+                            <Text className="text-black text-[14px] font-semibold leading-[24px]">Accommodation & Student Life</Text>
                             <Text className="text-black text-[14px] leading-[24px]">
-                                A conditional offer means that you have a place reserved for you, provided you meet certain conditions. In most cases, the primary condition is the payment of your tuition fee deposit or the submission of final verified academic documents.
+                                At Kestora University, we ensure that your transition into Finland is as seamless as possible.
+                            </Text>
+                            <Text className="text-black text-[14px] leading-[24px]">
+                                Once your payment is confirmed, your accommodation information will be made available in your dashboard, including:
+                            </Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Student housing options (shared and private apartments)</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Estimated monthly costs</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Location and proximity to campus</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Application guidance for housing providers</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">
+                                Finland offers a safe, modern, and student-friendly environment, with excellent public services, efficient transport systems, and a high quality of life.
                             </Text>
                         </Section>
 
                         <Section className="my-[20px]">
-                            <Text className="text-black text-[14px] font-semibold leading-[24px]">Your Next Steps</Text>
-                            <Text className="text-black text-[14px] leading-[24px]">To secure your place, please complete the following steps:</Text>
-                            <Text className="text-black text-[14px] leading-[24px]">• Review Your Offer Letter: Log in to your student dashboard to carefully read the terms of your conditional offer.</Text>
-                            <Text className="text-black text-[14px] leading-[24px]">• Accept Your Offer: Confirm your acceptance of the offer in the portal.</Text>
-                            <Text className="text-black text-[14px] leading-[24px]">• Fulfill Your Conditions: Fulfill the conditions outlined in your offer letter (such as paying your tuition fee deposit). Once the conditions are met, your offer will become unconditional, and your Official Admission Letter will be issued.</Text>
+                            <Text className="text-black text-[14px] font-semibold leading-[24px]">What to Look Forward To at Kestora University</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">As a Kestora student, you will experience:</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• A globally relevant curriculum designed for modern careers</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• A diverse and international student community</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Career-focused learning with practical insights</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Access to student support services and academic guidance</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">• Opportunities to build a strong professional network in Europe</Text>
+                            <Text className="text-black text-[14px] leading-[24px]">
+                                You will also gain exposure to Finland's innovation-driven ecosystem, positioning you for global opportunities after graduation.
+                            </Text>
                         </Section>
 
                         <Text className="text-black text-[14px] leading-[24px]">
-                            Log In and View Offer
+                            Important Note: As a confirmed student for the August 2026 intake, it is essential that you proceed with your study permit application immediately, as timelines are strict and processing times must be carefully considered.
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">
-                            Important Request: Please act promptly to accept your offer and fulfill the conditions, as places are limited and allocated on a first-come, first-served basis once conditions are met.
+                            We are excited to have you join Kestora University and look forward to supporting you every step of the way.
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">
-                            We are very impressed by your application and look forward to welcoming you to our creative community in Finland.
+                            Welcome to your next chapter.
                         </Text>
 
                         <Text className="text-black text-[14px] leading-[24px]">

@@ -222,13 +222,76 @@ serve(async (req) => {
                 if (applicationData?.manually_enrolled) {
                     break;
                 }
-                studentSubject = "Official Admission Letter - Kestora University";
-                const docLink = documentUrl || `${portalUrl}/student/offer`;
+                studentSubject = "Congratulations on Your Admission to Kestora University – Next Steps";
                 studentHtml = `
-                    <h1>Welcome to Kestora!</h1>
-                    <p>Dear ${firstName}, your official admission letter and enrollment confirmation are now available.</p>
-                    <p>You can download your document directly using the link below:</p>
-                    <a href="${docLink}" style="display:inline-block;background:#034737;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold;">Download Admission Letter</a>
+                    <h1 style="text-align: center; font-size: 24px; margin: 30px 0;">Kestora University Admission</h1>
+                    <h2 style="text-align: center; font-size: 18px; margin-bottom: 20px;">Congratulations!</h2>
+                    <p>Dear ${firstName},</p>
+                    <p>We are delighted to officially confirm your admission to Kestora University following the successful confirmation of your tuition payment.</p>
+                    <p>You have been admitted to study:</p>
+                    <div style="margin: 20px 0;">
+                        <p>Programme: ${applicationData?.course_title || 'Your Degree Programme'}</p>
+                        <p>Intake: ${applicationData?.intake || 'August 2026 (Autumn Semester)'}</p>
+                        <p>Student ID: ${applicationData?.student_id || ''}</p>
+                    </div>
+                    <p>This marks a significant milestone, and we are confident that you will thrive academically and personally as part of the Kestora community.</p>
+                    <div style="margin: 20px 0;">
+                        <p><strong>What Happens Next</strong></p>
+                        <p>Now that your admission has been secured, you will begin the next critical phase of your journey – your Study Permit (Residence Permit) application.</p>
+                        <p>You will receive the following in your student dashboard shortly:</p>
+                        <ul>
+                            <li>Your Official Admission Letter</li>
+                            <li>Your Tuition Payment Receipt</li>
+                            <li>Visa/Study Permit Guidance Documents</li>
+                            <li>Instructions for your Residence Permit (RP) application</li>
+                            <li>Accommodation details and options</li>
+                            <li>Pre-arrival and onboarding information</li>
+                        </ul>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <p><strong>Your Immediate Next Steps</strong></p>
+                        <p>To ensure a smooth process, please follow these steps carefully:</p>
+                        <ul>
+                            <li>Download Your Documents: Log in to your application dashboard and download all issued documents.</li>
+                            <li>Begin Your Study Permit Application: Apply for your Finnish residence permit for studies via the official immigration portal.</li>
+                            <li>Book Your VFS Appointment: Schedule and attend your biometric appointment at the nearest VFS center.</li>
+                            <li>Prepare Required Documents: Ensure you have: valid international passport, proof of funds, health insurance, and academic documents.</li>
+                            <li>Follow All Guidance Provided: Our team will support you throughout this process to ensure accuracy and success.</li>
+                        </ul>
+                    </div>
+                    <p>Log In to Your Dashboard</p>
+                    <div style="margin: 20px 0;">
+                        <p><strong>Accommodation & Student Life</strong></p>
+                        <p>At Kestora University, we ensure that your transition into Finland is as seamless as possible.</p>
+                        <p>Once your payment is confirmed, your accommodation information will be made available in your dashboard, including:</p>
+                        <ul>
+                            <li>Student housing options (shared and private apartments)</li>
+                            <li>Estimated monthly costs</li>
+                            <li>Location and proximity to campus</li>
+                            <li>Application guidance for housing providers</li>
+                        </ul>
+                        <p>Finland offers a safe, modern, and student-friendly environment, with excellent public services, efficient transport systems, and a high quality of life.</p>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <p><strong>What to Look Forward To at Kestora University</strong></p>
+                        <p>As a Kestora student, you will experience:</p>
+                        <ul>
+                            <li>A globally relevant curriculum designed for modern careers</li>
+                            <li>A diverse and international student community</li>
+                            <li>Career-focused learning with practical insights</li>
+                            <li>Access to student support services and academic guidance</li>
+                            <li>Opportunities to build a strong professional network in Europe</li>
+                        </ul>
+                        <p>You will also gain exposure to Finland's innovation-driven ecosystem, positioning you for global opportunities after graduation.</p>
+                    </div>
+                    <p>Important Note: As a confirmed student for the August 2026 intake, it is essential that you proceed with your study permit application immediately, as timelines are strict and processing times must be carefully considered.</p>
+                    <p>We are excited to have you join Kestora University and look forward to supporting you every step of the way.</p>
+                    <p>Welcome to your next chapter.</p>
+                    <p>Warm regards,</p>
+                    <p>Admissions Office</p>
+                    <p>Kestora University</p>
+                    <p>admissions@kestora.online</p>
+                    <p>https://kestora.online</p>
                 `;
                 break;
 
