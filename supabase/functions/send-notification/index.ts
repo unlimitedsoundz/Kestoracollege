@@ -95,7 +95,8 @@ serve(async (req) => {
             } else if (status === 'OFFER_ACCEPTED' && oldStatus !== 'OFFER_ACCEPTED') {
                 notificationType = 'OFFER_ACCEPTED';
             } else if ((status === 'ADMISSION_LETTER_GENERATED' && oldStatus !== 'ADMISSION_LETTER_GENERATED') ||
-                (status === 'ENROLLED' && oldStatus !== 'ENROLLED')) {
+                (status === 'ENROLLED' && oldStatus !== 'ENROLLED') ||
+                (record?.enrollment_status === 'Active' && old_record?.enrollment_status !== 'Active')) {
                 notificationType = 'ADMISSION_LETTER_READY';
             } else if (status === 'REJECTED' && oldStatus !== 'REJECTED') {
                 notificationType = 'APPLICATION_REJECTED';
@@ -168,12 +169,39 @@ serve(async (req) => {
                 break;
 
             case 'OFFER_LETTER_READY':
-                studentSubject = "Congratulations! Admission Offer from Kestora University";
+                studentSubject = "Conditional Admission Offer - Kestora University Next Steps";
                 studentHtml = `
-                    <h1 style="color: #034737;">Congratulations ${firstName}!</h1>
-                    <p>You have been offered admission to Kestora University. This is a significant milestone in your creative journey.</p>
-                    <p>Please log in to the student portal to review your offer letter and acceptance terms.</p>
-                    <a href="${portalUrl}/student/offer" style="display:inline-block;background:#034737;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold;">View Offer Letter</a>
+                    <h1 style="text-align: center; font-size: 24px; margin: 30px 0;">Kestora University Admission</h1>
+                    <h2 style="text-align: center; font-size: 18px; margin-bottom: 20px;">Congratulations on Your Offer!</h2>
+                    <p>Dear ${firstName},</p>
+                    <p>We are delighted to inform you that you have been offered a conditional place to study at Kestora University.</p>
+                    <div style="margin: 20px 0;">
+                        <p><strong>Your Offer Details:</strong></p>
+                        <p>Programme: ${applicationData?.course_title || 'Your Degree Programme'}</p>
+                        <p>Intake: August 2026 (Autumn Semester)</p>
+                        <p>Status: Conditional Offer</p>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <p><strong>What Does a Conditional Offer Mean?</strong></p>
+                        <p>A conditional offer means that you have a place reserved for you, provided you meet certain conditions. In most cases, the primary condition is the payment of your tuition fee deposit or the submission of final verified academic documents.</p>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <p><strong>Your Next Steps</strong></p>
+                        <p>To secure your place, please complete the following steps:</p>
+                        <ul>
+                            <li>Review Your Offer Letter: Log in to your student dashboard to carefully read the terms of your conditional offer.</li>
+                            <li>Accept Your Offer: Confirm your acceptance of the offer in the portal.</li>
+                            <li>Fulfill Your Conditions: Fulfill the conditions outlined in your offer letter (such as paying your tuition fee deposit). Once the conditions are met, your offer will become unconditional, and your Official Admission Letter will be issued.</li>
+                        </ul>
+                    </div>
+                    <p>Log In and View Offer</p>
+                    <p>Important Request: Please act promptly to accept your offer and fulfill the conditions, as places are limited and allocated on a first-come, first-served basis once conditions are met.</p>
+                    <p>We are very impressed by your application and look forward to welcoming you to our creative community in Finland.</p>
+                    <p>Warm regards,</p>
+                    <p>Admissions Office</p>
+                    <p>Kestora University</p>
+                    <p>admissions@kestora.online</p>
+                    <p>https://kestora.online</p>
                 `;
                 // Admin already likely knows (triggered by status change), but can send alert if needed
                 break;
@@ -190,6 +218,10 @@ serve(async (req) => {
                 break;
 
             case 'ADMISSION_LETTER_READY':
+                // Skip sending email if student was manually enrolled by admin
+                if (applicationData?.manually_enrolled) {
+                    break;
+                }
                 studentSubject = "Official Admission Letter - Kestora University";
                 const docLink = documentUrl || `${portalUrl}/student/offer`;
                 studentHtml = `
